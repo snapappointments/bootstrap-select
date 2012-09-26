@@ -3,6 +3,10 @@ bootstrap-select
 
 A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto
 
+## Observation
+
+For properly work on some browser, you need to add a ('.clearfix') class to your css.
+
 # Usage
 
 Create yours (`<select>`) and add to them the class (`.selectpicker`), like example below:
