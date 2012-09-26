@@ -5,7 +5,7 @@ A custom select for @twitter bootstrap using button dropdown; originally by Silv
 
 ## Observation
 
-For properly work on some browser, you need to add a `.clearfix` class to your css.
+To properly work on some browser, you need to add a `.clearfix` class to your css.
 
 # Usage
 
