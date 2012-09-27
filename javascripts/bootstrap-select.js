@@ -76,8 +76,6 @@
                     .setAttribute('selected', 'selected');
 
                 $(this).parents('.bootstrap-select').find('.filter-option').html($(this).text());
-
-                return false;
             });
         }
 
