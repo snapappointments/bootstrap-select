@@ -75,9 +75,7 @@
                 _this.$element.find('option')[parseInt(rel,10)]
                     .setAttribute('selected', 'selected');
 
-                $(this).parents('.bootstrap-select').find('.filter-option').html($(this).text());
-
-                return false;
+                $(this).parents('.bootstrap-select').find('.filter-option').html($(this).text());   
             });
         }
 
