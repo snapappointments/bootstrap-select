@@ -5,6 +5,7 @@
             e.preventDefault();
         }
         this.$element = $(element);
+        this.$newElement = null;
         this.selectClass = options.btnStyle || ''
         this.init();
     };
@@ -19,7 +20,7 @@
             var template = this.getTemplate();
             template = this.createLi(template);
             this.$element.after(template);
-            $('.bootstrap-select > a').addClass(this.selectClass);
+            el = this.$element.next('.bootstrap-select').find('> a').addClass(this.selectClass);
 
             this.clickListener();
         },
