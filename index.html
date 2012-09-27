@@ -7,8 +7,31 @@
     <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
+
 
     <title>Bootstrap-select</title>
+    <!-- javascript/jquery-1.7.2.min.js -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="javascripts/bootstrap.js"></script>
+    <script src="javascripts/bootstrap-select.js"></script>
+
+    <script type="text/javascript">
+      window.onload=function(){
+        $('.selectpicker').selectpicker();
+
+        $('.selectpicker-info').selectpicker({
+          btnStyle: 'btn-success'
+        });
+        $('.selectpicker-warning').selectpicker({
+          btnStyle: 'btn-danger'
+        });
+        $('.selectpicker-inverse').selectpicker({
+          btnStyle: 'btn-inverse'
+        });
+      };
+    </script>
   </head>
 
   <body>
@@ -35,6 +58,44 @@
 
 <p>A custom select for <a href="https://github.com/twitter" class="user-mention">@twitter</a> bootstrap using button dropdown; originally by Silvio Moreto</p>
 
+<h2>Example</h2>
+
+<p>Make this:</p>
+
+<select>
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+
+<p>Become this:</p>
+
+<select class="selectpicker">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+
+<p>You can also set different bootstrap class:</p>
+
+<select class="selectpicker-info">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+
+<select class="selectpicker-warning">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+
+<select class="selectpicker-inverse">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+
 <h2>Observation</h2>
 
 <p>To properly work on some browser, you need to add a <code>.clearfix</code> class to your css.</p>
@@ -44,7 +105,7 @@
 <p>Create yours <code>&lt;select&gt;</code> and add to them the class <code>.selectpicker</code>, like example below:</p>
 
 <pre><code>    &lt;select class="selectpicker"&gt;
-      &lt;option&gt;Mostard&lt;/select&gt;
+      &lt;option&gt;Mustard&lt;/select&gt;
       &lt;option&gt;Ketchup&lt;/select&gt;
       &lt;option&gt;Barbecue&lt;/select&gt;
     &lt;/select&gt;
@@ -72,7 +133,7 @@
       </footer>
     </div>
 
-    
+
 
   </body>
 </html>
