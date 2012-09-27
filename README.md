@@ -12,7 +12,7 @@ To properly work on some browser, you need to add a `.clearfix` class to your cs
 Create yours `<select>` and add to them the class `.selectpicker`, like example below:
 
     <select class="selectpicker">
-      <option>Mostard</select>
+      <option>Mustard</select>
       <option>Ketchup</select>
       <option>Barbecue</select>
     </select>
