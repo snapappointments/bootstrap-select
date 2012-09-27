@@ -85,7 +85,7 @@
                 data = $this.data('selectpicker'),
                 options = typeof option == 'object' && option;
             if (!data) {
-                $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
+                $this.data('selectpicker', (data = new Selectpicker(this, options)));
             }
             if (typeof option == 'string') {
                 data[option]();
