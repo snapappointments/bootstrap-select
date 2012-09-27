@@ -20,8 +20,8 @@
             var template = this.getTemplate();
             template = this.createLi(template);
             this.$element.after(template);
-            el = this.$element.next('.bootstrap-select').find('> a').addClass(this.selectClass);
-
+            this.$newElement = this.$element.next('.bootstrap-select');
+            this.$newElement.find('> a').addClass(this.selectClass);
             this.clickListener();
         },
 
@@ -66,7 +66,8 @@
 
         clickListener: function() {
             _this = this;
-            $('.bootstrap-select li').on('click', function() {
+            this.$newElement.find('li').on('click', function(e) {
+
                 var rel = $(this).attr('rel');
 
                 _this.$element.find('option').removeAttr('selected');
@@ -74,19 +75,21 @@
                 _this.$element.find('option')[parseInt(rel,10)]
                     .setAttribute('selected', 'selected');
 
-                $('.filter-option').html($(this).text());
+                $(this).parents('.bootstrap-select').find('.filter-option').html($(this).text());
+
+                return false;
             });
         }
 
     };
 
-    $.fn.selectpicker = function(option) {
+    $.fn.selectpicker = function(option, event) {
         return this.each(function () {
             var $this = $(this),
                 data = $this.data('selectpicker'),
                 options = typeof option == 'object' && option;
             if (!data) {
-                $this.data('selectpicker', (data = new Selectpicker(this, options)));
+                $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
             }
             if (typeof option == 'string') {
                 data[option]();
