@@ -57,7 +57,7 @@
                 };
             }
 
-            _this.$element.find('option')[0].setAttribute('selected', 'selected');
+            this.$element.find('option')[0].setAttribute('selected', 'selected');
 
             template = template.replace('__ADD_LI', _liHtml);
 
@@ -70,12 +70,15 @@
 
                 var rel = $(this).attr('rel');
 
-                _this.$element.find('option').removeAttr('selected');
+                $(this).parents('.bootstrap-select').prev('select')
+                    .find('option').removeAttr('selected');
 
-                _this.$element.find('option')[parseInt(rel,10)]
+                $(this).parents('.bootstrap-select').prev('select')
+                    .find('option')[parseInt(rel,10)]
                     .setAttribute('selected', 'selected');
 
-                $(this).parents('.bootstrap-select').find('.filter-option').html($(this).text());
+                $(this).parents('.bootstrap-select')
+                    .find('.filter-option').html($(this).text());
             });
         }
 
