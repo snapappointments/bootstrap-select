@@ -2,7 +2,7 @@ bootstrap-select
 ================
 
 A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto
-See a here an [example](http://silviomoreto.github.com/bootstrap-select/);
+See a here an [example](http://silviomoreto.github.com/bootstrap-select/)
 
 ## Observation
 
