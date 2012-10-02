@@ -67,6 +67,7 @@
         clickListener: function() {
             _this = this;
             this.$newElement.find('li').on('click', function(e) {
+                e.preventDefault();
 
                 var rel = $(this).attr('rel');
 
