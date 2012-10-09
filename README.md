@@ -1,12 +1,13 @@
 bootstrap-select
 ================
 
-A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto
-See a here an [example](http://silviomoreto.github.com/bootstrap-select/)
+A custom select for @twitter bootstrap using button dropdown; 
+originally by [Silvio Moreto](http://github.com/silviomoreto) and [Ana Carolina](http://github.com/anacarolinats).
+ See a here an [example](http://silviomoreto.github.com/bootstrap-select/)
 
 ## Observation
 
-To properly work on some browser, you need to add a `.clearfix` class to your css.
+To properly work on some browser, you need to add a `.clearfix` class in your css.
 
 # Usage
 
