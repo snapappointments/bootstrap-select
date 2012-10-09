@@ -29,7 +29,7 @@
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<a class='btn dropdown-toggle clearfix' data-toggle='dropdown' href='#''>" +
-                        "<span class='filter-option pull-left'>__FIRST_OPTION</span>" +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span>" +
                         "<span class='caret pull-right'></span>" +
                     "</a>" +
                     "<ul class='dropdown-menu'>" +
@@ -45,19 +45,21 @@
             var _li = [];
             var _liHtml = '';
             var _this = this;
+            var _selected_index = this.$element.find('option:selected').index() ? this.$element.find('option:selected').index() : 0;
 
+            console.log(_selected_index);
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
 
             if(_li.length > 0) {
-                template = template.replace('__FIRST_OPTION', _li[0]);
+                template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
                     _liHtml += "<li rel=" + i + "><a href='#'>" + _li[i] + "</a></li>";
                 };
             }
 
-            this.$element.find('option')[0].setAttribute('selected', 'selected');
+            this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
 
             template = template.replace('__ADD_LI', _liHtml);
 
@@ -67,6 +69,7 @@
         clickListener: function() {
             _this = this;
             this.$newElement.find('li').on('click', function(e) {
+                e.preventDefault();
 
                 var rel = $(this).attr('rel');
 
@@ -79,6 +82,7 @@
 
                 $(this).parents('.bootstrap-select')
                     .find('.filter-option').html($(this).text());
+
             });
         }
 
