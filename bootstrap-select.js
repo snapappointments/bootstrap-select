@@ -47,7 +47,6 @@
             var _this = this;
             var _selected_index = this.$element.find('option:selected').index() ? this.$element.find('option:selected').index() : 0;
 
-            console.log(_selected_index);
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
