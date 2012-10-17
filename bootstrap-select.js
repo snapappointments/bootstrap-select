@@ -82,6 +82,9 @@
                 $(this).parents('.bootstrap-select')
                     .find('.filter-option').html($(this).text());
 
+				// Trigger select 'change'
+                $(this).parents('.bootstrap-select').prev('select')
+					.trigger('change');
             });
         }
 
