@@ -19,6 +19,9 @@
 .clearfix:after {
   clear: both;
 }
+.btn-group > .btn:first-child {
+ width: 150px;
+}
 .hide-text {
   font: 0/0 a;
   color: transparent;
