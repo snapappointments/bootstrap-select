@@ -6,7 +6,7 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.selectClass = options.btnStyle || ''
+        this.selectClass = options.btnStyle || '';
         this.init();
     };
 
@@ -55,7 +55,7 @@
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
                     _liHtml += "<li rel=" + i + "><a href='#'>" + _li[i] + "</a></li>";
-                };
+                }
             }
 
             this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
@@ -70,21 +70,19 @@
             this.$newElement.find('li').on('click', function(e) {
                 e.preventDefault();
 
-                var rel = $(this).attr('rel');
+                var rel = $(this).attr('rel'),
+                  $select = $(this).parents('.bootstrap-select');
 
-                $(this).parents('.bootstrap-select').prev('select')
-                    .find('option').removeAttr('selected');
 
-                $(this).parents('.bootstrap-select').prev('select')
-                    .find('option')[parseInt(rel,10)]
+                $select.prev('select').find('option').removeAttr('selected');
+
+                $select.prev('select').find('option')[parseInt(rel,10)]
                     .setAttribute('selected', 'selected');
 
-                $(this).parents('.bootstrap-select')
-                    .find('.filter-option').html($(this).text());
+                $select.find('.filter-option').html($select.text());
 
-				// Trigger select 'change'
-                $(this).parents('.bootstrap-select').prev('select')
-					.trigger('change');
+                // Trigger select 'change'
+                $select.prev('select').trigger('change');
             });
         }
 
