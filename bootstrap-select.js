@@ -32,7 +32,7 @@
                         "<span class='filter-option pull-left'>__SELECTED_OPTION</span>" +
                         "<span class='caret pull-right'></span>" +
                     "</a>" +
-                    "<ul class='dropdown-menu'>" +
+                    "<ul class='dropdown-menu' role='menu'>" +
                         "__ADD_LI" +
                     "</ul>" +
                 "</div>";
@@ -54,7 +54,7 @@
             if(_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + "><a href='#'>" + _li[i] + "</a></li>";
+                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "</a></li>";
                 }
             }
 
