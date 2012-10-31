@@ -70,8 +70,9 @@
             this.$newElement.find('li').on('click', function(e) {
                 e.preventDefault();
 
-                var rel = $(this).attr('rel'),
-                  $select = $(this).parents('.bootstrap-select');
+                var $this = $(this),
+                    rel = $this.attr('rel'),
+                    $select = $this.parents('.bootstrap-select');
 
 
                 $select.prev('select').find('option').removeAttr('selected');
@@ -79,7 +80,7 @@
                 $select.prev('select').find('option')[parseInt(rel,10)]
                     .setAttribute('selected', 'selected');
 
-                $select.find('.filter-option').html($select.text());
+                $select.find('.filter-option').html($this.text());
 
                 // Trigger select 'change'
                 $select.prev('select').trigger('change');
