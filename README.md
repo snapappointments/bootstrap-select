@@ -28,3 +28,5 @@ You can also pass a button bootstrap class to your select using the option `btnS
     $('.selectpicker').selectpicker({
       btnStyle: 'btn-info'
     });
+
+bootstrap-select will import the classes from your `<select>`. So you can apply the `span#` classes from Bootstrap and the bootstrap-select can be responsive
