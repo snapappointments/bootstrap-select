@@ -27,7 +27,7 @@ Or just
 
     $('select').selectpicker();
     
-You can also pass a button bootstrap class to your select using the option `btnStyle` or the drop direction, like:
+You can also pass a button bootstrap class to your select using the option `btnStyle` or the drop `direction`, like:
 
     $('.selectpicker').selectpicker({
       btnStyle: 'btn-info',
