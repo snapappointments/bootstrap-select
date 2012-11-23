@@ -22,6 +22,7 @@
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
             this.$newElement.find('> a').addClass(this.selectClass);
+            this.checkDisabled();
             this.clickListener();
         },
 
@@ -58,11 +59,18 @@
                 }
             }
 
+
             this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
 
             template = template.replace('__ADD_LI', _liHtml);
 
             return template;
+        },
+
+        checkDisabled: function() {
+            if (this.$element.is(':disabled')) {
+                this.$newElement.addClass('disabled');
+            }
         },
 
         clickListener: function() {
@@ -74,16 +82,18 @@
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
+                if (!_this.$element.is(':disabled')){
+                    $select.prev('select').find('option').removeAttr('selected');
 
-                $select.prev('select').find('option').removeAttr('selected');
+                    $select.prev('select').find('option')[parseInt(rel,10)]
+                        .setAttribute('selected', 'selected');
 
-                $select.prev('select').find('option')[parseInt(rel,10)]
-                    .setAttribute('selected', 'selected');
+                    $select.find('.filter-option').html($this.text());
 
-                $select.find('.filter-option').html($this.text());
+                    // Trigger select 'change'
+                    $select.prev('select').trigger('change');
+                }
 
-                // Trigger select 'change'
-                $select.prev('select').trigger('change');
             });
         }
 
