@@ -7,6 +7,7 @@
         this.$element = $(element);
         this.$newElement = null;
         this.selectClass = options.btnStyle || '';
+        this.direction = options.direction || '';
         this.init();
     };
 
@@ -17,11 +18,11 @@
         init: function (e) {
             this.$element.css('display', 'none');
             var classList = this.$element.attr('class').split(/\s+/);
-            console.log(classList);
             var template = this.getTemplate();
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
+            this.$newElement.addClass(this.direction);
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.find('> a').addClass(classList[i]);
