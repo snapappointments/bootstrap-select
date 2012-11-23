@@ -22,11 +22,16 @@ Create yours `<select>` and add to them the class `.selectpicker`, like example 
 In your javascript, just add the line:
 
     $('.selectpicker').selectpicker();
+
+Or just
+
+    $('select').selectpicker();
     
-You can also pass a button bootstrap class to your select using the option `btnStyle`, like:
+You can also pass a button bootstrap class to your select using the option `btnStyle` or the drop direction, like:
 
     $('.selectpicker').selectpicker({
-      btnStyle: 'btn-info'
+      btnStyle: 'btn-info',
+      direction: 'dropup'
     });
 
 bootstrap-select will import the classes from your `<select>`. So you can apply the `span#` classes from Bootstrap and the bootstrap-select can be responsive
