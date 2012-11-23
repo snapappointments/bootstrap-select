@@ -6,3 +6,9 @@
     clear: both;
     height: 0;
  }
+.bootstrap-select.disabled a{
+    opacity: 0.7;
+}
+.bootstrap-select.disabled a span.caret{
+    opacity: 0.7;
+}
