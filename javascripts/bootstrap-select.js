@@ -6,7 +6,8 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.selectClass = options.btnStyle || ''
+        this.selectClass = options.btnStyle || '';
+        this.direction = options.direction || '';
         this.init();
     };
 
@@ -16,12 +17,19 @@
 
         init: function (e) {
             this.$element.css('display', 'none');
-
+            var classList = this.$element.attr('class').split(/\s+/);
             var template = this.getTemplate();
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
+            this.$newElement.addClass(this.direction);
+            for (var i = 0; i < classList.length; i++) {
+                if(classList[i] != 'selectpicker') {
+                    this.$newElement.find('> a').addClass(classList[i]);
+                }
+            };
             this.$newElement.find('> a').addClass(this.selectClass);
+            this.checkDisabled();
             this.clickListener();
         },
 
@@ -32,7 +40,7 @@
                         "<span class='filter-option pull-left'>__SELECTED_OPTION</span>" +
                         "<span class='caret pull-right'></span>" +
                     "</a>" +
-                    "<ul class='dropdown-menu'>" +
+                    "<ul class='dropdown-menu' role='menu'>" +
                         "__ADD_LI" +
                     "</ul>" +
                 "</div>";
@@ -47,7 +55,6 @@
             var _this = this;
             var _selected_index = this.$element.find('option:selected').index() ? this.$element.find('option:selected').index() : 0;
 
-            console.log(_selected_index);
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
@@ -55,9 +62,10 @@
             if(_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + "><a href='#'>" + _li[i] + "</a></li>";
-                };
+                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "</a></li>";
+                }
             }
+
 
             this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
 
@@ -66,22 +74,32 @@
             return template;
         },
 
+        checkDisabled: function() {
+            if (this.$element.is(':disabled')) {
+                this.$newElement.addClass('disabled');
+            }
+        },
+
         clickListener: function() {
             _this = this;
             this.$newElement.find('li').on('click', function(e) {
                 e.preventDefault();
 
-                var rel = $(this).attr('rel');
+                var $this = $(this),
+                    rel = $this.attr('rel'),
+                    $select = $this.parents('.bootstrap-select');
 
-                $(this).parents('.bootstrap-select').prev('select')
-                    .find('option').removeAttr('selected');
+                if (!_this.$element.is(':disabled')){
+                    $select.prev('select').find('option').removeAttr('selected');
 
-                $(this).parents('.bootstrap-select').prev('select')
-                    .find('option')[parseInt(rel,10)]
-                    .setAttribute('selected', 'selected');
+                    $select.prev('select').find('option')[parseInt(rel,10)]
+                        .setAttribute('selected', 'selected');
 
-                $(this).parents('.bootstrap-select')
-                    .find('.filter-option').html($(this).text());
+                    $select.find('.filter-option').html($this.text());
+
+                    // Trigger select 'change'
+                    $select.prev('select').trigger('change');
+                }
 
             });
         }
