@@ -31,6 +31,9 @@
             this.$newElement.find('> a').addClass(this.selectClass);
             this.checkDisabled();
             this.clickListener();
+
+            this.$newElement.find('ul').bind('DOMNodeInserted',
+                $.proxy(this.clickListener, this));
         },
 
         getTemplate: function() {
@@ -89,7 +92,7 @@
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
-                if (!_this.$element.is(':disabled')){
+                if (_this.$element.not(':disabled')){
                     $select.prev('select').find('option').removeAttr('selected');
 
                     $select.prev('select').find('option')[parseInt(rel,10)]
