@@ -17,7 +17,7 @@
 
         init: function (e) {
             this.$element.css('display', 'none');
-            var classList = this.$element.attr('class').split(/\s+/);
+            var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var template = this.getTemplate();
             var id = this.$element.attr('id');
             template = this.createLi(template);
