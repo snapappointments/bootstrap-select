@@ -19,10 +19,14 @@
             this.$element.css('display', 'none');
             var classList = this.$element.attr('class').split(/\s+/);
             var template = this.getTemplate();
+            var id = this.$element.attr('id');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
             this.$newElement.addClass(this.direction);
+            if (id !== undefined) {
+                this.$newElement.find('> a').attr('id', id);
+            }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.find('> a').addClass(classList[i]);
