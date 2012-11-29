@@ -82,7 +82,7 @@
 
         clickListener: function() {
             var _this = this;
-            $.on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+            $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             this.$newElement.find('li').on('click', function(e) {
                 e.preventDefault();
 
