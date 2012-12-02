@@ -25,14 +25,14 @@
             this.$newElement = this.$element.next('.bootstrap-select');
             this.$newElement.addClass(this.direction);
             if (id !== undefined) {
-                this.$newElement.find('> a').attr('id', id);
+                this.$newElement.find('> button').attr('id', id);
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
-                    this.$newElement.find('> a').addClass(classList[i]);
+                    this.$newElement.find('> button').addClass(classList[i]);
                 }
             };
-            this.$newElement.find('> a').addClass(this.selectClass);
+            this.$newElement.find('> button').addClass(this.selectClass);
             this.checkDisabled();
             this.clickListener();
 
@@ -43,10 +43,10 @@
         getTemplate: function() {
             var template =
                 "<div class='btn-group bootstrap-select'>" +
-                    "<a class='btn dropdown-toggle clearfix' data-toggle='dropdown' href='#''>" +
+                    "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
                         "<span class='filter-option'>__SELECTED_OPTION</span> " +
                         "<span class='caret'></span>" +
-                    "</a>" +
+                    "</button>" +
                     "<ul class='dropdown-menu' role='menu'>" +
                         "__ADD_LI" +
                     "</ul>" +
@@ -83,7 +83,7 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                this.$newElement.addClass('disabled');
+                this.$newElement.find('> button').addClass('disabled');
             }
         },
 
