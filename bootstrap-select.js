@@ -44,8 +44,8 @@
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<a class='btn dropdown-toggle clearfix' data-toggle='dropdown' href='#''>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span>" +
-                        "<span class='caret pull-right'></span>" +
+                        "<span class='filter-option'>__SELECTED_OPTION</span> " +
+                        "<span class='caret'></span>" +
                     "</a>" +
                     "<ul class='dropdown-menu' role='menu'>" +
                         "__ADD_LI" +
