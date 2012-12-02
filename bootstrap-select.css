@@ -6,9 +6,10 @@
     clear: both;
     height: 0;
  }
-.bootstrap-select.disabled a{
-    opacity: 0.7;
-}
-.bootstrap-select.disabled a span.caret{
-    opacity: 0.7;
-}
+ .bootstrap-select.btn-group {
+    float:none; 
+ 	display: inline-block;
+ 	margin-bottom: 10px;
+ 	margin-left:0;
+ 	width: 220px;
+ }
