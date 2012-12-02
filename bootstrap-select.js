@@ -16,8 +16,8 @@
         contructor: Selectpicker,
 
         init: function (e) {
-            this.$element.css('display', 'none');
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
+            var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
             var id = this.$element.attr('id');
             template = this.createLi(template);
@@ -32,19 +32,24 @@
                     this.$newElement.addClass(classList[i]);
                 }
             };
-            this.$newElement.find('> button').addClass(this.selectClass + ' span12');
+            if (btnclassList !== undefined) {
+                this.$newElement.find('> button').addClass(btnclassList);
+            } else {
+                this.$newElement.find('> button').addClass(this.selectClass);
+            }
             this.checkDisabled();
             this.clickListener();
 
             this.$newElement.find('ul').bind('DOMNodeInserted',
                 $.proxy(this.clickListener, this));
+            this.$element.remove();
         },
 
         getTemplate: function() {
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION &nbsp;</span> " +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION&nbsp;</span> " +
                         "<span class='caret pull-right'></span>" +
                     "</button>" +
                     "<ul class='dropdown-menu' role='menu'>" +
