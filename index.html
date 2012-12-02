@@ -4,35 +4,11 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="A custom select for bootstrap using button dropdown." />
-    <meta name="keywords" content="boostrap-select, twitter bootstrap select, bootstrap select, twitter bootstrap, custom select bootstrap, bootstrap select dropdown, jquery select plugin bootstrap, jquery select plugin" />    
+    <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
 
-
-    <title>Custom select for Bootstrap, from Twitter</title>
-    <!-- javascript/jquery-1.7.2.min.js -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="javascripts/bootstrap.js"></script>
-    <script src="javascripts/bootstrap-select.js"></script>
-
-    <script type="text/javascript">
-      window.onload=function(){
-        $('.selectpicker').selectpicker();
-
-        $('.selectpicker-info').selectpicker({
-          btnStyle: 'btn-success'
-        });
-        $('.selectpicker-warning').selectpicker({
-          btnStyle: 'btn-danger'
-        });
-        $('.selectpicker-inverse').selectpicker({
-          btnStyle: 'btn-inverse'
-        });
-      };
-    </script>
+    <title>Bootstrap-select</title>
   </head>
 
   <body>
@@ -40,14 +16,14 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/silviomoreto/bootstrap-select">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/caseyjhol/bootstrap-select">View on GitHub</a>
 
           <h1 id="project_title">Bootstrap-select</h1>
           <h2 id="project_tagline">A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/silviomoreto/bootstrap-select/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/silviomoreto/bootstrap-select/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" href="https://github.com/caseyjhol/bootstrap-select/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/caseyjhol/bootstrap-select/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
@@ -59,56 +35,18 @@
 
 <p>A custom select for <a href="https://github.com/twitter" class="user-mention">@twitter</a> bootstrap using button dropdown; originally by Silvio Moreto</p>
 
-<h2>Example</h2>
-
-<p>Make this:</p>
-
-<select>
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-
-<p>Become this:</p>
-
-<select class="selectpicker">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-
-<p>You can also set different bootstrap class:</p>
-
-<select class="selectpicker-info">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-
-<select class="selectpicker-warning">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-
-<select class="selectpicker-inverse">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-
 <h2>Observation</h2>
 
 <p>To properly work on some browser, you need to add a <code>.clearfix</code> class to your css.</p>
 
 <h1>Usage</h1>
 
-<p>Create your <code>&lt;select&gt;</code> and add to them the class <code>.selectpicker</code>, like example below:</p>
+<p>Create yours <code>&lt;select&gt;</code> and add to them the class <code>.selectpicker</code>, like example below:</p>
 
 <pre><code>    &lt;select class="selectpicker"&gt;
-      &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Barbecue&lt;/option&gt;
+      &lt;option&gt;Mostard&lt;/select&gt;
+      &lt;option&gt;Ketchup&lt;/select&gt;
+      &lt;option&gt;Barbecue&lt;/select&gt;
     &lt;/select&gt;
 </code></pre>
 
@@ -129,33 +67,12 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Bootstrap-select maintained by <a href="https://github.com/silviomoreto">silviomoreto</a></p>
+        <p class="copyright">Bootstrap-select maintained by <a href="https://github.com/caseyjhol">caseyjhol</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-        <!-- Place this tag where you want the +1 button to render. -->
-        <div class="g-plusone" data-size="small"></div>
-        
-        <!-- Place this tag after the last +1 button tag. -->
-        <script type="text/javascript">
-          (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/plusone.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-          })();
-        </script>
       </footer>
     </div>
 
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-35848102-1']);
-    _gaq.push(['_trackPageview']);
-  
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+    
 
   </body>
 </html>
