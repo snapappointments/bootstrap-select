@@ -6,7 +6,7 @@
     clear: both;
     height: 0;
  }
-.bootstrap-select.btn-group {
+.bootstrap-select.btn-group, .bootstrap-select.btn-group[class*="span"] {
  	float:none; 
  	display: inline-block;
  	margin-bottom: 10px;
@@ -17,4 +17,8 @@
  }
   .bootstrap-select .btn {
  	width: 220px;
+ }
+
+ .bootstrap-select.btn-group[class*="span"] .btn {
+ 	width:100%;
  }
