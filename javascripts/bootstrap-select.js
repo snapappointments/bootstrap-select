@@ -38,7 +38,7 @@
                 this.$newElement.find('> button').addClass(btnclassList);
             } else {
                 this.$newElement.find('> button').addClass(this.selectClass);
-            }
+            };
             if (size !== undefined && this.$newElement.find('.dropdown-menu ul li').length > size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
                 var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*size;
