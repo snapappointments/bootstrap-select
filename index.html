@@ -54,31 +54,45 @@
     <option>Barbecue</option>
 </select>
 
-<select class="selectpicker span3">
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</select>
+<p>You can also set different Bootstrap classes via the <code>data-btnstyle</code> attribute:</p>
 
-<p>You can also set different bootstrap class:</p>
-
-<!-- <select class="selectpicker-info">
+<select class="selectpicker" data-btnstyle="btn-info">
     <option>Mustard</option>
     <option>Ketchup</option>
     <option>Barbecue</option>
 </select>
 
-<select class="selectpicker-warning">
+<select class="selectpicker" data-btnstyle="btn-warning">
     <option>Mustard</option>
     <option>Ketchup</option>
     <option>Barbecue</option>
 </select>
 
-<select class="selectpicker-inverse">
+<select class="selectpicker" data-btnstyle="btn-inverse">
     <option>Mustard</option>
     <option>Ketchup</option>
     <option>Barbecue</option>
-</select> -->
+</select>
+
+<p>Use a combination of <code>data-btnstyle</code> attribute and class to add <code>span*</code> to the selects.</p>
+
+<div class="row-fluid">
+<select class="selectpicker span3" data-btnstyle="span12">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+<select class="selectpicker span5" data-btnstyle="span12">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+<select class="selectpicker span2" data-btnstyle="span12">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Barbecue</option>
+</select>
+</div>
 
 <h2>Observation</h2>
 
