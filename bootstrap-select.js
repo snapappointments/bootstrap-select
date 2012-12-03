@@ -82,8 +82,10 @@
         },
 
         checkDisabled: function() {
-            if (this.$element.is(':disabled')) {
+            if (this.$element.is('[disabled]')) {
                 this.$newElement.addClass('disabled');
+            } else {
+                this.$newElement.removeClass('disabled');
             }
         },
 
@@ -97,7 +99,7 @@
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
-                if (_this.$element.not(':disabled')){
+                if (!_this.$element.is('[disabled]')){
                     $select.prev('select').find('option').removeAttr('selected');
 
                     $select.prev('select').find('option')[parseInt(rel,10)]
@@ -108,7 +110,6 @@
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
-
             });
         }
 
