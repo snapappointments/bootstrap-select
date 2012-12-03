@@ -21,6 +21,7 @@
             var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
             var id = this.$element.attr('id');
+            var size = this.$element.attr('size');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
@@ -38,6 +39,10 @@
             } else {
                 this.$newElement.find('> button').addClass(this.selectClass);
             }
+            if (size !== undefined) {
+                var height = this.$newElement.find('.dropdown-menu ul').outerHeight()*size;
+                this.$newElement.find('.dropdown-menu ul').css({'height' : height + 'px', 'overflow-y' : scroll});
+            }
             this.checkDisabled();
             this.clickListener();
 
@@ -52,9 +57,11 @@
                         "<span class='filter-option pull-left'>__SELECTED_OPTION&nbsp;</span> " +
                         "<span class='caret pull-right'></span>" +
                     "</button>" +
-                    "<ul class='dropdown-menu' role='menu'>" +
-                        "__ADD_LI" +
-                    "</ul>" +
+                    "<div class='dropdown-menu' role='menu'>" +
+                        "<ul>" +
+                            "__ADD_LI" +
+                        "</ul>" +
+                    "</div>" +
                 "</div>";
 
             return template;

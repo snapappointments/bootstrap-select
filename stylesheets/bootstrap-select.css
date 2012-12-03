@@ -21,6 +21,10 @@
  .bootstrap-select.btn-group[class*="span"] .btn {
  	width:100%;
  }
- .bootstrap-select.btn-group ul {
+ .bootstrap-select.btn-group .dropdown-menu {
  	min-width:100%;
+ }
+
+ .bootstrap-select.btn-group .dropdown-menu ul {
+ 	margin:0;
  }
