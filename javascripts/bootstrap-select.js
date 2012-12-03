@@ -21,7 +21,7 @@
             var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
             var id = this.$element.attr('id');
-            var size = this.$element.attr('size');
+            /*var size = this.$element.attr('size');*/
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
