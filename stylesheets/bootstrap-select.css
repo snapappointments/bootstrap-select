@@ -21,3 +21,6 @@
  .bootstrap-select.btn-group[class*="span"] .btn {
  	width:100%;
  }
+ .bootstrap-select.btn-group ul {
+ 	min-width:100%;
+ }
