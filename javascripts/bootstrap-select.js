@@ -40,8 +40,9 @@
                 this.$newElement.find('> button').addClass(this.selectClass);
             }
             if (size !== undefined) {
-                var height = this.$newElement.find('.dropdown-menu ul').outerHeight()*size;
-                this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : scroll});
+                var menuA = this.$newElement.find('.dropdown-menu ul li > a');
+                var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*size;
+                this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
             }
             this.checkDisabled();
             this.clickListener();
