@@ -16,6 +16,7 @@
         contructor: Selectpicker,
 
         init: function (e) {
+            this.$element.hide();
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
@@ -42,7 +43,6 @@
 
             this.$newElement.find('ul').bind('DOMNodeInserted',
                 $.proxy(this.clickListener, this));
-            this.$element.remove();
         },
 
         getTemplate: function() {
