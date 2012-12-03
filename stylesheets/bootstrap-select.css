@@ -18,7 +18,6 @@
   .bootstrap-select .btn {
  	width: 220px;
  }
-
  .bootstrap-select.btn-group[class*="span"] .btn {
  	width:100%;
  }
