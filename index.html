@@ -35,7 +35,7 @@
       <section id="main_content" class="inner">
         <h1>bootstrap-select</h1>
 
-<p>A custom select for <a href="https://github.com/twitter" class="user-mention">@twitter</a> bootstrap using button dropdown; originally by Silvio Moreto</p>
+<p>A custom select for <a href="https://github.com/twitter" class="user-mention">@twitter</a> Bootstrap using button dropdown; originally by Silvio Moreto.</p>
 <h2>Example</h2>
 
 <p>Make this:</p>
@@ -43,7 +43,7 @@
 <select>
     <option>Mustard</option>
     <option>Ketchup</option>
-    <option>Barbecue</option>
+    <option>Relish</option>
 </select>
 
 <p>Become this:</p>
@@ -51,66 +51,132 @@
 <select class="selectpicker">
     <option>Mustard</option>
     <option>Ketchup</option>
-    <option>Barbecue</option>
+    <option>Relish</option>
 </select>
 
+<pre>
+  &lt;select class="selectpicker"&gt;
+    &lt;option&gt;Mustard&lt;/option&gt;
+    &lt;option&gt;Ketchup&lt;/option&gt;
+    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+
 <p>You can also set different Bootstrap classes via the <code>data-btnstyle</code> attribute:</p>
+
+<select class="selectpicker" data-btnstyle="btn-primary">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+</select>
 
 <select class="selectpicker" data-btnstyle="btn-info">
     <option>Mustard</option>
     <option>Ketchup</option>
-    <option>Barbecue</option>
+    <option>Relish</option>
+</select>
+
+<select class="selectpicker" data-btnstyle="btn-success">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
 </select>
 
 <select class="selectpicker" data-btnstyle="btn-warning">
     <option>Mustard</option>
     <option>Ketchup</option>
-    <option>Barbecue</option>
+    <option>Relish</option>
+</select>
+
+<select class="selectpicker" data-btnstyle="btn-danger">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
 </select>
 
 <select class="selectpicker" data-btnstyle="btn-inverse">
     <option>Mustard</option>
     <option>Ketchup</option>
-    <option>Barbecue</option>
+    <option>Relish</option>
 </select>
 
-<p>Use a combination of <code>data-btnstyle</code> attribute and class to add <code>span*</code> to the selects.</p>
+<pre>
+  &lt;select class="selectpicker" data-btnstyle="btn-primary"&gt;
+...
+  &lt;/select>
+
+    &lt;select class="selectpicker" data-btnstyle="btn-info"&gt;
+...
+  &lt;/select>
+
+    &lt;select class="selectpicker" data-btnstyle="btn-success"&gt;
+...
+  &lt;/select>
+
+      &lt;select class="selectpicker" data-btnstyle="btn-warning"&gt;
+...
+  &lt;/select>
+
+      &lt;select class="selectpicker" data-btnstyle="btn-danger"&gt;
+...
+  &lt;/select>
+
+      &lt;select class="selectpicker" data-btnstyle="btn-inverse"&gt;
+...
+  &lt;/select>
+</pre>
+
+<p>Preserving default Bootstrap select functionality, apply <code>span*</code> class to the selects. Unstyled selects are displayed for comparison.</p>
 
 <div class="row-fluid">
-<select class="span3">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-<select class="span5">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
 <select class="span2">
     <option>Mustard</option>
     <option>Ketchup</option>
-    <option>Barbecue</option>
+    <option>Relish</option>
+</select>
+
+<select class="span3">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+</select>
+
+<select class="span4">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
 </select>
 </div>
 
 <div class="row-fluid">
-<select class="selectpicker span3">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-<select class="selectpicker span5">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
-<select class="selectpicker span2">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
+  &lt;select class="selectpicker span2"&gt;
+...
+  &lt;/select>
+
+  &lt;select class="selectpicker span3"&gt;
+...
+  &lt;/select>
+
+  &lt;select class="selectpicker span4"&gt;
+...
+  &lt;/select>
 </div>
+
+<p>Add the <code>disabled</code> attribute to the select to apply the disabled class. Alternatively, use the <code>data-btnstyle</code> attribute.</p>
+
+<select class="selectpicker" disabled>
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+</select>
+
+<pre>
+  &lt;select class="selectpicker" disabled&gt;
+    &lt;option&gt;Mustard&lt;/option&gt;
+    &lt;option&gt;Ketchup&lt;/option&gt;
+    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
 
 <h2>Observation</h2>
 
@@ -121,9 +187,9 @@
 <p>Create yours <code>&lt;select&gt;</code> and add to them the class <code>.selectpicker</code>, like example below:</p>
 
 <pre><code>    &lt;select class="selectpicker"&gt;
-      &lt;option&gt;Mostard&lt;/select&gt;
+      &lt;option&gt;Mustard&lt;/select&gt;
       &lt;option&gt;Ketchup&lt;/select&gt;
-      &lt;option&gt;Barbecue&lt;/select&gt;
+      &lt;option&gt;Relish&lt;/select&gt;
     &lt;/select&gt;
 </code></pre>
 
