@@ -15,3 +15,6 @@
  .bootstrap-select {
  	width: 220px;
  }
+  .bootstrap-select .btn {
+ 	width: 220px;
+ }
