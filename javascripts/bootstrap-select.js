@@ -87,7 +87,7 @@
             }
 
 
-            this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
+            this.$element.find('option')[_selected_index].attr('selected',true);
 
             template = template.replace('__ADD_LI', _liHtml);
 
