@@ -49,7 +49,7 @@
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION </span> " +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION&nbsp;</span> " +
                         "<span class='caret pull-right'></span>" +
                     "</button>" +
                     "<ul class='dropdown-menu' role='menu'>" +
@@ -74,7 +74,7 @@
             if(_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "</a></li>";
+                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "&nbsp;</a></li>";
                 }
             }
 
