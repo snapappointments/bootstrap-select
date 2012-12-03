@@ -41,7 +41,7 @@
             }
             if (size !== undefined) {
                 var height = this.$newElement.find('.dropdown-menu ul').outerHeight()*size;
-                this.$newElement.find('.dropdown-menu ul').css({'height' : height + 'px', 'overflow-y' : scroll});
+                this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : scroll});
             }
             this.checkDisabled();
             this.clickListener();
