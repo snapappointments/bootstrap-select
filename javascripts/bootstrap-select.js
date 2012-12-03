@@ -16,13 +16,17 @@
         contructor: Selectpicker,
 
         init: function (e) {
-            this.$element.css('display', 'none');
-            var classList = this.$element.attr('class').split(/\s+/);
+            this.$element.hide();
+            var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var template = this.getTemplate();
+            var id = this.$element.attr('id');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
             this.$newElement.addClass(this.direction);
+            if (id !== undefined) {
+                this.$newElement.find('> a').attr('id', id);
+            }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.find('> a').addClass(classList[i]);
@@ -31,6 +35,11 @@
             this.$newElement.find('> a').addClass(this.selectClass);
             this.checkDisabled();
             this.clickListener();
+
+            this.$newElement.find('ul').bind('DOMNodeInserted',
+                $.proxy(this.clickListener, this));
+            this.$element.bind('DOMNodeInserted',
+                $.proxy(this.createLi, this));
         },
 
         getTemplate: function() {
@@ -49,7 +58,6 @@
         },
 
         createLi: function(template) {
-
             var _li = [];
             var _liHtml = '';
             var _this = this;
@@ -90,7 +98,7 @@
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
-                if (!_this.$element.is(':disabled')){
+                if (_this.$element.not(':disabled')){
                     $select.prev('select').find('option').removeAttr('selected');
 
                     $select.prev('select').find('option')[parseInt(rel,10)]
