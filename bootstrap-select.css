@@ -19,8 +19,15 @@
 	width: 220px;
 }
 .bootstrap-select.btn-group .btn .filter-option {
-	white-space:nowrap;
-	overflow:hidden;
+	overflow:hidden; 
+	position:absolute;
+	left:12px; 
+	right:25px;
+	text-align:left;
+}
+.bootstrap-select.btn-group .btn .caret {
+	position:absolute;
+	right:12px;
 }
 .bootstrap-select.btn-group .disabled {
 	cursor: not-allowed;
