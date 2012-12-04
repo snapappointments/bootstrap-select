@@ -117,7 +117,6 @@
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
-
             });
             this.$element.on('change', function(e) {
                 var selected = $(this).find('option:selected').text();
@@ -141,9 +140,9 @@
             }
         });
     };
-    
+
     $.fn.selectpicker.defaults = {
-        style: null, 
+        style: null,
         size: null
     }
 
