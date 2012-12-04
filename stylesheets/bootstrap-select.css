@@ -17,14 +17,16 @@
 }
 .bootstrap-select .btn {
 	width: 220px;
-	padding-right:25px;
 }
 .bootstrap-select.btn-group .btn .filter-option {
-	white-space:nowrap;
-	overflow:hidden;
-	width:100%;
-	text-align:left; 
-	margin-right:5px;
+	overflow:hidden; 
+	position:absolute;
+	left:12px; 
+	right:25px; 
+}
+.bootstrap-select.btn-group .btn {
+	position:absolute;
+	right:12px;
 }
 .bootstrap-select.btn-group .disabled {
 	cursor: not-allowed;
