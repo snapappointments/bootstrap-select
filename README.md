@@ -1,17 +1,13 @@
 bootstrap-select
 ================
 
-A custom select for @twitter bootstrap using button dropdown; 
+A custom select for @twitter bootstrap using button dropdown, designed to behave like regular Bootstrap selects; 
 originally by [Silvio Moreto](http://github.com/silviomoreto) and [Ana Carolina](http://github.com/anacarolinats).
- See a here an [example](http://silviomoreto.github.com/bootstrap-select/)
-
-## Observation
-
-To properly work on some browser, you need to add a `.clearfix` class in your css.
+ See a here an [example](http://caseyjhol.github.com/bootstrap-select/)
 
 # Usage
 
-Create yours `<select>` and add to them the class `.selectpicker`, like example below:
+Create your `<select>` with the `.selectpicker` class.
 
     <select class="selectpicker">
       <option>Mustard</select>
@@ -19,7 +15,7 @@ Create yours `<select>` and add to them the class `.selectpicker`, like example 
       <option>Barbecue</select>
     </select>
     
-In your javascript, just add the line:
+Enable Bootstrap-Select via JavaScript:
 
     $('.selectpicker').selectpicker();
 
@@ -27,11 +23,11 @@ Or just
 
     $('select').selectpicker();
     
-You can also pass a button bootstrap class to your select using the option `btnStyle` or the drop `direction`, like:
+Options can be passed via data attributes or JavaScript.
 
     $('.selectpicker').selectpicker({
-      btnStyle: 'btn-info',
-      direction: 'dropup'
+      style: 'btn-info',
+      size: 4
     });
 
-bootstrap-select will import the classes from your `<select>`. So you can apply the `span#` classes from Bootstrap and the bootstrap-select can be responsive
+You can set different Bootstrap classes on the button via the `data-style` attribute. Classes are applied to `.btn-group`.Apply `.span*` class to the selects to set the width. Add the `disabled` attribute to the select to apply the `.disabled` class. Specify `data-size` to choose how many items to show in the menu by default. Make the select a dropup menu by adding the `.dropup` class to the select.
