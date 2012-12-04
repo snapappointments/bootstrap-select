@@ -3,8 +3,7 @@ bootstrap-select
 
 A custom select for @twitter bootstrap using button dropdown, designed to behave like regular Bootstrap selects; 
 originally by [Silvio Moreto](http://github.com/silviomoreto) and [Ana Carolina](http://github.com/anacarolinats).
- See a here an [example](http://caseyjhol.github.com/bootstrap-select/)
-
+ See an [example](http://caseyjhol.github.com/bootstrap-select/).
 # Usage
 
 Create your `<select>` with the `.selectpicker` class.
