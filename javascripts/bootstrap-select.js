@@ -33,8 +33,6 @@
                     this.$newElement.addClass(classList[i]);
                 }
             }
-            var maxWidth = button.outerWidth() - 38;
-            this.$newElement.find('> button > .filter-option').css('max-width',maxWidth + 'px');
             button.addClass(this.style);
             if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
@@ -53,7 +51,7 @@
                 "<div class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
                         "<span class='filter-option pull-left'>__SELECTED_OPTION</span> " +
-                        "<span class='caret pull-right'></span>" +
+                        "<span class='caret'></span>" +
                     "</button>" +
                     "<div class='dropdown-menu' role='menu'>" +
                         "<ul>" +
