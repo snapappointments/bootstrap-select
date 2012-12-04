@@ -6,42 +6,39 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.selectClass = options.btnStyle || '';
-        this.direction = options.direction || '';
+        this.options = $.extend({}, $.fn.selectpicker.defaults, options);
+        this.style = this.options.style || this.$element.attr('data-style');
+        this.size = this.options.size || this.$element.attr('data-size');
         this.init();
     };
 
     Selectpicker.prototype = {
 
-        contructor: Selectpicker,
+        constructor: Selectpicker,
 
         init: function (e) {
             this.$element.hide();
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
-            var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
             var id = this.$element.attr('id');
-            var size = this.$element.attr('data-size');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
-            this.$newElement.addClass(this.direction);
+            var button = this.$newElement.find('> button');
             if (id !== undefined) {
-                this.$newElement.find('> button').attr('id', id);
+                button.attr('id', id);
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.addClass(classList[i]);
                 }
-            };
-            if (btnclassList !== undefined) {
-                this.$newElement.find('> button').addClass(btnclassList);
-            } else {
-                this.$newElement.find('> button').addClass(this.selectClass);
             }
-            if (size !== undefined && this.$newElement.find('.dropdown-menu ul li').length > size) {
+            var maxWidth = button.outerWidth() - 38;
+            this.$newElement.find('> button > .filter-option').css('max-width',maxWidth + 'px');
+            button.addClass(this.style);
+            if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
-                var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*size;
+                var height = (parseInt(menuA.css('line-height')) + menuA.outerHeight())*this.size;
                 this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
             }
             this.checkDisabled();
@@ -55,7 +52,7 @@
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION&nbsp;</span> " +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span> " +
                         "<span class='caret pull-right'></span>" +
                     "</button>" +
                     "<div class='dropdown-menu' role='menu'>" +
@@ -82,7 +79,7 @@
             if(_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "&nbsp;</a></li>";
+                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "</a></li>";
                 }
             }
 
@@ -95,7 +92,11 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                this.$newElement.find('> button').addClass('disabled');
+                var button = this.$newElement.find('> button');
+                button.addClass('disabled');
+                button.click(function(e) {
+                    e.preventDefault();
+                });
             }
         },
 
@@ -118,6 +119,11 @@
                 }
 
             });
+            this.$element.on('change', function(e) {
+                var selected = $(this).find('option:selected').text();
+                $(this).next('.bootstrap-select').find('.filter-option').html(selected);
+
+            });
         }
 
     };
@@ -135,5 +141,10 @@
             }
         });
     };
+    
+    $.fn.selectpicker.defaults = {
+        style: null, 
+        size: null
+    }
 
 }(window.jQuery);
