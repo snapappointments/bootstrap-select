@@ -21,6 +21,7 @@
             var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
             var id = this.$element.attr('id');
+            var size = this.$element.attr('data-size');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
@@ -38,6 +39,11 @@
             } else {
                 this.$newElement.find('> button').addClass(this.selectClass);
             }
+            if (size !== undefined && this.$newElement.find('.dropdown-menu ul li').length > size) {
+                var menuA = this.$newElement.find('.dropdown-menu ul li > a');
+                var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*size;
+                this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
+            }
             this.checkDisabled();
             this.clickListener();
 
@@ -52,9 +58,11 @@
                         "<span class='filter-option pull-left'>__SELECTED_OPTION&nbsp;</span> " +
                         "<span class='caret pull-right'></span>" +
                     "</button>" +
-                    "<ul class='dropdown-menu' role='menu'>" +
-                        "__ADD_LI" +
-                    "</ul>" +
+                    "<div class='dropdown-menu' role='menu'>" +
+                        "<ul>" +
+                            "__ADD_LI" +
+                        "</ul>" +
+                    "</div>" +
                 "</div>";
 
             return template;
@@ -74,12 +82,11 @@
             if(_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "</a></li>";
+                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "&nbsp;</a></li>";
                 }
             }
 
-
-            this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
+            this.$element.find('option').eq(_selected_index).prop('selected',true);
 
             template = template.replace('__ADD_LI', _liHtml);
 
@@ -97,17 +104,13 @@
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             this.$newElement.find('li').on('click', function(e) {
                 e.preventDefault();
-
+                var selected = $(this).index();
                 var $this = $(this),
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
                 if (_this.$element.not(':disabled')){
-                    $select.prev('select').find('option').removeAttr('selected');
-
-                    $select.prev('select').find('option')[parseInt(rel,10)]
-                        .setAttribute('selected', 'selected');
-
+                    $select.prev('select').find('option').eq(selected).prop('selected',true);
                     $select.find('.filter-option').html($this.text());
 
                     // Trigger select 'change'

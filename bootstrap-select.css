@@ -1,15 +1,34 @@
 .clearfix:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
- }
- .bootstrap-select.btn-group {
-    float:none; 
- 	display: inline-block;
- 	margin-bottom: 10px;
- 	margin-left:0;
- 	width: 220px;
- }
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+.bootstrap-select.btn-group, .bootstrap-select.btn-group[class*="span"] {
+	float:none; 
+	display: inline-block;
+	margin-bottom: 10px;
+	margin-left:0;
+}
+.bootstrap-select {
+	width: 220px;
+}
+.bootstrap-select .btn {
+	width: 220px;
+}
+.bootstrap-select.btn-group .btn {
+	cursor: not-allowed;
+}
+.bootstrap-select.btn-group[class*="span"] .btn {
+	width:100%;
+}
+.bootstrap-select.btn-group .dropdown-menu {
+	min-width:100%;
+}
+
+.bootstrap-select.btn-group .dropdown-menu ul {
+	margin:0;
+	list-style:none;
+}
