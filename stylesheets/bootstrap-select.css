@@ -24,7 +24,7 @@
 	left:12px; 
 	right:25px; 
 }
-.bootstrap-select.btn-group .btn {
+.bootstrap-select.btn-group .btn .caret {
 	position:absolute;
 	right:12px;
 }
