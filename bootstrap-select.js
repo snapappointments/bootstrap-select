@@ -33,8 +33,6 @@
                     this.$newElement.addClass(classList[i]);
                 }
             }
-            var maxWidth = button.outerWidth() - 38;
-            this.$newElement.find('> button > .filter-option').css('max-width',maxWidth + 'px');
             button.addClass(this.style);
             if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
