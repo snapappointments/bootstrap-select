@@ -24,17 +24,18 @@
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
+            var button = this.$newElement.find('> button');
             if (id !== undefined) {
-                this.$newElement.find('> button').attr('id', id);
+                button.attr('id', id);
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.addClass(classList[i]);
                 }
             }
-            var maxWidth = this.$newElement.find('> button').outerWidth() - 38;
+            var maxWidth = button.outerWidth() - 38;
             this.$newElement.find('> button > .filter-option').css('max-width',maxWidth + 'px');
-            this.$newElement.find('> button').addClass(this.style);
+            button.addClass(this.style);
             if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
                 var height = (parseInt(menuA.css('line-height')) + menuA.outerHeight())*this.size;
@@ -91,7 +92,11 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                this.$newElement.find('> button').addClass('disabled');
+                var button = this.$newElement.find('> button');
+                button.addClass('disabled');
+                button.click(function(e) {
+                    e.preventDefault();
+                });
             }
         },
 
