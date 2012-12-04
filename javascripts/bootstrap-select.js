@@ -118,6 +118,11 @@
                 }
 
             });
+            this.$element.on('change', function(e) {
+                var selected = $(this).find('option:selected').text();
+                $(this).next('.bootstrap-select').find('.filter-option').html(selected + ' ');
+
+            });
         }
 
     };
