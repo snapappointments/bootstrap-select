@@ -90,14 +90,13 @@
             return template;
         },
 
-        checkDisabled: function() {
+        checkDisabled: function(e) {
             if (this.$element.is(':disabled')) {
                 var button = this.$newElement.find('> button');
                 button.addClass('disabled');
                 button.click(function(e) {
-                    e.preventDefault();
-                });
-            }
+                e.preventDefault();
+            });
         },
 
         clickListener: function() {
@@ -117,7 +116,6 @@
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
-
             });
             this.$element.on('change', function(e) {
                 var selected = $(this).find('option:selected').text();
@@ -141,9 +139,9 @@
             }
         });
     };
-    
+
     $.fn.selectpicker.defaults = {
-        style: null, 
+        style: null,
         size: null
     }
 
