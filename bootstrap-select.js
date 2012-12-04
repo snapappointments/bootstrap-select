@@ -6,33 +6,41 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.selectClass = options.btnStyle || '';
-        this.direction = options.direction || '';
+        this.options = $.extend({}, $.fn.selectpicker.defaults, options);
+        this.style = this.options.style || this.$element.attr('data-style');
+        this.size = this.options.size || this.$element.attr('data-size');
         this.init();
     };
 
     Selectpicker.prototype = {
 
-        contructor: Selectpicker,
+        constructor: Selectpicker,
 
         init: function (e) {
-            this.$element.css('display', 'none');
+            this.$element.hide();
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var template = this.getTemplate();
             var id = this.$element.attr('id');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
-            this.$newElement.addClass(this.direction);
+            var button = this.$newElement.find('> button');
             if (id !== undefined) {
-                this.$newElement.find('> a').attr('id', id);
+                button.attr('id', id);
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
-                    this.$newElement.find('> a').addClass(classList[i]);
+                    this.$newElement.addClass(classList[i]);
                 }
-            };
-            this.$newElement.find('> a').addClass(this.selectClass);
+            }
+            var maxWidth = button.outerWidth() - 38;
+            this.$newElement.find('> button > .filter-option').css('max-width',maxWidth + 'px');
+            button.addClass(this.style);
+            if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
+                var menuA = this.$newElement.find('.dropdown-menu ul li > a');
+                var height = (parseInt(menuA.css('line-height')) + menuA.outerHeight())*this.size;
+                this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
+            }
             this.checkDisabled();
             this.clickListener();
 
@@ -43,13 +51,15 @@
         getTemplate: function() {
             var template =
                 "<div class='btn-group bootstrap-select'>" +
-                    "<a class='btn dropdown-toggle clearfix' data-toggle='dropdown' href='#''>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span>" +
+                    "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span> " +
                         "<span class='caret pull-right'></span>" +
-                    "</a>" +
-                    "<ul class='dropdown-menu' role='menu'>" +
-                        "__ADD_LI" +
-                    "</ul>" +
+                    "</button>" +
+                    "<div class='dropdown-menu' role='menu'>" +
+                        "<ul>" +
+                            "__ADD_LI" +
+                        "</ul>" +
+                    "</div>" +
                 "</div>";
 
             return template;
@@ -73,8 +83,7 @@
                 }
             }
 
-
-            this.$element.find('option')[_selected_index].setAttribute('selected', 'selected');
+            this.$element.find('option').eq(_selected_index).prop('selected',true);
 
             template = template.replace('__ADD_LI', _liHtml);
 
@@ -83,7 +92,11 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                this.$newElement.addClass('disabled');
+                var button = this.$newElement.find('> button');
+                button.addClass('disabled');
+                button.click(function(e) {
+                    e.preventDefault();
+                });
             }
         },
 
@@ -92,22 +105,23 @@
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             this.$newElement.find('li').on('click', function(e) {
                 e.preventDefault();
-
+                var selected = $(this).index();
                 var $this = $(this),
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
                 if (_this.$element.not(':disabled')){
-                    $select.prev('select').find('option').removeAttr('selected');
-
-                    $select.prev('select').find('option')[parseInt(rel,10)]
-                        .setAttribute('selected', 'selected');
-
+                    $select.prev('select').find('option').eq(selected).prop('selected',true);
                     $select.find('.filter-option').html($this.text());
 
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
+
+            });
+            this.$element.on('change', function(e) {
+                var selected = $(this).find('option:selected').text();
+                $(this).next('.bootstrap-select').find('.filter-option').html(selected);
 
             });
         }
@@ -127,5 +141,10 @@
             }
         });
     };
+    
+    $.fn.selectpicker.defaults = {
+        style: null, 
+        size: null
+    }
 
 }(window.jQuery);
