@@ -31,11 +31,13 @@
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.addClass(classList[i]);
                 }
-            };
+            }
+            var maxWidth = this.$newElement.find('> button').outerWidth() - 38;
+            this.$newElement.find('> button > .filter-option').css('max-width',maxWidth + 'px');
             this.$newElement.find('> button').addClass(this.style);
             if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
-                var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*this.size;
+                var height = (parseInt(menuA.css('line-height')) + menuA.outerHeight())*this.size;
                 this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
             }
             this.checkDisabled();

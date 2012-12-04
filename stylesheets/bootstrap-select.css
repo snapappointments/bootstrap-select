@@ -18,6 +18,10 @@
 .bootstrap-select .btn {
 	width: 220px;
 }
+.bootstrap-select.btn-group .btn .filter-option {
+	white-space:nowrap;
+	overflow:hidden;
+}
 .bootstrap-select.btn-group .disabled {
 	cursor: not-allowed;
 }
