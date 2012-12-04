@@ -50,8 +50,8 @@
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span> " +
-                        "<span class='caret pull-right'></span>" +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span>&nbsp;" +
+                        "<span class='caret'></span>" +
                     "</button>" +
                     "<div class='dropdown-menu' role='menu'>" +
                         "<ul>" +
@@ -115,6 +115,7 @@
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
+
             });
             this.$element.on('change', function(e) {
                 var selected = $(this).find('option:selected').text();
@@ -138,9 +139,9 @@
             }
         });
     };
-
+    
     $.fn.selectpicker.defaults = {
-        style: null,
+        style: null, 
         size: null
     }
 
