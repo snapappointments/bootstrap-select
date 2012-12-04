@@ -27,4 +27,5 @@
 
  .bootstrap-select.btn-group .dropdown-menu ul {
  	margin:0;
+ 	list-style:none;
  }
