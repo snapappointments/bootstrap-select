@@ -35,10 +35,6 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-ol, ul {
-  list-style: none;
-}
-
 blockquote, q {
 }
 
