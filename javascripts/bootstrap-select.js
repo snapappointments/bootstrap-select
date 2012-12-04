@@ -50,7 +50,7 @@
             var template =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span> " +
+                        "<span class='filter-option pull-left'>__SELECTED_OPTION</span>&nbsp;" +
                         "<span class='caret'></span>" +
                     "</button>" +
                     "<div class='dropdown-menu' role='menu'>" +
