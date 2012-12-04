@@ -8,7 +8,6 @@
         this.$newElement = null;
         this.options = $.extend({}, $.fn.selectpicker.defaults, options);
         this.style = this.options.style || this.$element.attr('data-style');
-        this.direction = this.options.direction || this.$element.attr('data-direction');
         this.size = this.options.size || this.$element.attr('data-size');
         this.init();
     };
@@ -18,14 +17,13 @@
         constructor: Selectpicker,
 
         init: function (e) {
-            //this.$element.hide();
+            this.$element.hide();
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var template = this.getTemplate();
             var id = this.$element.attr('id');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
-            this.$newElement.addClass(this.direction);
             if (id !== undefined) {
                 this.$newElement.find('> button').attr('id', id);
             }
@@ -139,7 +137,6 @@
     
     $.fn.selectpicker.defaults = {
         style: null, 
-        direction: null, 
         size: null
     }
 
