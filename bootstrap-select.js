@@ -90,13 +90,14 @@
             return template;
         },
 
-        checkDisabled: function(e) {
+        checkDisabled: function() {
             if (this.$element.is(':disabled')) {
                 var button = this.$newElement.find('> button');
                 button.addClass('disabled');
                 button.click(function(e) {
-                e.preventDefault();
-            });
+                    e.preventDefault();
+                });
+            }
         },
 
         clickListener: function() {
