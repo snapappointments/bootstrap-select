@@ -9,6 +9,38 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <style type="text/css">
+      .com { color: #93a1a1; }
+      .lit { color: #195f91; }
+      .pun, .opn, .clo { color: #93a1a1; }
+      .fun { color: #dc322f; }
+      .str, .atv { color: #D14; }
+      .kwd, .prettyprint .tag { color: #1e347b; }
+      .typ, .atn, .dec, .var { color: teal; }
+      .pln { color: #48484c; }
+
+      .prettyprint {
+        padding: 8px;
+        background-color: #f7f7f9;
+        border: 1px solid #e1e1e8;
+      }
+      .prettyprint.linenums {
+        -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+           -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+                box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+      }
+
+      /* Specify class=linenums on a pre to get line numbering */
+      ol.linenums {
+        margin: 0 0 0 33px; /* IE indents via margin-left */
+      }
+      ol.linenums li {
+        padding-left: 12px;
+        color: #bebec5;
+        line-height: 20px;
+        text-shadow: 0 1px 0 #fff;
+      }
+    </style>
 
     <title>Bootstrap-select</title>
   </head>
@@ -198,24 +230,21 @@
 <p>Specify <code>data-size</code> to choose how many items to show in the menu by default.</p>
 
 <div class="bs-docs-example">
-  <select class="selectpicker" data-size="6">
+  <select class="selectpicker" data-size="5">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
   </select>
 </div>
 
 <pre>
-  &lt;select class="selectpicker" disabled&gt;
-    &lt;option&gt;Mustard&lt;/option&gt;
-    &lt;option&gt;Ketchup&lt;/option&gt;
-    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;select class="selectpicker" data-size="5"&gt;
+...
   &lt;/select>
 </pre>
 
@@ -257,6 +286,7 @@
     </div>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <script src="javascripts/bootstrap-select.js"></script>
     <script type="text/javascript">
