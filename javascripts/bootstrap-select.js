@@ -6,22 +6,22 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.selectClass = options.btnStyle || '';
-        this.direction = options.direction || '';
+        this.options = $.extend({}, $.fn.selectpicker.defaults, options);
+        this.style = this.options.style || this.$element.attr('data-style');
+        this.direction = this.options.direction || this.$element.attr('data-direction');
+        this.size = this.options.size || this.$element.attr('data-size');
         this.init();
     };
 
     Selectpicker.prototype = {
 
-        contructor: Selectpicker,
+        constructor: Selectpicker,
 
         init: function (e) {
-            this.$element.hide();
+            //this.$element.hide();
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
-            var btnclassList = this.$element.attr('data-btnstyle');
             var template = this.getTemplate();
             var id = this.$element.attr('id');
-            var size = this.$element.attr('data-size');
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
@@ -34,14 +34,10 @@
                     this.$newElement.addClass(classList[i]);
                 }
             };
-            if (btnclassList !== undefined) {
-                this.$newElement.find('> button').addClass(btnclassList);
-            } else {
-                this.$newElement.find('> button').addClass(this.selectClass);
-            }
-            if (size !== undefined && this.$newElement.find('.dropdown-menu ul li').length > size) {
+            this.$newElement.find('> button').addClass(this.style);
+            if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
                 var menuA = this.$newElement.find('.dropdown-menu ul li > a');
-                var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*size;
+                var height = (parseInt(menuA.css('line-height')) + parseInt(menuA.css('padding-top')) + parseInt(menuA.css('padding-bottom')))*this.size;
                 this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
             }
             this.checkDisabled();
@@ -140,5 +136,11 @@
             }
         });
     };
+    
+    $.fn.selectpicker.defaults = {
+        style: null, 
+        direction: null, 
+        size: null
+    }
 
 }(window.jQuery);

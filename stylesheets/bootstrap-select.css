@@ -18,7 +18,7 @@
 .bootstrap-select .btn {
 	width: 220px;
 }
-.bootstrap-select.btn-group .btn {
+.bootstrap-select.btn-group .disabled {
 	cursor: not-allowed;
 }
 .bootstrap-select.btn-group[class*="span"] .btn {
