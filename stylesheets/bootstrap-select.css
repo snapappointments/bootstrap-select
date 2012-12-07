@@ -20,6 +20,7 @@
 }
 .bootstrap-select .btn:focus {
 	outline: thin dotted #333333 !important;
+	outline: 5px auto -webkit-focus-ring-color !important;
 	outline-offset: -2px;
 }
 .bootstrap-select.btn-group .btn .filter-option {
