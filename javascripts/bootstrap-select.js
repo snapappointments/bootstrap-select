@@ -48,6 +48,7 @@
             button.addClass(this.style);
             this.checkDisabled();
             this.clickListener();
+            console.log(this.size)
             if (this.size == 'auto') {
                 this.getSize();
                 $(window).resize(this.getSize);
