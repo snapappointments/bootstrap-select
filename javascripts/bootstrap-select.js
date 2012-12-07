@@ -6,9 +6,14 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.options = $.extend({}, $.fn.selectpicker.defaults, options);
-        this.style = this.options.style || this.$element.attr('data-style');
-        this.size = this.options.size || this.$element.attr('data-size');
+        var button = null;
+        var menu = null;
+        var liHeight = null;
+        var selectOffset_top = null;
+        var selectHeight = null;
+        this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
+        this.style = this.options.style;
+        this.size = this.options.size;
         this.init();
     };
 
@@ -24,7 +29,14 @@
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
-            var button = this.$newElement.find('> button');
+            button = this.$newElement.find('> button');
+            menu = this.$newElement.find('.dropdown-menu');
+            var menuA = this.$newElement.find('.dropdown-menu ul li > a');
+            liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
+            selectOffset_top = this.$newElement.offset().top;
+            var size = null;
+            var menuHeight = null;
+            selectHeight = this.$newElement.outerHeight();
             if (id !== undefined) {
                 button.attr('id', id);
             }
@@ -34,16 +46,31 @@
                 }
             }
             button.addClass(this.style);
-            if (this.size && this.$newElement.find('.dropdown-menu ul li').length > this.size) {
-                var menuA = this.$newElement.find('.dropdown-menu ul li > a');
-                var height = (parseInt(menuA.css('line-height')) + menuA.outerHeight())*this.size;
-                this.$newElement.find('.dropdown-menu ul').css({'max-height' : height + 'px', 'overflow-y' : 'scroll'});
-            }
             this.checkDisabled();
             this.clickListener();
+            if (this.size == 'auto') {
+                this.getSize();
+                $(window).resize(this.getSize);
+            } else if (this.size != 'auto' && menu.find('ul li').length > this.size) {
+                menuHeight = liHeight*this.size;
+                menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
+            }
 
             this.$newElement.find('ul').bind('DOMNodeInserted',
                 $.proxy(this.clickListener, this));
+        },
+
+        getSize: function() {
+            var windowHeight = window.innerHeight;
+            var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top')) + parseInt(menu.css('border-bottom')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
+            var selectOffset_bot = windowHeight - selectOffset_top - selectHeight - menuExtras;
+            size = Math.floor(selectOffset_bot/liHeight);
+            menuHeight = liHeight*size;
+            if (menu.find('ul li').length > size) {
+                menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
+            } else {
+                menu.find('ul').css({'max-height' : 'none', 'overflow-y' : 'auto'});
+            }
         },
 
         getTemplate: function() {
@@ -90,7 +117,6 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                var button = this.$newElement.find('> button');
                 button.addClass('disabled');
                 button.click(function(e) {
                     e.preventDefault();
@@ -142,7 +168,7 @@
     
     $.fn.selectpicker.defaults = {
         style: null, 
-        size: null
+        size: 'auto'
     }
 
 }(window.jQuery);
