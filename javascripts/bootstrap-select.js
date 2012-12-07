@@ -7,10 +7,6 @@
         this.$element = $(element);
         this.$newElement = null;
         var button = null;
-        var menu = null;
-        var liHeight = null;
-        var selectOffset_top = null;
-        var selectHeight = null;
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
         this.style = this.options.style;
         this.size = this.options.size;
@@ -29,14 +25,14 @@
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
-            button = this.$newElement.find('> button');
-            menu = this.$newElement.find('.dropdown-menu');
+            var menu = this.$newElement.find('.dropdown-menu');
             var menuA = this.$newElement.find('.dropdown-menu ul li > a');
-            liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
-            selectOffset_top = this.$newElement.offset().top;
-            var size = null;
-            var menuHeight = null;
-            selectHeight = this.$newElement.outerHeight();
+            var liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
+            var selectOffset_top = this.$newElement.offset().top;
+            var size = 0;
+            var menuHeight = 0;
+            var selectHeight = this.$newElement.outerHeight();
+            button = this.$newElement.find('> button');
             if (id !== undefined) {
                 button.attr('id', id);
             }
@@ -48,30 +44,27 @@
             button.addClass(this.style);
             this.checkDisabled();
             this.clickListener();
-            console.log(this.size)
             if (this.size == 'auto') {
-                this.getSize();
-                $(window).resize(this.getSize);
+                function getSize() {
+                    var windowHeight = window.innerHeight;
+                    var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top')) + parseInt(menu.css('border-bottom')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
+                    var selectOffset_bot = windowHeight - selectOffset_top - selectHeight - menuExtras;
+                    size = Math.floor(selectOffset_bot/liHeight);
+                    menuHeight = liHeight*size;
+                    if (menu.find('ul li').length > size) {
+                        menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
+                    } else {
+                        menu.find('ul').css({'max-height' : 'none', 'overflow-y' : 'auto'});
+                    }
+            }
+                getSize();
+                $(window).bind('resize', getSize);
             } else if (this.size != 'auto' && menu.find('ul li').length > this.size) {
                 menuHeight = liHeight*this.size;
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
-
             this.$newElement.find('ul').bind('DOMNodeInserted',
-                $.proxy(this.clickListener, this));
-        },
-
-        getSize: function() {
-            var windowHeight = window.innerHeight;
-            var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top')) + parseInt(menu.css('border-bottom')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
-            var selectOffset_bot = windowHeight - selectOffset_top - selectHeight - menuExtras;
-            size = Math.floor(selectOffset_bot/liHeight);
-            menuHeight = liHeight*size;
-            if (menu.find('ul li').length > size) {
-                menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
-            } else {
-                menu.find('ul').css({'max-height' : 'none', 'overflow-y' : 'auto'});
-            }
+            $.proxy(this.clickListener, this));
         },
 
         getTemplate: function() {
