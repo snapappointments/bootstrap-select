@@ -67,7 +67,7 @@
                 getSize();
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
-            } else if (this.size != 'auto' && menu.find('ul li').length > this.size) {
+            } else if (this.size && this.size != 'auto' && menu.find('ul li').length > this.size) {
                 menuHeight = liHeight*this.size;
                 if (this.size == 1) {menuHeight = menuHeight + 8}
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
