@@ -46,9 +46,10 @@
             this.clickListener();
             if (this.size == 'auto') {
                 function getSize() {
+                    var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
                     var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top')) + parseInt(menu.css('border-bottom')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
-                    var selectOffset_bot = windowHeight - selectOffset_top - selectHeight - menuExtras;
+                    var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
                     size = Math.floor(selectOffset_bot/liHeight);
                     menuHeight = liHeight*size;
                     if (menu.find('ul li').length > size) {
@@ -58,7 +59,8 @@
                     }
             }
                 getSize();
-                $(window).bind('resize', getSize);
+                $(window).resize(getSize);
+                $(window).scroll(getSize);
             } else if (this.size != 'auto' && menu.find('ul li').length > this.size) {
                 menuHeight = liHeight*this.size;
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
