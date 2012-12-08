@@ -209,7 +209,7 @@
   &lt;/div&gt;
 </pre>
 
-<p>Add the <code>disabled</code> attribute to the select to apply the <code>disabled</code> class.</p>
+<p>Add the <code>.disabled</code> attribute to the select to apply the <code>disabled</code> class.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker" disabled>
@@ -227,7 +227,49 @@
   &lt;/select>
 </pre>
 
-<p>Specify <code>data-size</code> to choose how many items to show in the menu by default.</p>
+<p>The <code>size</code> option is set to <code>'auto'</code> by default. When <code>size</code> is set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off. Try it out! Set <code>size</code> to <code>null</code> always show all items. The size of the menu can also be specifed using the <code>data-size</code> attribute.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    ...
+  &lt;/select>
+<br>
+Note: this is the same as:<br>
+  &lt;select class="selectpicker" data-size="auto"&gt;
+    ...
+  &lt;/select>
+</pre>
+
+<p>Specify a number for <code>data-size</code> to choose the maximum number of items to show in the menu.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker" data-size="5">
@@ -248,7 +290,7 @@
   &lt;/select>
 </pre>
 
-<p>Make the select a dropup menu by adding the <code>dropup</code> class to the select.</p>
+<p>Make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker dropup">
