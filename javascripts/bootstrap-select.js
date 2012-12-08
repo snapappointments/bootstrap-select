@@ -25,6 +25,7 @@
             template = this.createLi(template);
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
+            var select = this.$newElement;
             var menu = this.$newElement.find('.dropdown-menu');
             var menuA = this.$newElement.find('.dropdown-menu ul li > a');
             var liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
@@ -50,7 +51,12 @@
                     var windowHeight = window.innerHeight;
                     var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
+                    if (!select.hasClass('dropup')) {
                     size = Math.floor(selectOffset_bot/liHeight);
+                    } else {
+                    size = Math.floor((selectOffset_top_scroll - menuExtras)/liHeight);
+                    }
+                    if (size < 4) {size = 3};
                     menuHeight = liHeight*size;
                     if (menu.find('ul li').length > size) {
                         menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
@@ -63,6 +69,7 @@
                 $(window).scroll(getSize);
             } else if (this.size != 'auto' && menu.find('ul li').length > this.size) {
                 menuHeight = liHeight*this.size;
+                if (this.size == 1) {menuHeight = menuHeight + 8}
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
             this.$newElement.find('ul').bind('DOMNodeInserted',
@@ -163,7 +170,7 @@
     };
     
     $.fn.selectpicker.defaults = {
-        style: null, 
+        style: null,
         size: 'auto'
     }
 
