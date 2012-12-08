@@ -18,7 +18,7 @@
         constructor: Selectpicker,
 
         init: function (e) {
-            //this.$element.hide();
+            this.$element.hide();
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var template = this.getTemplate();
             var id = this.$element.attr('id');
@@ -48,7 +48,7 @@
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
-                    var menuExtras = parseInt(menu.css('padding'))*2 + parseInt(menu.css('border'))*2 + parseInt(menu.css('margin'));
+                    var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
                     size = Math.floor(selectOffset_bot/liHeight);
                     menuHeight = liHeight*size;
