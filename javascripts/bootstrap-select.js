@@ -51,7 +51,6 @@
                     var menuExtras = parseInt(menu.css('padding'))*2 + parseInt(menu.css('border'))*2 + parseInt(menu.css('margin'));
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
                     size = Math.floor(selectOffset_bot/liHeight);
-                    console.log(this.$element);
                     menuHeight = liHeight*size;
                     if (menu.find('ul li').length > size) {
                         menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
