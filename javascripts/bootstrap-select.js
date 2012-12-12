@@ -45,6 +45,12 @@
             button.addClass(this.style);
             this.checkDisabled();
             this.clickListener();
+            this.$element.find('optgroup').each(function() {
+                if ($(this).attr('label')) {
+                    menu.find('.opt'+$(this).index()).eq(0).before('<dt>'+$(this).attr('label')+'</dt>');
+                }
+                menu.find('.opt'+$(this).index()).eq(0).parent().prev().addClass('optgroup-div');
+            });
             if (this.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
@@ -58,7 +64,7 @@
                     }
                     if (size < 4) {size = 3};
                     menuHeight = liHeight*size;
-                    if (menu.find('ul li').length > size) {
+                    if (menu.find('ul li').length + menu.find('dt').length > size) {
                         menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
                     } else {
                         menu.find('ul').css({'max-height' : 'none', 'overflow-y' : 'auto'});
@@ -96,18 +102,33 @@
         createLi: function(template) {
 
             var _li = [];
+            var _liA = [];
             var _liHtml = '';
+            var opt_index = null;
             var _this = this;
             var _selected_index = this.$element.find('option:selected').index() ? this.$element.find('option:selected').index() : 0;
-
+            
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
 
-            if(_li.length > 0) {
+            this.$element.find('option').each(function() {
+                if ($(this).parent().is('optgroup')) {
+                    opt_index = String($(this).parent().index());
+                    var optgroup = $(this).parent();
+                    for (var i = 0; i < optgroup.length; i++) {
+                        _liA.push('<a class="opt'+opt_index[i]+'" tabindex="-1" href="#">'+$(this).text()+'</a>');
+                    }
+
+                } else {
+                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+                }
+            });
+
+            if (_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + "><a tabindex='-1' href='#'>" + _li[i] + "</a></li>";
+                    _liHtml += "<li rel=" + i + ">" + _liA[i] + "</li>";
                 }
             }
 
@@ -130,10 +151,13 @@
         clickListener: function() {
             var _this = this;
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-            this.$newElement.find('li').on('click', function(e) {
+            $('.dropdown-menu').find('li dt').on('click', function(e) {
+                e.stopPropagation();
+            });
+            this.$newElement.find('li a').on('click', function(e) {
                 e.preventDefault();
-                var selected = $(this).index();
-                var $this = $(this),
+                var selected = $(this).parent().index();
+                var $this = $(this).parent(),
                     rel = $this.attr('rel'),
                     $select = $this.parents('.bootstrap-select');
 
@@ -149,7 +173,6 @@
             this.$element.on('change', function(e) {
                 var selected = $(this).find('option:selected').text();
                 $(this).next('.bootstrap-select').find('.filter-option').html(selected);
-
             });
         }
 
