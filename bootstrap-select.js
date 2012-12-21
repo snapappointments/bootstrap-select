@@ -106,7 +106,7 @@
             var _liHtml = '';
             var opt_index = null;
             var _this = this;
-            var _selected_index = this.$element.find('option:selected').index() ? this.$element.find('option:selected').index() : 0;
+            var _selected_index = this.$element[0].selectedIndex ? this.$element[0].selectedIndex : 0;
             
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
