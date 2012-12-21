@@ -36,6 +36,7 @@
             button = this.$newElement.find('> button');
             if (id !== undefined) {
                 button.attr('id', id);
+                $('label[for="' + id + '"]').click(function(){ button.focus(); })                
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
@@ -168,6 +169,7 @@
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
+                button.focus();
 
             });
             this.$element.on('change', function(e) {
