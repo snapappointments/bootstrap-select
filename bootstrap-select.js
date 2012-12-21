@@ -169,6 +169,7 @@
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
+                button.focus();
 
             });
             this.$element.on('change', function(e) {
