@@ -165,11 +165,11 @@
                 if (_this.$element.not(':disabled')){
                     $select.prev('select').find('option').eq(selected).prop('selected',true);
                     $select.find('.filter-option').html($this.text());
+                    $select.find('button').focus();
 
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
-                button.focus();
 
             });
             this.$element.on('change', function(e) {
