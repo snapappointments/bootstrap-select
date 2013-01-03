@@ -36,7 +36,7 @@
             button = this.$newElement.find('> button');
             if (id !== undefined) {
                 button.attr('id', id);
-                $('label[for="' + id + '"]').click(function(){ button.focus(); })                
+                $('label[for="' + id + '"]').click(function(){ select.find('button#'+id).focus(); })
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
