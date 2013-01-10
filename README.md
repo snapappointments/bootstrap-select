@@ -18,9 +18,9 @@ See an [example](http://caseyjhol.github.com/bootstrap-select/).
 Create your `<select>` with the `.selectpicker` class.
 
     <select class="selectpicker">
-      <option>Mustard</select>
-      <option>Ketchup</select>
-      <option>Barbecue</select>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Barbecue</option>
     </select>
     
 Enable Bootstrap-Select via JavaScript:
