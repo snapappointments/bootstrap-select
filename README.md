@@ -23,6 +23,14 @@ Create your `<select>` with the `.selectpicker` class.
       <option>Barbecue</select>
     </select>
     
+
+You can also use the title tag as an alternative to display when the option is selected
+    <select class="selectpicker">
+        <option title="Combo 1">Hot Dog, Fries and a Soda</option>
+        <option title="Combo 2">Burger, Shake and a Smile</option>
+        <option title="Combo 3">Sugar, Spice and all things nice</option>
+    </select>
+
 Enable Bootstrap-Select via JavaScript:
 
     $('.selectpicker').selectpicker();
