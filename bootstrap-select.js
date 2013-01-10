@@ -173,8 +173,11 @@
 
             });
             this.$element.on('change', function(e) {
-                var selected = $(this).find('option:selected').text();
-                $(this).next('.bootstrap-select').find('.filter-option').html(selected);
+                if($(this).find('option:selected').attr('title')!=undefined){
+                	$(this).next('.bootstrap-select').find('.filter-option').html($(this).find('option:selected').attr('title'));
+                }else{
+                	$(this).next('.bootstrap-select').find('.filter-option').html($(this).find('option:selected').text());
+                }
             });
         }
 
