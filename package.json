@@ -1,4 +1,3 @@
-
 {
   "name": "jquery",
 	"title": "jQuery",
@@ -11,7 +10,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/antonellopasella/bootstrap-select"
+		"url": "https://github.com/antonellopasella/bootstrap-select.git"
 	},
 	"licenses": [
 		{
