@@ -79,8 +79,6 @@
                 if (this.size == 1) {menuHeight = menuHeight + 8}
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
-            this.$newElement.find('ul').bind('DOMNodeInserted',
-            $.proxy(this.clickListener, this));
             
             this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
         },
@@ -176,7 +174,7 @@
             $('.dropdown-menu').find('li dt').on('click', function(e) {
                 e.stopPropagation();
             });
-            this.$newElement.find('li a').on('click', function(e) {
+            $(this.$newElement).on('click', 'li a', function(e){
                 e.preventDefault();
                 var selected = $(this).parent().index();
                 var $this = $(this).parent(),
