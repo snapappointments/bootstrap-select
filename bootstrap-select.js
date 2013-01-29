@@ -6,7 +6,7 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        var button = null;
+        this.button = null;
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
         this.style = this.options.style;
         this.size = this.options.size;
@@ -33,9 +33,9 @@
             var size = 0;
             var menuHeight = 0;
             var selectHeight = this.$newElement.outerHeight();
-            button = this.$newElement.find('> button');
+            this.button = this.$newElement.find('> button');
             if (id !== undefined) {
-                button.attr('id', id);
+                this.button.attr('id', id);
                 $('label[for="' + id + '"]').click(function(){ select.find('button#'+id).focus(); })
             }
             for (var i = 0; i < classList.length; i++) {
@@ -43,7 +43,7 @@
                     this.$newElement.addClass(classList[i]);
                 }
             }
-            button.addClass(this.style);
+            this.button.addClass(this.style);
             this.checkDisabled();
             this.clickListener();
             this.$element.find('optgroup').each(function() {
@@ -163,8 +163,8 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                button.addClass('disabled');
-                button.click(function(e) {
+                this.button.addClass('disabled');
+                this.button.click(function(e) {
                     e.preventDefault();
                 });
             }
