@@ -182,9 +182,8 @@
                 if ($select.prev('select').not(':disabled')){
 
                     $select.prev('select').find('option').removeAttr('selected')
-                    $select.prev('select').find('option').eq(selected).attr('selected', 'selected');
 
-                    $select.prev('select').find('option').eq(selected).prop('selected', true);
+                    $select.prev('select').find('option').eq(selected).prop('selected', true).attr('selected', 'selected');
                     $select.find('.filter-option').html($this.text());
                     $select.find('button').focus();
 
