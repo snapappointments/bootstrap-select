@@ -79,7 +79,7 @@
                 if (this.size == 1) {menuHeight = menuHeight + 8}
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
-            
+
             this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
         },
 
@@ -127,7 +127,7 @@
             var opt_index = null;
             var _this = this;
             var _selected_index = this.$element[0].selectedIndex ? this.$element[0].selectedIndex : 0;
-            
+
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
@@ -169,20 +169,22 @@
         },
 
         clickListener: function() {
-            var _this = this;
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             $('.dropdown-menu').find('li dt').on('click', function(e) {
                 e.stopPropagation();
             });
             $(this.$newElement).on('click', 'li a', function(e){
                 e.preventDefault();
-                var selected = $(this).parent().index();
-                var $this = $(this).parent(),
-                    rel = $this.attr('rel'),
+                var selected = $(this).parent().index(),
+                    $this = $(this).parent(),
                     $select = $this.parents('.bootstrap-select');
 
-                if (_this.$element.not(':disabled')){
-                    $select.prev('select').find('option').eq(selected).prop('selected',true);
+                if ($select.prev('select').not(':disabled')){
+
+                    $select.prev('select').find('option').removeAttr('selected')
+                    $select.prev('select').find('option').eq(selected).attr('selected', 'selected');
+
+                    $select.prev('select').find('option').eq(selected).prop('selected', true);
                     $select.find('.filter-option').html($this.text());
                     $select.find('button').focus();
 
@@ -215,7 +217,7 @@
             }
         });
     };
-    
+
     $.fn.selectpicker.defaults = {
         style: null,
         size: 'auto'
