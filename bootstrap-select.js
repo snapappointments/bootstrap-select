@@ -81,6 +81,8 @@
             }
             this.$newElement.find('ul').bind('DOMNodeInserted',
             $.proxy(this.clickListener, this));
+            
+            this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
         },
 
         getTemplate: function() {
@@ -98,6 +100,25 @@
                 "</div>";
 
             return template;
+        },
+
+        reloadLi: function() {
+            var _li = [];
+            var _liHtml = '';
+
+            this.$newElement.find('li').remove();
+
+            this.$element.find('option').each(function(){
+                _li.push($(this).text());
+            });
+
+            if(_li.length > 0) {
+                for (var i = 0; i < _li.length; i++) {
+                    this.$newElement.find('ul').append(
+                        '<li rel=' + i + '><a tabindex="-1" href="#">' + _li[i] + '</a></li>'
+                    );
+                }
+            }
         },
 
         createLi: function(template) {
