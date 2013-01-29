@@ -174,7 +174,7 @@
             $('.dropdown-menu').find('li dt').on('click', function(e) {
                 e.stopPropagation();
             });
-            t$(this.$newElement).on('click', 'li a', function(e){
+            $(this.$newElement).on('click', 'li a', function(e){
                 console.log('hi')
                 e.preventDefault();
                 var selected = $(this).parent().index();
