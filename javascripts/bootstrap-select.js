@@ -175,7 +175,6 @@
                 e.stopPropagation();
             });
             $(this.$newElement).on('click', 'li a', function(e){
-                console.log('hi')
                 e.preventDefault();
                 var selected = $(this).parent().index();
                 var $this = $(this).parent(),
