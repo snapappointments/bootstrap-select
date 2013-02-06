@@ -120,29 +120,50 @@
         },
 
         createLi: function(template) {
-
-            var _li = [];
-            var _liA = [];
-            var _liHtml = '';
-            var opt_index = null;
-            var _this = this;
-            var _selected_index = this.$element[0].selectedIndex ? this.$element[0].selectedIndex : 0;
+            var _li = [],
+                _liA = [],
+                _liHtml = '',
+                opt_index = null,
+                _this = this,
+                _selected_index = this.$element[0].selectedIndex ? this.$element[0].selectedIndex : 0;
 
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
 
             this.$element.find('option').each(function() {
-                if ($(this).parent().is('optgroup')) {
-                    opt_index = String($(this).parent().index());
-                    var optgroup = $(this).parent();
-                    for (var i = 0; i < optgroup.length; i++) {
-                        _liA.push('<a class="opt'+opt_index[i]+'" tabindex="-1" href="#">'+$(this).text()+'</a>');
-                    }
-
-                } else {
-                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+              var option = $(this),
+                  optgroup,
+                  
+                  text, link;
+                
+                // create a separator
+                if (option.data('separator') == true) {
+                    _liA.push('<span class="separator"></span>');
+                    return;
                 }
+                
+                // does it use custom text
+                if (option.data('option-text') !== undefined ) {
+                    text = option.data('option-text');
+                }else {
+                    text = option.text();
+                }
+                
+                // set the link markup
+                link = '<a __CLASS tabindex="-1" href="#">'+text+'</a>';
+                
+                // add class for indention
+                if (option.parent().is('optgroup')) {
+                    opt_index = String(option.parent().index());
+                    optgroup = option.parent();
+                    for (var i = 0; i < optgroup.length; i++) {
+                        link = link.replace('__CLASS', 'class="opt'+opt_index[i]+'"');
+                    }
+                }
+                
+                // push the link and remove the "__CLASS" placeholder
+                _liA.push(link.replace(' __CLASS', ''));
             });
 
             if (_li.length > 0) {
