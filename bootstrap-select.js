@@ -45,6 +45,7 @@
             }
             this.button.addClass(this.style);
             this.checkDisabled();
+			this.checkTabIndex();
             this.clickListener();
             this.$element.find('optgroup').each(function() {
                 if ($(this).attr('label')) {
@@ -167,6 +168,13 @@
                 });
             }
         },
+		
+		checkTabIndex: function() {
+			if (this.$element.is('[tabindex]')) {
+				var tabindex = this.$element.attr("tabindex");
+				this.button.attr('tabindex', tabindex);
+			}
+		},
 
         clickListener: function() {
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
