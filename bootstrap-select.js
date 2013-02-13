@@ -45,7 +45,7 @@
             }
             this.button.addClass(this.style);
             this.checkDisabled();
-			this.checkTabIndex();
+      this.checkTabIndex();
             this.clickListener();
             this.$element.find('optgroup').each(function() {
                 if ($(this).attr('label')) {
@@ -138,11 +138,11 @@
                     opt_index = String($(this).parent().index());
                     var optgroup = $(this).parent();
                     for (var i = 0; i < optgroup.length; i++) {
-                        _liA.push('<a class="opt'+opt_index[i]+'" tabindex="-1" href="#">'+$(this).text()+'</a>');
+                        _liA.push("<a class='opt"+opt_index[i]+" "+ $(this).attr("class") +"' tabindex='-1' href='#'>"+$(this).text()+"</a>");
                     }
 
                 } else {
-                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+                    _liA.push("<a class='" + $(this).attr("class") + "' tabindex='-1' href='#'>"+$(this).text()+"</a>");
                 }
             });
 
@@ -168,13 +168,13 @@
                 });
             }
         },
-		
-		checkTabIndex: function() {
-			if (this.$element.is('[tabindex]')) {
-				var tabindex = this.$element.attr("tabindex");
-				this.button.attr('tabindex', tabindex);
-			}
-		},
+
+    checkTabIndex: function() {
+      if (this.$element.is('[tabindex]')) {
+        var tabindex = this.$element.attr("tabindex");
+        this.button.attr('tabindex', tabindex);
+      }
+    },
 
         clickListener: function() {
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
