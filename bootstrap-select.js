@@ -113,19 +113,19 @@
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" class="opt">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                     }
                 } else {
-                    _liA.push('<a tabindex="-1">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" class="'+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                 }
             });
 
@@ -156,19 +156,19 @@
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" class="opt">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                     }
                 } else {
-                    _liA.push('<a tabindex="-1">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" class="'+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                 }
             });
 
