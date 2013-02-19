@@ -42,8 +42,8 @@
       }
       .special {
         font-style: italic; 
-        font-weight: bold; 
-        color:#bc0000; 
+        font-weight: bold !important; 
+        color:#bc0000 !important; 
         background:#000;
       }
     </style>
@@ -233,12 +233,12 @@
   &lt;/select>
 </pre>
 <pre class="prettyprint linenums">
-      .special {
-        font-style: italic; 
-        font-weight: bold; 
-        color:#bc0000; 
-        background:#000;
-      }
+  .special {
+    font-style: italic; 
+    font-weight: bold !important;
+    color:#bc0000 !important; 
+    background:#000;
+  }
 </pre>
 
 <p>Apply <code>.span*</code> class to the selects to set the width.</p>
