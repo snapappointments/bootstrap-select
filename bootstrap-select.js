@@ -47,12 +47,6 @@
             this.checkDisabled();
 			this.checkTabIndex();
             this.clickListener();
-            this.$element.find('optgroup').each(function() {
-                if ($(this).attr('label')) {
-                    menu.find('.opt'+$(this).index()).eq(0).before('<dt>'+$(this).attr('label')+'</dt>');
-                }
-                menu.find('.opt'+$(this).index()).eq(0).parent().prev().addClass('optgroup-div');
-            });
             if (this.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
@@ -82,6 +76,7 @@
             }
 
             this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
+            this.$element.bind('DOMNodeInserted', getSize);
         },
 
         getTemplate: function() {
@@ -103,6 +98,7 @@
 
         reloadLi: function() {
             var _li = [];
+            var _liA = [];
             var _liHtml = '';
 
             this.$newElement.find('li').remove();
@@ -111,10 +107,32 @@
                 _li.push($(this).text());
             });
 
+            this.$element.find('option').each(function() {
+                if ($(this).parent().is('optgroup')) {
+                    if ($(this).index() == 0) {
+                        if ($(this)[0].index != 0) {
+                            _liA.push(
+                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        } else {
+                            _liA.push(
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        }
+                    } else {
+                         _liA.push('<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>');
+                    }
+                } else {
+                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+                }
+            });
+
             if(_li.length > 0) {
                 for (var i = 0; i < _li.length; i++) {
                     this.$newElement.find('ul').append(
-                        '<li rel=' + i + '><a tabindex="-1" href="#">' + _li[i] + '</a></li>'
+                        '<li rel=' + i + '>' + _liA[i] + '</li>'
                     );
                 }
             }
@@ -125,7 +143,6 @@
             var _li = [];
             var _liA = [];
             var _liHtml = '';
-            var opt_index = null;
             var _this = this;
             var _selected_index = this.$element[0].selectedIndex ? this.$element[0].selectedIndex : 0;
 
@@ -135,12 +152,21 @@
 
             this.$element.find('option').each(function() {
                 if ($(this).parent().is('optgroup')) {
-                    opt_index = String($(this).parent().index());
-                    var optgroup = $(this).parent();
-                    for (var i = 0; i < optgroup.length; i++) {
-                        _liA.push('<a class="opt'+opt_index[i]+'" tabindex="-1" href="#">'+$(this).text()+'</a>');
+                    if ($(this).index() == 0) {
+                        if ($(this)[0].index != 0) {
+                            _liA.push(
+                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        } else {
+                            _liA.push(
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        }
+                    } else {
+                         _liA.push('<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>');
                     }
-
                 } else {
                     _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
                 }
