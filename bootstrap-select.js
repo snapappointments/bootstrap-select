@@ -69,6 +69,7 @@
                 getSize();
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
+                this.$element.bind('DOMNodeInserted', getSize);
             } else if (this.size && this.size != 'auto' && menu.find('ul li').length > this.size) {
                 menuHeight = liHeight*this.size;
                 if (this.size == 1) {menuHeight = menuHeight + 8}
@@ -76,7 +77,6 @@
             }
 
             this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
-            this.$element.bind('DOMNodeInserted', getSize);
         },
 
         getTemplate: function() {
