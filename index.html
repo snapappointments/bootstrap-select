@@ -40,6 +40,12 @@
         line-height: 20px;
         text-shadow: 0 1px 0 #fff;
       }
+      .special {
+        font-style: italic; 
+        font-weight: bold; 
+        color:#bc0000; 
+        background:#000;
+      }
     </style>
 
     <title>Bootstrap-select</title>
@@ -189,6 +195,50 @@
   &lt;select class="selectpicker" data-style="btn-inverse"&gt;
     ...
   &lt;/select>
+</pre>
+
+<p>You can also use the <code>title</code> tag as an alternative to display when the option is selected:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+    <option title="Combo 1">Hot Dog, Fries and a Soda</option>
+    <option title="Combo 2">Burger, Shake and a Smile</option>
+    <option title="Combo 3">Sugar, Spice and all things nice</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;option title="Combo 1"&gt;Hot Dog, Fries and a Soda&lt;/option&gt;
+    &lt;option title="Combo 2"&gt;Burger, Shake and a Smile&lt;/option&gt;
+    &lt;option title="Combo 3"&gt;Sugar, Spice and all things nice&lt;/option&gt;
+  &lt;/select>
+</pre>
+
+<p>Classes added to the options are transferred to the select:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option>Mustard</option>
+      <option class="special">Ketchup</option>
+      <option>Relish</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;option&gt;Mustard&lt;/option&gt;
+    &lt;option class="special"&gt;Ketchup&lt;/option&gt;
+    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+<pre class="prettyprint linenums">
+      .special {
+        font-style: italic; 
+        font-weight: bold; 
+        color:#bc0000; 
+        background:#000;
+      }
 </pre>
 
 <p>Apply <code>.span*</code> class to the selects to set the width.</p>
