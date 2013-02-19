@@ -50,8 +50,8 @@
 	padding:3px 20px; 
 	cursor:default;
 }
-.bootstrap-select.btn-group .dropdown-menu li a[class^="opt"] {padding-left:35px;}
-.bootstrap-select.btn-group .dropdown-menu ul .optgroup-div {border-bottom:1px solid #e5e5e5;}
+.bootstrap-select.btn-group .dropdown-menu li a.opt {padding-left:35px;}
+.bootstrap-select.btn-group .dropdown-menu ul .optgroup-div {border-top:1px solid #e5e5e5;}
 
 /*issues for bootstrap 2.3*/
 .bootstrap-select.btn-group .dropdown-menu li > a {
