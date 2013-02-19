@@ -6,7 +6,7 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        var button = null;
+        this.button = null;
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
         this.style = this.options.style;
         this.size = this.options.size;
@@ -33,9 +33,9 @@
             var size = 0;
             var menuHeight = 0;
             var selectHeight = this.$newElement.outerHeight();
-            button = this.$newElement.find('> button');
+            this.button = this.$newElement.find('> button');
             if (id !== undefined) {
-                button.attr('id', id);
+                this.button.attr('id', id);
                 $('label[for="' + id + '"]').click(function(){ select.find('button#'+id).focus(); })
             }
             for (var i = 0; i < classList.length; i++) {
@@ -43,15 +43,10 @@
                     this.$newElement.addClass(classList[i]);
                 }
             }
-            button.addClass(this.style);
+            this.button.addClass(this.style);
             this.checkDisabled();
+            this.checkTabIndex();
             this.clickListener();
-            this.$element.find('optgroup').each(function() {
-                if ($(this).attr('label')) {
-                    menu.find('.opt'+$(this).index()).eq(0).before('<dt>'+$(this).attr('label')+'</dt>');
-                }
-                menu.find('.opt'+$(this).index()).eq(0).parent().prev().addClass('optgroup-div');
-            });
             if (this.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
@@ -79,8 +74,9 @@
                 if (this.size == 1) {menuHeight = menuHeight + 8}
                 menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
-            this.$newElement.find('ul').bind('DOMNodeInserted',
-            $.proxy(this.clickListener, this));
+
+            this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
+            this.$element.bind('DOMNodeInserted', getSize);
         },
 
         getTemplate: function() {
@@ -100,27 +96,77 @@
             return template;
         },
 
+        reloadLi: function() {
+            var _li = [];
+            var _liA = [];
+            var _liHtml = '';
+
+            this.$newElement.find('li').remove();
+
+            this.$element.find('option').each(function(){
+                _li.push($(this).text());
+            });
+
+            this.$element.find('option').each(function(){
+                if ($(this).parent().is('optgroup')) {
+                    if ($(this).index() == 0) {
+                        if ($(this)[0].index != 0) {
+                            _liA.push(
+                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        } else {
+                            _liA.push(
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        }
+                    } else {
+                         _liA.push('<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>');
+                    }
+                } else {
+                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+                }
+            });
+
+            if(_li.length > 0) {
+                for (var i = 0; i < _li.length; i++) {
+                    this.$newElement.find('ul').append(
+                        '<li rel=' + i + '>' + _liA[i] + '</li>'
+                    );
+                }
+            }
+        },
+
         createLi: function(template) {
 
             var _li = [];
             var _liA = [];
             var _liHtml = '';
-            var opt_index = null;
             var _this = this;
             var _selected_index = this.$element[0].selectedIndex ? this.$element[0].selectedIndex : 0;
-            
+
             this.$element.find('option').each(function(){
                 _li.push($(this).text());
             });
 
-            this.$element.find('option').each(function() {
+            this.$element.find('option').each(function(){
                 if ($(this).parent().is('optgroup')) {
-                    opt_index = String($(this).parent().index());
-                    var optgroup = $(this).parent();
-                    for (var i = 0; i < optgroup.length; i++) {
-                        _liA.push('<a class="opt'+opt_index[i]+'" tabindex="-1" href="#">'+$(this).text()+'</a>');
+                    if ($(this).index() == 0) {
+                        if ($(this)[0].index != 0) {
+                            _liA.push(
+                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        } else {
+                            _liA.push(
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                );
+                        }
+                    } else {
+                         _liA.push('<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>');
                     }
-
                 } else {
                     _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
                 }
@@ -142,28 +188,36 @@
 
         checkDisabled: function() {
             if (this.$element.is(':disabled')) {
-                button.addClass('disabled');
-                button.click(function(e) {
+                this.button.addClass('disabled');
+                this.button.click(function(e) {
                     e.preventDefault();
                 });
             }
         },
+        
+        checkTabIndex: function() {
+            if (this.$element.is('[tabindex]')) {
+                var tabindex = this.$element.attr("tabindex");
+                this.button.attr('tabindex', tabindex);
+            }
+        },
 
         clickListener: function() {
-            var _this = this;
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             $('.dropdown-menu').find('li dt').on('click', function(e) {
                 e.stopPropagation();
             });
-            this.$newElement.find('li a').on('click', function(e) {
+            $(this.$newElement).on('click', 'li a', function(e){
                 e.preventDefault();
-                var selected = $(this).parent().index();
-                var $this = $(this).parent(),
-                    rel = $this.attr('rel'),
+                var selected = $(this).parent().index(),
+                    $this = $(this).parent(),
                     $select = $this.parents('.bootstrap-select');
 
-                if (_this.$element.not(':disabled')){
-                    $select.prev('select').find('option').eq(selected).prop('selected',true);
+                if ($select.prev('select').not(':disabled')){
+
+                    $select.prev('select').find('option').removeAttr('selected');
+
+                    $select.prev('select').find('option').eq(selected).prop('selected', true).attr('selected', 'selected');
                     $select.find('.filter-option').html($this.text());
                     $select.find('button').focus();
 
@@ -173,8 +227,11 @@
 
             });
             this.$element.on('change', function(e) {
-                var selected = $(this).find('option:selected').text();
-                $(this).next('.bootstrap-select').find('.filter-option').html(selected);
+                if($(this).find('option:selected').attr('title')!=undefined){
+                    $(this).next('.bootstrap-select').find('.filter-option').html($(this).find('option:selected').attr('title'));
+                }else{
+                    $(this).next('.bootstrap-select').find('.filter-option').html($(this).find('option:selected').text());
+                }
             });
         }
 
@@ -193,7 +250,7 @@
             }
         });
     };
-    
+
     $.fn.selectpicker.defaults = {
         style: null,
         size: 'auto'
