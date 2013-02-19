@@ -107,25 +107,25 @@
                 _li.push($(this).text());
             });
 
-            this.$element.find('option').each(function(){
+            this.$element.find('option').each(function() {
                 if ($(this).parent().is('optgroup')) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                     }
                 } else {
-                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" class="'+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                 }
             });
 
@@ -150,25 +150,25 @@
                 _li.push($(this).text());
             });
 
-            this.$element.find('option').each(function(){
+            this.$element.find('option').each(function() {
                 if ($(this).parent().is('optgroup')) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" href="#" class="opt">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                     }
                 } else {
-                    _liA.push('<a tabindex="-1" href="#">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" class="'+ $(this).attr("class")+'">'+$(this).text()+'</a>');
                 }
             });
 
