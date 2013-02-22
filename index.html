@@ -1,38 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="A custom select for bootstrap using button dropdown." />
-    <meta name="keywords" content="boostrap-select, twitter bootstrap select, bootstrap select, twitter bootstrap, custom select bootstrap, bootstrap select dropdown, jquery select plugin bootstrap, jquery select plugin" />
+    <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown; originally by Silvio Moreto" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap.css">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
+    <style type="text/css">
+      .com { color: #93a1a1; }
+      .lit { color: #195f91; }
+      .pun, .opn, .clo { color: #93a1a1; }
+      .fun { color: #dc322f; }
+      .str, .atv { color: #D14; }
+      .kwd, .prettyprint .tag { color: #1e347b; }
+      .typ, .atn, .dec, .var { color: teal; }
+      .pln { color: #48484c; }
 
+      .prettyprint {
+        padding: 8px;
+        background-color: #f7f7f9;
+        border: 1px solid #e1e1e8;
+      }
+      .prettyprint.linenums {
+        -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+           -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+                box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+      }
 
-    <title>Custom select for Bootstrap, from Twitter</title>
-    <!-- javascript/jquery-1.7.2.min.js -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="javascripts/bootstrap.js"></script>
-    <script src="javascripts/bootstrap-select.js"></script>
+      /* Specify class=linenums on a pre to get line numbering */
+      ol.linenums {
+        margin: 0 0 0 33px; /* IE indents via margin-left */
+      }
+      ol.linenums li {
+        padding-left: 12px;
+        color: #bebec5;
+        line-height: 20px;
+        text-shadow: 0 1px 0 #fff;
+      }
+      .special {
+        font-style: italic;
+        font-weight: bold !important;
+        color:#bc0000 !important;
+        background:#000;
+      }
+    </style>
 
-    <script type="text/javascript">
-      window.onload=function(){
-        $('.selectpicker').selectpicker();
-
-        $('.selectpicker-info').selectpicker({
-          style: 'btn-success'
-        });
-        $('.selectpicker-warning').selectpicker({
-          style: 'btn-danger'
-        });
-        $('.selectpicker-inverse').selectpicker({
-          style: 'btn-inverse'
-        });
-      };
-    </script>
+    <title>Bootstrap-select</title>
   </head>
 
   <body>
@@ -57,105 +73,377 @@
       <section id="main_content" class="inner">
         <h1>bootstrap-select</h1>
 
-<p>A custom select for <a href="https://github.com/twitter" class="user-mention">@twitter</a> bootstrap using button dropdown; originally by Silvio Moreto</p>
-
+<p>A custom select for <a href="https://github.com/twitter" class="user-mention">@twitter</a> Bootstrap using button dropdown; originally by Silvio Moreto.</p>
 <h2>Example</h2>
+<div class="bs-docs-example">
+  <p>Make this:</p>
 
-<p>Make this:</p>
+  <select>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
 
-<select>
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
+  <p>Become this:</p>
 
-<p>Become this:</p>
+  <select class="selectpicker">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
+</div>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;option&gt;Mustard&lt;/option&gt;
+    &lt;option&gt;Ketchup&lt;/option&gt;
+    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
 
-<select class="selectpicker" disabled>
-    <option>Banana</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
+<p>It also works with option groups:</p>
 
-<p>You can also set different bootstrap class:</p>
+<div class="bs-docs-example">
+  <select class="selectpicker">
+    <optgroup label="Picnic">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </optgroup>
+    <optgroup label="Camping">
+      <option>Tent</option>
+      <option>Flashlight</option>
+      <option>Toilet Paper</option>
+    </optgroup>
+  </select>
+</div>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;optgroup label="Picnic"&gt;
+      &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Camping"&gt;
+      &lt;option&gt;Tent&lt;/option&gt;
+      &lt;option&gt;Flashlight&lt;/option&gt;
+      &lt;option&gt;Toilet Paper&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select>
+</pre>
 
-<select class="selectpicker-info">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
+<p>You can set different Bootstrap classes via the <code>data-style</code> attribute:</p>
 
-<select class="selectpicker-warning">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
+<div class="bs-docs-example">
+  <select class="selectpicker" data-style="btn-primary">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
 
-<select class="selectpicker-inverse">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Barbecue</option>
-</select>
+  <select class="selectpicker" data-style="btn-info">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
 
-<h2>Observation</h2>
+  <select class="selectpicker" data-style="btn-success">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
 
-<p>To properly work on some browser, you need to add a <code>.clearfix</code> class to your css.</p>
+  <select class="selectpicker" data-style="btn-warning">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
+
+  <select class="selectpicker" data-style="btn-danger">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
+
+  <select class="selectpicker" data-style="btn-inverse">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" data-style="btn-primary"&gt;
+    ...
+  &lt;/select>
+
+  &lt;select class="selectpicker" data-style="btn-info"&gt;
+    ...
+  &lt;/select>
+
+  &lt;select class="selectpicker" data-style="btn-success"&gt;
+    ...
+  &lt;/select>
+
+  &lt;select class="selectpicker" data-style="btn-warning"&gt;
+    ...
+  &lt;/select>
+
+  &lt;select class="selectpicker" data-style="btn-danger"&gt;
+    ...
+  &lt;/select>
+
+  &lt;select class="selectpicker" data-style="btn-inverse"&gt;
+    ...
+  &lt;/select>
+</pre>
+
+<p>You can also use the <code>title</code> tag as an alternative to display when the option is selected:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+    <option title="Combo 1">Hot Dog, Fries and a Soda</option>
+    <option title="Combo 2">Burger, Shake and a Smile</option>
+    <option title="Combo 3">Sugar, Spice and all things nice</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;option title="Combo 1"&gt;Hot Dog, Fries and a Soda&lt;/option&gt;
+    &lt;option title="Combo 2"&gt;Burger, Shake and a Smile&lt;/option&gt;
+    &lt;option title="Combo 3"&gt;Sugar, Spice and all things nice&lt;/option&gt;
+  &lt;/select>
+</pre>
+
+<p>Classes added to the options are transferred to the select:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option>Mustard</option>
+      <option class="special">Ketchup</option>
+      <option>Relish</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;option&gt;Mustard&lt;/option&gt;
+    &lt;option class="special"&gt;Ketchup&lt;/option&gt;
+    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+<pre class="prettyprint linenums">
+  .special {
+    font-style: italic;
+    font-weight: bold !important;
+    color:#bc0000 !important;
+    background:#000;
+  }
+</pre>
+
+<p>Apply <code>.span*</code> class to the selects to set the width.</p>
+
+<div class="bs-docs-example">
+  <div class="row-fluid">
+    <select class="selectpicker span3">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+    <select class="selectpicker span8">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="row-fluid">
+    <select class="selectpicker span4">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+    <select class="selectpicker span7">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="row-fluid">
+    <select class="selectpicker span5">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+    <select class="selectpicker span6">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;div class="row-fluid"&gt;
+    &lt;select class="selectpicker span2"&gt;
+      ...
+    &lt;/select&gt;
+  &lt;/div&gt;
+</pre>
+
+<p>Add the <code>.disabled</code> attribute to the select to apply the <code>disabled</code> class.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" disabled>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" disabled&gt;
+    &lt;option&gt;Mustard&lt;/option&gt;
+    &lt;option&gt;Ketchup&lt;/option&gt;
+    &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+
+<p>The <code>size</code> option is set to <code>'auto'</code> by default. When <code>size</code> is set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off. Set <code>size</code> to <code>false</code> to always show all items. The size of the menu can also be specifed using the <code>data-size</code> attribute.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    ...
+  &lt;/select>
+<br>
+Note: this is the same as:<br>
+  &lt;select class="selectpicker" data-size="auto"&gt;
+    ...
+  &lt;/select>
+</pre>
+
+<p>Specify a number for <code>data-size</code> to choose the maximum number of items to show in the menu.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" data-size="5">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" data-size="5"&gt;
+    ...
+  &lt;/select>
+</pre>
+
+<p>Make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker dropup">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker dropup"&gt;
+    ...
+  &lt;/select>
+</pre>
 
 <h1>Usage</h1>
 
-<p>Create your <code>&lt;select&gt;</code> and add to them the class <code>.selectpicker</code>, like example below:</p>
+<p>Create your <code>&lt;select&gt;</code> with the <code>.selectpicker</code> class.</p>
 
-<pre><code>    &lt;select class="selectpicker"&gt;
-      &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Barbecue&lt;/option&gt;
-    &lt;/select&gt;
-</code></pre>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;option&gt;Mustard&lt;/select&gt;
+    &lt;option&gt;Ketchup&lt;/select&gt;
+    &lt;option&gt;Relish&lt;/select&gt;
+  &lt;/select&gt;
+</pre>
 
-<p>In your javascript, just add the line:</p>
+<p>Enable Bootstrap-Select via JavaScript:</p>
 
-<pre><code>    $('.selectpicker').selectpicker();
-</code></pre>
+<pre class="prettyprint linenums">
+  $('.selectpicker').selectpicker();
+</pre>
 
-<p>You can also pass a button bootstrap class to your select using the option <code>btnStyle</code>, like:</p>
+<p>Options can be passed via data attributes or JavaScript.</p>
 
-<pre><code>    $('.selectpicker').selectpicker({
-      btnStyle: 'btn-info'
-    });
-</code></pre>
+<pre class="prettyprint linenums">
+  $('.selectpicker').selectpicker({
+      style: 'btn-info',
+      size: 4
+  });
+</pre>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Bootstrap-select maintained by <a href="https://github.com/silviomoreto">silviomoreto</a></p>
+        <p class="copyright">Bootstrap-select maintained by <a href="https://github.com/caseyjhol">caseyjhol</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-        <!-- Place this tag where you want the +1 button to render. -->
-        <div class="g-plusone" data-size="small"></div>
-
-        <!-- Place this tag after the last +1 button tag. -->
-        <script type="text/javascript">
-          (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/plusone.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-          })();
-        </script>
       </footer>
     </div>
 
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-35848102-1']);
-    _gaq.push(['_trackPageview']);
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="javascripts/prettify.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script src="javascripts/bootstrap-select.js"></script>
+    <script type="text/javascript">
+      window.onload=function(){
+      $('.selectpicker').selectpicker();
+      prettyPrint();
+      };
+    </script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-35848102-1']);
+        _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+    </script>
   </body>
 </html>
