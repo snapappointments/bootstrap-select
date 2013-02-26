@@ -27,8 +27,9 @@
             this.$newElement = this.$element.next('.bootstrap-select');
             var select = this.$newElement;
             var menu = this.$newElement.find('.dropdown-menu');
-            var menuA = this.$newElement.find('.dropdown-menu ul li > a');
+            var menuA = menu.find('li > a');
             var liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
+            var divHeight = menu.find('li .divider').outerHeight(true);
             var selectOffset_top = this.$newElement.offset().top;
             var size = 0;
             var menuHeight = 0;
@@ -45,35 +46,30 @@
             }
             this.button.addClass(this.style);
             this.checkDisabled();
-    		this.checkTabIndex();
+			this.checkTabIndex();
             this.clickListener();
+            var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
             if (this.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
-                    var menuExtras = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width')) + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
+                    var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
-                    if (!select.hasClass('dropup')) {
-                    size = Math.floor(selectOffset_bot/liHeight);
-                    } else {
-                    size = Math.floor((selectOffset_top_scroll - menuExtras)/liHeight);
+                    menuHeight = selectOffset_bot;
+                    if (select.hasClass('dropup')) {
+                        menuHeight = selectOffset_top_scroll - menuExtras;
                     }
-                    if (size < 4) {size = 3};
-                    menuHeight = liHeight*size;
-                    if (menu.find('ul li').length + menu.find('dt').length > size) {
-                        menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
-                    } else {
-                        menu.find('ul').css({'max-height' : 'none', 'overflow-y' : 'auto'});
-                    }
+                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : liHeight*3 + 'px'});
             }
                 getSize();
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
                 this.$element.bind('DOMNodeInserted', getSize);
-            } else if (this.size && this.size != 'auto' && menu.find('ul li').length > this.size) {
-                menuHeight = liHeight*this.size;
-                if (this.size == 1) {menuHeight = menuHeight + 8}
-                menu.find('ul').css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
+            } else if (this.size && this.size != 'auto' && menu.find('li').length > this.size) {
+                var optIndex = menu.find("li > *").filter(':not(.div-contain)').slice(0,this.size).last().parent().index();
+                var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
+                menuHeight = liHeight*this.size + divLength*divHeight + menuPadding;
+                menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
 
             this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
@@ -86,11 +82,9 @@
                         "<span class='filter-option pull-left'>__SELECTED_OPTION</span>&nbsp;" +
                         "<span class='caret'></span>" +
                     "</button>" +
-                    "<div class='dropdown-menu' role='menu'>" +
-                        "<ul>" +
-                            "__ADD_LI" +
-                        "</ul>" +
-                    "</div>" +
+                    "<ul class='dropdown-menu' role='menu'>" +
+                        "__ADD_LI" +
+                    "</ul>" +
                 "</div>";
 
             return template;
@@ -108,33 +102,51 @@
             });
 
             this.$element.find('option').each(function() {
-                if ($(this).parent().is('optgroup')) {
+                var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
+                if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
-                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
+                                '<div class="div-contain"><div class="divider"></div></div>'+
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>');
                     }
+                } else if ($(this).data('divider') == true) {
+                    _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" class="'+ $(this).attr("class")+'">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+'</a>');
                 }
             });
 
             if(_li.length > 0) {
                 for (var i = 0; i < _li.length; i++) {
+                    var disabled = this.$element.find('option').eq(i).is(':disabled') ? 'class="disabled"' : '';
                     this.$newElement.find('ul').append(
-                        '<li rel=' + i + '>' + _liA[i] + '</li>'
+                        '<li rel=' + i + ' '+ disabled +'>' + _liA[i] + '</li>'
                     );
                 }
+            }
+
+            this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $select = $(this).parent().parents('.bootstrap-select');
+                $select.find('button').focus();
+            });
+
+            if(this.$element.find('option:selected').attr('title')!=undefined){
+                this.$newElement.find('.filter-option').html(this.$element.find('option:selected').attr('title'));
+            }else{
+                this.$newElement.find('.filter-option').html(this.$element.find('option:selected').text());
             }
         },
 
@@ -151,31 +163,36 @@
             });
 
             this.$element.find('option').each(function() {
-                if ($(this).parent().is('optgroup')) {
+                var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
+                if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
-                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
+                                '<div class="div-contain"><div class="divider"></div></div>'+
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" class="opt '+ $(this).attr("class")+'">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>');
                     }
+                } else if ($(this).data('divider') == true) {
+                    _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" class="'+ $(this).attr("class")+'">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+'</a>');
                 }
             });
 
             if (_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    _liHtml += "<li rel=" + i + ">" + _liA[i] + "</li>";
+                    var disabled = this.$element.find('option').eq(i).is(':disabled') ? 'class="disabled"' : '';
+                    _liHtml += "<li rel=" + i + " "+ disabled +">" + _liA[i] + "</li>";
                 }
             }
 
@@ -204,10 +221,13 @@
 
         clickListener: function() {
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-            $('.dropdown-menu').find('li dt').on('click', function(e) {
+            this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
+                $select = $(this).parent().parents('.bootstrap-select');
+                $select.find('button').focus();
             });
-            $(this.$newElement).on('click', 'li a', function(e){
+            this.$newElement.on('click', 'li a', function(e){
                 e.preventDefault();
                 var selected = $(this).parent().index(),
                     $this = $(this).parent(),
