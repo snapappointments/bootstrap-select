@@ -5,7 +5,7 @@ A custom select for @twitter bootstrap using button dropdown, designed to behave
 
 ## Demo
 
-See an  example [here](http://caseyjhol.github.com/bootstrap-select/), and [here](http://silviomoreto.github.com/bootstrap-select/),
+See an  example [here](http://silviomoreto.github.com/bootstrap-select/).
 
 ## Authors
 
