@@ -137,6 +137,7 @@
             }
 
             this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
                 $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
@@ -221,6 +222,7 @@
         clickListener: function() {
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
                 $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
