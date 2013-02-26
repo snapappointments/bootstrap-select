@@ -371,6 +371,30 @@ Note: this is the same as:<br>
   &lt;/select>
 </pre>
 
+<p>Add <code>data-divider="true"</code> to an option to insert a divider.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option data-divider="true"></option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    ...
+    &lt;option data-divider="true"&gt;&lt;/option>
+    ...
+  &lt;/select>
+</pre>
+
 <p>Make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
 
 <div class="bs-docs-example">
