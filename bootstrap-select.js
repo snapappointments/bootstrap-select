@@ -27,8 +27,9 @@
             this.$newElement = this.$element.next('.bootstrap-select');
             var select = this.$newElement;
             var menu = this.$newElement.find('.dropdown-menu');
-            var menuA = this.$newElement.find('.dropdown-menu li > a');
+            var menuA = menu.find('li > a');
             var liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
+            var divHeight = menu.find('li .divider').outerHeight(true);
             var selectOffset_top = this.$newElement.offset().top;
             var size = 0;
             var menuHeight = 0;
@@ -54,26 +55,20 @@
                     var windowHeight = window.innerHeight;
                     var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
-                    if (!select.hasClass('dropup')) {
-                    size = Math.floor(selectOffset_bot/liHeight);
-                    } else {
-                    size = Math.floor((selectOffset_top_scroll - menuExtras)/liHeight);
+                    menuHeight = selectOffset_bot;
+                    if (select.hasClass('dropup')) {
+                        menuHeight = selectOffset_top_scroll - menuExtras;
                     }
-                    if (size < 4) {size = 3};
-                    menuHeight = liHeight*size + menuPadding;
-                    if (menu.find('li').length + menu.find('dt').length > size) {
-                        menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
-                    } else {
-                        menu.css({'max-height' : 'none', 'overflow-y' : 'auto'});
-                    }
+                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : liHeight*3 + 'px'});
             }
                 getSize();
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
                 this.$element.bind('DOMNodeInserted', getSize);
             } else if (this.size && this.size != 'auto' && menu.find('li').length > this.size) {
-                menuHeight = liHeight*this.size + menuPadding;
-                if (this.size == 1) {menuHeight = menuHeight + 8}
+                var optIndex = menu.find("li > *").filter(':not(.div-contain)').slice(0,this.size).last().parent().index();
+                var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
+                menuHeight = liHeight*this.size + divLength*divHeight + menuPadding;
                 menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
 
@@ -108,11 +103,12 @@
 
             this.$element.find('option').each(function() {
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
-                if ($(this).parent().is('optgroup')) {
+                if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
-                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
+                                '<div class="div-contain"><div class="divider"></div></div>'+
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
                                 '<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         } else {
@@ -124,6 +120,8 @@
                     } else {
                          _liA.push('<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>');
                     }
+                } else if ($(this).data('divider') == true) {
+                    _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
                     _liA.push('<a tabindex="-1" class="'+optionClass+'">'+$(this).text()+'</a>');
                 }
@@ -138,16 +136,17 @@
                 }
             }
 
-            this.$newElement.find('li dt').on('click', function(e) {
+            this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
                 e.stopPropagation();
                 $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
             });
-            this.$newElement.find('li.disabled a').on('click', function(e) {
-                e.stopPropagation();
-                $select = $(this).parent().parents('.bootstrap-select');
-                $select.find('button').focus();
-            });
+
+            if(this.$element.find('option:selected').attr('title')!=undefined){
+                this.$newElement.find('.filter-option').html(this.$element.find('option:selected').attr('title'));
+            }else{
+                this.$newElement.find('.filter-option').html(this.$element.find('option:selected').text());
+            }
         },
 
         createLi: function(template) {
@@ -164,11 +163,12 @@
 
             this.$element.find('option').each(function() {
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
-                if ($(this).parent().is('optgroup')) {
+                if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
-                                '<dt class="optgroup-div">'+$(this).parent().attr('label')+'</dt>'+
+                                '<div class="div-contain"><div class="divider"></div></div>'+
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
                                 '<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         } else {
@@ -180,6 +180,8 @@
                     } else {
                          _liA.push('<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>');
                     }
+                } else if ($(this).data('divider') == true) {
+                    _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
                     _liA.push('<a tabindex="-1" class="'+optionClass+'">'+$(this).text()+'</a>');
                 }
@@ -218,12 +220,7 @@
 
         clickListener: function() {
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-            this.$newElement.find('li dt').on('click', function(e) {
-                e.stopPropagation();
-                $select = $(this).parent().parents('.bootstrap-select');
-                $select.find('button').focus();
-            });
-            this.$newElement.find('li.disabled a').on('click', function(e) {
+            this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
                 e.stopPropagation();
                 $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
