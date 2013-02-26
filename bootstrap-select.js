@@ -109,21 +109,21 @@
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>');
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" class="'+optionClass+'">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+'</a>');
                 }
             });
 
@@ -169,21 +169,21 @@
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" class="opt '+optionClass+'">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>');
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" class="'+optionClass+'">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+'</a>');
                 }
             });
 
