@@ -413,6 +413,30 @@ Note: this is the same as:<br>
   &lt;/select>
 </pre>
 
+<p id="data-divider">Add subtext to an option or optgroup with the <code>data-subtext</code> attribute:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option data-subtext="French's">Mustard</option>
+      <option data-subtext="Heinz">Ketchup</option>
+      <option data-subtext="Sweet">Relish</option>
+      <option data-subtext="Miracle Whip">Mayonnaise</option>
+      <option data-divider="true"></option>
+      <option data-subtext="Honey">Barbecue Sauce</option>
+      <option data-subtext="Ranch">Salad Dressing</option>
+      <option data-subtext="Sweet & Spicy">Tabasco</option>
+      <option data-subtext="Chunky">Salsa</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    ...
+    &lt;option data-subtext="Heinz"&gt;&lt;/option>
+    ...
+  &lt;/select>
+</pre>
+
 <p id="dropup">Make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
 
 <div class="bs-docs-example">
