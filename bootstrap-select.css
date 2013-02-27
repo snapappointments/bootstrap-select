@@ -48,3 +48,6 @@
 .bootstrap-select.btn-group .div-contain {overflow:hidden;}
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {padding-left:35px;}
 .bootstrap-select.btn-group .dropdown-menu li > a {min-height:20px;}
+.bootstrap-select.btn-group .dropdown-menu li small {padding-left:0.5em;}
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small {color: #64b1d8; color:rgba(255,255,255,0.4);}
+.bootstrap-select.btn-group .dropdown-menu li > dt small {font-weight:normal;}
