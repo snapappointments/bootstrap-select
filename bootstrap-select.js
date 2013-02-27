@@ -103,33 +103,35 @@
 
             this.$element.find('option').each(function() {
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
+                var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
+                var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
                 if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
                                 );
                         } else {
                             _liA.push(
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>');
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+subtext+'</a>');
                 }
             });
 
             if(_li.length > 0) {
                 for (var i = 0; i < _li.length; i++) {
-                    var disabled = this.$element.find('option').eq(i).is(':disabled') ? 'class="disabled"' : '';
+                    var disabled = this.$element.find('option').eq(i).is(':disabled') || this.$element.find('option').eq(i).parent().is(':disabled') ? 'class="disabled"' : '';
                     this.$newElement.find('ul').append(
                         '<li rel=' + i + ' '+ disabled +'>' + _liA[i] + '</li>'
                     );
@@ -164,36 +166,40 @@
 
             this.$element.find('option').each(function() {
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
+                var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
+                var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
                 if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
                                 );
                         } else {
                             _liA.push(
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>'
+                                '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>');
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+subtext+'</a>');
                 }
             });
 
             if (_li.length > 0) {
                 template = template.replace('__SELECTED_OPTION', _li[_selected_index]);
                 for (var i = 0; i < _li.length; i++) {
-                    var disabled = this.$element.find('option').eq(i).is(':disabled') ? 'class="disabled"' : '';
+                    var disabled = this.$element.find('option').eq(i).is(':disabled') || this.$element.find('option').eq(i).parent().is(':disabled') ? 'class="disabled"' : '';
                     _liHtml += "<li rel=" + i + " "+ disabled +">" + _liA[i] + "</li>";
                 }
+            } else {
+                template = template.replace('__SELECTED_OPTION', '');
             }
 
             this.$element.find('option').eq(_selected_index).prop('selected',true);
