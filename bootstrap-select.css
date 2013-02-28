@@ -51,3 +51,11 @@
 .bootstrap-select.btn-group .dropdown-menu li small {padding-left:0.5em;}
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small {color: #64b1d8; color:rgba(255,255,255,0.4);}
 .bootstrap-select.btn-group .dropdown-menu li > dt small {font-weight:normal;}
+
+.bootstrap-select.btn-group .dropdown-menu li > a[selected="selected"]{
+	text-decoration: none;
+	background-repeat: repeat-x;
+	background-color: #0081C2;
+	background-image: linear-gradient(to bottom, #0088CC, #0077B3);
+	color: #FFFFFF;
+}

@@ -103,6 +103,7 @@
 
             this.$element.find('option').each(function() {
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
+                var selected = ($(this).attr("selected") == "selected") ? 'selected="selected"' : '';
                 var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
                 var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
                 if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
@@ -111,21 +112,21 @@
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>');
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+subtext+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>');
                 }
             });
 
@@ -166,6 +167,7 @@
 
             this.$element.find('option').each(function() {
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
+                var selected = ($(this).attr("selected") == "selected") ? 'selected="selected"' : '';
                 var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
                 var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
                 if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
@@ -174,21 +176,21 @@
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>'
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+$(this).parent().attr('label')+labelSubtext+'</dt>'+
-                                '<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>'
+                                '<a tabindex="-1" href="#" class="opt '+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>'
                                 );
                         }
                     } else {
-                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'">'+$(this).text()+subtext+'</a>');
+                         _liA.push('<a tabindex="-1" href="#" class="opt '+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>');
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'">'+$(this).text()+subtext+'</a>');
+                    _liA.push('<a tabindex="-1" href="#" class="'+optionClass+'" '+selected+'>'+$(this).text()+subtext+'</a>');
                 }
             });
 
@@ -258,6 +260,14 @@
                 }else{
                     $(this).next('.bootstrap-select').find('.filter-option').html($(this).find('option:selected').text());
                 }
+                
+                var list = $(this).next('div.bootstrap-select').find('ul.dropdown-menu');
+                list.find('[selected="selected"]').removeAttr('selected');
+                $(this).find('option').each(function(i, el){
+                	if ($(this).attr('selected')){
+                		list.find('[rel='+i+'] a').attr('selected', 'selected');
+                	}
+                });
             });
         }
 
