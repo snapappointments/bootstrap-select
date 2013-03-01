@@ -10,7 +10,10 @@
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
         this.style = this.options.style;
         this.size = this.options.size;
+        this.title = this.options.title;
+        this.notSelectedText = this.options.notSelectedText;
         this.selectedText = this.options.selectedText;
+        //Expose public methods
         this.val = Selectpicker.prototype.val;
         this.render = Selectpicker.prototype.render;
         this.init();
@@ -23,11 +26,12 @@
         init: function (e) {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
-            this.title = this.$element.attr('title');
+            //Favour the JS option over the attribute
+            if(this.title==null)
+                this.title = this.$element.attr('title'); 
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var id = this.$element.attr('id');
-            var newView = this.createView();
-            this.$element.after(newView);
+            this.$element.after( this.createView() );
             this.$newElement = this.$element.next('.bootstrap-select');
             var select = this.$newElement;
             var menu = this.$newElement.find('.dropdown-menu');
@@ -204,9 +208,9 @@
                 }
              }  
             
-            //If we dont have a title, then use the default
+            //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if(!title) {
-                title = _this.title;    
+                title = _this.title != undefined ? _this.title : _this.notSelectedText;    
             }
             
             this.$element.next('.bootstrap-select').find('.filter-option').html( title );
@@ -348,7 +352,9 @@
     $.fn.selectpicker.defaults = {
         style: null,
         size: 'auto',
-        selectedText : 'values'
+        title:null,
+        selectedText : 'values',
+        notSelectedText : 'Nothing selected'
     }
 
 }(window.jQuery);

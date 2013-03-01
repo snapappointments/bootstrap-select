@@ -51,3 +51,36 @@
 
 .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark { display:inline-block; }
 .bootstrap-select.btn-group .dropdown-menu li a i.check-mark { display:none; }
+
+
+
+.bootstrap-select.btn-group.show-menu-arrow .dropdown-menu {
+    overflow-y:visible !important;
+}     
+     
+.bootstrap-select.btn-group.show-menu-arrow .dropdown-menu::after {
+  position: absolute;
+  top: -6px;
+  left: auto;
+  right:10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid white;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+.bootstrap-select.btn-group.show-menu-arrow .dropdown-menu::before {
+    position: absolute;
+    top: -7px;
+    left: auto;
+    right: 9px;
+    display: inline-block;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #CCC;
+    border-left: 7px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    content: '';
+}
+
+
