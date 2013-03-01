@@ -240,7 +240,7 @@
                     $select = $this.parents('.bootstrap-select');
 
                 if ($select.prev('select').not(':disabled')){
-
+                    var oldSelected = $select.prev('select').find('option:selected').index();
                     $select.prev('select').find('option').removeAttr('selected');
 
                     $select.prev('select').find('option').eq(selected).prop('selected', true).attr('selected', 'selected');
@@ -248,7 +248,9 @@
                     $select.find('button').focus();
 
                     // Trigger select 'change'
-                    $select.prev('select').trigger('change');
+                    if (selected != oldSelected) {
+                        $select.prev('select').trigger('change');
+                    }
                 }
 
             });
