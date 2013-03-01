@@ -331,7 +331,8 @@
     $.fn.selectpicker = function(option, event) {
        //get the args of the outer function..
        var args = arguments;
-       return this.each(function () {
+       var value;
+       var chain = this.each(function () {
             var $this = $(this),
                 data = $this.data('selectpicker'),
                 options = typeof option == 'object' && option;
@@ -343,10 +344,20 @@
                 //Copy the value of option, as once we shift the arguments
                 //it also shifts the value of option.
                 property = option;
-                [].shift.apply(args);
-                data[property].apply(data, args);
+                if(data[property] instanceof Function) {
+                    [].shift.apply(args);
+                    value = data[property].apply(data, args);
+                } else {
+                    value = data[property];
+                }
             }
         });
+        
+        if(value!=undefined) {
+            return value;
+        } else {
+            return chain;
+        } 
     };
 
     $.fn.selectpicker.defaults = {
