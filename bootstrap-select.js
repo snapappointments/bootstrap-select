@@ -138,30 +138,30 @@
             });
 
             this.$element.find('option').each(function() {
+                
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
-                
-                var aTag = '<a tabindex="-1" href="#" class="opt '+optionClass+'">' +
-                                $(this).text() + 
-                                '<i class="icon-ok pull-right check-mark"></i>' + 
-                            '</a>';
-                
+               	var text =  $(this).text();
+               	
                 if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+ aTag
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+ 
+                                _this.createA(text, "opt " + optionClass )
                                 );
                         } else {
-                            _liA.push('<dt>'+$(this).parent().attr('label')+'</dt>'+ aTag);
+                            _liA.push(
+                                '<dt>'+$(this).parent().attr('label')+'</dt>'+ 
+                                _this.createA(text, "opt " + optionClass ));
                         }
                     } else {
-                         _liA.push(aTag);
+                         _liA.push( _this.createA(text, "opt " + optionClass )  );
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else {
-                    _liA.push(aTag);
+                    _liA.push( _this.createA(text, optionClass ) );
                 }
             });
                
@@ -178,6 +178,14 @@
             }
             
             return $(_liHtml);
+        },
+        
+        createA:function(test, classes) {
+         return '<a tabindex="-1" href="#" class="'+classes+'">' +
+                 	test + 
+                 '<i class="icon-ok pull-right check-mark"></i>' + 
+                 '</a>';
+                
         },
         
          render:function() {
@@ -198,7 +206,7 @@
             }).toArray();
             
             //Convert all the values into a comma delimited string    
-            var title = selectedItems.join(",");
+            var title = selectedItems.join(", ");
             
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..                    
             if(_this.multiple && _this.selectedText.indexOf('count') > -1) {
@@ -336,8 +344,13 @@
             var $this = $(this),
                 data = $this.data('selectpicker'),
                 options = typeof option == 'object' && option;
+            
             if (!data) {
-                $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
+            	$this.data('selectpicker', (data = new Selectpicker(this, options, event)));
+            } else {
+            	for(var i in option) {
+            		data[i]=option[i];
+            	}
             }
             
             if (typeof option == 'string') {
