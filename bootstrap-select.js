@@ -271,6 +271,17 @@
             if (!data) {
                 $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
             }
+            // the select picker is already initalized; kill the UI element and rebuild it.
+            // If you added disabled="disabled" attributes to any of your options in the original element, the changes will be reflected here.
+            else {
+                // remove the stuff we added
+                data.$newElement.remove();
+                // Test if the current selected item is disabled; if so, de-select it.
+                var current = data.$element.find(':selected');
+                if(current.attr('disabled') === 'disabled') current.removeAttr('selected');
+                // re-init and rebuild
+                data.init();
+            }
             if (typeof option == 'string') {
                 data[option]();
             }
