@@ -7,7 +7,7 @@
     <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown." />
     
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
     <style type="text/css">
       .com { color: #93a1a1; }
@@ -131,6 +131,24 @@
   &lt;/select>
 </pre>
 
+
+<p id="multiselect">And with multiple selects:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple>
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" multiple&gt;
+      &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+
 <p id="data-style">You can set different Bootstrap classes via the <code>data-style</code> attribute:</p>
 
 <div class="bs-docs-example">
@@ -197,7 +215,7 @@
   &lt;/select>
 </pre>
 
-<p id="titles">You can also use the <code>title</code> tag as an alternative to display when the option is selected:</p>
+<p id="titles">You can also use the <code>title</code> attribute as an alternative to display when the option is selected:</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -207,13 +225,115 @@
   </select>
 </div>
 
+<p id="selectTitles">Using the <code>title</code> attribute on a <code>multiple select</code> will show the default prompt text when nothing is selected (note: this will not work on single <code>select</code> elements as they must have a selected value):</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple title="Choose one of the following...">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+
+
 <pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    &lt;option title="Combo 1"&gt;Hot Dog, Fries and a Soda&lt;/option&gt;
-    &lt;option title="Combo 2"&gt;Burger, Shake and a Smile&lt;/option&gt;
-    &lt;option title="Combo 3"&gt;Sugar, Spice and all things nice&lt;/option&gt;
+  &lt;select class="selectpicker" multiple title='Choose one of the following...'&gt;
+     &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
   &lt;/select>
 </pre>
+
+
+<p id="selectTitles">Using the <code>data-selected-text-format</code> attribute on a <code>multiple select</code> you can specify how the selection is displayed.</p>
+<p>The supported values are:</p>
+<ul>
+<li><code>values</code> A comma delimted list of selected values. (default)</li>
+<li><code>count</code> If one item is selected, then the value is shown, if more than one is selected then the number of selected items is displayed, eg <span class="label">2 of 6 selected</span></li>
+<li><code>count > x</code> Where X is the number of items selected when the display format changes from <code>values</code> to <code>count</code></li>
+</ul>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple data-selected-text-format="count">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" multiple data-selected-text-format="count"&gt;
+     &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple data-selected-text-format="count > 3">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+    <option>Onions</option>
+  </select>
+</div>
+
+
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" multiple data-selected-text-format="count&gt3"&gt;
+     &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+      &lt;option&gt;Onions&lt;/option&gt;
+  &lt;/select>
+</pre>
+
+
+
+<p id="selectTitles">You can also show the tick icon on single <code>select</code> with the <code>show-tick</code> class:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker show-tick">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker show-tick"&gt;
+     &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+
+<p id="selectTitles">The bootstrap menu arrow can be added with the <code>show-menu-arrow</code> class:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker show-menu-arrow">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker show-menu-arrow"&gt;
+     &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+  &lt;/select>
+</pre>
+
 
 <p id="classes">Classes added to the options are transferred to the select:</p>
 
@@ -290,7 +410,7 @@
   &lt;/div&gt;
 </pre>
 
-<p id="disabled-select">Add the <code>.disabled</code> attribute to the select to apply the <code>disabled</code> class.</p>
+<p id="disabled-select">Add the <code>disabled</code> attribute to the select to apply the <code>disabled</code> class.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker" disabled>
@@ -325,6 +445,39 @@
     &lt;option&gt;Relish&lt;/option&gt;
   &lt;/select>
 </pre>
+
+<p id="disabled-option-group">Adding <code>disabled="disabled"</code> to an option group cascades to the children.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker test">
+    <optgroup label="Picnic" disabled>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </optgroup>
+    <optgroup label="Camping">
+      <option>Tent</option>
+      <option>Flashlight</option>
+      <option>Toilet Paper</option>
+    </optgroup>
+  </select>
+</div>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    &lt;optgroup label="Picnic" disabled&gt;
+      &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Camping"&gt;
+      &lt;option&gt;Tent&lt;/option&gt;
+      &lt;option&gt;Flashlight&lt;/option&gt;
+      &lt;option&gt;Toilet Paper&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select>
+</pre>
+
+
 
 <p id="size">The <code>size</code> option is set to <code>'auto'</code> by default. When <code>size</code> is set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off. Set <code>size</code> to <code>false</code> to always show all items. The size of the menu can also be specifed using the <code>data-size</code> attribute.</p>
 
@@ -453,6 +606,8 @@ Note: this is the same as:<br>
   &lt;/select>
 </pre>
 
+
+
 <h1>Usage</h1>
 
 <p>Create your <code>&lt;select&gt;</code> with the <code>.selectpicker</code> class.</p>
@@ -479,6 +634,35 @@ Note: this is the same as:<br>
       size: 4
   });
 </pre>
+
+<h1>Methods</h1>
+<h3>val()</h3>
+<p>You can set the selected value by calling the <code>val</code> method on the element.</p>
+
+<pre class="prettyprint linenums">
+  $('.selectpicker').selectpicker('val', 'Mustard');
+  $('.selectpicker').selectpicker('val', ['Mustard','Relish']);
+</pre>
+
+<p>This is different to calling <code>val()</code> directly on the <code>select</code> element. If you call <code>val()</code> on the element directly
+the bootstrap-select ui will not refresh (as the change event only fires from user interaction). If you use <code>val()</code> directly, you will need to manually re-render the ui</p>
+
+<pre class="prettyprint linenums">
+  $('.selectpicker').val('Mustard');
+  $('.selectpicker').selectpicker('render');
+  
+  //this is the equivalent of the above
+  $('.selectpicker').selectpicker('val', 'Mustard'); 
+</pre>
+
+<h3>render()</h3>
+<p>You can force a re-render of the bootstrap-select ui with the <code>render</code> method. This is useful if you programatically change any underlying values that affect the layout of the element.</p>
+
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('render');
+</pre>
+
+
       </section>
     </div>
 
@@ -490,9 +674,9 @@ Note: this is the same as:<br>
       </footer>
     </div>
     
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="javascripts/prettify.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
     <script src="javascripts/bootstrap-select.js"></script>
     <script type="text/javascript">
       window.onload=function(){
