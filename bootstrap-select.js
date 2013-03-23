@@ -137,22 +137,31 @@
                 _li.push($(this).text());
             });
 
-            this.$element.find('option').each(function() {
-                
+            this.$element.find('option').each(function(index) {
+                //Get the class and text for the option
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
                	var text =  $(this).text();
-               	
-                if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
+               	var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
+                
+                //Append any subtext to the main text.
+		        text+=subtext;
+
+	        	if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
+                        //Get the opt group label
+                        var label = $(this).parent().attr('label');
+                        var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
+                        label += labelSubtext;
+                  
                         if ($(this)[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+ 
+                                '<dt>'+label+'</dt>'+ 
                                 _this.createA(text, "opt " + optionClass )
                                 );
                         } else {
                             _liA.push(
-                                '<dt>'+$(this).parent().attr('label')+'</dt>'+ 
+                                '<dt>'+label+'</dt>'+ 
                                 _this.createA(text, "opt " + optionClass ));
                         }
                     } else {
@@ -190,12 +199,14 @@
         
          render:function() {
 	        var _this = this;
-	        
+
             //Update the LI to match the SELECT
             this.$element.find('option').each(function(index) {
-               _this.setDisabled($(this).index(), $(this).is(':disabled') );
-               _this.setSelected($(this).index(), $(this).is(':selected') );
+               _this.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
+               _this.setSelected(index, $(this).is(':selected') );
             });
+            
+            
             
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
                 if($(this).attr('title')!=undefined) {
@@ -263,12 +274,7 @@
             
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
             
-            this.$newElement.find('li.disabled a, li dt, li .div-contain').on('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $select = $(this).parent().parents('.bootstrap-select');
-                $select.find('button').focus();
-            });
+           
             
             this.$newElement.on('click', 'li a', function(e){
                 var clickedIndex = $(this).parent().index(),
@@ -283,7 +289,8 @@
                 
                 e.preventDefault();
                 
-                if ($select.prev('select').not(':disabled')){
+                //Dont run if we have been disabled
+                if ($select.prev('select').not(':disabled') && !$(this).parent().hasClass('disabled')){
                     //Deselect all others if not multi select box
                     if (!_this.multiple) {
                         $select.prev('select').find('option').removeAttr('selected');
