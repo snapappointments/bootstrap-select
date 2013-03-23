@@ -7,12 +7,14 @@
         this.$element = $(element);
         this.$newElement = null;
         this.button = null;
+        
+        //Merge defaults, options and data-attributes to make our options
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
-        this.style = this.options.style;
-        this.size = this.options.size;
-        this.title = this.options.title;
-        this.notSelectedText = this.options.notSelectedText;
-        this.selectedText = this.options.selectedText;
+        
+        //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
+        if(this.options.title==null) 
+            this.options.title = this.$element.attr('title');
+            
         //Expose public methods
         this.val = Selectpicker.prototype.val;
         this.render = Selectpicker.prototype.render;
@@ -26,9 +28,8 @@
         init: function (e) {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
-            //Favour the JS option over the attribute
-            if(this.title==null)
-                this.title = this.$element.attr('title'); 
+             
+                
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var id = this.$element.attr('id');
             this.$element.after( this.createView() );
@@ -56,12 +57,12 @@
             if(this.multiple) {
                  this.$newElement.addClass('show-tick'); 
             }
-            this.button.addClass(this.style);
+            this.button.addClass(this.options.style);
             this.checkDisabled();
 			this.checkTabIndex();
             this.clickListener();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
-            if (this.size == 'auto') {
+            if (this.options.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
@@ -77,10 +78,10 @@
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
                 this.$element.bind('DOMNodeInserted', getSize);
-            } else if (this.size && this.size != 'auto' && menu.find('li').length > this.size) {
-                var optIndex = menu.find("li > *").filter(':not(.div-contain)').slice(0,this.size).last().parent().index();
+            } else if (this.options.size && this.options.size != 'auto' && menu.find('li').length > this.options.size) {
+                var optIndex = menu.find("li > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
-                menuHeight = liHeight*this.size + divLength*divHeight + menuPadding;
+                menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
             
@@ -182,7 +183,7 @@
             }
             
             //If we dont have a selected item, and we dont have a title, select the first element so something is set in the button
-            if(this.$element.find('option:selected').length==0 && !_this.title) {
+            if(this.$element.find('option:selected').length==0 && !_this.options.title) {
                 this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
             }
             
@@ -220,8 +221,8 @@
             var title = selectedItems.join(", ");
             
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..                    
-            if(_this.multiple && _this.selectedText.indexOf('count') > -1) {
-                var max = _this.selectedText.split(">");
+            if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
+                var max = _this.options.selectedTextFormat.split(">");
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = selectedItems.length +' of ' + this.$element.find('option').length + ' selected';
                 }
@@ -229,7 +230,7 @@
             
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if(!title) {
-                title = _this.title != undefined ? _this.title : _this.notSelectedText;    
+                title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;    
             }
             
             this.$element.next('.bootstrap-select').find('.filter-option').html( title );
@@ -384,8 +385,8 @@
         style: null,
         size: 'auto',
         title:null,
-        selectedText : 'values',
-        notSelectedText : 'Nothing selected'
+        selectedTextFormat : 'values',
+        noneSelectedText : 'Nothing selected'
     }
 
 }(window.jQuery);
