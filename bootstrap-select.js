@@ -192,7 +192,7 @@
         
         createA:function(test, classes) {
          return '<a tabindex="-1" href="#" class="'+classes+'">' +
-                 	test + 
+                 '<span class="pull-left">' + test + '</span>' +
                  '<i class="icon-ok pull-right check-mark"></i>' + 
                  '</a>';
                 
