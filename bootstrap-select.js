@@ -37,7 +37,8 @@
             var select = this.$newElement;
             var menu = this.$newElement.find('.dropdown-menu');
             var menuA = menu.find('li > a');
-            var liHeight = parseInt(menuA.css('line-height')) + menuA.outerHeight();
+            var liHeight = select.addClass('open').find('.dropdown-menu li > a').outerHeight();
+            select.removeClass('open');
             var divHeight = menu.find('li .divider').outerHeight(true);
             var selectOffset_top = this.$newElement.offset().top;
             var size = 0;
