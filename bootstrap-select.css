@@ -14,6 +14,14 @@
     margin-left:0;
 }
 
+.input-append .bootstrap-select.btn-group {
+    margin-left: -1px;
+}
+
+.input-prepend .bootstrap-select.btn-group {
+    margin-right: -1px;
+}
+
 .bootstrap-select {
     width: 220px;
 }
@@ -110,7 +118,7 @@ bootstrap-select.btn-group .dropdown-menu li > a {
     padding-left:0.5em;
 }
 
-.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small {
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small, .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
     color: #64b1d8; 
     color:rgba(255,255,255,0.4);
 }
