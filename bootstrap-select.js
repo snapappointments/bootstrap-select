@@ -193,13 +193,21 @@
         createA:function(test, classes) {
          return '<a tabindex="-1" href="#" class="'+classes+'">' +
                  '<span class="pull-left">' + test + '</span>' +
-                 '<i class="icon-ok pull-right check-mark"></i>' + 
+                 '<i class="icon-ok check-mark"></i>' + 
                  '</a>';
                 
         },
         
          render:function() {
 	        var _this = this;
+
+            //Set width of select
+             if (this.options.width == 'auto') {
+                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
+                 this.$newElement.css('width',ulWidth);
+             } else if (this.options.width && this.options.width != 'auto') {
+                 this.$newElement.css('width',this.options.width);
+             }
 
             //Update the LI to match the SELECT
             this.$element.find('option').each(function(index) {
@@ -384,9 +392,10 @@
     $.fn.selectpicker.defaults = {
         style: null,
         size: 'auto',
-        title:null,
+        title: null,
         selectedTextFormat : 'values',
-        noneSelectedText : 'Nothing selected'
+        noneSelectedText : 'Nothing selected',
+        width: null
     }
 
 }(window.jQuery);
