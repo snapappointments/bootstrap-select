@@ -206,8 +206,6 @@
             }
             
             this.$element.next('.bootstrap-select').find('.filter-option').html( title );
-
-            this.setSize();
         },
         
         setSize:function() {
@@ -241,6 +239,11 @@
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
             }
+        },
+
+        refresh:function() {
+            this.reloadLi();
+            this.setSize();
         },
         
         setSelected:function(index, selected) {
