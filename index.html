@@ -634,8 +634,49 @@ Note: this is the same as:<br>
 
 <p id="dropup">Make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
 
+<div class="bs-docs-example" style="overflow:hidden;">
+  <div class="row-fluid">
+    <select class="selectpicker">
+        <option data-subtext="French's">Mustard</option>
+        <option data-subtext="Heinz">Ketchup</option>
+        <option data-subtext="Sweet">Relish</option>
+        <option data-subtext="Miracle Whip">Mayonnaise</option>
+        <option data-divider="true"></option>
+        <option data-subtext="Honey">Barbecue Sauce</option>
+        <option data-subtext="Ranch">Salad Dressing</option>
+        <option data-subtext="Sweet & Spicy">Tabasco</option>
+        <option data-subtext="Chunky">Salsa</option>
+    </select>
+    <select class="selectpicker" data-container="body">
+        <option data-subtext="French's">Mustard</option>
+        <option data-subtext="Heinz">Ketchup</option>
+        <option data-subtext="Sweet">Relish</option>
+        <option data-subtext="Miracle Whip">Mayonnaise</option>
+        <option data-divider="true"></option>
+        <option data-subtext="Honey">Barbecue Sauce</option>
+        <option data-subtext="Ranch">Salad Dressing</option>
+        <option data-subtext="Sweet & Spicy">Tabasco</option>
+        <option data-subtext="Chunky">Salsa</option>
+    </select>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;div style="overflow:hidden;"&gt;
+  &lt;select class="selectpicker"&gt;
+    ...
+  &lt;/select>
+  
+  &lt;select class="selectpicker" data-container="body"&gt;
+    ...
+  &lt;/select>
+&lt;div&gt;
+</pre>
+
+<p id="container">Append the select to a specific element, e.g. <code>container: 'body'</code> or <code>data-container=".main-content"</code></p>
+
 <div class="bs-docs-example">
-  <select class="selectpicker dropup">
+  <select class="selectpicker">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
@@ -647,8 +688,6 @@ Note: this is the same as:<br>
     ...
   &lt;/select>
 </pre>
-
-
 
 <h1>Usage</h1>
 
