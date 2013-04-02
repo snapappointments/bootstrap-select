@@ -222,7 +222,12 @@
                     if (_this.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
                     }
-                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : liHeight*3 + 'px'});
+                    if ((menu.find('li').length + menu.find('dt').length) > 3) {
+                        minHeight = liHeight*3 + menuExtras - 2;
+                    } else {
+                        minHeight = 0;
+                    }
+                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight + 'px'});
             }
                 getSize();
                 $(window).resize(getSize);
