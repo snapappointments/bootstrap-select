@@ -708,9 +708,32 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
 <p>To programmatically update a select with JavaScript, first manipulate the select, then use the <code>refresh</code> method to update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a select via JavaScript.</p>
 
 <pre class="prettyprint linenums">
-   $('.selectpicker').selectpicker('render');
+   $('.selectpicker').selectpicker('refresh');
 </pre>
 
+<div class="bs-docs-example">
+  <select class="selectpicker remove-example">
+      <option value="Mustard">Mustard</option>
+      <option value="Ketchup">Ketchup</option>
+      <option value="Relish">Relish</option>
+  </select>
+  
+<button class="btn btn-warning rm-mustard">Remove Mustard</button>
+<button class="btn btn-danger rm-ketchup">Remove Ketchup</button>
+<button class="btn btn-success rm-relish">Remove Relish</button>
+</div>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker remove-example"&gt;
+    &lt;option value="Mustard"&gt;Mustard&lt;/option&gt;
+    &lt;option value="Ketchup"&gt;Ketchup&lt;/option&gt;
+    &lt;option value="Relish"&gt;Relish&lt;/option&gt;
+  &lt;/select&gt;
+  
+  $('.rm-mustard').click(function() {
+    $('.remove-example').find('[value=Mustard]').remove();
+    $('.remove-example').selectpicker('refresh');
+  });
+</pre>
 
       </section>
     </div>
@@ -730,6 +753,18 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
     <script type="text/javascript">
       window.onload=function(){
       $('.selectpicker').selectpicker();
+      $('.rm-mustard').click(function() {
+        $('.remove-example').find('[value=Mustard]').remove();
+        $('.remove-example').selectpicker('refresh');
+      });
+      $('.rm-ketchup').click(function() {
+        $('.remove-example').find('[value=Ketchup]').remove();
+        $('.remove-example').selectpicker('refresh');
+      });
+      $('.rm-relish').click(function() {
+        $('.remove-example').find('[value=Relish]').remove();
+        $('.remove-example').selectpicker('refresh');
+      });
       prettyPrint();
       };
     </script>   
