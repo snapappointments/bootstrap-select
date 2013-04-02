@@ -15,13 +15,11 @@
         if(this.options.title==null) 
             this.options.title = this.$element.attr('title');
             
-        //Expose public methods - only if element is a select
-        if ($(element).is('select')) {
-            this.val = Selectpicker.prototype.val;
-            this.render = Selectpicker.prototype.render;
-            this.refresh = Selectpicker.prototype.refresh;
-            this.init();
-        }
+        //Expose public methods
+        this.val = Selectpicker.prototype.val;
+        this.render = Selectpicker.prototype.render;
+        this.refresh = Selectpicker.prototype.refresh;
+        this.init();
     };
 
     Selectpicker.prototype = {
@@ -84,17 +82,17 @@
         },
         
         reloadLi: function() {
+            if (this.$newElement) {
             //Remove all children.
             this.destroyLi();
             //Re build
             $li = this.createLi();
             this.$newElement.find('ul').append( $li );
+            }
         },
         
         destroyLi:function() {
-            if (this.$newElement != undefined) {
-                this.$newElement.find('li').remove();
-            }
+            this.$newElement.find('li').remove();
         },
 
         createLi: function() {
@@ -224,12 +222,7 @@
                     if (_this.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
                     }
-                    if ((menu.find('li').length + menu.find('dt').length) > 3) {
-                        minHeight = liHeight*3 + menuExtras - 2;
-                    } else {
-                        minHeight = 0;
-                    }
-                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight + 'px'});
+                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : liHeight*3 + 'px'});
             }
                 getSize();
                 $(window).resize(getSize);
