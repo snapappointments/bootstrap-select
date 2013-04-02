@@ -731,7 +731,7 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
   
   $('.rm-mustard').click(function() {
     $('.remove-example').find('[value=Mustard]').remove();
-    $('.remove-example').selectpicker('refresh');
+    $('.selectpicker.remove-example').selectpicker('refresh');
   });
 </pre>
 
@@ -755,15 +755,15 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
       $('.selectpicker').selectpicker();
       $('.rm-mustard').click(function() {
         $('.remove-example').find('[value=Mustard]').remove();
-        $('.remove-example').selectpicker('refresh');
+        $('.selectpicker.remove-example').selectpicker('refresh');
       });
       $('.rm-ketchup').click(function() {
         $('.remove-example').find('[value=Ketchup]').remove();
-        $('.remove-example').selectpicker('refresh');
+        $('.selectpicker.remove-example').selectpicker('refresh');
       });
       $('.rm-relish').click(function() {
         $('.remove-example').find('[value=Relish]').remove();
-        $('.remove-example').selectpicker('refresh');
+        $('.selectpicker.remove-example').selectpicker('refresh');
       });
       prettyPrint();
       };
