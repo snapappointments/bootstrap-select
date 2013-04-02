@@ -92,7 +92,9 @@
         },
         
         destroyLi:function() {
-            this.$newElement.find('li').remove();
+            if (this.$newElement) {
+                this.$newElement.find('li').remove();
+            }
         },
 
         createLi: function() {
