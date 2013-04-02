@@ -15,11 +15,13 @@
         if(this.options.title==null) 
             this.options.title = this.$element.attr('title');
             
-        //Expose public methods
-        this.val = Selectpicker.prototype.val;
-        this.render = Selectpicker.prototype.render;
-        this.refresh = Selectpicker.prototype.refresh;
-        this.init();
+        //Expose public methods - only if element is a select
+        if ($(element).is('select')) {
+            this.val = Selectpicker.prototype.val;
+            this.render = Selectpicker.prototype.render;
+            this.refresh = Selectpicker.prototype.refresh;
+            this.init();
+        }
     };
 
     Selectpicker.prototype = {
