@@ -18,6 +18,7 @@
         //Expose public methods
         this.val = Selectpicker.prototype.val;
         this.render = Selectpicker.prototype.render;
+        this.refresh = Selectpicker.prototype.refresh;
         this.init();
     };
 
@@ -242,7 +243,9 @@
 
         refresh:function() {
             this.reloadLi();
+            this.render();
             this.setSize();
+            this.checkDisabled();
         },
         
         setSelected:function(index, selected) {
@@ -266,6 +269,11 @@
                 this.button.addClass('disabled');
                 this.button.click(function(e) {
                     e.preventDefault();
+                });
+            } else if (!this.$element.is(':disabled') && this.button.hasClass('disabled')) {
+                this.button.removeClass('disabled');
+                this.button.click(function() {
+                    return true;
                 });
             }
         },
