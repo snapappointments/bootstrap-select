@@ -697,14 +697,14 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
   $('.selectpicker').selectpicker('val', 'Mustard'); 
 </pre>
 
-<h3>render()</h3>
+<h3 id="render">render()</h3>
 <p>You can force a re-render of the bootstrap-select ui with the <code>render</code> method. This is useful if you programatically change any underlying values that affect the layout of the element.</p>
 
 <pre class="prettyprint linenums">
    $('.selectpicker').selectpicker('render');
 </pre>
 
-<h3>refresh()</h3>
+<h3 id="refresh">refresh()</h3>
 <p>To programmatically update a select with JavaScript, first manipulate the select, then use the <code>refresh</code> method to update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a select via JavaScript.</p>
 
 <pre class="prettyprint linenums">
@@ -735,7 +735,7 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
   
   $('.rm-mustard').click(function() {
     $('.remove-example').find('[value=Mustard]').remove();
-    $('.selectpicker.remove-example').selectpicker('refresh');
+    $('.remove-example').selectpicker('refresh');
   });
 </pre>
 
@@ -752,11 +752,11 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
 <pre class="prettyprint linenums">  
       $('.ex-disable').click(function() {
           $('.disable-example').prop('disabled',true);
-          $('.selectpicker.disable-example').selectpicker('refresh');
+          $('.disable-example').selectpicker('refresh');
       });
       $('.ex-enable').click(function() {
           $('.disable-example').prop('disabled',false);
-          $('.selectpicker.disable-example').selectpicker('refresh');
+          $('.disable-example').selectpicker('refresh');
       });
 </pre>
 
@@ -780,23 +780,23 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
       $('.selectpicker').selectpicker();
       $('.rm-mustard').click(function() {
         $('.remove-example').find('[value=Mustard]').remove();
-        $('.selectpicker.remove-example').selectpicker('refresh');
+        $('.remove-example').selectpicker('refresh');
       });
       $('.rm-ketchup').click(function() {
         $('.remove-example').find('[value=Ketchup]').remove();
-        $('.selectpicker.remove-example').selectpicker('refresh');
+        $('.remove-example').selectpicker('refresh');
       });
       $('.rm-relish').click(function() {
         $('.remove-example').find('[value=Relish]').remove();
-        $('.selectpicker.remove-example').selectpicker('refresh');
+        $('.remove-example').selectpicker('refresh');
       });
       $('.ex-disable').click(function() {
           $('.disable-example').prop('disabled',true);
-          $('.selectpicker.disable-example').selectpicker('refresh');
+          $('.disable-example').selectpicker('refresh');
       });
       $('.ex-enable').click(function() {
           $('.disable-example').prop('disabled',false);
-          $('.selectpicker.disable-example').selectpicker('refresh');
+          $('.disable-example').selectpicker('refresh');
       });
       prettyPrint();
       };
