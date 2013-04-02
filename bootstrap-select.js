@@ -52,9 +52,10 @@
             this.clickListener();
             
             //Listen for updates to the DOM and re render...    
-            this.$element.bind('DOMNodeInserted', $.proxy(this.reloadLi, this));
+            this.$element.bind('DOMNodeInserted DOMNodeRemoved', $.proxy(this.refresh, this));
             
             this.render();
+            this.setSize();
         },
 
         createDropdown: function() {
@@ -85,8 +86,6 @@
             //Re build
             $li = this.createLi();
             this.$newElement.find('ul').append( $li );
-            //render view
-            this.render();
         },
         
         destroyLi:function() {
@@ -167,14 +166,6 @@
         render:function() {
             var _this = this;
 
-            //Set width of select
-             if (this.options.width == 'auto') {
-                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
-                 this.$newElement.css('width',ulWidth);
-             } else if (this.options.width && this.options.width != 'auto') {
-                 this.$newElement.css('width',this.options.width);
-             }
-
             //Update the LI to match the SELECT
             this.$element.find('option').each(function(index) {
                _this.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
@@ -237,8 +228,16 @@
                 var optIndex = menu.find("li > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
-                menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'scroll'});
+                menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto'});
             }
+
+            //Set width of select
+             if (this.options.width == 'auto') {
+                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
+                 this.$newElement.css('width',ulWidth);
+             } else if (this.options.width && this.options.width != 'auto') {
+                 this.$newElement.css('width',this.options.width);
+             }
         },
 
         refresh:function() {
@@ -287,7 +286,7 @@
                 var clickedIndex = $(this).parent().index(),
                     $this = $(this).parent(),
                     $select = $this.parents('.bootstrap-select'),
-                    prevIndex = _this.$element[0].selectedIndex;                
+                    prevIndex = _this.$element[0].selectedIndex;
                 
                 //Dont close on multi choice menu    
                 if(_this.multiple) {
