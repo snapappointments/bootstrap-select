@@ -1,5 +1,6 @@
 !function($) {
     var Selectpicker = function(element, options, e) {
+        if ($(element).is('select')) {
         if (e ) {
             e.stopPropagation();
             e.preventDefault();
@@ -16,7 +17,7 @@
             this.options.title = this.$element.attr('title');
             
         //Expose public methods - only if element is a select
-        if ($(element).is('select')) {
+        
             this.val = Selectpicker.prototype.val;
             this.render = Selectpicker.prototype.render;
             this.refresh = Selectpicker.prototype.refresh;
@@ -84,13 +85,11 @@
         },
         
         reloadLi: function() {
-            if (this.$newElement) {
             //Remove all children.
             this.destroyLi();
             //Re build
             $li = this.createLi();
             this.$newElement.find('ul').append( $li );
-            }
         },
         
         destroyLi:function() {
