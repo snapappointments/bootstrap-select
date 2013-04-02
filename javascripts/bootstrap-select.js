@@ -10,7 +10,7 @@
         
         //Merge defaults, options and data-attributes to make our options
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
-        
+       
         //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
         if(this.options.title==null) 
             this.options.title = this.$element.attr('title');
@@ -19,6 +19,8 @@
         this.val = Selectpicker.prototype.val;
         this.render = Selectpicker.prototype.render;
         this.refresh = Selectpicker.prototype.refresh;
+        this.selectAll = Selectpicker.prototype.selectAll;
+        this.deselectAll = Selectpicker.prototype.deselectAll;
         this.init();
     };
 
@@ -362,7 +364,17 @@
             } else {
                 return this.$element.val();
             }
-        }
+        },
+        
+        selectAll:function() {
+            this.$element.find('option').prop('selected', true).attr('selected', 'selected');
+            this.render();
+        },
+        
+        deselectAll:function() {
+            this.$element.find('option').prop('selected', false).removeAttr('selected');
+            this.render();
+        },
 
     };
 
@@ -375,12 +387,12 @@
                 var $this = $(this),
                     data = $this.data('selectpicker'),
                     options = typeof option == 'object' && option;
-                
+               
                 if (!data) {
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
-                } else {
-                    for(var i in option) {
-                        data[i]=option[i];
+                } else if(options){
+                    for(var i in options) {
+                       data.options[i]=options[i];
                     }
                 }
                 
@@ -392,7 +404,7 @@
                         [].shift.apply(args);
                         value = data[property].apply(data, args);
                     } else {
-                        value = data[property];
+                        value = data.options[property];
                     }
                 }
             }
