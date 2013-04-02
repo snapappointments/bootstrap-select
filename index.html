@@ -729,9 +729,18 @@ Note: this is the same as:<br>
           <tbody>
            <tr>
              <td>style</td>
-             <td>string</td>
+             <td>string | null</td>
              <td>null</td>
              <td><p>apply a css style to the button</p></td>
+           </tr>
+           <tr>
+             <td>width</td>
+             <td>string | null</td>
+             <td>null</td>
+             <td>
+                <p><code>'auto</code> automatically adjusts the width of the select to accommodate its widest option</p>
+                <p>set the width of the select manually, e.g. <code>300px</code> or <code>50%</code></p>
+              </td>
            </tr>
            <tr>
              <td>size</td>
@@ -743,7 +752,7 @@ Note: this is the same as:<br>
              <td>container</td>
              <td>string | false</td>
              <td>false</td>
-             <td>Appends the popover to a specific element <code>container: 'body'</code></td>
+             <td>appends the select to a specific element <code>container: 'body'</code></td>
            </tr>
           </tbody>
 </table>
