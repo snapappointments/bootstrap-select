@@ -7,7 +7,7 @@
     <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown." />
     
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
     <style type="text/css">
       .com { color: #93a1a1; }
@@ -410,6 +410,48 @@
   &lt;/div&gt;
 </pre>
 
+<p id="span">Alternatively, use the <code>data-width</code> attribute to set the width of the select. Set <code>data-size</code> to <code>'auto'</code> to automatically adjust the width of the select to its widest option. An exact value can also be specified, e.g., <code>300px</code> or <code>50%</code>.</p>
+
+<div class="datawidth">
+  <div class="row-fluid">
+    <select class="selectpicker" data-width="auto">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>All of the above (and much, much more!)</option>
+    </select>
+  <div class="row-fluid">
+    <select class="selectpicker" data-width="350px">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>All of the above (and much, much more!)</option>
+    </select>
+  </div>
+  <div class="row-fluid">
+    <select class="selectpicker" data-width="50%">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>All of the above (and much, much more!)</option>
+    </select>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;div class="row-fluid"&gt;
+    &lt;select class="selectpicker" data-width="auto"&gt;
+      ...
+    &lt;/select&gt;
+    &lt;select class="selectpicker" data-width="350px"&gt;
+      ...
+    &lt;/select&gt;
+    &lt;select class="selectpicker" data-width="50%"&gt;
+      ...
+    &lt;/select&gt;
+  &lt;/div&gt;
+</pre>
+
 <p id="disabled-select">Add the <code>disabled</code> attribute to the select to apply the <code>disabled</code> class.</p>
 
 <div class="bs-docs-example">
@@ -676,7 +718,7 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="javascripts/prettify.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script src="javascripts/bootstrap-select.js"></script>
     <script type="text/javascript">
       window.onload=function(){
