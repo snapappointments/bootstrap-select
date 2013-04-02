@@ -1,6 +1,5 @@
 !function($) {
     var Selectpicker = function(element, options, e) {
-        if ($(element).is('select')) {
         if (e ) {
             e.stopPropagation();
             e.preventDefault();
@@ -16,13 +15,11 @@
         if(this.options.title==null) 
             this.options.title = this.$element.attr('title');
             
-        //Expose public methods - only if element is a select
-        
-            this.val = Selectpicker.prototype.val;
-            this.render = Selectpicker.prototype.render;
-            this.refresh = Selectpicker.prototype.refresh;
-            this.init();
-        }
+        //Expose public methods
+        this.val = Selectpicker.prototype.val;
+        this.render = Selectpicker.prototype.render;
+        this.refresh = Selectpicker.prototype.refresh;
+        this.init();
     };
 
     Selectpicker.prototype = {
@@ -374,27 +371,29 @@
        var args = arguments;
        var value;
        var chain = this.each(function () {
-            var $this = $(this),
-                data = $this.data('selectpicker'),
-                options = typeof option == 'object' && option;
-            
-            if (!data) {
-                $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
-            } else {
-                for(var i in option) {
-                    data[i]=option[i];
-                }
-            }
-            
-            if (typeof option == 'string') {
-                //Copy the value of option, as once we shift the arguments
-                //it also shifts the value of option.
-                property = option;
-                if(data[property] instanceof Function) {
-                    [].shift.apply(args);
-                    value = data[property].apply(data, args);
+            if ($(this).is('select')) {
+                var $this = $(this),
+                    data = $this.data('selectpicker'),
+                    options = typeof option == 'object' && option;
+                
+                if (!data) {
+                    $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
                 } else {
-                    value = data[property];
+                    for(var i in option) {
+                        data[i]=option[i];
+                    }
+                }
+                
+                if (typeof option == 'string') {
+                    //Copy the value of option, as once we shift the arguments
+                    //it also shifts the value of option.
+                    property = option;
+                    if(data[property] instanceof Function) {
+                        [].shift.apply(args);
+                        value = data[property].apply(data, args);
+                    } else {
+                        value = data[property];
+                    }
                 }
             }
         });
