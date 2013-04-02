@@ -331,6 +331,10 @@
                 $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
             });
+
+            this.$element.on('change', function(e) {
+                _this.render();
+            });
         },
         
         val:function(value) {
