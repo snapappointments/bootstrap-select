@@ -45,7 +45,7 @@
             this.button = this.$newElement.find('> button');
             if (id !== undefined) {
                 this.button.attr('id', id);
-                $('label[for="' + id + '"]').click(function(){ this.$newElement.find('button#'+id).focus(); })
+                $('label[for="' + id + '"]').click( $.proxy(this, function(){ this.$newElement.find('button#'+id).focus(); }))
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
@@ -248,10 +248,17 @@
 
             //Set width of select
              if (this.options.width == 'auto') {
-                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
-                 this.$newElement.css('width',ulWidth);
+                this.$newElement.find('.dropdown-menu').css('min-width','0');
+                var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
+                this.$newElement.css('width',ulWidth);
+                if (this.options.container) {
+                    this.$element.css('width',ulWidth);
+                }
              } else if (this.options.width && this.options.width != 'auto') {
-                 this.$newElement.css('width',this.options.width);
+                this.$newElement.css('width',this.options.width);
+                if (this.options.container) {
+                    this.$element.css('width',this.options.width);
+                }
              }
         },
 
