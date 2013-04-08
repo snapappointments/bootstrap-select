@@ -328,7 +328,7 @@
                 var clickedIndex = $(this).parent().index(),
                     $this = $(this).parent(),
                     $select = $this.parents('.bootstrap-select'),
-                    prevIndex = _this.$element[0].selectedIndex;
+                    prevValue = _this.$element.val();
                 
                 //Dont close on multi choice menu    
                 if(_this.multiple) {
@@ -360,7 +360,7 @@
                     $select.find('button').focus();
 
                     // Trigger select 'change'
-                    if (prevIndex != clickedIndex) {
+                    if (prevValue != _this.$element.val()) {
                         _this.$element.trigger('change');
                     }
 
