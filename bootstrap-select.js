@@ -29,16 +29,23 @@
         constructor: Selectpicker,
 
         init: function (e) {
-            this.$element.hide();
+            if (!this.options.container) {
+                this.$element.hide();
+            } else {
+                this.$element.css('visibility','hidden');
+            };
             this.multiple = this.$element.prop('multiple');                
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var id = this.$element.attr('id');
             this.$element.after( this.createView() );
             this.$newElement = this.$element.next('.bootstrap-select');
+            if (this.options.container) {
+                this.selectPosition();
+            }
             this.button = this.$newElement.find('> button');
             if (id !== undefined) {
                 this.button.attr('id', id);
-                $('label[for="' + id + '"]').click(function(){ this.$newElement.find('button#'+id).focus(); })
+                $('label[for="' + id + '"]').click( $.proxy(this, function(){ this.$newElement.find('button#'+id).focus(); }))
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
@@ -199,7 +206,7 @@
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;    
             }
             
-            this.$element.next('.bootstrap-select').find('.filter-option').html( title );
+            _this.$newElement.find('.filter-option').html( title );
         },
         
         setSize:function() {
@@ -241,11 +248,25 @@
 
             //Set width of select
              if (this.options.width == 'auto') {
-                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
-                 this.$newElement.css('width',ulWidth);
+                this.$newElement.find('.dropdown-menu').css('min-width','0');
+                var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
+                this.$newElement.css('width',ulWidth);
+                if (this.options.container) {
+                    this.$element.css('width',ulWidth);
+                }
              } else if (this.options.width && this.options.width != 'auto') {
-                 this.$newElement.css('width',this.options.width);
+                this.$newElement.css('width',this.options.width);
+                if (this.options.container) {
+                    this.$element.css('width',this.options.width);
+                }
              }
+        },
+
+        selectPosition:function() {
+            var selectElementTop = this.$element.offset().top;
+            var selectElementLeft = this.$element.offset().left;
+            this.$newElement.appendTo(this.options.container);
+            this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
         },
 
         refresh:function() {
@@ -253,6 +274,9 @@
             this.render();
             this.setSize();
             this.checkDisabled();
+            if (this.options.container) {
+                this.selectPosition();
+            }
         },
         
         setSelected:function(index, selected) {
@@ -276,6 +300,9 @@
                 this.button.addClass('disabled');
                 this.button.click(function(e) {
                     e.preventDefault();
+                });
+                this.button.on('focusin', function() {
+                    $(this).blur();
                 });
             } else if (!this.$element.is(':disabled') && this.button.hasClass('disabled')) {
                 this.button.removeClass('disabled');
@@ -301,7 +328,7 @@
                 var clickedIndex = $(this).parent().index(),
                     $this = $(this).parent(),
                     $select = $this.parents('.bootstrap-select'),
-                    prevIndex = _this.$element[0].selectedIndex;
+                    prevValue = _this.$element.val();
                 
                 //Dont close on multi choice menu    
                 if(_this.multiple) {
@@ -311,20 +338,20 @@
                 e.preventDefault();
                 
                 //Dont run if we have been disabled
-                if ($select.prev('select').not(':disabled') && !$(this).parent().hasClass('disabled')){
+                if (_this.$element.not(':disabled') && !$(this).parent().hasClass('disabled')){
                     //Deselect all others if not multi select box
                     if (!_this.multiple) {
-                        $select.prev('select').find('option').removeAttr('selected');
-                        $select.prev('select').find('option').eq(clickedIndex).prop('selected', true).attr('selected', 'selected');
+                        _this.$element.find('option').removeAttr('selected');
+                        _this.$element.find('option').eq(clickedIndex).prop('selected', true).attr('selected', 'selected');
                     } 
                     //Else toggle the one we have chosen if we are multi selet.
                     else {
-                        var selected = $select.prev('select').find('option').eq(clickedIndex).prop('selected');
+                        var selected = _this.$element.find('option').eq(clickedIndex).prop('selected');
                         
                         if(selected) {
-                            $select.prev('select').find('option').eq(clickedIndex).removeAttr('selected');
+                            _this.$element.find('option').eq(clickedIndex).removeAttr('selected');
                         } else {
-                            $select.prev('select').find('option').eq(clickedIndex).prop('selected', true).attr('selected', 'selected');
+                            _this.$element.find('option').eq(clickedIndex).prop('selected', true).attr('selected', 'selected');
                         }
                     }
                     
@@ -333,8 +360,8 @@
                     $select.find('button').focus();
 
                     // Trigger select 'change'
-                    if (prevIndex != clickedIndex) {
-                        $select.prev('select').trigger('change');
+                    if (prevValue != _this.$element.val()) {
+                        _this.$element.trigger('change');
                     }
 
                     _this.render();
@@ -423,7 +450,8 @@
         title: null,
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
-        width: null
+        width: null,
+        container: false
     }
 
 }(window.jQuery);
