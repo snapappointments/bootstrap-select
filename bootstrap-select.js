@@ -294,9 +294,13 @@
                 this.$newElement.find('li').eq(index).removeClass('disabled');
             }
         },
+
+        isDisabled: function() {
+                return this.$element.is(':disabled') || this.$element.attr('readonly');
+        },
        
         checkDisabled: function() {
-            if (this.$element.is(':disabled')) {
+            if (this.isDisabled()) {
                 this.button.addClass('disabled');
                 this.button.click(function(e) {
                     e.preventDefault();
@@ -304,7 +308,7 @@
                 this.button.on('focusin', function() {
                     $(this).blur();
                 });
-            } else if (!this.$element.is(':disabled') && this.button.hasClass('disabled')) {
+            } else if (!this.isDisabled() && this.button.hasClass('disabled')) {
                 this.button.removeClass('disabled');
                 this.button.click(function() {
                     return true;
