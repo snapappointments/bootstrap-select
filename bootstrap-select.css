@@ -7,14 +7,17 @@
     height: 0;
 }
 
-.bootstrap-select.btn-group, .bootstrap-select.btn-group[class*="span"] {
+.bootstrap-select.btn-group, 
+.bootstrap-select.btn-group[class*="span"] {
     float:none; 
     display: inline-block;
     margin-bottom: 10px;
     margin-left:0;
 }
 
-.bootstrap-select.btn-group.pull-right, .bootstrap-select.btn-group[class*="span"].pull-right, .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
+.bootstrap-select.btn-group.pull-right, 
+.bootstrap-select.btn-group[class*="span"].pull-right, 
+.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
     float:right;
 }
 
@@ -53,7 +56,8 @@
     right:12px;
 }
 
-.bootstrap-select.btn-group > .disabled, .bootstrap-select.btn-group .dropdown-menu li.disabled > a {
+.bootstrap-select.btn-group > .disabled, 
+.bootstrap-select.btn-group .dropdown-menu li.disabled > a {
     cursor: not-allowed;
 }
 
@@ -86,35 +90,22 @@
     min-height:20px;
 }
 
-bootstrap-select.btn-group .dropdown-menu li > a {
-    min-height:20px;
-}
-
-.bootstrap-select.btn-group .dropdown-menu li small {
-    padding-left:0.5em;
-}
-
-.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small {
-    color: #64b1d8; 
-    color:rgba(255,255,255,0.4);
-}
-
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
     font-weight:normal;
 }
 
-
 .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark { 
     display:inline-block;
     position: absolute;
-    right: 20px;
+    right: 15px;
+    margin-top: 2.5px;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li a i.check-mark { 
     display: none;
 }
 
-.bootstrap-select.btn-group.show-tick .dropdown-menu li a .pull-left {
+.bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     margin-right: 34px;
 }
 
@@ -122,7 +113,8 @@ bootstrap-select.btn-group .dropdown-menu li > a {
     padding-left:0.5em;
 }
 
-.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small, .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small, 
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
     color: #64b1d8; 
     color:rgba(255,255,255,0.4);
 }
@@ -131,20 +123,19 @@ bootstrap-select.btn-group .dropdown-menu li > a {
     font-weight:normal;
 }
 
-
 .bootstrap-select.btn-group.show-menu-arrow .dropdown-menu {
     overflow-y:visible !important;
 }     
      
 .bootstrap-select.btn-group.show-menu-arrow .dropdown-menu::after {
-  position: absolute;
-  top: -6px;
-  left: 10px;
-  display: inline-block;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid white;
-  border-left: 6px solid transparent;
-  content: '';
+    position: absolute;
+    top: -6px;
+    left: 10px;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
 }
 
 .bootstrap-select.btn-group.show-menu-arrow .dropdown-menu::before {
