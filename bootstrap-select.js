@@ -118,16 +118,21 @@
                 var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
                 var text =  $(this).text();
                 var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
+                var icon = $(this).data('icon') !== undefined ? '<i class="'+$(this).data('icon')+'"></i> ' : '';
+                if ($(this).is(':disabled') || $(this).parent().is(':disabled')) {
+                    icon = '<span>'+icon+'</span>';
+                }
                 
-                //Append any subtext to the main text.
-                text+=subtext;
+                //Prepend any icon and append any subtext to the main text.
+                 text = icon + '<span class="text">' + text + subtext + '</span>';
 
                 if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
                     if ($(this).index() == 0) {
                         //Get the opt group label
                         var label = $(this).parent().attr('label');
                         var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
-                        label += labelSubtext;
+                        var labelIcon = $(this).parent().data('icon') ? '<i class="'+$(this).parent().data('icon')+'"></i> ' : '';
+                        label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
                   
                         if ($(this)[0].index != 0) {
                             _liA.push(
@@ -165,12 +170,11 @@
             return $(_liHtml);
         },
         
-        createA:function(test, classes) {
+        createA:function(text, classes) {
          return '<a tabindex="-1" href="#" class="'+classes+'">' +
-                 '<span class="pull-left">' + test + '</span>' +
+                 text +
                  '<i class="icon-ok check-mark"></i>' + 
                  '</a>';
-                
         },
         
         render:function() {
@@ -455,7 +459,8 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         width: null,
-        container: false
+        container: false,
+        icon: false
     }
 
 }(window.jQuery);
