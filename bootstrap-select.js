@@ -162,8 +162,8 @@
                 }
             }
             
-            //If we dont have a selected item, and we dont have a title, select the first element so something is set in the button
-            if(this.$element.find('option:selected').length==0 && !_this.options.title) {
+            //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
+            if(!this.multiple && this.$element.find('option:selected').length==0 && !_this.options.title) {
                 this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
             }
             
