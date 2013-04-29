@@ -309,9 +309,7 @@
                 this.button.click(function(e) {
                     e.preventDefault();
                 });
-                this.button.on('focusin', function() {
-                    $(this).blur();
-                });
+                this.button.attr('tabindex','-1');
             } else if (!this.isDisabled() && this.button.hasClass('disabled')) {
                 this.button.removeClass('disabled');
                 this.button.click(function() {
