@@ -150,6 +150,8 @@
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
+                } else if ($(this).data('hidden') == true) {
+                    _liA.push('');
                 } else {
                     _liA.push( _this.createA(text, optionClass ) );
                 }
