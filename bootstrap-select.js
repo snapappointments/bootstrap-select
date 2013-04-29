@@ -315,6 +315,7 @@
                 this.button.click(function() {
                     return true;
                 });
+                this.button.removeAttr('tabindex');
             }
         },
         
