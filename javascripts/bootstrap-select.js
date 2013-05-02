@@ -171,7 +171,7 @@
         },
         
         createA:function(text, classes) {
-         return '<a tabindex="-1" href="#" class="'+classes+'">' +
+         return '<a tabindex="0" class="'+classes+'">' +
                  text +
                  '<i class="icon-ok check-mark"></i>' + 
                  '</a>';
