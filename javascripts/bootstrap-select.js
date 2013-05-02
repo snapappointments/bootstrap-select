@@ -171,7 +171,7 @@
         },
         
         createA:function(text, classes) {
-         return '<a tabindex="-1" class="'+classes+'">' +
+         return '<a tabindex="-1" href="#" class="'+classes+'">' +
                  text +
                  '<i class="icon-ok check-mark"></i>' + 
                  '</a>';
@@ -341,7 +341,6 @@
                     e.stopPropagation();
                 }
                 
-                //e.stopImmediatePropagation();
                 e.preventDefault();
                 
                 //Dont run if we have been disabled
