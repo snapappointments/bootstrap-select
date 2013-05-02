@@ -341,7 +341,7 @@
                     e.stopPropagation();
                 }
                 
-                e.stopImmediatePropagation();
+                //e.stopImmediatePropagation();
                 e.preventDefault();
                 
                 //Dont run if we have been disabled
