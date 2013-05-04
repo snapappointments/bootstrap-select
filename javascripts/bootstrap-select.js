@@ -61,9 +61,6 @@
             this.checkTabIndex();
             this.clickListener();
             
-            //Listen for updates to the DOM and re render...    
-            this.$element.bind('DOMNodeInserted DOMNodeRemoved', $.proxy(this.refresh, this));
-            
             this.render();
             this.setSize();
         },
@@ -150,6 +147,8 @@
                     }
                 } else if ($(this).data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
+                } else if ($(this).data('hidden') == true) {
+                    _liA.push('');
                 } else {
                     _liA.push( _this.createA(text, optionClass ) );
                 }
@@ -194,8 +193,13 @@
                 }
             }).toArray();
             
-            //Convert all the values into a comma delimited string    
-            var title = selectedItems.join(", ");
+            if (!_this.multiple) {
+                //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
+                var title = this.$element.find('option:selected').eq(0).text();
+            } else {
+                //Convert all the values into a comma delimited string    
+                var title = selectedItems.join(", ");
+            }
             
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..                    
             if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
@@ -293,9 +297,9 @@
         
         setDisabled:function(index, disabled) {
             if(disabled) {
-                this.$newElement.find('li').eq(index).addClass('disabled');
+                this.$newElement.find('li').eq(index).addClass('disabled').find('a').attr('href','#').attr('tabindex',-1);
             } else {
-                this.$newElement.find('li').eq(index).removeClass('disabled');
+                this.$newElement.find('li').eq(index).removeClass('disabled').find('a').removeAttr('href').attr('tabindex',0);
             }
         },
 
@@ -315,6 +319,7 @@
                 this.button.click(function() {
                     return true;
                 });
+                this.button.removeAttr('tabindex');
             }
         },
         
@@ -350,7 +355,7 @@
                         _this.$element.find('option').removeAttr('selected');
                         _this.$element.find('option').eq(clickedIndex).prop('selected', true).attr('selected', 'selected');
                     } 
-                    //Else toggle the one we have chosen if we are multi selet.
+                    //Else toggle the one we have chosen if we are multi select.
                     else {
                         var selected = _this.$element.find('option').eq(clickedIndex).prop('selected');
                         
@@ -409,6 +414,80 @@
             this.render();
         },
 
+        keydown: function (e) {
+            var $this, 
+                $items, 
+                $parent, 
+                index,
+                next,
+                first,
+                last,
+                prev,
+                nextPrev
+                
+            $this = $(this);
+                
+            $parent = $this.parent();
+            
+            $items = $('[role=menu] li:not(.divider):visible a', $parent);
+                
+            if (!$items.length) return;
+            
+            if (/(38|40)/.test(e.keyCode)) {
+
+                index = $items.index($items.filter(':focus'));
+                
+                first = $items.parent(':not(.disabled)').first().index();
+                last = $items.parent(':not(.disabled)').last().index();
+                next = $items.eq(index).parent().nextAll(':not(.disabled)').eq(0).index();
+                prev = $items.eq(index).parent().prevAll(':not(.disabled)').eq(0).index();
+                nextPrev = $items.eq(next).parent().prevAll(':not(.disabled)').eq(0).index();
+
+                if (e.keyCode == 38) {
+                    if (index != nextPrev && index > prev) index = prev;
+                    if (index < first) index = first;
+                }
+                
+                if (e.keyCode == 40) {
+                    if (index != nextPrev && index < next) index = next;
+                    if (index > last) index = last;
+                }
+                
+                $items.eq(index).focus()
+            } else {
+                var keyCodeMap = {
+                    48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
+                    65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
+                    77:"m", 78:"n", 79:"o", 80:"p", 81:"q", 82:"r", 83:"s", 84:"t", 85:"u", 86:"v", 87:"w", 88:"x", 89:"y", 90:"z",
+                    96:"0", 97:"1", 98:"2", 99:"3", 100:"4", 101:"5", 102:"6", 103:"7", 104:"8", 105:"9"
+                }
+                
+                var keyIndex = [];
+
+                $items.each(function() {
+                    if ($(this).parent().is(':not(.disabled)')) {
+                        if ($.trim($(this).text().toLowerCase()).substring(0,1) == keyCodeMap[e.keyCode]) {
+                            keyIndex.push($(this).parent().index());
+                        } 
+                    }
+                });
+
+                var count = $(document).data('keycount');
+                count++;
+                $(document).data('keycount',count);
+                
+                var prevKey = $.trim($(':focus').text().toLowerCase()).substring(0,1);
+                
+                if (prevKey != keyCodeMap[e.keyCode]) {
+                    count = 1;
+                    $(document).data('keycount',count);
+                } else if (count >= keyIndex.length) {
+                    $(document).data('keycount',0);
+                }
+                
+                $items.eq(keyIndex[count - 1]).focus();
+            }
+        }
     };
 
     $.fn.selectpicker = function(option, event) {
@@ -457,8 +536,11 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         width: null,
-        container: false,
-        icon: false
+        container: false
     }
+
+    $(document)
+        .data('keycount',0)
+        .on('keydown', '[data-toggle=dropdown], [role=menu]' , Selectpicker.prototype.keydown)
 
 }(window.jQuery);
