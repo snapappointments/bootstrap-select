@@ -193,9 +193,9 @@
                 }
             }).toArray();
             
-            if (!_this.multiple) {
+            if (!this.multiple) {
                 //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
-                var title = this.$element.find('option:selected').eq(0).text();
+                var title = selectedItems.slice(0,1);
             } else {
                 //Convert all the values into a comma delimited string    
                 var title = selectedItems.join(", ");
