@@ -33,6 +33,10 @@
     width: 220px;
 }
 
+.bootstrap-select {
+    width: 220px\9; /*IE8 and below*/
+}
+
 .bootstrap-select .btn {
     width: 100%;
 }
@@ -88,6 +92,7 @@
 
 .bootstrap-select.btn-group .dropdown-menu li > a {
     min-height:20px;
+    cursor: pointer;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
