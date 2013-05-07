@@ -44,8 +44,11 @@
             }
             this.button = this.$newElement.find('> button');
             if (id !== undefined) {
-                this.button.attr('id', id);
-                $('label[for="' + id + '"]').click( $.proxy(this, function(){ this.$newElement.find('button#'+id).focus(); }))
+                var _this = this;
+                this.button.attr('data-id', id);
+                $('label[for="' + id + '"]').click(function(){
+                    _this.$newElement.find('button[data-id='+id+']').focus(); 
+                })
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
@@ -111,27 +114,31 @@
             });
 
             this.$element.find('option').each(function(index) {
+                var $this = $(this);
+
                 //Get the class and text for the option
-                var optionClass = $(this).attr("class") !== undefined ? $(this).attr("class") : '';
-                var text =  $(this).text();
-                var subtext = $(this).data('subtext') !== undefined ? '<small class="muted">'+$(this).data('subtext')+'</small>' : '';
-                var icon = $(this).data('icon') !== undefined ? '<i class="'+$(this).data('icon')+'"></i> ' : '';
-                if ($(this).is(':disabled') || $(this).parent().is(':disabled')) {
+                var optionClass = $this.attr("class") !== undefined ? $this.attr("class") : '';
+                var text =  $this.text();
+                var subtext = $this.data('subtext') !== undefined ? '<small class="muted">'+$this.data('subtext')+'</small>' : '';
+                var icon = $this.data('icon') !== undefined ? '<i class="'+$this.data('icon')+'"></i> ' : '';
+                if ($this.is(':disabled') || $this.parent().is(':disabled')) {
                     icon = '<span>'+icon+'</span>';
                 }
                 
                 //Prepend any icon and append any subtext to the main text.
                  text = icon + '<span class="text">' + text + subtext + '</span>';
 
-                if ($(this).parent().is('optgroup') && $(this).data('divider') != true) {
-                    if ($(this).index() == 0) {
+                if (_this.options.hideDisabled == true && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
+                    _liA.push('<a style="min-height: 0; padding: 0"></a>');
+                } else if ($this.parent().is('optgroup') && $this.data('divider') != true) {
+                    if ($this.index() == 0) {
                         //Get the opt group label
-                        var label = $(this).parent().attr('label');
-                        var labelSubtext = $(this).parent().data('subtext') !== undefined ? '<small class="muted">'+$(this).parent().data('subtext')+'</small>' : '';
-                        var labelIcon = $(this).parent().data('icon') ? '<i class="'+$(this).parent().data('icon')+'"></i> ' : '';
+                        var label = $this.parent().attr('label');
+                        var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted">'+$this.parent().data('subtext')+'</small>' : '';
+                        var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
                   
-                        if ($(this)[0].index != 0) {
+                        if ($this[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+label+'</dt>'+ 
@@ -145,7 +152,7 @@
                     } else {
                          _liA.push( _this.createA(text, "opt " + optionClass )  );
                     }
-                } else if ($(this).data('divider') == true) {
+                } else if ($this.data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else if ($(this).data('hidden') == true) {
                     _liA.push('');
@@ -487,6 +494,12 @@
                 
                 $items.eq(keyIndex[count - 1]).focus();
             }
+
+            if (/(13)/.test(e.keyCode)) {
+                $(':focus').click();
+                $parent.addClass('open');
+                $(document).data('keycount',0);
+            }
         }
     };
 
@@ -536,7 +549,8 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         width: null,
-        container: false
+        container: false,
+        hideDisabled: false
     }
 
     $(document)
