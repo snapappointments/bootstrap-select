@@ -32,7 +32,7 @@
     width: 100%;
 }
 
-.bootstrap-select.open .btn {
+.bootstrap-select.show-menu-arrow.open .btn {
     z-index:1001;
 }
 
