@@ -71,7 +71,7 @@
         createDropdown: function() {
             var drop =
                 "<div class='btn-group bootstrap-select'>" +
-                    "<button type='button' class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
+                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
                         "<span class='filter-option pull-left'></span>&nbsp;" +
                         "<span class='caret'></span>" +
                     "</button>" +
@@ -128,7 +128,7 @@
                 //Prepend any icon and append any subtext to the main text.
                  text = icon + '<span class="text">' + text + subtext + '</span>';
 
-                if (_this.options.hideDisabled == true && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
+                if (_this.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
                 } else if ($this.parent().is('optgroup') && $this.data('divider') != true) {
                     if ($this.index() == 0) {
@@ -230,6 +230,7 @@
             var selectOffset_top = this.$newElement.offset().top;
             var selectHeight = this.$newElement.outerHeight();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
+            var notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '';
             if (this.options.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
@@ -250,8 +251,8 @@
                 getSize();
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
-            } else if (this.options.size && this.options.size != 'auto' && menu.find('li').length > this.options.size) {
-                var optIndex = menu.find("li > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
+            } else if (this.options.size && this.options.size != 'auto' && menu.find('li'+notDisabled).length > this.options.size) {
+                var optIndex = menu.find("li"+notDisabled+" > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto'});
