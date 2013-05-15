@@ -208,7 +208,7 @@
             if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = _this.options.selectedTextFormat.split(">");
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = selectedItems.length +' of ' + this.$element.find('option').length + ' selected';
+                    title = _this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option').length);
                 }
              }  
             
@@ -544,7 +544,8 @@
         size: 'auto',
         title: null,
         selectedTextFormat : 'values',
-        noneSelectedText : 'Nothing selected',
+        countSelectedText: '{0} of {1} selected',
+        noneSelectedText: 'Nothing selected',
         width: null,
         container: false,
         hideDisabled: false
