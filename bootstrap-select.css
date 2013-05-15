@@ -30,6 +30,10 @@
 
 .bootstrap-select .btn {
     width: 100%;
+    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
 .bootstrap-select.show-menu-arrow.open .btn {
@@ -37,9 +41,13 @@
 }
 
 .bootstrap-select .btn:focus {
-    outline: thin dotted #333333 !important;
-    outline: 5px auto -webkit-focus-ring-color !important;
-    outline-offset: -2px;
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted \9; /* IE6-9 */
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    background: #f8f8f8;
 }
 
 .bootstrap-select.btn-group .btn .filter-option {
