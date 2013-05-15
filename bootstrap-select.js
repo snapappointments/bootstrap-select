@@ -521,7 +521,7 @@
                 if (typeof option == 'string') {
                     //Copy the value of option, as once we shift the arguments
                     //it also shifts the value of option.
-                    property = option;
+                    var property = option;
                     if(data[property] instanceof Function) {
                         [].shift.apply(args);
                         value = data[property].apply(data, args);
