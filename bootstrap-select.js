@@ -1,4 +1,7 @@
 !function($) {
+
+	"use strict";
+
     var Selectpicker = function(element, options, e) {
         if (e ) {
             e.stopPropagation();
@@ -94,7 +97,7 @@
             //Remove all children.
             this.destroyLi();
             //Re build
-            $li = this.createLi();
+            var $li = this.createLi();
             this.$newElement.find('ul').append( $li );
         },
         
@@ -231,12 +234,14 @@
             var selectHeight = this.$newElement.outerHeight();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
             var notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '';
+	        var menuHeight;
             if (this.options.size == 'auto') {
-                function getSize() {
+                var getSize = function() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
                     var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
+	                var minHeight;
                     menuHeight = selectOffset_bot;
                     if (_this.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
@@ -387,7 +392,7 @@
            this.$newElement.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                $select = $(this).parent().parents('.bootstrap-select');
+                var $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
             });
 
@@ -521,7 +526,7 @@
                 if (typeof option == 'string') {
                     //Copy the value of option, as once we shift the arguments
                     //it also shifts the value of option.
-                    property = option;
+                    var property = option;
                     if(data[property] instanceof Function) {
                         [].shift.apply(args);
                         value = data[property].apply(data, args);
