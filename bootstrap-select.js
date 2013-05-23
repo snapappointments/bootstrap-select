@@ -280,10 +280,14 @@
         },
 
         selectPosition:function() {
-            var selectElementTop = this.$element.offset().top;
-            var selectElementLeft = this.$element.offset().left;
-            this.$newElement.appendTo(this.options.container);
-            this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
+	        var containerOffset = $(this.options.container).offset();
+	        var eltOffset = this.$element.offset();
+	        if(containerOffset && eltOffset) {
+		        var selectElementTop = eltOffset.top - containerOffset.top;
+		        var selectElementLeft = eltOffset.left - containerOffset.left;
+		        this.$newElement.appendTo(this.options.container);
+		        this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
+	        }
 	        this.$newElement.toggle(this.$element.parent().is(':visible'));
         },
 
