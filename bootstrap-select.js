@@ -284,6 +284,7 @@
             var selectElementLeft = this.$element.offset().left;
             this.$newElement.appendTo(this.options.container);
             this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
+	        this.$newElement.toggle(this.$element.parent().is(':visible'));
         },
 
         refresh:function() {
