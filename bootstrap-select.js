@@ -224,7 +224,11 @@
         },
         
         setSize:function() {
-            var _this = this;
+	        if(this.options.container) {
+	        	// Show $newElement before perfoming size calculations
+		        this.$newElement.toggle(this.$element.parent().is(':visible'));
+	        }
+	        var _this = this;
             var menu = this.$newElement.find('.dropdown-menu');
             var menuA = menu.find('li > a');
             var liHeight = this.$newElement.addClass('open').find('.dropdown-menu li > a').outerHeight();
@@ -265,20 +269,22 @@
 
             //Set width of select
             if (this.options.width == 'auto') {
-                this.$newElement.find('.dropdown-menu').css('min-width','0');
                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
                 this.$newElement.css('width',ulWidth);
                 if (this.options.container) {
                     this.$element.css('width',ulWidth);
                 }
             } else if (this.options.width) {
-                this.$newElement.css('width',this.options.width);
                 if (this.options.container) {
-                    this.$element.css('width',this.options.width);
+                    this.$element.css('width', this.options.width);
+	                // Set $newElement based on $element, since width can be %
+	                this.$newElement.css('width', this.$element.width());
+                } else {
+	                this.$newElement.css('width',this.options.width);
                 }
-            } else if(this.options.container && this.$element.css('width').indexOf('%')) {
-                // Set width of $newElement based on $element
-                this.$newElement.width(this.$element.width());
+            } else if(this.options.container) {
+	            // Set width of $newElement based on $element
+	            this.$newElement.width(this.$element.width());
             }
         },
 
@@ -291,7 +297,6 @@
 		        this.$newElement.appendTo(this.options.container);
 		        this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
 	        }
-	        this.$newElement.toggle(this.$element.parent().is(':visible'));
         },
 
         refresh:function() {
