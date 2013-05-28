@@ -269,6 +269,7 @@
 
             //Set width of select
             if (this.options.width == 'auto') {
+	            this.$newElement.find('.dropdown-menu').css('min-width','0');
                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
                 this.$newElement.css('width',ulWidth);
                 if (this.options.container) {
@@ -276,9 +277,10 @@
                 }
             } else if (this.options.width) {
                 if (this.options.container) {
+	                // Note: options.width can be %
                     this.$element.css('width', this.options.width);
-	                // Set $newElement based on $element, since width can be %
-	                this.$newElement.css('width', this.$element.width());
+	                // Set pixel width of $newElement based on $element's pixel width
+	                this.$newElement.width(this.$element.width());
                 } else {
 	                this.$newElement.css('width',this.options.width);
                 }
