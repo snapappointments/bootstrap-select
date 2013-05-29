@@ -280,13 +280,13 @@
 	                // Note: options.width can be %
                     this.$element.css('width', this.options.width);
 	                // Set pixel width of $newElement based on $element's pixel width
-	                this.$newElement.width(this.$element.width());
+	                this.$newElement.width(this.$element.outerWidth());
                 } else {
 	                this.$newElement.css('width',this.options.width);
                 }
             } else if(this.options.container) {
 	            // Set width of $newElement based on $element
-	            this.$newElement.width(this.$element.width());
+	            this.$newElement.width(this.$element.outerWidth());
             }
         },
 
