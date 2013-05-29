@@ -48,7 +48,7 @@
                 this.button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function(){
                     _this.$newElement.find('button[data-id='+id+']').focus(); 
-                })
+                });
             }
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
@@ -208,7 +208,7 @@
             if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = _this.options.selectedTextFormat.split(">");
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = selectedItems.length +' of ' + this.$element.find('option').length + ' selected';
+                    title = _this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option').length);
                 }
              }  
             
@@ -231,6 +231,7 @@
             var selectHeight = this.$newElement.outerHeight();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
             var notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '';
+            var menuHeight;
             if (this.options.size == 'auto') {
                 function getSize() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
@@ -241,6 +242,7 @@
                     if (_this.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
                     }
+                    var minHeight;
                     if ((menu.find('li').length + menu.find('dt').length) > 3) {
                         minHeight = liHeight*3 + menuExtras - 2;
                     } else {
@@ -521,7 +523,7 @@
                 if (typeof option == 'string') {
                     //Copy the value of option, as once we shift the arguments
                     //it also shifts the value of option.
-                    property = option;
+                    var property = option;
                     if(data[property] instanceof Function) {
                         [].shift.apply(args);
                         value = data[property].apply(data, args);
@@ -544,6 +546,7 @@
         size: 'auto',
         title: null,
         selectedTextFormat : 'values',
+        countSelectedText: '{0} of {1} selected',
         noneSelectedText : 'Nothing selected',
         width: null,
         container: false,
