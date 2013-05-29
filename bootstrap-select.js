@@ -1,4 +1,7 @@
 !function($) {
+
+	"use strict";
+
     var Selectpicker = function(element, options, e) {
         if (e ) {
             e.stopPropagation();
@@ -94,7 +97,7 @@
             //Remove all children.
             this.destroyLi();
             //Re build
-            $li = this.createLi();
+            var $li = this.createLi();
             this.$newElement.find('ul').append( $li );
         },
         
@@ -221,7 +224,11 @@
         },
         
         setSize:function() {
-            var _this = this;
+	        if(this.options.container) {
+	        	// Show $newElement before perfoming size calculations
+		        this.$newElement.toggle(this.$element.parent().is(':visible'));
+	        }
+	        var _this = this;
             var menu = this.$newElement.find('.dropdown-menu');
             var menuA = menu.find('li > a');
             var liHeight = this.$newElement.addClass('open').find('.dropdown-menu li > a').outerHeight();
@@ -231,12 +238,14 @@
             var selectHeight = this.$newElement.outerHeight();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
             var notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '';
+	        var menuHeight;
             if (this.options.size == 'auto') {
-                function getSize() {
+                var getSize = function() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
                     var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
+	                var minHeight;
                     menuHeight = selectOffset_bot;
                     if (_this.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
@@ -259,26 +268,37 @@
             }
 
             //Set width of select
-             if (this.options.width == 'auto') {
-                this.$newElement.find('.dropdown-menu').css('min-width','0');
+            if (this.options.width == 'auto') {
+	            this.$newElement.find('.dropdown-menu').css('min-width','0');
                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
                 this.$newElement.css('width',ulWidth);
                 if (this.options.container) {
                     this.$element.css('width',ulWidth);
                 }
-             } else if (this.options.width && this.options.width != 'auto') {
-                this.$newElement.css('width',this.options.width);
+            } else if (this.options.width) {
                 if (this.options.container) {
-                    this.$element.css('width',this.options.width);
+	                // Note: options.width can be %
+                    this.$element.css('width', this.options.width);
+	                // Set pixel width of $newElement based on $element's pixel width
+	                this.$newElement.width(this.$element.outerWidth());
+                } else {
+	                this.$newElement.css('width',this.options.width);
                 }
-             }
+            } else if(this.options.container) {
+	            // Set width of $newElement based on $element
+	            this.$newElement.width(this.$element.outerWidth());
+            }
         },
 
         selectPosition:function() {
-            var selectElementTop = this.$element.offset().top;
-            var selectElementLeft = this.$element.offset().left;
-            this.$newElement.appendTo(this.options.container);
-            this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
+	        var containerOffset = $(this.options.container).offset();
+	        var eltOffset = this.$element.offset();
+	        if(containerOffset && eltOffset) {
+		        var selectElementTop = eltOffset.top - containerOffset.top;
+		        var selectElementLeft = eltOffset.left - containerOffset.left;
+		        this.$newElement.appendTo(this.options.container);
+		        this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
+	        }
         },
 
         refresh:function() {
@@ -387,7 +407,7 @@
            this.$newElement.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                $select = $(this).parent().parents('.bootstrap-select');
+                var $select = $(this).parent().parents('.bootstrap-select');
                 $select.find('button').focus();
             });
 
@@ -521,7 +541,7 @@
                 if (typeof option == 'string') {
                     //Copy the value of option, as once we shift the arguments
                     //it also shifts the value of option.
-                    property = option;
+                    var property = option;
                     if(data[property] instanceof Function) {
                         [].shift.apply(args);
                         value = data[property].apply(data, args);
