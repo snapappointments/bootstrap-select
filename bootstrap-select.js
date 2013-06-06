@@ -210,8 +210,9 @@
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..                    
             if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = _this.options.selectedTextFormat.split(">");
+                var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = selectedItems.length +' of ' + this.$element.find('option').length + ' selected';
+                    title = selectedItems.length +' of ' + this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length + ' selected';
                 }
              }  
             
