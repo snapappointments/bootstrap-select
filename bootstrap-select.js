@@ -376,8 +376,7 @@
                 if (_this.$element.not(':disabled') && !$(this).parent().hasClass('disabled')){
                     //Deselect all others if not multi select box
                     if (!_this.multiple) {
-                        _this.$element.find('option').removeAttr('selected');
-                        _this.$element.find('option').eq(clickedIndex).prop('selected', true).attr('selected', 'selected');
+                        _this.$element.find('option').eq(clickedIndex).attr('selected', 'selected');
                     } 
                     //Else toggle the one we have chosen if we are multi select.
                     else {
