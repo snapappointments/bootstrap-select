@@ -532,6 +532,9 @@
                
                 if (!data) {
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
+                    if (data.options.constructorCallback != undefined){
+                    	data.options.constructorCallback(data.$element, data.button);
+                    }
                 } else if(options){
                     for(var i in options) {
                        data.options[i]=options[i];
@@ -567,7 +570,8 @@
         noneSelectedText : 'Nothing selected',
         width: null,
         container: false,
-        hideDisabled: false
+        hideDisabled: false,
+        constructorCallback: null
     }
 
     $(document)
