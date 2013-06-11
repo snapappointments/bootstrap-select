@@ -196,10 +196,16 @@
             });
 
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
+                var subtext;            
+                if (_this.options.showSubtext && $(this).attr('data-subtext') && !_this.multiple) {
+                    subtext = ' <small class="muted">'+$(this).data('subtext') +'</small>';
+                } else {
+                    subtext = '';
+                }
                 if($(this).attr('title')!=undefined) {
                     return $(this).attr('title');
                 } else {
-                    return $(this).text();
+                    return $(this).text() + subtext;
                 }
             }).toArray();
 
