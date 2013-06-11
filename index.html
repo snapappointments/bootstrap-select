@@ -758,7 +758,7 @@ Note: this is the same as:<br>
              <td>string | null</td>
              <td>null</td>
              <td>
-                <p><code>'auto</code> automatically adjusts the width of the select to accommodate its widest option</p>
+                <p><code>'auto'</code> automatically adjusts the width of the select to accommodate its widest option</p>
                 <p>set the width of the select manually, e.g. <code>300px</code> or <code>50%</code></p>
               </td>
            </tr>
@@ -772,13 +772,19 @@ Note: this is the same as:<br>
              <td>container</td>
              <td>string | false</td>
              <td>false</td>
-             <td>appends the select to a specific element <code>container: 'body'</code></td>
+             <td>appends the select to a specific element, e.g., <code>container: 'body'</code></td>
            </tr>
            <tr>
              <td>hideDisabled</td>
              <td>boolean</td>
              <td>false</td>
              <td>removes disabled options and optgroups from the menu <code>data-hide-disabled: true</code></td>
+           </tr>
+           <tr>
+             <td>showSubtext</td>
+             <td>boolean</td>
+             <td>false</td>
+             <td>subtext associated with a selected option will be displayed in the button <code>data-show-subtext: true</code></td>
            </tr>
           </tbody>
 </table>
