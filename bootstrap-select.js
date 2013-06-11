@@ -221,7 +221,14 @@
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;
             }
 
-            _this.$newElement.find('.filter-option').html( title );
+            var subtext;            
+            if (this.options.showSubtext && this.$element.find('option:selected').attr('data-subtext')) {
+                subtext = ' <small class="muted">'+this.$element.find('option:selected').data('subtext') +'</small>';
+            } else {
+                subtext = '';
+            }
+
+            _this.$newElement.find('.filter-option').html( title + subtext );
         },
 
         setSize:function() {
@@ -568,7 +575,8 @@
         noneSelectedText : 'Nothing selected',
         width: null,
         container: false,
-        hideDisabled: false
+        hideDisabled: false,
+        showSubtext: false
     }
 
     $(document)
