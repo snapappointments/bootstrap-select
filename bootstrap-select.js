@@ -75,8 +75,8 @@
             var drop =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'></span>&nbsp;" +
-                        "<span class='caret'></span>" +
+                        "<div class='filter-option pull-left'></div>&nbsp;" +
+                        "<div class='caret'></div>" +
                     "</button>" +
                     "<ul class='dropdown-menu' role='menu'>" +
                     "</ul>" +
@@ -236,7 +236,12 @@
                 subtext = '';
             }
 
-            _this.$newElement.find('.filter-option').html( title + subtext );
+            var icon = this.$element.find('option:selected').data('icon') || '';
+            if(icon.length) {
+                icon = '<i class="' + icon + '"></i> ';
+            }
+
+            _this.$newElement.find('.filter-option').html(icon + title + subtext);
         },
 
         setSize:function() {
@@ -406,8 +411,6 @@
                         }
                     }
 
-
-                    $select.find('.filter-option').html($this.text());
                     $select.find('button').focus();
 
                     // Trigger select 'change'
