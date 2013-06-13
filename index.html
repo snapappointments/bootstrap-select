@@ -747,44 +747,68 @@ Note: this is the same as:<br>
            </tr>
           </thead>
           <tbody>
-           <tr>
-             <td>style</td>
-             <td>string | null</td>
-             <td>null</td>
-             <td><p>apply a class to the button</p></td>
-           </tr>
-           <tr>
-             <td>width</td>
-             <td>string | null</td>
-             <td>null</td>
-             <td>
-                <p><code>'auto'</code> automatically adjusts the width of the select to accommodate its widest option</p>
-                <p>set the width of the select manually, e.g. <code>300px</code> or <code>50%</code></p>
-              </td>
-           </tr>
-           <tr>
-             <td>size</td>
-             <td>string | false</td>
-             <td>'auto'</td>
-             <td><p>when set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off</p><p>set to <code>false</code> to always show all items</p></td>
-           </tr>
-           <tr>
+            <tr>
              <td>container</td>
              <td>string | false</td>
              <td>false</td>
-             <td>appends the select to a specific element, e.g., <code>container: 'body'</code></td>
-           </tr>
-           <tr>
+             <td>appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code></td>
+            </tr>
+            <tr>
              <td>hideDisabled</td>
              <td>boolean</td>
              <td>false</td>
              <td>removes disabled options and optgroups from the menu <code>data-hide-disabled: true</code></td>
+            </tr>
+            <tr>
+             <td>selected-text</td>
+             <td>string | null</td>
+             <td>'selected'</td>
+             <td><p>Selected text for multiple</p></td>
+            </tr>
+            <tr>
+             <td>selected-text-format</td>
+             <td>'values' | 'count' | 'count>#' (where # is an integer)</td>
+             <td>null</td>
+             <td><p>Set how <code>multiple select</code> is displayed</p></td>
+            </tr>
+            <tr>
+             <td>separator-text</td>
+             <td>string | null</td>
+             <td>'of'</td>
+             <td><p>Separator text for multiple</p></td>
+            </tr>
+           <tr>
+             <td>size</td>
+             <td>'auto' | integer | false</td>
+             <td>'auto'</td>
+             <td><p>when set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off</p><p>set to <code>false</code> to always show all items</p></td>
            </tr>
            <tr>
              <td>showSubtext</td>
              <td>boolean</td>
              <td>false</td>
              <td>subtext associated with a selected option will be displayed in the button <code>data-show-subtext: true</code></td>
+           </tr>
+           <tr>
+             <td>style</td>
+             <td>string | null</td>
+             <td>null</td>
+             <td><p>apply a class to the button, see <a href="http://twitter.github.io/bootstrap/base-css.html#buttons">bootstrap buttons styles</a></p></td>
+           </tr>
+           <tr>
+             <td>title</td>
+             <td>string | null</td>
+             <td>null</td>
+             <td><p>Set the default text for bootstrap-select</p></td>
+           </tr>
+           <tr>
+             <td>width</td>
+             <td>'auto' | '#px' | '%px' | null (where # is an integer)</td>
+             <td>null</td>
+             <td>
+                <p><code>auto</code> automatically adjusts the width of the select to accommodate its widest option</p>
+                <p>set the width of the select manually, e.g. <code>300px</code> or <code>50%</code></p>
+              </td>
            </tr>
           </tbody>
 </table>
