@@ -196,7 +196,7 @@
             });
 
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
-                var subtext;            
+                var subtext;
                 if (_this.options.showSubtext && $(this).attr('data-subtext') && !_this.multiple) {
                     subtext = ' <small class="muted">'+$(this).data('subtext') +'</small>';
                 } else {
@@ -211,14 +211,16 @@
 
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
-            var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
+            var title = !this.multiple ? selectedItems[0] : selectedItems.join(", "),
+                separator = _this.options.separatorText || _this.options.defaultSeparatorText,
+                selected = _this.options.selectedText || _this.options.defaultSelectedText;
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = _this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = selectedItems.length +' of ' + this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length + ' selected';
+                    title = selectedItems.length +' ' + separator +' ' + this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length + ' ' + selected;
                 }
              }
 
@@ -227,7 +229,7 @@
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;
             }
 
-            var subtext;            
+            var subtext;
             if (this.options.showSubtext && this.$element.find('option:selected').attr('data-subtext')) {
                 subtext = ' <small class="muted">'+this.$element.find('option:selected').data('subtext') +'</small>';
             } else {
@@ -579,6 +581,8 @@
         title: null,
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
+        defaultSelectedText: 'selected',
+        defaultSeparatorText: 'of',
         width: null,
         container: false,
         hideDisabled: false,
