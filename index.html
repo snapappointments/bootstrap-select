@@ -760,22 +760,16 @@ Note: this is the same as:<br>
              <td>removes disabled options and optgroups from the menu <code>data-hide-disabled: true</code></td>
             </tr>
             <tr>
-             <td>selected-text</td>
-             <td>string | null</td>
-             <td>'selected'</td>
-             <td><p>Selected text for multiple</p></td>
-            </tr>
-            <tr>
-             <td>selected-text-format</td>
-             <td>'values' | 'count' | 'count>#' (where # is an integer)</td>
+             <td>selectedTextFormat</td>
+             <td>'values' | 'count' | 'count > #' (where # is an integer)</td>
              <td>null</td>
-             <td><p>Set how <code>multiple select</code> is displayed</p></td>
+             <td>specifies how the selection is displayed with a multiple select (see <a href="http://silviomoreto.github.io/bootstrap-select/#selectTitles">here</a></td>
             </tr>
             <tr>
-             <td>separator-text</td>
-             <td>string | null</td>
-             <td>'of'</td>
-             <td><p>Separator text for multiple</p></td>
+             <td>countSelectedText</td>
+             <td>string</td>
+             <td>'{0} of {1} selected'</td>
+             <td>sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>. {0} is the selected amount. {1} is total available for selection.</td>
             </tr>
            <tr>
              <td>size</td>
