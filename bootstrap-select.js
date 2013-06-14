@@ -220,7 +220,7 @@
                 var max = _this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = selectedItems.length +' ' + separator +' ' + this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length + ' ' + selected;
+                    title = _this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
              }
 
@@ -584,8 +584,7 @@
         title: null,
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
-        defaultSelectedText: 'selected',
-        defaultSeparatorText: 'of',
+        countSelectedText: '{0} of {1} selected',
         width: null,
         container: false,
         hideDisabled: false,
