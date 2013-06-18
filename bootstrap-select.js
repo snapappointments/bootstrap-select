@@ -74,8 +74,8 @@
             var drop =
                 "<div class='btn-group bootstrap-select'>" +
                     "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'></span>&nbsp;" +
-                        "<span class='caret'></span>" +
+                        "<div class='filter-option pull-left'></div>&nbsp;" +
+                        "<div class='caret'></div>" +
                     "</button>" +
                     "<ul class='dropdown-menu' role='menu'>" +
                     "</ul>" +
@@ -203,14 +203,16 @@
 
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
-            var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
+            var title = !this.multiple ? selectedItems[0] : selectedItems.join(", "),
+                separator = _this.options.separatorText || _this.options.defaultSeparatorText,
+                selected = _this.options.selectedText || _this.options.defaultSelectedText;
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = _this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = selectedItems.length +' of ' + this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length + ' selected';
+                    title = _this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
              }
 
@@ -226,7 +228,12 @@
                 subtext = '';
             }
 
-            _this.$newElement.find('.filter-option').html( title + subtext );
+            var icon = this.$element.find('option:selected').data('icon') || '';
+            if(icon.length) {
+                icon = '<i class="' + icon + '"></i> ';
+            }
+
+            _this.$newElement.find('.filter-option').html(icon + title + subtext);
         },
 
         setSize:function() {
@@ -396,8 +403,6 @@
                         }
                     }
 
-
-                    $select.find('.filter-option').html($this.text());
                     $select.find('button').focus();
 
                     // Trigger select 'change'
@@ -571,6 +576,7 @@
         title: null,
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
+        countSelectedText: '{0} of {1} selected',
         width: null,
         container: false,
         hideDisabled: false,

@@ -4,12 +4,15 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.js"></script>
     <script type="text/javascript" src="bootstrap-select.js"></script>
-    <link rel="stylesheet" type="text/css" href="bootstrap-select.css">
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bootstrap-select.css">
 
     <script type="text/javascript">
         $(window).on('load', function () {
-            $('.selectpicker').selectpicker({style: 'button claass'});
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
         });
     </script>
 </head>
