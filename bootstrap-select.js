@@ -1,9 +1,9 @@
 !function($) {
 
-	"use strict";
+    "use strict";
 
     var Selectpicker = function(element, options, e) {
-        if (e ) {
+        if (e) {
             e.stopPropagation();
             e.preventDefault();
         }
@@ -38,10 +38,10 @@
                 this.$element.css('visibility','hidden');
             };
             this.multiple = this.$element.prop('multiple');
-            var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var id = this.$element.attr('id');
-            this.$element.after( this.createView() );
-            this.$newElement = this.$element.next('.bootstrap-select');
+            this.$newElement = this.createView()
+            this.$element.after(this.$newElement);
+
             if (this.options.container) {
                 this.selectPosition();
             }
@@ -50,14 +50,13 @@
                 var _this = this;
                 this.button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function(){
-                    _this.$newElement.find('button[data-id='+id+']').focus();
+                    _this.button.focus();
                 })
             }
-            for (var i = 0; i < classList.length; i++) {
-                if(classList[i] != 'selectpicker') {
-                    this.$newElement.addClass(classList[i]);
-                }
+            if (this.$element.attr('class')) {
+                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker/gi, ''));
             }
+
             //If we are multiple, then add the show-tick class by default
             if(this.multiple) {
                  this.$newElement.addClass('show-tick');
@@ -108,28 +107,24 @@
         createLi: function() {
 
             var _this = this;
-            var _li = [];
             var _liA = [];
             var _liHtml = '';
 
-            this.$element.find('option').each(function(){
-                _li.push($(this).text());
-            });
 
             this.$element.find('option').each(function(index) {
                 var $this = $(this);
 
                 //Get the class and text for the option
-                var optionClass = $this.attr("class") !== undefined ? $this.attr("class") : '';
+                var optionClass = $this.attr("class") || '';
                 var text =  $this.text();
-                var subtext = $this.data('subtext') !== undefined ? '<small class="muted">'+$this.data('subtext')+'</small>' : '';
+                var subtext = $this.data('subtext') !== undefined ? '<small class="muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="'+$this.data('icon')+'"></i> ' : '';
-                if ($this.is(':disabled') || $this.parent().is(':disabled')) {
+                if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
                 }
 
                 //Prepend any icon and append any subtext to the main text.
-                 text = icon + '<span class="text">' + text + subtext + '</span>';
+                text = icon + '<span class="text">' + text + subtext + '</span>';
 
                 if (_this.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
@@ -164,12 +159,9 @@
                 }
             });
 
-            if (_li.length > 0) {
-                for (var i = 0; i < _li.length; i++) {
-                    var $option = this.$element.find('option').eq(i);
-                    _liHtml += "<li rel=" + i + ">" + _liA[i] + "</li>";
-                }
-            }
+            $.each(_liA, function(i, item){
+                _liHtml += "<li rel=" + i + ">" + item + "</li>";
+            });
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
             if(!this.multiple && this.$element.find('option:selected').length==0 && !_this.options.title) {
@@ -245,11 +237,11 @@
         },
 
         setSize:function() {
-	        if(this.options.container) {
-	        	// Show $newElement before perfoming size calculations
-		        this.$newElement.toggle(this.$element.parent().is(':visible'));
-	        }
-	        var _this = this;
+            if(this.options.container) {
+                // Show $newElement before perfoming size calculations
+                this.$newElement.toggle(this.$element.parent().is(':visible'));
+            }
+            var _this = this;
             var menu = this.$newElement.find('.dropdown-menu');
             var menuA = menu.find('li > a');
             var liHeight = this.$newElement.addClass('open').find('.dropdown-menu li > a').outerHeight();
@@ -259,14 +251,14 @@
             var selectHeight = this.$newElement.outerHeight();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
             var notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '';
-	        var menuHeight;
+            var menuHeight;
             if (this.options.size == 'auto') {
                 var getSize = function() {
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
                     var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
-	                var minHeight;
+                    var minHeight;
                     menuHeight = selectOffset_bot;
                     if (_this.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
@@ -290,7 +282,7 @@
 
             //Set width of select
             if (this.options.width == 'auto') {
-	            this.$newElement.find('.dropdown-menu').css('min-width','0');
+                this.$newElement.find('.dropdown-menu').css('min-width','0');
                 var ulWidth = this.$newElement.find('.dropdown-menu').css('width');
                 this.$newElement.css('width',ulWidth);
                 if (this.options.container) {
@@ -298,28 +290,28 @@
                 }
             } else if (this.options.width) {
                 if (this.options.container) {
-	                // Note: options.width can be %
+                    // Note: options.width can be %
                     this.$element.css('width', this.options.width);
-	                // Set pixel width of $newElement based on $element's pixel width
-	                this.$newElement.width(this.$element.outerWidth());
+                    // Set pixel width of $newElement based on $element's pixel width
+                    this.$newElement.width(this.$element.outerWidth());
                 } else {
-	                this.$newElement.css('width',this.options.width);
+                    this.$newElement.css('width',this.options.width);
                 }
             } else if(this.options.container) {
-	            // Set width of $newElement based on $element
-	            this.$newElement.width(this.$element.outerWidth());
+                // Set width of $newElement based on $element
+                this.$newElement.width(this.$element.outerWidth());
             }
         },
 
         selectPosition:function() {
-	        var containerOffset = $(this.options.container).offset();
-	        var eltOffset = this.$element.offset();
-	        if(containerOffset && eltOffset) {
-		        var selectElementTop = eltOffset.top - containerOffset.top;
-		        var selectElementLeft = eltOffset.left - containerOffset.left;
-		        this.$newElement.appendTo(this.options.container);
-		        this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
-	        }
+            var containerOffset = $(this.options.container).offset();
+            var eltOffset = this.$element.offset();
+            if(containerOffset && eltOffset) {
+                var selectElementTop = eltOffset.top - containerOffset.top;
+                var selectElementLeft = eltOffset.left - containerOffset.left;
+                this.$newElement.appendTo(this.options.container);
+                this.$newElement.css({'position':'absolute', 'top':selectElementTop+'px', 'left':selectElementLeft+'px'});
+            }
         },
 
         refresh:function() {
@@ -349,7 +341,7 @@
         },
 
         isDisabled: function() {
-                return this.$element.is(':disabled') || this.$element.attr('readonly');
+            return this.$element.is(':disabled') || this.$element.attr('readonly');
         },
 
         checkDisabled: function() {
@@ -592,7 +584,7 @@
     }
 
     $(document)
-        .data('keycount',0)
+        .data('keycount', 0)
         .on('keydown', '[data-toggle=dropdown], [role=menu]' , Selectpicker.prototype.keydown)
 
 }(window.jQuery);
