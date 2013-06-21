@@ -1,0 +1,26 @@
+.scrollMe .dropdown-menu {
+    height: 100px;
+    overflow: hidden !important;
+    position: relative;
+}
+
+.scrollMe .dropdown-menu .scrollyou-bar {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 7px;
+    height: 32px;
+
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+
+    -webkit-transition: background 0.2s ease-in-out;
+       -moz-transition: background 0.2s ease-in-out;
+        -ms-transition: background 0.2s ease-in-out;
+         -o-transition: background 0.2s ease-in-out;
+            transition: background 0.2s ease-in-out;
+}
+
+.scrollMe .dropdown-menu:hover .scrollyou-bar {
+    background-color: rgba(0,0,0,0.5);
+}
