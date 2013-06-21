@@ -5,10 +5,11 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown." />
-    
+
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/scrollYou.css">
     <style type="text/css">
       .com { color: #93a1a1; }
       .lit { color: #195f91; }
@@ -41,9 +42,9 @@
         text-shadow: 0 1px 0 #fff;
       }
       .special {
-        font-style: italic; 
-        font-weight: bold !important; 
-        color:#bc0000 !important; 
+        font-style: italic;
+        font-weight: bold !important;
+        color:#bc0000 !important;
         background:#000;
       }
     </style>
@@ -354,9 +355,9 @@
 </pre>
 <pre class="prettyprint linenums">
   .special {
-    font-style: italic; 
+    font-style: italic;
     font-weight: bold !important;
-    color:#bc0000 !important; 
+    color:#bc0000 !important;
     background:#000;
   }
 </pre>
@@ -584,6 +585,27 @@ Note: this is the same as:<br>
   &lt;/select>
 </pre>
 
+<p id="scrollYou">You can use the plugin <a href="https://github.com/silviomoreto/scrollYou" target="_blank">scrollYou</a> cross-browser native scroll. The example below behave like mountain lion.</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker scrollMe" data-size="5">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+      <option>Mayonnaise</option>
+      <option>Barbecue Sauce</option>
+      <option>Salad Dressing</option>
+      <option>Tabasco</option>
+      <option>Salsa</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" data-size="5"&gt;
+    ...
+  &lt;/select>
+</pre>
+
 <p id="data-divider">Add <code>data-divider="true"</code> to an option to turn it into a divider.</p>
 
 <div class="bs-docs-example">
@@ -686,7 +708,7 @@ Note: this is the same as:<br>
   &lt;select class="selectpicker"&gt;
     ...
   &lt;/select>
-  
+
   &lt;select class="selectpicker" data-container="body"&gt;
     ...
   &lt;/select>
@@ -821,9 +843,9 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
 <pre class="prettyprint linenums">
   $('.selectpicker').val('Mustard');
   $('.selectpicker').selectpicker('render');
-  
+
   //this is the equivalent of the above
-  $('.selectpicker').selectpicker('val', 'Mustard'); 
+  $('.selectpicker').selectpicker('val', 'Mustard');
 </pre>
 
 <h3 id="selectAll">selectAll()</h3>
@@ -872,11 +894,11 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
     &lt;option value="Ketchup"&gt;Ketchup&lt;/option&gt;
     &lt;option value="Relish"&gt;Relish&lt;/option&gt;
   &lt;/select&gt;
-  
+
 &lt;button class="btn btn-warning rm-mustard"&gt;Remove Mustard&lt;/button&gt;
 &lt;button class="btn btn-danger rm-ketchup"&gt;Remove Ketchup&lt;/button&gt;
 &lt;button class="btn btn-success rm-relish"&gt;Remove Relish&lt;/button&gt;
-  
+
   $('.rm-mustard').click(function() {
     $('.remove-example').find('[value=Mustard]').remove();
     $('.remove-example').selectpicker('refresh');
@@ -893,7 +915,7 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
 <button class="btn ex-disable"><i class="icon-remove"></i> Disable</button>
 <button class="btn ex-enable"><i class="icon-ok"></i> Enable</button>
 </div>
-<pre class="prettyprint linenums">  
+<pre class="prettyprint linenums">
       $('.ex-disable').click(function() {
           $('.disable-example').prop('disabled',true);
           $('.disable-example').selectpicker('refresh');
@@ -914,11 +936,13 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="javascripts/prettify.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script src="javascripts/bootstrap-select.js"></script>
+    <script src="javascripts/jquery.mousewheel.js"></script>
+    <script src="javascripts/scrollYou.js"></script>
     <script type="text/javascript">
       window.onload=function(){
       $('.selectpicker').selectpicker();
@@ -942,9 +966,13 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
           $('.disable-example').prop('disabled',false);
           $('.disable-example').selectpicker('refresh');
       });
+
+      // scrollYou
+      $('.scrollMe .dropdown-menu').scrollyou();
+
       prettyPrint();
       };
-    </script>   
+    </script>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-35848102-1']);
