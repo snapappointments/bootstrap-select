@@ -528,6 +528,14 @@
                 $parent.addClass('open');
                 $(document).data('keycount',0);
             }
+        },
+
+        hide: function() {
+            this.$newElement.hide();
+        },
+
+        show: function() {
+            this.$newElement.show();
         }
     };
 
