@@ -116,7 +116,7 @@
 
                 //Get the class and text for the option
                 var optionClass = $this.attr("class") || '';
-                var text =  $this.text();
+                var text =  $this.html();
                 var subtext = $this.data('subtext') !== undefined ? '<small class="muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="'+$this.data('icon')+'"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
