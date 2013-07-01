@@ -22,6 +22,7 @@
         this.val = Selectpicker.prototype.val;
         this.render = Selectpicker.prototype.render;
         this.refresh = Selectpicker.prototype.refresh;
+        this.selectFew = Selectpicker.prototype.selectFew;
         this.selectAll = Selectpicker.prototype.selectAll;
         this.deselectAll = Selectpicker.prototype.deselectAll;
         this.init();
@@ -441,6 +442,11 @@
 
         selectAll:function() {
             this.$element.find('option').prop('selected', true).attr('selected', 'selected');
+            this.render();
+        },
+        
+        selectFew:function() {
+            this.$element.find('option#selected').prop('selected', true).attr('selected', 'selected');
             this.render();
         },
 
