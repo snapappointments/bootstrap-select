@@ -22,6 +22,7 @@
         this.val = Selectpicker.prototype.val;
         this.render = Selectpicker.prototype.render;
         this.refresh = Selectpicker.prototype.refresh;
+        this.setStyle = Selectpicker.prototype.setStyle;
         this.selectAll = Selectpicker.prototype.selectAll;
         this.deselectAll = Selectpicker.prototype.deselectAll;
         this.init();
@@ -53,21 +54,18 @@
                     _this.button.focus();
                 })
             }
-            if (this.$element.attr('class')) {
-                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker/gi, ''));
-            }
 
             //If we are multiple, then add the show-tick class by default
             if(this.multiple) {
                  this.$newElement.addClass('show-tick');
             }
-            this.button.addClass(this.options.style);
+            
             this.checkDisabled();
             this.checkTabIndex();
             this.clickListener();
-
             this.render();
             this.setSize();
+            this.setStyle();
         },
 
         createDropdown: function() {
@@ -188,16 +186,18 @@
             });
 
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
+                var $this = $(this);
+                var icon = $this.data('icon') && _this.options.showIcon ? '<i class="' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
-                if (_this.options.showSubtext && $(this).attr('data-subtext') && !_this.multiple) {
-                    subtext = ' <small class="muted">'+$(this).data('subtext') +'</small>';
+                if (_this.options.showSubtext && $this.attr('data-subtext') && !_this.multiple) {
+                    subtext = ' <small class="muted">'+$this.data('subtext') +'</small>';
                 } else {
                     subtext = '';
                 }
-                if($(this).attr('title')!=undefined) {
-                    return $(this).attr('title');
+                if($this.attr('title')!=undefined) {
+                    return $this.attr('title');
                 } else {
-                    return $(this).text() + subtext;
+                    return icon + $this.text() + subtext;
                 }
             }).toArray();
 
@@ -226,12 +226,22 @@
                 subtext = '';
             }
 
-            var icon = this.$element.find('option:selected').data('icon') || '';
-            if(icon.length) {
-                icon = '<i class="' + icon + '"></i> ';
+            _this.$newElement.find('.filter-option').html(title + subtext);
+        },
+        
+        setStyle:function(style, status) {
+            if (this.$element.attr('class')) {
+                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker/gi, ''));
             }
-
-            _this.$newElement.find('.filter-option').html(icon + title + subtext);
+            
+            var buttonClass = style ? style : this.options.style;
+            
+            if (status == 'add') {
+                this.button.addClass(buttonClass);
+            } else {
+                this.button.removeClass(this.options.style);
+                this.button.addClass(buttonClass);
+            }
         },
 
         setSize:function() {
@@ -316,6 +326,7 @@
             this.reloadLi();
             this.render();
             this.setSize();
+            this.setStyle();
             this.checkDisabled();
             if (this.options.container) {
                 this.selectPosition();
@@ -586,7 +597,8 @@
         width: null,
         container: false,
         hideDisabled: false,
-        showSubtext: false
+        showSubtext: false,
+        showIcon: true
     }
 
     $(document)
