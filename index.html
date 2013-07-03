@@ -806,6 +806,12 @@ Note: this is the same as:<br>
              <td>subtext associated with a selected option will be displayed in the button <code>data-show-subtext: true</code></td>
            </tr>
            <tr>
+             <td>showIcon</td>
+             <td>boolean</td>
+             <td>true</td>
+             <td>Display icon(s) associated with selected option(s) in the button. If false, icons will not be displayed in the button.</td>
+           </tr>
+           <tr>
              <td>style</td>
              <td>string | null</td>
              <td>null</td>
@@ -870,25 +876,30 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
    $('.selectpicker').selectpicker('render');
 </pre>
 
+<h3 id="selectAll">setStyle()</h3>
+<p>Modify the class(es) associated with either the button itself or its container.</p>
+
+<p>If changing the class on the container:</p>
+
+<pre class="prettyprint linenums">
+   $('.selectpicker').addClass('span12').selectpicker('setStyle');
+</pre>
+
+<p>If changing the class(es) on the button (altering data-style):</p>
+
+<pre class="prettyprint linenums">
+// Replace Class
+  $('.selectpicker').selectpicker('setStyle', 'btn-danger');
+
+// Add Class
+  $('.selectpicker').selectpicker('setStyle', 'btn-large', 'add');
+</pre>
+
 <h3 id="refresh">refresh()</h3>
 <p>To programmatically update a select with JavaScript, first manipulate the select, then use the <code>refresh</code> method to update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a select via JavaScript.</p>
 
 <pre class="prettyprint linenums">
    $('.selectpicker').selectpicker('refresh');
-</pre>
-
-<h3 id="hide">hide()</h3>
-<p>To programmatically hide the bootstrap-select use the <code>hide</code> method to hide it.</p>
-
-<pre class="prettyprint linenums">
-   $('.selectpicker').selectpicker('hide');
-</pre>
-
-<h3 id="show">show()</h3>
-<p>To programmatically show the bootstrap-select use the <code>show</code> method to show it.</p>
-
-<pre class="prettyprint linenums">
-   $('.selectpicker').selectpicker('show');
 </pre>
 
 <div class="bs-docs-example">
@@ -938,6 +949,20 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
           $('.disable-example').prop('disabled',false);
           $('.disable-example').selectpicker('refresh');
       });
+</pre>
+
+<h3 id="hide">hide()</h3>
+<p>To programmatically hide the bootstrap-select use the <code>hide</code> method to hide it.</p>
+
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('hide');
+</pre>
+
+<h3 id="show">show()</h3>
+<p>To programmatically show the bootstrap-select use the <code>show</code> method to show it.</p>
+
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('show');
 </pre>
 
       </section>
