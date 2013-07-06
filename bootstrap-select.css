@@ -33,11 +33,11 @@
     width: 220px\9; /*IE8 and below*/
 }
 
-.bootstrap-select .btn {
+.bootstrap-select > .btn {
     width: 100%;
 }
 
-.bootstrap-select.show-menu-arrow.open .btn {
+.bootstrap-select.show-menu-arrow.open > .btn {
     z-index: 1001;
 }
 
@@ -76,6 +76,19 @@
     box-sizing: border-box;
 }
 
+.bootstrap-select.btn-group .dropdown-menu.inner {
+    position: static;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+}
+
 .bootstrap-select.btn-group .dropdown-menu dt {
     display: block;
     padding: 3px 20px;
@@ -84,6 +97,10 @@
 
 .bootstrap-select.btn-group .div-contain {
     overflow: hidden;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li {
+    position: relative;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {

@@ -64,7 +64,7 @@
             this.checkTabIndex();
             this.clickListener();
             this.render();
-            this.setSize();
+            this.liHeight();
             this.setStyle();
         },
 
@@ -75,8 +75,10 @@
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
                     "</button>" +
-                    "<ul class='dropdown-menu' role='menu'>" +
-                    "</ul>" +
+                    "<div class='dropdown-menu open'>" +
+                        "<ul class='dropdown-menu inner' role='menu'>" +
+                        "</ul>" +
+                    "</div>" +
                 "</div>";
 
             return $(drop);
@@ -243,6 +245,14 @@
                 this.button.addClass(buttonClass);
             }
         },
+        
+        liHeight:function() {
+            var selectClone = this.$newElement.clone();
+            selectClone.appendTo('body');
+            var liHeight = selectClone.addClass('open').find('.dropdown-menu li > a').outerHeight();
+            selectClone.remove();
+            this.$newElement.data('liHeight', liHeight);
+        },
 
         setSize:function() {
             if(this.options.container) {
@@ -250,18 +260,21 @@
                 this.$newElement.toggle(this.$element.parent().is(':visible'));
             }
             var _this = this;
-            var menu = this.$newElement.find('.dropdown-menu');
-            var menuA = menu.find('li > a');
-            var liHeight = this.$newElement.addClass('open').find('.dropdown-menu li > a').outerHeight();
-            this.$newElement.removeClass('open');
-            var divHeight = menu.find('li .divider').outerHeight(true);
-            var selectOffset_top = this.$newElement.offset().top;
+            var menu = this.$newElement.find('> .dropdown-menu');
+            var menuInner = menu.find('.inner');
+            var menuA = menuInner.find('li > a');
             var selectHeight = this.$newElement.outerHeight();
-            var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
+            var liHeight = this.$newElement.data('liHeight');
+            var divHeight = menu.find('li .divider').outerHeight(true);
+            var menuPadding = parseInt(menu.css('padding-top')) + 
+                              parseInt(menu.css('padding-bottom')) + 
+                              parseInt(menu.css('border-top-width')) + 
+                              parseInt(menu.css('border-bottom-width'));
             var notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '';
             var menuHeight;
             if (this.options.size == 'auto') {
                 var getSize = function() {
+                    var selectOffset_top = _this.$newElement.offset().top;
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = window.innerHeight;
                     var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
@@ -276,7 +289,8 @@
                     } else {
                         minHeight = 0;
                     }
-                    menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight + 'px'});
+                    menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden', 'min-height' : minHeight + 'px'});
+                    menuInner.css({'max-height' : (menuHeight - menuPadding) + 'px', 'overflow-y' : 'auto'});
             }
                 getSize();
                 $(window).resize(getSize);
@@ -285,7 +299,8 @@
                 var optIndex = menu.find("li"+notDisabled+" > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
-                menu.css({'max-height' : menuHeight + 'px', 'overflow-y' : 'auto'});
+                menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden'});
+                menuInner.css({'max-height' : (menuHeight - menuPadding) + 'px', 'overflow-y' : 'auto'});
             }
 
             //Set width of select
@@ -380,6 +395,10 @@
             var _this = this;
 
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+            
+            this.$newElement.on('click', function() {
+                _this.setSize();
+            });
 
             this.$newElement.on('click', 'li a', function(e){
                 var clickedIndex = $(this).parent().index(),
