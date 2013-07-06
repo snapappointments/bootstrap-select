@@ -276,7 +276,7 @@
                 var getSize = function() {
                     var selectOffset_top = _this.$newElement.offset().top;
                     var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
-                    var windowHeight = window.innerHeight;
+                    var windowHeight = $(window).height();
                     var menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2;
                     var selectOffset_bot = windowHeight - selectOffset_top_scroll - selectHeight - menuExtras;
                     var minHeight;
