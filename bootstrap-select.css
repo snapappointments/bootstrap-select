@@ -65,6 +65,10 @@
     cursor: not-allowed;
 }
 
+.bootstrap-select.btn-group > .disabled:focus {
+    outline: none !important;
+}
+
 .bootstrap-select.btn-group[class*="span"] .btn {
     width: 100%;
 }
