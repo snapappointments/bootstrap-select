@@ -84,7 +84,6 @@
             return $(drop);
         },
 
-
         createView: function() {
             var $drop = this.createDropdown();
             var $li = this.createLi();
