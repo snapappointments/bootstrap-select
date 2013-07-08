@@ -16,8 +16,9 @@
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
 
         //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
-        if(this.options.title==null)
+        if (this.options.title == null) {
             this.options.title = this.$element.attr('title');
+        }
 
         //Expose public methods
         this.val = Selectpicker.prototype.val;
@@ -33,7 +34,7 @@
 
         constructor: Selectpicker,
 
-        init: function (e) {
+        init: function(e) {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
@@ -41,20 +42,20 @@
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
             this.button = this.$newElement.find('> button');
-            
+
             if (id !== undefined) {
                 var _this = this;
                 this.button.attr('data-id', id);
-                $('label[for="' + id + '"]').click(function(){
+                $('label[for="' + id + '"]').click(function() {
                     _this.button.focus();
                 })
             }
 
             //If we are multiple, then add the show-tick class by default
-            if(this.multiple) {
+            if (this.multiple) {
                  this.$newElement.addClass('show-tick');
             }
-            
+
             this.checkDisabled();
             this.checkTabIndex();
             this.clickListener();
@@ -156,12 +157,12 @@
                 }
             });
 
-            $.each(_liA, function(i, item){
+            $.each(_liA, function(i, item) {
                 _liHtml += "<li rel=" + i + ">" + item + "</li>";
             });
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
-            if(!this.multiple && this.$element.find('option:selected').length==0 && !_this.options.title) {
+            if (!this.multiple && this.$element.find('option:selected').length==0 && !_this.options.title) {
                 this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
             }
 
@@ -193,7 +194,7 @@
                 } else {
                     subtext = '';
                 }
-                if($this.attr('title')!=undefined) {
+                if ($this.attr('title') != undefined) {
                     return $this.attr('title');
                 } else {
                     return icon + $this.text() + subtext;
@@ -205,16 +206,16 @@
             var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
-            if(_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
+            if (_this.multiple && _this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = _this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
-                if( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
+                if ( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = _this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
              }
 
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
-            if(!title) {
+            if (!title) {
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;
             }
 
@@ -227,14 +228,14 @@
 
             _this.$newElement.find('.filter-option').html(title + subtext);
         },
-        
+
         setStyle: function(style, status) {
             if (this.$element.attr('class')) {
                 this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker/gi, ''));
             }
-            
+
             var buttonClass = style ? style : this.options.style;
-            
+
             if (status == 'add') {
                 this.button.addClass(buttonClass);
             } else {
@@ -242,7 +243,7 @@
                 this.button.addClass(buttonClass);
             }
         },
-        
+
         liHeight: function() {
             var selectClone = this.$newElement.clone();
             selectClone.appendTo('body');
@@ -259,9 +260,9 @@
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 divHeight = menu.find('li .divider').outerHeight(true),
-                menuPadding = parseInt(menu.css('padding-top')) + 
-                              parseInt(menu.css('padding-bottom')) + 
-                              parseInt(menu.css('border-top-width')) + 
+                menuPadding = parseInt(menu.css('padding-top')) +
+                              parseInt(menu.css('padding-bottom')) +
+                              parseInt(menu.css('border-top-width')) +
                               parseInt(menu.css('border-bottom-width')),
                 notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '',
                 menuHeight;
@@ -296,7 +297,7 @@
                 menuInner.css({'max-height' : (menuHeight - menuPadding) + 'px', 'overflow-y' : 'auto'});
             }
         },
-        
+
         setWidth: function() {
             //Set width of select
             var menu = this.$newElement.find('> .dropdown-menu');
@@ -315,7 +316,7 @@
                 $drop = $(drop),
                 pos,
                 actualHeight,
-                getPlacement = function($element) {    
+                getPlacement = function($element) {
                     $drop.addClass($element.attr('class').replace(/open/gi, ''));
                     pos = $element.offset();
                     actualHeight = $element[0].offsetHeight;
@@ -348,7 +349,7 @@
         },
 
         setSelected: function(index, selected) {
-            if(selected) {
+            if (selected) {
                 this.$menu.find('li').eq(index).addClass('selected');
             } else {
                 this.$menu.find('li').eq(index).removeClass('selected');
@@ -356,7 +357,7 @@
         },
 
         setDisabled: function(index, disabled) {
-            if(disabled) {
+            if (disabled) {
                 this.$menu.find('li').eq(index).addClass('disabled').find('a').attr('href','#').attr('tabindex',-1);
             } else {
                 this.$menu.find('li').eq(index).removeClass('disabled').find('a').removeAttr('href').attr('tabindex',0);
@@ -393,26 +394,28 @@
         clickListener: function() {
             var _this = this;
 
-            $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-            
+            $('body').on('touchstart.dropdown', '.dropdown-menu', function(e) {
+                e.stopPropagation();
+            });
+
             this.$newElement.on('click', function() {
                 _this.setSize();
             });
 
-            this.$menu.on('click', 'li a', function(e){
+            this.$menu.on('click', 'li a', function(e) {
                 var clickedIndex = $(this).parent().index(),
                     $this = $(this).parent(),
                     prevValue = _this.$element.val();
 
                 //Dont close on multi choice menu
-                if(_this.multiple) {
+                if (_this.multiple) {
                     e.stopPropagation();
                 }
 
                 e.preventDefault();
 
                 //Dont run if we have been disabled
-                if (_this.$element.not(':disabled') && !$(this).parent().hasClass('disabled')){
+                if (_this.$element.not(':disabled') && !$(this).parent().hasClass('disabled')) {
                     //Deselect all others if not multi select box
                     if (!_this.multiple) {
                         _this.$element.find('option').prop('selected', false);
@@ -422,7 +425,7 @@
                     else {
                         var selected = _this.$element.find('option').eq(clickedIndex).prop('selected');
 
-                        if(selected) {
+                        if (selected) {
                             _this.$element.find('option').eq(clickedIndex).prop('selected', false);
                         } else {
                             _this.$element.find('option').eq(clickedIndex).prop('selected', true);
@@ -455,7 +458,7 @@
 
         val: function(value) {
 
-            if(value!=undefined) {
+            if (value != undefined) {
                 this.$element.val( value );
 
                 this.$element.trigger('change');
@@ -484,7 +487,7 @@
                 first,
                 last,
                 prev,
-                nextPrev
+                nextPrev;
 
             $this = $(this);
 
@@ -569,7 +572,7 @@
        //get the args of the outer function..
        var args = arguments;
        var value;
-       var chain = this.each(function () {
+       var chain = this.each(function() {
             if ($(this).is('select')) {
                 var $this = $(this),
                     data = $this.data('selectpicker'),
@@ -577,9 +580,9 @@
 
                 if (!data) {
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
-                } else if(options){
+                } else if (options) {
                     for(var i in options) {
-                       data.options[i]=options[i];
+                       data.options[i] = options[i];
                     }
                 }
 
@@ -587,7 +590,7 @@
                     //Copy the value of option, as once we shift the arguments
                     //it also shifts the value of option.
                     var property = option;
-                    if(data[property] instanceof Function) {
+                    if (data[property] instanceof Function) {
                         [].shift.apply(args);
                         value = data[property].apply(data, args);
                     } else {
@@ -597,7 +600,7 @@
             }
         });
 
-        if(value!=undefined) {
+        if (value != undefined) {
             return value;
         } else {
             return chain;
