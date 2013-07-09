@@ -113,6 +113,7 @@
 
                 //Get the class and text for the option
                 var optionClass = $this.attr("class") || '';
+                var inline = $this.attr("style") || '';
                 var text =  $this.html();
                 var subtext = $this.data('subtext') !== undefined ? '<small class="muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="'+$this.data('icon')+'"></i> ' : '';
@@ -137,22 +138,22 @@
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+label+'</dt>'+
-                                _this.createA(text, "opt " + optionClass )
+                                _this.createA(text, "opt " + optionClass, inline )
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+label+'</dt>'+
-                                _this.createA(text, "opt " + optionClass ));
+                                _this.createA(text, "opt " + optionClass, inline ));
                         }
                     } else {
-                         _liA.push( _this.createA(text, "opt " + optionClass )  );
+                         _liA.push( _this.createA(text, "opt " + optionClass, inline )  );
                     }
                 } else if ($this.data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else if ($(this).data('hidden') == true) {
                     _liA.push('');
                 } else {
-                    _liA.push( _this.createA(text, optionClass ) );
+                    _liA.push( _this.createA(text, optionClass, inline ) );
                 }
             });
 
@@ -168,8 +169,8 @@
             return $(_liHtml);
         },
 
-        createA: function(text, classes) {
-         return '<a tabindex="0" class="'+classes+'">' +
+        createA: function(text, classes, inline) {
+         return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
                  text +
                  '<i class="icon-ok check-mark"></i>' +
                  '</a>';
