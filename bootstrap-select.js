@@ -2,7 +2,8 @@
 
     "use strict";
 
-    var Selectpicker = function(element, options, e) {
+    var selectpicker = '.selectpicker'
+    , Selectpicker = function(element, options, e) {
         if (e) {
             e.stopPropagation();
             e.preventDefault();
@@ -623,6 +624,11 @@
 
     $(document)
         .data('keycount', 0)
-        .on('keydown', '[data-toggle=dropdown], [role=menu]' , Selectpicker.prototype.keydown)
+        .on('keydown', '[data-toggle=dropdown], [role=menu]' , Selectpicker.prototype.keydown);
+    $(document).on('ready', function () {
+            $(selectpicker).each(function () {
+                    $(this).selectpicker();
+            });
+       });
 
 }(window.jQuery);
