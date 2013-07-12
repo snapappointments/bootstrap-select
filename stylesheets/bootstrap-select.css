@@ -1,6 +1,6 @@
-.bootstrap-select.btn-group, 
+.bootstrap-select.btn-group,
 .bootstrap-select.btn-group[class*="span"] {
-    float: none; 
+    float: none;
     display: inline-block;
     margin-bottom: 10px;
     margin-left: 0;
@@ -11,8 +11,8 @@
     margin-bottom: 0;
 }
 
-.bootstrap-select.btn-group.pull-right, 
-.bootstrap-select.btn-group[class*="span"].pull-right, 
+.bootstrap-select.btn-group.pull-right,
+.bootstrap-select.btn-group[class*="span"].pull-right,
 .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
     float: right;
 }
@@ -33,11 +33,11 @@
     width: 220px\9; /*IE8 and below*/
 }
 
-.bootstrap-select .btn {
+.bootstrap-select > .btn {
     width: 100%;
 }
 
-.bootstrap-select.show-menu-arrow.open .btn {
+.bootstrap-select.show-menu-arrow.open > .btn {
     z-index: 1001;
 }
 
@@ -48,9 +48,9 @@
 }
 
 .bootstrap-select.btn-group .btn .filter-option {
-    overflow: hidden; 
+    overflow: hidden;
     position: absolute;
-    left: 12px; 
+    left: 12px;
     right: 25px;
     text-align: left;
 }
@@ -60,9 +60,13 @@
     right: 12px;
 }
 
-.bootstrap-select.btn-group > .disabled, 
+.bootstrap-select.btn-group > .disabled,
 .bootstrap-select.btn-group .dropdown-menu li.disabled > a {
     cursor: not-allowed;
+}
+
+.bootstrap-select.btn-group > .disabled:focus {
+    outline: none !important;
 }
 
 .bootstrap-select.btn-group[class*="span"] .btn {
@@ -76,14 +80,31 @@
     box-sizing: border-box;
 }
 
+.bootstrap-select.btn-group .dropdown-menu.inner {
+    position: static;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+}
+
 .bootstrap-select.btn-group .dropdown-menu dt {
-    display: block; 
-    padding: 3px 20px; 
+    display: block;
+    padding: 3px 20px;
     cursor: default;
 }
 
 .bootstrap-select.btn-group .div-contain {
     overflow: hidden;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li {
+    position: relative;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {
@@ -99,14 +120,14 @@
     font-weight: normal;
 }
 
-.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark { 
+.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
     display: inline-block;
     position: absolute;
     right: 15px;
     margin-top: 2.5px;
 }
 
-.bootstrap-select.btn-group .dropdown-menu li a i.check-mark { 
+.bootstrap-select.btn-group .dropdown-menu li a i.check-mark {
     display: none;
 }
 
@@ -118,9 +139,9 @@
     padding-left: 0.5em;
 }
 
-.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small, 
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small,
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
-    color: #64b1d8; 
+    color: #64b1d8;
     color: rgba(255,255,255,0.4);
 }
 
