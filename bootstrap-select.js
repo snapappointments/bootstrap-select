@@ -197,7 +197,7 @@
                 if ($this.attr('title') != undefined) {
                     return $this.attr('title');
                 } else {
-                    return icon + $this.text() + subtext;
+                    return icon + $this.html() + subtext;
                 }
             }).toArray();
 
