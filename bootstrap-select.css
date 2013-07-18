@@ -37,6 +37,10 @@
     width: 100%;
 }
 
+.error .bootstrap-select .btn {
+    border: 1px solid #b94a48;
+}
+
 .bootstrap-select.show-menu-arrow.open > .btn {
     z-index: 1001;
 }
