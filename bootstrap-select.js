@@ -565,6 +565,11 @@
 
         show: function() {
             this.$newElement.show();
+        },
+        
+        destroy: function() {
+            this.$newElement.remove();
+            this.$element.remove();
         }
     };
 
