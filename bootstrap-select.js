@@ -369,19 +369,19 @@
         },
 
         checkDisabled: function() {
+            var _this = this;
             if (this.isDisabled()) {
                 this.button.addClass('disabled');
-                this.button.click(function(e) {
-                    return false;
-                });
                 this.button.attr('tabindex','-1');
             } else if (!this.isDisabled() && this.button.hasClass('disabled')) {
                 this.button.removeClass('disabled');
-                this.button.click(function() {
-                    return true;
-                });
                 this.button.removeAttr('tabindex');
             }
+            this.button.click(function() {
+                if (_this.isDisabled()) {
+                    return false;
+                }
+            });
         },
 
         checkTabIndex: function() {
