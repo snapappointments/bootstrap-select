@@ -436,10 +436,8 @@
 
                     // Trigger select 'change'
                     if (prevValue != _this.$element.val()) {
-                        _this.$element.trigger('change');
+                        _this.$element.change();
                     }
-
-                    _this.render();
                 }
 
             });
@@ -461,7 +459,7 @@
             if (value != undefined) {
                 this.$element.val( value );
 
-                this.$element.trigger('change');
+                this.$element.change();
                 return this.$element;
             } else {
                 return this.$element.val();
