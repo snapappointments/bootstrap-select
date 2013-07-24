@@ -349,11 +349,7 @@
         },
 
         setSelected: function(index, selected) {
-            if (selected) {
-                this.$menu.find('li').eq(index).addClass('selected');
-            } else {
-                this.$menu.find('li').eq(index).removeClass('selected');
-            }
+            this.$menu.find('li').eq(index).toggleClass('selected', selected);
         },
 
         setDisabled: function(index, disabled) {
