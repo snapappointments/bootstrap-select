@@ -423,13 +423,10 @@
                     }
                     //Else toggle the one we have chosen if we are multi select.
                     else {
-                        var selected = _this.$element.find('option').eq(clickedIndex).prop('selected');
+                        var $option = _this.$element.find('option').eq(clickedIndex);
+                        var selected = $option.prop('selected');
 
-                        if (selected) {
-                            _this.$element.find('option').eq(clickedIndex).prop('selected', false);
-                        } else {
-                            _this.$element.find('option').eq(clickedIndex).prop('selected', true);
-                        }
+                        $option.prop('selected', !selected);
                     }
 
                     _this.button.focus();
@@ -445,7 +442,6 @@
            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                var $select = $(this).parent().parents('.bootstrap-select');
                 _this.button.focus();
             });
 
@@ -564,7 +560,7 @@
         show: function() {
             this.$newElement.show();
         },
-        
+
         destroy: function() {
             this.$newElement.remove();
             this.$element.remove();
