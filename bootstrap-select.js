@@ -423,31 +423,24 @@
                     }
                     //Else toggle the one we have chosen if we are multi select.
                     else {
-                        var selected = _this.$element.find('option').eq(clickedIndex).prop('selected');
+                        var $option = _this.$element.find('option').eq(clickedIndex);
+                        var state = $option.prop('selected');
 
-                        if (selected) {
-                            _this.$element.find('option').eq(clickedIndex).prop('selected', false);
-                        } else {
-                            _this.$element.find('option').eq(clickedIndex).prop('selected', true);
-                        }
+                        $option.prop('selected', !state);
                     }
 
                     _this.button.focus();
 
                     // Trigger select 'change'
                     if (prevValue != _this.$element.val()) {
-                        _this.$element.trigger('change');
+                        _this.$element.change();
                     }
-
-                    _this.render();
                 }
-
             });
 
            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                var $select = $(this).parent().parents('.bootstrap-select');
                 _this.button.focus();
             });
 
@@ -461,7 +454,7 @@
             if (value != undefined) {
                 this.$element.val( value );
 
-                this.$element.trigger('change');
+                this.$element.change();
                 return this.$element;
             } else {
                 return this.$element.val();
@@ -566,7 +559,7 @@
         show: function() {
             this.$newElement.show();
         },
-        
+
         destroy: function() {
             this.$newElement.remove();
             this.$element.remove();
