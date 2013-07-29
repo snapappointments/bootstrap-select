@@ -219,13 +219,6 @@
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;
             }
 
-            var subtext;
-            if (this.options.showSubtext && this.$element.find('option:selected').attr('data-subtext')) {
-                subtext = ' <small class="muted">'+this.$element.find('option:selected').data('subtext') +'</small>';
-            } else {
-                subtext = '';
-            }
-
             _this.$newElement.find('.filter-option').html(title + subtext);
         },
 
