@@ -197,7 +197,7 @@
                 if ($this.attr('title') != undefined) {
                     return $this.attr('title');
                 } else {
-                    return icon + $this.text() + subtext;
+                    return icon + $this.html() + subtext;
                 }
             }).toArray();
 
@@ -219,14 +219,7 @@
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;
             }
 
-            var subtext;
-            if (this.options.showSubtext && this.$element.find('option:selected').attr('data-subtext')) {
-                subtext = ' <small class="muted">'+this.$element.find('option:selected').data('subtext') +'</small>';
-            } else {
-                subtext = '';
-            }
-
-            _this.$newElement.find('.filter-option').html(title + subtext);
+            _this.$newElement.find('.filter-option').html(title);
         },
 
         setStyle: function(style, status) {
@@ -369,19 +362,19 @@
         },
 
         checkDisabled: function() {
+            var _this = this;
             if (this.isDisabled()) {
                 this.button.addClass('disabled');
-                this.button.click(function(e) {
-                    return false;
-                });
                 this.button.attr('tabindex','-1');
             } else if (!this.isDisabled() && this.button.hasClass('disabled')) {
                 this.button.removeClass('disabled');
-                this.button.click(function() {
-                    return true;
-                });
                 this.button.removeAttr('tabindex');
             }
+            this.button.click(function() {
+                if (_this.isDisabled()) {
+                    return false;
+                }
+            });
         },
 
         checkTabIndex: function() {
@@ -565,6 +558,11 @@
 
         show: function() {
             this.$newElement.show();
+        },
+        
+        destroy: function() {
+            this.$newElement.remove();
+            this.$element.remove();
         }
     };
 
