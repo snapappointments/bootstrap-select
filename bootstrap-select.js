@@ -219,7 +219,7 @@
                 title = _this.options.title != undefined ? _this.options.title : _this.options.noneSelectedText;
             }
 
-            _this.$newElement.find('.filter-option').html(title + subtext);
+            _this.$newElement.find('.filter-option').html(title);
         },
 
         setStyle: function(style, status) {
