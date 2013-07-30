@@ -633,17 +633,34 @@ Note: this is the same as:<br>
 <p id="data-subtext">Add subtext to an option or optgroup with the <code>data-subtext</code> attribute:</p>
 
 <div class="bs-docs-example">
-  <select class="selectpicker">
-      <option data-subtext="French's">Mustard</option>
-      <option data-subtext="Heinz">Ketchup</option>
-      <option data-subtext="Sweet">Relish</option>
-      <option data-subtext="Miracle Whip">Mayonnaise</option>
-      <option data-divider="true"></option>
-      <option data-subtext="Honey">Barbecue Sauce</option>
-      <option data-subtext="Ranch">Salad Dressing</option>
-      <option data-subtext="Sweet & Spicy">Tabasco</option>
-      <option data-subtext="Chunky">Salsa</option>
-  </select>
+  <div class="row-fluid">
+    <select class="selectpicker">
+        <option data-subtext="French's">Mustard</option>
+        <option data-subtext="Heinz">Ketchup</option>
+        <option data-subtext="Sweet">Relish</option>
+        <option data-subtext="Miracle Whip">Mayonnaise</option>
+        <option data-divider="true"></option>
+        <option data-subtext="Honey">Barbecue Sauce</option>
+        <option data-subtext="Ranch">Salad Dressing</option>
+        <option data-subtext="Sweet & Spicy">Tabasco</option>
+        <option data-subtext="Chunky">Salsa</option>
+    </select>
+  </div>
+    
+  <div class="row-fluid">
+    <select class="selectpicker">
+        <option data-subtext="French's">Mustard</option>
+        <option data-subtext="Heinz">Ketchup</option>
+        <option data-subtext="Sweet">Relish</option>
+        <option data-subtext="Miracle Whip">Mayonnaise</option>
+        <option data-divider="true"></option>
+        <option data-subtext="Honey">Barbecue Sauce</option>
+        <option data-subtext="Ranch">Salad Dressing</option>
+        <option data-subtext="Sweet & Spicy">Tabasco</option>
+        <option data-subtext="Chunky">Salsa</option>
+    </select>
+    <span class="help-block">With <code>showSubtext</code> set to true.</span>
+  </div>
 </div>
 
 <pre class="prettyprint linenums">
@@ -670,6 +687,25 @@ Note: this is the same as:<br>
   &lt;select class="selectpicker"&gt;
     ...
     &lt;option data-icon="icon-heart"&gt;Ketchup&lt;/option>
+    ...
+  &lt;/select>
+</pre>
+
+<p id="data-content">Insert custom HTML into the option with the <code>data-content</code> attribute:</p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+      <option data-content="<span class='label label-warning'>Mustard</span>">Mustard</option>
+      <option data-content="<span class='label label-danger'>Ketchup</span>">Ketchup</option>
+      <option data-content="<span class='label label-success'>Ketchup</span>">Relish</option>
+      <option data-content="<span class='label label-info'>Ketchup</span>">Mayonnaise</option>
+  </select>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker"&gt;
+    ...
+    &lt;option data-content="&lt;span class='label label-danger'&gt;Ketchup&lt;/span&gt;"&gt;Ketchup&lt;/option>
     ...
   &lt;/select>
 </pre>
@@ -810,6 +846,12 @@ Note: this is the same as:<br>
              <td>boolean</td>
              <td>true</td>
              <td>Display icon(s) associated with selected option(s) in the button. If false, icons will not be displayed in the button.</td>
+           </tr>
+           <tr>
+             <td>showContent</td>
+             <td>boolean</td>
+             <td>true</td>
+             <td>Display custom HTML associated with selected option(s) in the button. If false, the option value will be displayed instead.</td>
            </tr>
            <tr>
              <td>style</td>
