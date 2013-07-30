@@ -207,3 +207,13 @@
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:after {
     display: block;
 }
+
+.mobile-device {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block !important;
+    width: 100%;
+    height: 100% !important;
+    opacity: 0;
+}
