@@ -71,7 +71,7 @@
         createDropdown: function() {
             var drop =
                 "<div class='btn-group bootstrap-select'>" +
-                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
+                    "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
                     "</button>" +
@@ -114,15 +114,17 @@
                 //Get the class and text for the option
                 var optionClass = $this.attr("class") || '';
                 var inline = $this.attr("style") || '';
-                var text =  $this.html();
+                var text =  $this.data('content') ? $this.data('content') : $this.html();
                 var subtext = $this.data('subtext') !== undefined ? '<small class="muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="'+$this.data('icon')+'"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
                 }
-
-                //Prepend any icon and append any subtext to the main text.
-                text = icon + '<span class="text">' + text + subtext + '</span>';
+                
+                if (!$this.data('content')) {
+                    //Prepend any icon and append any subtext to the main text.
+                    text = icon + '<span class="text">' + text + subtext + '</span>';
+                }
 
                 if (_this.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
@@ -194,7 +196,9 @@
                 } else {
                     subtext = '';
                 }
-                if ($this.attr('title') != undefined) {
+                if ($this.data('content') && _this.options.showContent) {
+                    return $this.data('content');
+                } else if ($this.attr('title') != undefined) {
                     return $this.attr('title');
                 } else {
                     return icon + $this.html() + subtext;
@@ -621,7 +625,8 @@
         container: false,
         hideDisabled: false,
         showSubtext: false,
-        showIcon: true
+        showIcon: true,
+        showContent: true
     }
 
     $(document)
