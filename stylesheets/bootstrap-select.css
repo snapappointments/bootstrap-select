@@ -30,11 +30,16 @@
 }
 
 .bootstrap-select {
-    width: 220px\9; /*IE8 and below*/
+    /*width: 220px\9; IE8 and below*/
+    width: 220px \0/; /*IE9 and below*/
 }
 
 .bootstrap-select > .btn {
     width: 100%;
+}
+
+.error .bootstrap-select .btn {
+    border: 1px solid #b94a48;
 }
 
 .bootstrap-select.show-menu-arrow.open > .btn {
@@ -201,4 +206,14 @@
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:before,
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:after {
     display: block;
+}
+
+.mobile-device {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block !important;
+    width: 100%;
+    height: 100% !important;
+    opacity: 0;
 }
