@@ -876,6 +876,15 @@ the bootstrap-select ui will not refresh (as the change event only fires from us
    $('.selectpicker').selectpicker('render');
 </pre>
 
+<h3 id="mobile">mobile()</h3>
+<p>Enable mobile scrolling by calling <code>$('.selectpicker').selectpicker('mobile')</code>. The method for detecting the browser is left up to the user.</p>
+
+<pre class="prettyprint linenums">
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    $('.selectpicker').selectpicker('mobile');
+}
+</pre>
+
 <h3 id="selectAll">setStyle()</h3>
 <p>Modify the class(es) associated with either the button itself or its container.</p>
 
