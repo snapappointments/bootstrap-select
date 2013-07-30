@@ -224,7 +224,7 @@
 
         setStyle: function(style, status) {
             if (this.$element.attr('class')) {
-                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker/gi, ''));
+                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device/gi, ''));
             }
 
             var buttonClass = style ? style : this.options.style;
@@ -331,6 +331,11 @@
             $('html').on('click', function() {
                 $drop.removeClass('open');
             });
+        },
+
+        mobile: function() {
+            this.$element.addClass('mobile-device').appendTo(this.$newElement);
+            if (this.options.container) this.$menu.hide();
         },
 
         refresh: function() {
