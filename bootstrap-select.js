@@ -299,7 +299,12 @@
             //Set width of select
             if (this.options.width == 'auto') {
                 this.$menu.css('min-width','0');
-                var ulWidth = this.$menu.css('width');
+
+                // Get correct width if element hidden
+                var selectClone = this.$newElement.clone().appendTo('body');
+                var ulWidth = selectClone.find('> .dropdown-menu').css('width');
+                selectClone.remove();
+
                 this.$newElement.css('width',ulWidth);
             } else if (this.options.width) {
                 this.$newElement.css('width',this.options.width);
