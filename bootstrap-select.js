@@ -416,7 +416,7 @@
 
                 //Dont run if we have been disabled
                 if (!_this.isDisabled() && !$(this).parent().hasClass('disabled')) {
-                    var $options = _this.$element.find('option').eq(clickedIndex);
+                    var $options = _this.$element.find('option');
                     var $option = $options.eq(clickedIndex);
 
                     //Deselect all others if not multi select box
