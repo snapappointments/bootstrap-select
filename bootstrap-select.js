@@ -9,7 +9,7 @@
         }
         this.$element = $(element);
         this.$newElement = null;
-        this.button = null;
+        this.$button = null;
         this.$menu = null;
 
         //Merge defaults, options and data-attributes to make our options
@@ -41,13 +41,13 @@
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
-            this.button = this.$newElement.find('> button');
+            this.$button = this.$newElement.find('> button');
 
             if (id !== undefined) {
                 var _this = this;
-                this.button.attr('data-id', id);
+                this.$button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function() {
-                    _this.button.focus();
+                    _this.$button.focus();
                 })
             }
 
@@ -234,10 +234,10 @@
             var buttonClass = style ? style : this.options.style;
 
             if (status == 'add') {
-                this.button.addClass(buttonClass);
+                this.$button.addClass(buttonClass);
             } else {
-                this.button.removeClass(this.options.style);
-                this.button.addClass(buttonClass);
+                this.$button.removeClass(this.options.style);
+                this.$button.addClass(buttonClass);
             }
         },
 
@@ -373,13 +373,13 @@
         checkDisabled: function() {
             var _this = this;
             if (this.isDisabled()) {
-                this.button.addClass('disabled');
-                this.button.attr('tabindex','-1');
-            } else if (!this.isDisabled() && this.button.hasClass('disabled')) {
-                this.button.removeClass('disabled');
-                this.button.removeAttr('tabindex');
+                this.$button.addClass('disabled');
+                this.$button.attr('tabindex','-1');
+            } else if (!this.isDisabled() && this.$button.hasClass('disabled')) {
+                this.$button.removeClass('disabled');
+                this.$button.removeAttr('tabindex');
             }
-            this.button.click(function() {
+            this.$button.click(function() {
                 if (_this.isDisabled()) {
                     return false;
                 }
@@ -389,7 +389,7 @@
         checkTabIndex: function() {
             if (this.$element.is('[tabindex]')) {
                 var tabindex = this.$element.attr("tabindex");
-                this.button.attr('tabindex', tabindex);
+                this.$button.attr('tabindex', tabindex);
             }
         },
 
@@ -431,7 +431,7 @@
                         $option.prop('selected', !state);
                     }
 
-                    _this.button.focus();
+                    _this.$button.focus();
 
                     // Trigger select 'change'
                     if (prevValue != _this.$element.val()) {
@@ -443,7 +443,7 @@
            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                _this.button.focus();
+                _this.$button.focus();
             });
 
             this.$element.on('change', function(e) {
