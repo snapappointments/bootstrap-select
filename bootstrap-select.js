@@ -367,7 +367,7 @@
         },
 
         isDisabled: function() {
-            return this.$element.is(':disabled') || this.$element.attr('readonly');
+            return this.$element.is(':disabled');
         },
 
         checkDisabled: function() {
