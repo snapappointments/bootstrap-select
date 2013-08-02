@@ -120,7 +120,7 @@
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
                 }
-                
+
                 if (!$this.data('content')) {
                     //Prepend any icon and append any subtext to the main text.
                     text = icon + '<span class="text">' + text + subtext + '</span>';
@@ -251,7 +251,7 @@
 
         setSize: function() {
             var _this = this,
-                menu = this.$newElement.find('> .dropdown-menu'),
+                menu = this.$menu,
                 menuInner = menu.find('.inner'),
                 menuA = menuInner.find('li > a'),
                 selectHeight = this.$newElement.outerHeight(),
@@ -297,10 +297,14 @@
 
         setWidth: function() {
             //Set width of select
-            var menu = this.$newElement.find('> .dropdown-menu');
             if (this.options.width == 'auto') {
-                menu.css('min-width','0');
-                var ulWidth = menu.css('width');
+                this.$menu.css('min-width','0');
+
+                // Get correct width if element hidden
+                var selectClone = this.$newElement.clone().appendTo('body');
+                var ulWidth = selectClone.find('> .dropdown-menu').css('width');
+                selectClone.remove();
+
                 this.$newElement.css('width',ulWidth);
             } else if (this.options.width) {
                 this.$newElement.css('width',this.options.width);
