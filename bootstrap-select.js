@@ -48,7 +48,7 @@
                 this.$button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function() {
                     _this.$button.focus();
-                })
+                });
             }
 
             //If we are multiple, then add the show-tick class by default
@@ -148,7 +148,7 @@
                                 _this.createA(text, "opt " + optionClass, inline ));
                         }
                     } else {
-                         _liA.push( _this.createA(text, "opt " + optionClass, inline )  );
+                         _liA.push( _this.createA(text, "opt " + optionClass, inline ) );
                     }
                 } else if ($this.data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
@@ -172,7 +172,7 @@
         },
 
         createA: function(text, classes, inline) {
-         return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
+            return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
                  text +
                  '<i class="icon-ok check-mark"></i>' +
                  '</a>';
@@ -375,14 +375,12 @@
             if (this.isDisabled()) {
                 this.$button.addClass('disabled');
                 this.$button.attr('tabindex','-1');
-            } else if (!this.isDisabled() && this.$button.hasClass('disabled')) {
+            } else if (this.$button.hasClass('disabled')) {
                 this.$button.removeClass('disabled');
                 this.$button.removeAttr('tabindex');
             }
             this.$button.click(function() {
-                if (_this.isDisabled()) {
-                    return false;
-                }
+                return !_this.isDisabled();
             });
         },
 
@@ -417,15 +415,17 @@
                 e.preventDefault();
 
                 //Dont run if we have been disabled
-                if (_this.$element.not(':disabled') && !$(this).parent().hasClass('disabled')) {
+                if (!_this.isDisabled() && !$(this).parent().hasClass('disabled')) {
+                    var $options = _this.$element.find('option').eq(clickedIndex);
+                    var $option = $options.eq(clickedIndex);
+
                     //Deselect all others if not multi select box
                     if (!_this.multiple) {
-                        _this.$element.find('option').prop('selected', false);
-                        _this.$element.find('option').eq(clickedIndex).prop('selected', true);
+                        $options.prop('selected', false);
+                        $option.prop('selected', true);
                     }
                     //Else toggle the one we have chosen if we are multi select.
                     else {
-                        var $option = _this.$element.find('option').eq(clickedIndex);
                         var state = $option.prop('selected');
 
                         $option.prop('selected', !state);
@@ -440,15 +440,13 @@
                 }
             });
 
-           this.$menu.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
+            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 _this.$button.focus();
             });
 
-            this.$element.on('change', function(e) {
-                _this.render();
-            });
+            this.$element.change(this.render.bind(this));
         },
 
         val: function(value) {
@@ -512,7 +510,7 @@
                     if (index > last) index = last;
                 }
 
-                $items.eq(index).focus()
+                $items.eq(index).focus();
             } else {
                 var keyCodeMap = {
                     48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
