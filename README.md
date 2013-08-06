@@ -34,6 +34,14 @@ Or just
 
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
+## Bugs and feature requests
+
+Anyone and everyone is welcome to contribute. Please take a moment to
+review the [guidelines for contributing](CONTRIBUTING.md).
+
+* [Bug reports](CONTRIBUTING.md#bugs)
+* [Feature requests](CONTRIBUTING.md#features)
+
 ## Copyright and license
 
 Copyright (C) 2013 bootstrap-select
