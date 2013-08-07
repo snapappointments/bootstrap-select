@@ -1,3 +1,10 @@
+/*!
+ * bootstrap-select v1.0
+ * http://silviomoreto.github.io/bootstrap-select/
+ *
+ * Copyright 2013 bootstrap-select
+ * Licensed under the MIT license
+ */
 .bootstrap-select.btn-group,
 .bootstrap-select.btn-group[class*="span"] {
     float: none;
@@ -30,14 +37,19 @@
 }
 
 .bootstrap-select {
-    width: 220px\9; /*IE8 and below*/
+    /*width: 220px\9; IE8 and below*/
+    width: 220px \0/; /*IE9 and below*/
 }
 
-.bootstrap-select .btn {
+.bootstrap-select > .btn {
     width: 100%;
 }
 
-.bootstrap-select.show-menu-arrow.open .btn {
+.error .bootstrap-select .btn {
+    border: 1px solid #b94a48;
+}
+
+.bootstrap-select.show-menu-arrow.open > .btn {
     z-index: 1001;
 }
 
@@ -65,6 +77,10 @@
     cursor: not-allowed;
 }
 
+.bootstrap-select.btn-group > .disabled:focus {
+    outline: none !important;
+}
+
 .bootstrap-select.btn-group[class*="span"] .btn {
     width: 100%;
 }
@@ -74,6 +90,19 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.bootstrap-select.btn-group .dropdown-menu.inner {
+    position: static;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
 }
 
 .bootstrap-select.btn-group .dropdown-menu dt {
@@ -86,12 +115,15 @@
     overflow: hidden;
 }
 
+.bootstrap-select.btn-group .dropdown-menu li {
+    position: relative;
+}
+
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     padding-left: 35px;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a {
-    min-height: 20px;
     cursor: pointer;
 }
 
@@ -180,4 +212,14 @@
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:before,
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:after {
     display: block;
+}
+
+.mobile-device {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block !important;
+    width: 100%;
+    height: 100% !important;
+    opacity: 0;
 }
