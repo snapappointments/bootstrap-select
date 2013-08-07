@@ -310,7 +310,7 @@
                 // Get correct width if element hidden
                 var selectClone = this.$newElement.clone().appendTo('body');
                 var ulWidth = selectClone.find('> .dropdown-menu');
-                ulWidth = if (this.options.width == 'auto') ? ulWidth.css('width') : ulWidth.find('li:not(.selected)').remove().end().css('width');
+                ulWidth = (this.options.width == 'auto') ? ulWidth.css('width') : ulWidth.find('li:not(.selected)').remove().end().css('width');
                 selectClone.remove();
 
                 this.$newElement.css('width',ulWidth);
