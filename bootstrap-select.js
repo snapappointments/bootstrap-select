@@ -304,12 +304,13 @@
 
         setWidth: function() {
             //Set width of select
-            if (this.options.width == 'auto') {
+            if (this.options.width == 'auto' || this.options.width == 'fit') {
                 this.$menu.css('min-width','0');
 
                 // Get correct width if element hidden
                 var selectClone = this.$newElement.clone().appendTo('body');
-                var ulWidth = selectClone.find('> .dropdown-menu').css('width');
+                var ulWidth = selectClone.find('> .dropdown-menu');
+                ulWidth = if (this.options.width == 'auto') ? ulWidth.css('width') : ulWidth.find('li:not(.selected)').remove().end().css('width');
                 selectClone.remove();
 
                 this.$newElement.css('width',ulWidth);
@@ -363,6 +364,7 @@
 
         setSelected: function(index, selected) {
             this.$menu.find('li').eq(index).toggleClass('selected', selected);
+            if (this.options.width == 'fit') { this.setWidth(); }
         },
 
         setDisabled: function(index, disabled) {
