@@ -455,7 +455,8 @@
                 _this.$button.focus();
             });
 
-            this.$element.change(this.render.bind(this));
+            var self = this;
+            this.$element.on('change', $.proxy( self.render, self ));
         },
 
         val: function(value) {
