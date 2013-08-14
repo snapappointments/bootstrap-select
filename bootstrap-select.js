@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.1.0
+ * bootstrap-select v1.1.1
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -465,7 +465,9 @@
                 _this.$button.focus();
             });
 
-            this.$element.change(this.render.bind(this));
+            this.$element.change(function() {
+                _this.render()
+            });
         },
 
         val: function(value) {
