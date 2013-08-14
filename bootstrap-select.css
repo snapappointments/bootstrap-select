@@ -1,10 +1,11 @@
 /*!
- * bootstrap-select v1.0
+ * bootstrap-select v1.1.0
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
  * Licensed under the MIT license
  */
+
 .bootstrap-select.btn-group,
 .bootstrap-select.btn-group[class*="span"] {
     float: none;
@@ -69,7 +70,9 @@
 
 .bootstrap-select.btn-group .btn .caret {
     position: absolute;
+    top: 50%;
     right: 12px;
+    margin-top: -2px;
 }
 
 .bootstrap-select.btn-group > .disabled,
