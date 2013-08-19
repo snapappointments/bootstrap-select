@@ -106,11 +106,11 @@
             this.destroyLi();
             //Re build
             var $li = this.createLi();
-            this.$newElement.find('ul').append( $li );
+            this.$menu.find('ul').append( $li );
         },
 
         destroyLi: function() {
-            this.$newElement.find('li').remove();
+            this.$menu.find('li').remove();
         },
 
         createLi: function() {
