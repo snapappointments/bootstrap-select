@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.1.1
+ * bootstrap-select v1.1.2
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
