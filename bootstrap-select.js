@@ -245,6 +245,8 @@
 
             if (status == 'add') {
                 this.$button.addClass(buttonClass);
+            } else if (status == 'remove') {
+                this.$button.removeClass(buttonClass);
             } else {
                 this.$button.removeClass(this.options.style);
                 this.$button.addClass(buttonClass);
