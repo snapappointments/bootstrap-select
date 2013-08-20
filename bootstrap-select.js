@@ -575,12 +575,8 @@
 
             // select focused option if "Enter" or "Spacebar" are pressed
             if (/(13|32)/.test(e.keyCode)) {
+                e.preventDefault();
                 $(':focus').click();
-                if (!that.multiple) {
-                    $parent.parent().toggleClass('open', !(e.keyCode == 32));
-                } else {
-                    e.preventDefault();
-                };
                 $(document).data('keycount',0);
             }
         },
