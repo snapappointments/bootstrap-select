@@ -313,18 +313,31 @@
         },
 
         setWidth: function() {
-            //Set width of select
             if (this.options.width == 'auto') {
-                this.$menu.css('min-width','0');
+                this.$menu.css('min-width', '0');
 
                 // Get correct width if element hidden
                 var selectClone = this.$newElement.clone().appendTo('body');
                 var ulWidth = selectClone.find('> .dropdown-menu').css('width');
                 selectClone.remove();
 
-                this.$newElement.css('width',ulWidth);
+                this.$newElement.css('width', ulWidth);
+            } else if (this.options.width == 'fit') {
+                // Remove inline min-width so width can be changed from 'auto'
+                this.$menu.css('min-width', '');
+                this.$newElement.css('width', '').addClass('fit-width');
             } else if (this.options.width) {
-                this.$newElement.css('width',this.options.width);
+                // Remove inline min-width so width can be changed from 'auto'
+                this.$menu.css('min-width', '');
+                this.$newElement.css('width', this.options.width);
+            } else {
+                // Remove inline min-width/width so width can be changed
+                this.$menu.css('min-width', '');
+                this.$newElement.css('width', '');
+            }
+            // Remove fit-width class if width is changed programmatically
+            if (this.$newElement.hasClass('fit-width') && this.options.width !== 'fit') {
+                this.$newElement.removeClass('fit-width');
             }
         },
 
@@ -638,7 +651,7 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         countSelectedText: '{0} of {1} selected',
-        width: null,
+        width: false,
         container: false,
         hideDisabled: false,
         showSubtext: false,
