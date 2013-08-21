@@ -59,18 +59,13 @@
                 });
             }
 
-            //If we are multiple, then add the show-tick class by default
-            if (this.multiple) {
-                 this.$newElement.addClass('show-tick');
-            }
-
             this.checkDisabled();
             this.checkTabIndex();
             this.clickListener();
             this.render();
             this.liHeight();
-            this.setWidth();
             this.setStyle();
+            this.setWidth();
             if (this.options.container) {
                 this.selectPosition();
             }
@@ -79,8 +74,10 @@
         },
 
         createDropdown: function() {
+            //If we are multiple, then add the show-tick class by default            
+            var multiple = this.multiple ? ' show-tick' : '';
             var drop =
-                "<div class='btn-group bootstrap-select'>" +
+                "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
