@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.1.2
+ * bootstrap-select v1.1.3
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -59,18 +59,13 @@
                 });
             }
 
-            //If we are multiple, then add the show-tick class by default
-            if (this.multiple) {
-                 this.$newElement.addClass('show-tick');
-            }
-
             this.checkDisabled();
             this.checkTabIndex();
             this.clickListener();
             this.render();
             this.liHeight();
-            this.setWidth();
             this.setStyle();
+            this.setWidth();
             if (this.options.container) {
                 this.selectPosition();
             }
@@ -79,8 +74,10 @@
         },
 
         createDropdown: function() {
+            //If we are multiple, then add the show-tick class by default            
+            var multiple = this.multiple ? ' show-tick' : '';
             var drop =
-                "<div class='btn-group bootstrap-select'>" +
+                "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
@@ -316,18 +313,31 @@
         },
 
         setWidth: function() {
-            //Set width of select
             if (this.options.width == 'auto') {
-                this.$menu.css('min-width','0');
+                this.$menu.css('min-width', '0');
 
                 // Get correct width if element hidden
                 var selectClone = this.$newElement.clone().appendTo('body');
                 var ulWidth = selectClone.find('> .dropdown-menu').css('width');
                 selectClone.remove();
 
-                this.$newElement.css('width',ulWidth);
+                this.$newElement.css('width', ulWidth);
+            } else if (this.options.width == 'fit') {
+                // Remove inline min-width so width can be changed from 'auto'
+                this.$menu.css('min-width', '');
+                this.$newElement.css('width', '').addClass('fit-width');
             } else if (this.options.width) {
-                this.$newElement.css('width',this.options.width);
+                // Remove inline min-width so width can be changed from 'auto'
+                this.$menu.css('min-width', '');
+                this.$newElement.css('width', this.options.width);
+            } else {
+                // Remove inline min-width/width so width can be changed
+                this.$menu.css('min-width', '');
+                this.$newElement.css('width', '');
+            }
+            // Remove fit-width class if width is changed programmatically
+            if (this.$newElement.hasClass('fit-width') && this.options.width !== 'fit') {
+                this.$newElement.removeClass('fit-width');
             }
         },
 
@@ -641,7 +651,7 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         countSelectedText: '{0} of {1} selected',
-        width: null,
+        width: false,
         container: false,
         hideDisabled: false,
         showSubtext: false,
