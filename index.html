@@ -751,7 +751,7 @@ Note: this is the same as:<br>
 &lt;div&gt;
 </pre>
 
-<p id="dropup">Make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
+<p id="dropup"><code>dropupAuto</code> is set to true by default, which automatically determines whether or not the select should be a dropup. If <code>dropupAuto</code> is set to false, manually make the select a dropup menu by adding the <code>.dropup</code> class to the select.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker dropup">
@@ -810,6 +810,12 @@ Note: this is the same as:<br>
              <td>string | false</td>
              <td>false</td>
              <td>appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code></td>
+            </tr>
+            <tr>
+             <td>dropupAuto</td>
+             <td>boolean</td>
+             <td>true</td>
+             <td>checks to see which has more room, above or below. If the dropup has enough room to fully open normally, but there is more room above, the dropup still opens normally. Otherwise, it becomes a dropup. If dropupAuto is set to false, dropups must be called manually.</td>
             </tr>
             <tr>
              <td>hideDisabled</td>
@@ -944,6 +950,9 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 
 // Add Class
   $('.selectpicker').selectpicker('setStyle', 'btn-large', 'add');
+
+// Remove Class
+  $('.selectpicker').selectpicker('setStyle', 'btn-large', 'remove');
 </pre>
 
 <h3 id="refresh">refresh()</h3>
