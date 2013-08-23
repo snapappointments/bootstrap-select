@@ -1,3 +1,11 @@
+/*!
+ * bootstrap-select v1.1.3
+ * http://silviomoreto.github.io/bootstrap-select/
+ *
+ * Copyright 2013 bootstrap-select
+ * Licensed under the MIT license
+ */
+
 .bootstrap-select.btn-group,
 .bootstrap-select.btn-group[class*="span"] {
     float: none;
@@ -62,7 +70,10 @@
 
 .bootstrap-select.btn-group .btn .caret {
     position: absolute;
+    top: 50%;
     right: 12px;
+    margin-top: -2px;
+    vertical-align: middle;
 }
 
 .bootstrap-select.btn-group > .disabled,
@@ -117,7 +128,6 @@
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a {
-    min-height: 20px;
     cursor: pointer;
 }
 
@@ -216,4 +226,18 @@
     width: 100%;
     height: 100% !important;
     opacity: 0;
+}
+
+.bootstrap-select.fit-width {
+    width: auto !important;
+}
+
+.bootstrap-select.btn-group.fit-width .btn .filter-option {
+    position: static;
+}
+
+.bootstrap-select.btn-group.fit-width .btn .caret {
+    position: static;
+    top: auto;
+    margin-top: -1px;
 }
