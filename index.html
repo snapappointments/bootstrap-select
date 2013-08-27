@@ -710,6 +710,30 @@ Note: this is the same as:<br>
   &lt;/select>
 </pre>
 
+<p id="header">Add a header to the dropdown menu, e.g. <code>header: 'Select a condiment'</code> or <code>data-header="Select a condiment"</code></p>
+
+<div class="bs-docs-example">
+  <div class="row-fluid">
+    <select class="selectpicker" data-header="Select a condiment">
+        <option data-subtext="French's">Mustard</option>
+        <option data-subtext="Heinz">Ketchup</option>
+        <option data-subtext="Sweet">Relish</option>
+        <option data-subtext="Miracle Whip">Mayonnaise</option>
+        <option data-divider="true"></option>
+        <option data-subtext="Honey">Barbecue Sauce</option>
+        <option data-subtext="Ranch">Salad Dressing</option>
+        <option data-subtext="Sweet & Spicy">Tabasco</option>
+        <option data-subtext="Chunky">Salsa</option>
+    </select>
+  </div>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" data-header="Select a condiment"&gt;
+    ...
+  &lt;/select>
+</pre>
+
 <p id="container">Append the select to a specific element, e.g. <code>container: 'body'</code> or <code>data-container=".main-content"</code></p>
 
 <div class="bs-docs-example" style="overflow:hidden;">
@@ -812,10 +836,22 @@ Note: this is the same as:<br>
              <td>appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code></td>
             </tr>
             <tr>
+              <td>countSelectedText</td>
+              <td>string</td>
+              <td>'{0} of {1} selected'</td>
+              <td>sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>. {0} is the selected amount. {1} is total available for selection.</td>
+            </tr>
+            <tr>
              <td>dropupAuto</td>
              <td>boolean</td>
              <td>true</td>
              <td>checks to see which has more room, above or below. If the dropup has enough room to fully open normally, but there is more room above, the dropup still opens normally. Otherwise, it becomes a dropup. If dropupAuto is set to false, dropups must be called manually.</td>
+            </tr>
+            <tr>
+             <td>header</td>
+             <td>string</td>
+             <td>false</td>
+             <td>adds a header to the top of the menu; includes a close button by default</td>
             </tr>
             <tr>
              <td>hideDisabled</td>
@@ -828,12 +864,6 @@ Note: this is the same as:<br>
              <td>'values' | 'count' | 'count > #' (where # is an integer)</td>
              <td>null</td>
              <td>specifies how the selection is displayed with a multiple select (see <a href="http://silviomoreto.github.io/bootstrap-select/#selectTitles">here</a></td>
-            </tr>
-            <tr>
-             <td>countSelectedText</td>
-             <td>string</td>
-             <td>'{0} of {1} selected'</td>
-             <td>sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>. {0} is the selected amount. {1} is total available for selection.</td>
             </tr>
            <tr>
              <td>size</td>
