@@ -74,10 +74,10 @@
         },
 
         createDropdown: function() {
-            //If we are multiple, then add the show-tick class by default            
+            //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
             var drop =
-                "<div class='btn-group bootstrap-select" + multiple + "'>" +
+                "<div id='" + this.$element.attr('id') + "_selectpicker' class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
@@ -235,7 +235,7 @@
 
         setStyle: function(style, status) {
             if (this.$element.attr('class')) {
-                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device/gi, ''));
+                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|validate\[(.*)\]/gi, ''));
             }
 
             var buttonClass = style ? style : this.options.style;
