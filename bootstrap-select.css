@@ -241,3 +241,7 @@
     top: auto;
     margin-top: -1px;
 }
+
+.control-group.error .bootstrap-select .dropdown-toggle{
+    border-color: #b94a48;
+}
