@@ -1,0 +1,20 @@
+{
+  "name": "bootstrap-select",
+  "main": "bootstrap-select.js",
+  "version": "2.0.0-pre",
+  "homepage": "https://github.com/silviomoreto/bootstrap-select",
+  "authors": [
+    "silviomoreto"
+  ],
+  "keywords": [
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
