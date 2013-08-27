@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.1.3
+ * bootstrap-select v1.2.0
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -39,7 +39,7 @@
 
 .bootstrap-select {
     /*width: 220px\9; IE8 and below*/
-    width: 220px \0/; /*IE9 and below*/
+    width: 220px\0; /*IE9 and below*/
 }
 
 .bootstrap-select > .btn {
@@ -240,4 +240,8 @@
     position: static;
     top: auto;
     margin-top: -1px;
+}
+
+.control-group.error .bootstrap-select .dropdown-toggle{
+    border-color: #b94a48;
 }

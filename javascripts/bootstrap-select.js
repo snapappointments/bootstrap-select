@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.1.3
+ * bootstrap-select v1.2.0
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -76,6 +76,7 @@
         createDropdown: function() {
             //If we are multiple, then add the show-tick class by default            
             var multiple = this.multiple ? ' show-tick' : '';
+            var header = this.options.header ? '<h3 class="popover-title">' + this.options.header + '<button type="button" class="close" aria-hidden="true">&times;</button></h3>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
@@ -83,6 +84,7 @@
                         "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
+                        header +
                         "<ul class='dropdown-menu inner' role='menu'>" +
                         "</ul>" +
                     "</div>" +
@@ -253,9 +255,11 @@
         liHeight: function() {
             var selectClone = this.$newElement.clone();
             selectClone.appendTo('body');
-            var liHeight = selectClone.addClass('open').find('.dropdown-menu li > a').outerHeight();
+            var $menuClone = selectClone.addClass('open').find('> .dropdown-menu');
+            var liHeight = $menuClone.find('li > a').outerHeight();
+            var headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0;
             selectClone.remove();
-            this.$newElement.data('liHeight', liHeight);
+            this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight);
         },
 
         setSize: function() {
@@ -265,6 +269,7 @@
                 menuA = menuInner.find('li > a'),
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
+                headerHeight = this.$newElement.data('headerHeight'),
                 divHeight = menu.find('li .divider').outerHeight(true),
                 menuPadding = parseInt(menu.css('padding-top')) +
                               parseInt(menu.css('padding-bottom')) +
@@ -281,6 +286,7 @@
                     selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
                 };
                 posVert();
+                if (this.options.header) menu.css('padding-top', 0);
                 
             if (this.options.size == 'auto') {
                 var getSize = function() {
@@ -297,7 +303,7 @@
                         minHeight = 0;
                     }
                     menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden', 'min-height' : minHeight + 'px'});
-                    menuInner.css({'max-height' : (menuHeight - menuPadding) + 'px', 'overflow-y' : 'auto', 'min-height' : (minHeight - menuPadding) + 'px'});
+                    menuInner.css({'max-height' : menuHeight - headerHeight- menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight - menuPadding + 'px'});
                 }
                 getSize();
                 $(window).resize(getSize);
@@ -307,8 +313,8 @@
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && menuHeight < menu.height() && this.options.dropupAuto);
-                menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden'});
-                menuInner.css({'max-height' : (menuHeight - menuPadding) + 'px', 'overflow-y' : 'auto'});
+                menu.css({'max-height' : menuHeight + headerHeight + 'px', 'overflow' : 'hidden'});
+                menuInner.css({'max-height' : menuHeight - menuPadding + 'px', 'overflow-y' : 'auto'});
             }
         },
 
@@ -471,10 +477,12 @@
                 }
             });
 
-            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                _this.$button.focus();
+            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain, h3.popover-title', function(e) {
+                if (e.target == this) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    _this.$button.focus();
+                }
             });
 
             this.$element.change(function() {
@@ -657,7 +665,8 @@
         showSubtext: false,
         showIcon: true,
         showContent: true,
-        dropupAuto: true
+        dropupAuto: true,
+        header: false
     }
 
     $(document)
