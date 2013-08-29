@@ -74,21 +74,21 @@
         },
 
         createDropdown: function() {
-            //If we are multiple, then add the show-tick class by default            
+            //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<h3 class="popover-title">' + this.options.header + '<button type="button" class="close" aria-hidden="true">&times;</button></h3>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
-                        "<div class='filter-option pull-left'></div>&nbsp;" +
-                        "<div class='caret'></div>" +
+                    "<div class='filter-option pull-left'></div>&nbsp;" +
+                    "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
-                        header +
-                        "<ul class='dropdown-menu inner' role='menu'>" +
-                        "</ul>" +
+                    header +
+                    "<ul class='dropdown-menu inner' role='menu'>" +
+                    "</ul>" +
                     "</div>" +
-                "</div>";
+                    "</div>";
 
             return $(drop);
         },
@@ -148,16 +148,16 @@
                         if ($this[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+label+'</dt>'+
-                                _this.createA(text, "opt " + optionClass, inline )
-                                );
+                                    '<dt>'+label+'</dt>'+
+                                    _this.createA(text, "opt " + optionClass, inline )
+                            );
                         } else {
                             _liA.push(
                                 '<dt>'+label+'</dt>'+
-                                _this.createA(text, "opt " + optionClass, inline ));
+                                    _this.createA(text, "opt " + optionClass, inline ));
                         }
                     } else {
-                         _liA.push( _this.createA(text, "opt " + optionClass, inline ) );
+                        _liA.push( _this.createA(text, "opt " + optionClass, inline ) );
                     }
                 } else if ($this.data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
@@ -182,9 +182,9 @@
 
         createA: function(text, classes, inline) {
             return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
-                 text +
-                 '<i class="glyphicon glyphicon-ok icon-ok check-mark"></i>' +
-                 '</a>';
+                text +
+                '<i class="glyphicon glyphicon-ok icon-ok check-mark"></i>' +
+                '</a>';
         },
 
         render: function() {
@@ -192,8 +192,8 @@
 
             //Update the LI to match the SELECT
             this.$element.find('option').each(function(index) {
-               _this.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
-               _this.setSelected(index, $(this).is(':selected') );
+                _this.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
+                _this.setSelected(index, $(this).is(':selected') );
             });
 
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
@@ -225,7 +225,7 @@
                 if ( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = _this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
-             }
+            }
 
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
@@ -272,9 +272,9 @@
                 headerHeight = this.$newElement.data('headerHeight'),
                 divHeight = menu.find('li .divider').outerHeight(true),
                 menuPadding = parseInt(menu.css('padding-top')) +
-                              parseInt(menu.css('padding-bottom')) +
-                              parseInt(menu.css('border-top-width')) +
-                              parseInt(menu.css('border-bottom-width')),
+                    parseInt(menu.css('padding-bottom')) +
+                    parseInt(menu.css('border-top-width')) +
+                    parseInt(menu.css('border-bottom-width')),
                 notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '',
                 $window = $(window),
                 menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2,
@@ -285,9 +285,9 @@
                     selectOffsetTop = _this.$newElement.offset().top - $window.scrollTop();
                     selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
                 };
-                posVert();
-                if (this.options.header) menu.css('padding-top', 0);
-                
+            posVert();
+            if (this.options.header) menu.css('padding-top', 0);
+
             if (this.options.size == 'auto') {
                 var getSize = function() {
                     var minHeight;
@@ -511,7 +511,10 @@
             this.$element.find('option').prop('selected', false).removeAttr('selected');
             this.render();
         },
-
+        unload : function() {
+            this.$element.removeData('selectpicker').show();
+            this.$newElement.remove();
+        },
         keydown: function(e) {
             var $this,
                 $items,
@@ -614,10 +617,10 @@
     };
 
     $.fn.selectpicker = function(option, event) {
-       //get the args of the outer function..
-       var args = arguments;
-       var value;
-       var chain = this.each(function() {
+        //get the args of the outer function..
+        var args = arguments;
+        var value;
+        var chain = this.each(function() {
             if ($(this).is('select')) {
                 var $this = $(this),
                     data = $this.data('selectpicker'),
@@ -627,7 +630,7 @@
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
                 } else if (options) {
                     for(var i in options) {
-                       data.options[i] = options[i];
+                        data.options[i] = options[i];
                     }
                 }
 
