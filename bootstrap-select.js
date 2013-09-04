@@ -389,6 +389,7 @@
             this.setWidth();
             this.setStyle();
             this.checkDisabled();
+            this.liHeight();
         },
 
         setSelected: function(index, selected) {
