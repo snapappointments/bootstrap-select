@@ -1,25 +1,30 @@
 {
-  "name": "jquery",
-	"title": "jQuery",
-	"description": "JavaScript library for DOM operations",
+  "name": "bootstrap-select",
+	"title": "bootstrap-select",
+	"description": "A custom <select> for @twitter bootstrap using button dropdown as replacement",
 	"version": "1.2.0",
-	"homepage": "http://jquery.com",
+	"homepage": "http://silviomoreto.github.io/bootstrap-select/",
 	"author": {
 		"name": "Silvio Moreto",
-		"url": "https://github.com/silviomoreto/"
+		"url": "https://github.com/silviomoreto/",
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/antonellopasella/bootstrap-select.git"
+		"url": "git://github.com/antonellopasella/bootstrap-select.git",
 	},
 	"licenses": [
 		{
-			"type": "Custom",
-			"url": "https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license"
+			"type": "MIT",
+			"url": "https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license",
 		}
 	],
 	"dependencies": {
-		"jquery": "1.8"
+		"jquery": "1.8",
 	},
-	"keywords": []
+	"keywords": [
+		"form",
+		"bootstrap",
+		"select",
+		"replacement",
+	],
 }
