@@ -70,6 +70,8 @@
 .bootstrap-select.btn-group .btn .caret {
     position: absolute;
     right: 12px;
+    top: 50%;
+    margin-top: -3px;
 }
 
 .bootstrap-select.btn-group > .disabled,
