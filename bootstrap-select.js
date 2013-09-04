@@ -10,6 +10,12 @@
 
     "use strict";
 
+    $.expr[":"].icontains = $.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+
     var Selectpicker = function(element, options, e) {
         if (e) {
             e.stopPropagation();
@@ -50,6 +56,7 @@
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
             this.$button = this.$newElement.find('> button');
+            this.$searchbox = this.$newElement.find('input');
 
             if (id !== undefined) {
                 var _this = this;
@@ -62,6 +69,7 @@
             this.checkDisabled();
             this.checkTabIndex();
             this.clickListener();
+            this.liveSearchListener();
             this.render();
             this.liHeight();
             this.setStyle();
@@ -77,6 +85,7 @@
             //If we are multiple, then add the show-tick class by default            
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<h3 class="popover-title">' + this.options.header + '<button type="button" class="close" aria-hidden="true">&times;</button></h3>' : '';
+            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
@@ -85,6 +94,7 @@
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
                         header +
+                        searchbox +
                         "<ul class='dropdown-menu inner' role='menu'>" +
                         "</ul>" +
                     "</div>" +
@@ -485,8 +495,20 @@
                 }
             });
 
+            _this.$searchbox.on('click', function(e) {
+                e.stopPropagation();
+            });
+
             this.$element.change(function() {
                 _this.render()
+            });
+        },
+
+        liveSearchListener: function() {
+            var _this = this;
+
+            _this.$searchbox.on('input', function() {
+                _this.$newElement.find('li').show().not('.selected').not(':icontains(' + _this.$searchbox.val() + ')').hide();
             });
         },
 
@@ -666,7 +688,8 @@
         showIcon: true,
         showContent: true,
         dropupAuto: true,
-        header: false
+        header: false,
+        liveSearch: false
     }
 
     $(document)
