@@ -41,6 +41,8 @@
         this.setStyle = Selectpicker.prototype.setStyle;
         this.selectAll = Selectpicker.prototype.selectAll;
         this.deselectAll = Selectpicker.prototype.deselectAll;
+        this.selectInverse = Selectpicker.prototype.selectInverse;
+
         this.init();
     };
 
@@ -85,6 +87,11 @@
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<h3 class="popover-title">' + this.options.header + '<button type="button" class="close" aria-hidden="true">&times;</button></h3>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level" /></div>' : '';
+            var selectHeader = this.multiple&&this.options.showSelectOptions? '<div class="selectAll"><a class="all">'+
+                                this.options.selectOptionsText.all+'</a> | <a class="none">'+
+                                this.options.selectOptionsText.none+'</a> | <a class="inv">'+
+                                this.options.selectOptionsText.inv+'</a></div> ' : '';
+
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
@@ -94,6 +101,7 @@
                     "<div class='dropdown-menu open'>" +
                         header +
                         searchbox +
+                        selectHeader+
                         "<ul class='dropdown-menu inner' role='menu'>" +
                         "</ul>" +
                     "</div>" +
@@ -480,6 +488,20 @@
                     }
                 }
             }, this));
+            
+            this.$menu.on('click', '.selectAll a', $.proxy(function(e) {
+                if (e.target == e.currentTarget) {
+                    switch(e.target.className){
+                        case 'all' : this.selectAll(); break;
+                        case 'none': this.deselectAll(); break;
+                        case 'inv' : this.selectInverse(); break;
+                        default: break;
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.$button.focus();
+                }
+            },this));
 
             this.$menu.on('click', 'li.disabled a, li dt, li .div-contain, h3.popover-title', $.proxy(function(e) {
                 if (e.target == e.currentTarget) {
@@ -525,15 +547,21 @@
         },
 
         selectAll: function() {
-            this.$element.find('option').prop('selected', true).attr('selected', 'selected');
+            this.$element.find('option:not(:disabled)').prop('selected', true).attr('selected', 'selected');
             this.render();
         },
 
         deselectAll: function() {
-            this.$element.find('option').prop('selected', false).removeAttr('selected');
+            this.$element.find('option:not(:disabled)').prop('selected', false).removeAttr('selected');
             this.render();
         },
-
+        selectInverse: function() {
+            this.$element.find('option:not(:disabled)').each(
+                function(i,opt){
+                        $(this).prop('selected',!$(this).prop('selected'));
+                });
+            this.render();
+        },
         keydown: function(e) {
             var $this,
                 $items,
@@ -681,10 +709,12 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         countSelectedText: '{0} of {1} selected',
+        selectOptionsText: {all:'All',none:'None',inv:'Inverse'},
         width: false,
         container: false,
         hideDisabled: false,
         showSubtext: false,
+        showSelectOptions:true,
         showIcon: true,
         showContent: true,
         dropupAuto: true,
