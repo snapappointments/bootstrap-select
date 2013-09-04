@@ -73,3 +73,13 @@ Feature requests are welcome. But take a moment to find out whether your idea
 fits with the scope and aims of the project. It's up to *you* to make a strong
 case to convince the project's developers of the merits of this feature. Please
 provide as much detail and context as possible.
+
+## Pull Request Guidelines
+
+* Please **do not** use `var _this = this`. Use `$.proxy` instead to keep the context.
+* Submit your CLA, if you haven't.
+* Please check to make sure that there aren't existing pull requests attempting to address the issue mentioned. We also recommend checking for issues related to the issue on the tracker, as a team member may be working on the issue in a branch or fork.
+* Non-trivial changes should be discussed in an issue first
+* If possible, use JSlint or JSHint to validate it
+* If possible, add relevant tests to cover the change
+* Write a convincing description of your PR and why we should land it
