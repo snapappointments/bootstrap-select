@@ -245,3 +245,7 @@
 .control-group.error .bootstrap-select .dropdown-toggle{
     border-color: #b94a48;
 }
+
+.bootstrap-select-searchbox {
+    padding: 4px 8px;
+}
