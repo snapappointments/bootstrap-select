@@ -163,6 +163,12 @@
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
     font-weight: normal;
 }
+.bootstrap-select.btn-group .dropdown-menu .selectAll {
+    padding: 3px 20px;
+}
+.bootstrap-select.btn-group .dropdown-menu .selectAll a {
+    cursor: pointer; cursor: hand; 
+}
 
 .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
     content: '';
@@ -249,3 +255,5 @@
 .bootstrap-select-searchbox {
     padding: 4px 8px;
 }
+
+
