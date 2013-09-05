@@ -87,7 +87,7 @@
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>" +
+                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
                     "</button>" +
