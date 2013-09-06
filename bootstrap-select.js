@@ -507,6 +507,14 @@
 
         liveSearchListener: function() {
             var that = this;
+            
+            this.$newElement.on('click.dropdown.data-api', function(e){
+                if(that.options.liveSearch) {
+                    setTimeout(function() {
+                        that.$searchbox.focus();
+                    }, 10);
+                }
+            });
 
             this.$searchbox.on('input', function() {
                 that.$newElement.find('li').show().not('.selected').not(':icontains(' + that.$searchbox.val() + ')').hide();
