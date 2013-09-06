@@ -420,7 +420,7 @@ Small Device Styles
 
 }
 
-.inner h2 {
+.inner > h2 {
   float: left;
   width: 500px;
 }
