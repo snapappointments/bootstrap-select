@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.2.0
+ * bootstrap-select v1.3.1
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -244,4 +244,8 @@
 
 .control-group.error .bootstrap-select .dropdown-toggle{
     border-color: #b94a48;
+}
+
+.bootstrap-select-searchbox {
+    padding: 4px 8px;
 }

@@ -63,6 +63,10 @@ Theme Styles
           border-radius: 4px;
 }
 
+.bs-docs-example > p {
+  margin-top: 20px;
+}
+
 /* Echo out a label for the example */
 .bs-docs-example:after {
   content: "Example";
@@ -178,7 +182,7 @@ strong {
 }
 
 img {
-  position: relative;
+/*  position: relative;
   margin: 0 auto;
   max-width: 739px;
   padding: 5px;
@@ -189,7 +193,7 @@ img {
   -webkit-box-shadow: 0 0 5px #ebebeb;
   -moz-box-shadow: 0 0 5px #ebebeb;
   -o-box-shadow: 0 0 5px #ebebeb;
-  -ms-box-shadow: 0 0 5px #ebebeb;
+  -ms-box-shadow: 0 0 5px #ebebeb;*/
 }
 
 blockquote {
@@ -263,7 +267,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 640px;
+  max-width: 840px;
   padding: 20px 10px;
   margin: 0 auto;
 }
@@ -294,6 +298,7 @@ Full-Width Styles
 
 #header_wrap .inner {
   padding: 50px 10px 30px 10px;
+  min-height: 190px;
 }
 
 #project_title {
@@ -316,8 +321,8 @@ Full-Width Styles
   position: absolute;
   width: 210px;
   z-index: 10;
-  bottom: -40px;
-  right: 0;
+  bottom: -29px;
+  left: 0;
   height: 70px;
   background: url('../images/icon_download.png') no-repeat 0% 90%;
 }
@@ -413,4 +418,18 @@ Small Device Styles
     font-size: 12px;
   }
 
+}
+
+.inner h2 {
+  float: left;
+  width: 500px;
+}
+
+/*carbon*/
+#carbonads-container {
+  float: right;
+}
+
+.carbonad {
+  border-width: 0;
 }
