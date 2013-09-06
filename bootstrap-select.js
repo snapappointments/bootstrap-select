@@ -517,7 +517,7 @@
             });
 
             this.$searchbox.on('input', function() {
-                that.$newElement.find('li').show().not('.selected').not(':icontains(' + that.$searchbox.val() + ')').hide();
+                that.$newElement.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
             });
         },
 
