@@ -61,7 +61,8 @@
             if (id !== undefined) {
                 var that = this;
                 this.$button.attr('data-id', id);
-                $('label[for="' + id + '"]').click(function() {
+                $('label[for="' + id + '"]').click(function(e) {
+                    e.preventDefault();
                     that.$button.focus();
                 });
             }
