@@ -684,7 +684,7 @@
     };
 
     $.fn.selectpicker.defaults = {
-        style: null,
+        style: 'btn-default',
         size: 'auto',
         title: null,
         selectedTextFormat : 'values',
