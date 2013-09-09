@@ -50,8 +50,13 @@
     border: 1px solid #b94a48;
 }
 
+
+.dropdown-menu {
+  z-index: 2000;
+}
+
 .bootstrap-select.show-menu-arrow.open > .btn {
-    z-index: 1001;
+    z-index: 2051;
 }
 
 .bootstrap-select .btn:focus {
