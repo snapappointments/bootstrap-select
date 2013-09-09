@@ -50,7 +50,6 @@
 
         init: function(e) {
 
-            console.log('vaca!')
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
