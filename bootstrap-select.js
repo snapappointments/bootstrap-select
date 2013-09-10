@@ -86,7 +86,7 @@
             //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<h3 class="popover-title">' + this.options.header + '<button type="button" class="close" aria-hidden="true">&times;</button></h3>' : '';
-            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level" /></div>' : '';
+            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
@@ -508,7 +508,7 @@
 
         liveSearchListener: function() {
             var that = this;
-            
+
             this.$newElement.on('click.dropdown.data-api', function(e){
                 if(that.options.liveSearch) {
                     setTimeout(function() {
