@@ -1,46 +1,42 @@
-bootstrap-select
+bootstrap-select with dependencies
 ================
 
-A custom select / multiselect for @twitter bootstrap using button dropdown, designed to behave like regular Bootstrap selects;
+Forked from https://github.com/silviomoreto/bootstrap-select
 
-## Demo and Documentation
-
-See an  example [here](http://silviomoreto.github.com/bootstrap-select/).
-
-## Authors
-
-[Silvio Moreto](http://github.com/silviomoreto),
-[Ana Carolina](http://github.com/anacarolinats),
-[caseyjhol](https://github.com/caseyjhol), and
-[Matt Bryson](https://github.com/mattbryson).
+Extended bootstrap-select to support dependencies - i.e. enable/disable a <select>, <optgroup>, <option> based on the evaluation result of a jQuery selector string.
 
 ## Usage
 
-Create your `<select>` with the `.selectpicker` class.
+Use "enable-if" attribute on the desired <select> or <optgroup> or <option>. The value of "enable-if" should be a jQuery selector expression. You can also use "&&" as logic AND. Nesting is not supported. If no "enable-if" attribute is provided or if its value is empty, by default the element will be *enabled*.
 
-    <select class="selectpicker">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Barbecue</option>
-    </select>
-    
-Enable Bootstrap-Select via JavaScript:
+## Examples
 
-    $('.selectpicker').selectpicker();
+```html
+<select id="platform">
+	<option>--- Select Platform ---</option>
+	<option value="android">Android</option>
+	<option value="ios">iOS</option>
+</select>
 
-Or just
+<input type="checkbox" id="all-platforms"/> <label for="all-platforms">All Platforms</label>
 
-    $('select').selectpicker();
+<select>
+	<option>--- Select Model ---</option>
+	<optgroup label="Android" enable-if="#platform option[value='android']:selected, #all-platforms:checked">
+		<option>Galaxy Note III</option>
+		<option>Galaxy S4</option>
+		<option>HTC One</option>
+	</optgroup>
+	<option enable-if="option[value='ios']:selected">iPhone 5S</option>
+	<option enable-if="#platform option[value='ios']:selected && #all-platforms:checked">iPhone 5</option>
+</select>
+```
+* Please note iPhone 5 is configured to only show up when both iOS and All Platforms are selected. Sorry this example logically makes little sense.
 
-Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
-
-## Bugs and feature requests
-
-Anyone and everyone is welcome to contribute. Please take a moment to
-review the [guidelines for contributing](CONTRIBUTING.md). Make sure you're using the latest version of bootstrap-select before submitting an issue.
-
-* [Bug reports](CONTRIBUTING.md#bugs)
-* [Feature requests](CONTRIBUTING.md#features)
+## Limitations
+* Only value changes from <select> <input> are monitored and set to trigger a refresh of the listening <select>. If you use selectors like "div#myDiv[class='myClass']" you will not be able to trigger a refresh by adding or removing "myClass" to or from the div.
+* When "enable-if" has no value the element is by default enabled. This is a somewhat weird logic. Just wanted to avoid the double negative statement, e.g. disable-if="select#mySelect option[value!="myValue"]:selected"
+* Try to be as specific about the selector as possible, or there could be performance issues.
 
 ## Copyright and license
 

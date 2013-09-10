@@ -71,6 +71,7 @@
             this.checkTabIndex();
             this.clickListener();
             this.liveSearchListener();
+            this.enableTargetListener();
             this.render();
             this.liHeight();
             this.setStyle();
@@ -415,12 +416,32 @@
             }
         },
 
+        evaluateEnableCriteria: function($el){
+            var criteria = $el.attr('enable-if');
+            var disable = false; // If criteria is not provided by default the control should be enabled.
+            if (criteria){
+                $(criteria.split('&&')).each(function(){
+                    if ($(this).length == 0){
+                        disable = true;
+                        return false;
+                    }
+                });
+            }
+            $el.prop('disabled', disable);
+        },
+
         isDisabled: function() {
             return this.$element.is(':disabled');
         },
 
         checkDisabled: function() {
             var that = this;
+            // set prop('disabled') first according to enable-if
+            that.evaluateEnableCriteria(that.$element);
+            that.$element.find('option, optgroup').each(function(index) {
+                that.evaluateEnableCriteria($(this));
+            });
+
             if (this.isDisabled()) {
                 this.$button.addClass('disabled');
                 this.$button.attr('tabindex','-1');
@@ -502,7 +523,7 @@
             });
 
             this.$element.change(function() {
-                that.render()
+                that.render();
             });
         },
 
@@ -520,6 +541,20 @@
             this.$searchbox.on('input', function() {
                 that.$newElement.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
             });
+        },
+
+        enableTargetListener: function(){
+            $('[enable-if]').each(function(){
+                    var criteria = $(this).attr('enable-if');
+                    // loosen up criteria a little
+                    criteria = criteria.replace(/&&/g, ',').replace(/:selected/g, '').replace(/:checked/g, '');
+                    var $select = $(this).closest('select');
+                    $(criteria).each(function(){
+                        $(this).closest('input, select').change(function(){
+                            $select.selectpicker('refresh');
+                        });
+                    });
+                });
         },
 
         val: function(value) {
