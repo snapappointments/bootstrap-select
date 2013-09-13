@@ -207,6 +207,13 @@
                that.setSelected(index, $(this).is(':selected') );
             });
 
+            //If have prefix icon or text, then add it 
+            var titlePrefix;
+            if (that.options.titlePrefixIcon || that.options.titlePrefixText) {
+                titlePrefix = that.options.titlePrefixIcon ? '<i class="glyphicon ' + that.options.titlePrefixIcon + '"></i>' : '';
+                titlePrefix += that.options.titlePrefixText ? '<span class="prefix">' + that.options.titlePrefixText + '</span>' : '';
+            }
+
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
@@ -227,20 +234,24 @@
 
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
-            var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
+            var titleData = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if ( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
+                    titleData = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
              }
 
-            //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
-            if (!title) {
+            //If we dont have a title data, then use the default, or if nothing is set at all, use the not selected text
+            //And if we have title prefix use it, or set title data only
+            var title;
+            if (!titleData) {
                 title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
+            } else {
+                title = titlePrefix != undefined ? titlePrefix + titleData : titleData;
             }
 
             this.$newElement.find('.filter-option').html(title);
@@ -687,6 +698,8 @@
     $.fn.selectpicker.defaults = {
         style: 'btn-default',
         size: 'auto',
+        titlePrefixIcon: null,
+        titlePrefixText: null,
         title: null,
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',

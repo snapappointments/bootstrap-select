@@ -65,6 +65,15 @@
     outline-offset: -2px;
 }
 
+.bootstrap-select .btn i {
+    padding-right: 5px;
+}
+
+.bootstrap-select .btn span.prefix {
+    font-weight: bold;
+    padding-right: 3px;
+}
+
 .bootstrap-select.btn-group .btn .filter-option {
     overflow: hidden;
     position: absolute;
