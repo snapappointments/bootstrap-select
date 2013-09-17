@@ -129,6 +129,7 @@
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {
+    position: relative;
     padding-left: 35px;
 }
 
