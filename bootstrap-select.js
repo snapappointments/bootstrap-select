@@ -10,11 +10,9 @@
 
     "use strict";
 
-    $.expr[":"].icontains = $.expr.createPseudo(function(arg) {
-        return function( elem ) {
-            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
-        };
-    });
+    $.expr[":"].icontains = function(obj, index, meta) {
+        return $(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) >= 0;
+    };
 
     var Selectpicker = function(element, options, e) {
         if (e) {
@@ -518,7 +516,11 @@
             });
 
             this.$searchbox.on('input', function() {
-                that.$newElement.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
+                if (that.$searchbox.val()) {
+                    that.$newElement.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
+                } else {
+                    that.$newElement.find('li').show();
+                }
             });
         },
 
