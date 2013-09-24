@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.2
+ * bootstrap-select v1.3.3
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -66,7 +66,6 @@
             }
 
             this.checkDisabled();
-            this.checkTabIndex();
             this.clickListener();
             this.liveSearchListener();
             this.render();
@@ -205,6 +204,8 @@
                that.setSelected(index, $(this).is(':selected') );
             });
 
+            this.tabIndex();
+
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
@@ -267,8 +268,9 @@
             var $menuClone = selectClone.addClass('open').find('> .dropdown-menu');
             var liHeight = $menuClone.find('li > a').outerHeight();
             var headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0;
+            var searchHeight = this.options.header ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
             selectClone.remove();
-            this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight);
+            this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight).data('searchHeight', searchHeight);
         },
 
         setSize: function() {
@@ -279,6 +281,7 @@
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 headerHeight = this.$newElement.data('headerHeight'),
+                searchHeight = this.$newElement.data('searchHeight'),
                 divHeight = menu.find('li .divider').outerHeight(true),
                 menuPadding = parseInt(menu.css('padding-top')) +
                               parseInt(menu.css('padding-bottom')) +
@@ -312,7 +315,7 @@
                         minHeight = 0;
                     }
                     menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden', 'min-height' : minHeight + 'px'});
-                    menuInner.css({'max-height' : menuHeight - headerHeight- menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight - menuPadding + 'px'});
+                    menuInner.css({'max-height' : menuHeight - headerHeight - searchHeight- menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight - menuPadding + 'px'});
                 };
                 getSize();
                 $(window).resize(getSize);
@@ -322,7 +325,7 @@
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && menuHeight < menu.height() && this.options.dropupAuto);
-                menu.css({'max-height' : menuHeight + headerHeight + 'px', 'overflow' : 'hidden'});
+                menu.css({'max-height' : menuHeight + headerHeight + searchHeight + 'px', 'overflow' : 'hidden'});
                 menuInner.css({'max-height' : menuHeight - menuPadding + 'px', 'overflow-y' : 'auto'});
             }
         },
@@ -424,17 +427,17 @@
                 this.$button.attr('tabindex','-1');
             } else if (this.$button.hasClass('disabled')) {
                 this.$button.removeClass('disabled');
-                this.$button.removeAttr('tabindex');
+                if (!this.$element.data('tabindex')) this.$button.removeAttr('tabindex');
             }
             this.$button.click(function() {
                 return !that.isDisabled();
             });
         },
 
-        checkTabIndex: function() {
+        tabIndex: function() {
             if (this.$element.is('[tabindex]')) {
-                var tabindex = this.$element.attr("tabindex");
-                this.$button.attr('tabindex', tabindex);
+                this.$element.data('tabindex', this.$element.attr("tabindex"));
+                this.$button.attr('tabindex', this.$element.data('tabindex'));
             }
         },
 
