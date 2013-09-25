@@ -397,7 +397,6 @@
 
         refresh: function() {
             this.reloadLi();
-            this.render();
             this.setWidth();
             this.setStyle();
             this.checkDisabled();
@@ -429,12 +428,12 @@
                 if (this.$button.hasClass('disabled')) {
                     this.$button.removeClass('disabled');
                 }
-                
+
                 if (this.$button.attr('tabindex') == -1) {
                     if (!this.$element.data('tabindex')) this.$button.removeAttr('tabindex');
                 }
             }
-            
+
             this.$button.click(function() {
                 return !that.isDisabled();
             });
