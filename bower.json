@@ -1,7 +1,7 @@
 {
   "name": "bootstrap-select",
   "main": "bootstrap-select.js",
-  "version": "1.2.0",
+  "version": "1.3.3",
   "homepage": "https://github.com/silviomoreto/bootstrap-select",
   "authors": [
     "silviomoreto"
