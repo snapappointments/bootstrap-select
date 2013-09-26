@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.3
+ * bootstrap-select v1.3.4
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -534,9 +534,9 @@
 
             this.$searchbox.on('input', function() {
                 if (that.$searchbox.val()) {
-                    that.$newElement.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
+                    that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                 } else {
-                    that.$newElement.find('li').show();
+                    that.$menu.find('li').show();
                 }
             });
         },
