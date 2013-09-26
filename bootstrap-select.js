@@ -240,7 +240,7 @@
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
                 title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
-            }
+            }re
 
             this.$newElement.find('.filter-option').html(title);
         },
@@ -396,6 +396,15 @@
         },
 
         refresh: function() {
+            this.reloadLi();
+            this.render();
+            this.setWidth();
+            this.setStyle();
+            this.checkDisabled();
+            this.liHeight();
+        },
+        
+        update: function() {
             this.reloadLi();
             this.setWidth();
             this.setStyle();
