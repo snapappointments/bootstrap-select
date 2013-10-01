@@ -132,7 +132,7 @@
                 var optionClass = $this.attr("class") || '';
                 var inline = $this.attr("style") || '';
                 var text =  $this.data('content') ? $this.data('content') : $this.html();
-                var subtext = $this.data('subtext') !== undefined ? '<small class="muted">' + $this.data('subtext') + '</small>' : '';
+                var subtext = $this.data('subtext') !== undefined ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="glyphicon '+$this.data('icon')+'"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
@@ -149,7 +149,7 @@
                     if ($this.index() == 0) {
                         //Get the opt group label
                         var label = $this.parent().attr('label');
-                        var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted">'+$this.parent().data('subtext')+'</small>' : '';
+                        var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted text-muted">'+$this.parent().data('subtext')+'</small>' : '';
                         var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
@@ -211,7 +211,7 @@
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
                 if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
-                    subtext = ' <small class="muted">'+$this.data('subtext') +'</small>';
+                    subtext = ' <small class="muted text-muted">'+$this.data('subtext') +'</small>';
                 } else {
                     subtext = '';
                 }
