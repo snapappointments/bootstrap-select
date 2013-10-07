@@ -642,8 +642,8 @@
                 $items.eq(keyIndex[count - 1]).focus();
             }
 
-            // select focused option if "Enter" or "Spacebar" are pressed
-            if (/(13|32)/.test(e.keyCode)) {
+            // select focused option if "Enter", "Spacebar" or "Tab" are pressed
+            if (/(13|32|9)/.test(e.keyCode)) {
                 e.preventDefault();
                 $(':focus').click();
                 $(document).data('keycount',0);
