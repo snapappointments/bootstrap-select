@@ -19,6 +19,15 @@
     margin-bottom: 0;
 }
 
+.bootstrap-select.form-control {
+    padding: 0;
+    border: none;
+}
+
+.bootstrap-select.form-control:not([class*="span"]) {
+    width: 100%;
+}
+
 .bootstrap-select.btn-group.pull-right,
 .bootstrap-select.btn-group[class*="span"].pull-right,
 .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
