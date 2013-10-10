@@ -268,7 +268,7 @@
             var $menuClone = selectClone.addClass('open').find('> .dropdown-menu');
             var liHeight = $menuClone.find('li > a').outerHeight();
             var headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0;
-            var searchHeight = this.options.header ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
+            var searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
             selectClone.remove();
             this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight).data('searchHeight', searchHeight);
         },
