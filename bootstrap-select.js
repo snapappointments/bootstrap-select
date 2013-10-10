@@ -277,7 +277,6 @@
             var that = this,
                 menu = this.$menu,
                 menuInner = menu.find('.inner'),
-                menuA = menuInner.find('li > a'),
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 headerHeight = this.$newElement.data('headerHeight'),
@@ -468,7 +467,6 @@
 
             this.$menu.on('click', 'li a', function(e) {
                 var clickedIndex = $(this).parent().index(),
-                    $this = $(this).parent(),
                     prevValue = that.$element.val();
 
                 //Dont close on multi choice menu
