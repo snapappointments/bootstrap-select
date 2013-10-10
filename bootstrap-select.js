@@ -46,7 +46,7 @@
 
         constructor: Selectpicker,
 
-        init: function(e) {
+        init: function() {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
@@ -125,7 +125,7 @@
                 _liA = [],
                 _liHtml = '';
 
-            this.$element.find('option').each(function(index) {
+            this.$element.find('option').each(function() {
                 var $this = $(this);
 
                 //Get the class and text for the option
@@ -206,7 +206,7 @@
 
             this.tabIndex();
 
-            var selectedItems = this.$element.find('option:selected').map(function(index,value) {
+            var selectedItems = this.$element.find('option:selected').map(function() {
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
@@ -371,7 +371,7 @@
                     actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
                     $drop.css({'top' : pos.top + actualHeight, 'left' : pos.left, 'width' : $element[0].offsetWidth, 'position' : 'absolute'});
                 };
-            this.$newElement.on('click', function(e) {
+            this.$newElement.on('click', function() {
                 getPlacement($(this));
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
@@ -380,7 +380,7 @@
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
-            $(window).on('scroll', function(e) {
+            $(window).on('scroll', function() {
                 getPlacement(that.$newElement);
             });
             $('html').on('click', function(e) {
@@ -524,7 +524,7 @@
         liveSearchListener: function() {
             var that = this;
 
-            this.$newElement.on('click.dropdown.data-api', function(e){
+            this.$newElement.on('click.dropdown.data-api', function(){
                 if(that.options.liveSearch) {
                     setTimeout(function() {
                         that.$searchbox.focus();
