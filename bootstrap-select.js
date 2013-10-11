@@ -46,7 +46,7 @@
 
         constructor: Selectpicker,
 
-        init: function(e) {
+        init: function() {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
@@ -125,7 +125,7 @@
                 _liA = [],
                 _liHtml = '';
 
-            this.$element.find('option').each(function(index) {
+            this.$element.find('option').each(function() {
                 var $this = $(this);
 
                 //Get the class and text for the option
@@ -145,7 +145,7 @@
 
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
-                } else if ($this.parent().is('optgroup') && $this.data('divider') != true) {
+                } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
                     if ($this.index() == 0) {
                         //Get the opt group label
                         var label = $this.parent().attr('label');
@@ -167,9 +167,9 @@
                     } else {
                          _liA.push(that.createA(text, "opt " + optionClass, inline ));
                     }
-                } else if ($this.data('divider') == true) {
+                } else if ($this.data('divider') === true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
-                } else if ($(this).data('hidden') == true) {
+                } else if ($(this).data('hidden') === true) {
                     _liA.push('');
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
@@ -206,7 +206,7 @@
 
             this.tabIndex();
 
-            var selectedItems = this.$element.find('option:selected').map(function(index,value) {
+            var selectedItems = this.$element.find('option:selected').map(function() {
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
@@ -277,7 +277,6 @@
             var that = this,
                 menu = this.$menu,
                 menuInner = menu.find('.inner'),
-                menuA = menuInner.find('li > a'),
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 headerHeight = this.$newElement.data('headerHeight'),
@@ -371,7 +370,7 @@
                     actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
                     $drop.css({'top' : pos.top + actualHeight, 'left' : pos.left, 'width' : $element[0].offsetWidth, 'position' : 'absolute'});
                 };
-            this.$newElement.on('click', function(e) {
+            this.$newElement.on('click', function() {
                 getPlacement($(this));
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
@@ -380,7 +379,7 @@
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
-            $(window).on('scroll', function(e) {
+            $(window).on('scroll', function() {
                 getPlacement(that.$newElement);
             });
             $('html').on('click', function(e) {
@@ -468,7 +467,6 @@
 
             this.$menu.on('click', 'li a', function(e) {
                 var clickedIndex = $(this).parent().index(),
-                    $this = $(this).parent(),
                     prevValue = that.$element.val();
 
                 //Dont close on multi choice menu
@@ -524,7 +522,7 @@
         liveSearchListener: function() {
             var that = this;
 
-            this.$newElement.on('click.dropdown.data-api', function(e){
+            this.$newElement.on('click.dropdown.data-api', function(){
                 if(that.options.liveSearch) {
                     setTimeout(function() {
                         that.$searchbox.focus();
