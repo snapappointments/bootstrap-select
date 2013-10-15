@@ -75,8 +75,8 @@
             if (this.options.container) {
                 this.selectPosition();
             }
-            this.$menu.data('this', this);
-            this.$newElement.data('this', this);
+            this.$menu.data('selectpicker', this);
+            this.$newElement.data('selectpicker', this);
         },
 
         createDropdown: function() {
@@ -577,74 +577,76 @@
 
             $parent = $this.parent();
 
-            that = $parent.data('this');
+            that = $parent.data('selectpicker');
+            if(that){
 
-            if (that.options.container) $parent = that.$menu;
-
-            $items = $('[role=menu] li:not(.divider):visible a', $parent);
-
-            if (!$items.length) return;
-
-            if (/(38|40)/.test(e.keyCode)) {
-
-                index = $items.index($items.filter(':focus'));
-                first = $items.parent(':not(.disabled)').first().index();
-                last = $items.parent(':not(.disabled)').last().index();
-                next = $items.eq(index).parent().nextAll(':not(.disabled)').eq(0).index();
-                prev = $items.eq(index).parent().prevAll(':not(.disabled)').eq(0).index();
-                nextPrev = $items.eq(next).parent().prevAll(':not(.disabled)').eq(0).index();
-
-                if (e.keyCode == 38) {
-                    if (index != nextPrev && index > prev) index = prev;
-                    if (index < first) index = first;
-                }
-
-                if (e.keyCode == 40) {
-                    if (index != nextPrev && index < next) index = next;
-                    if (index > last) index = last;
-                    if (index == -1) index = 0;
-                }
-
-                $items.eq(index).focus();
-            } else {
-                var keyCodeMap = {
-                    48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
-                    65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
-                    77:"m", 78:"n", 79:"o", 80:"p", 81:"q", 82:"r", 83:"s", 84:"t", 85:"u", 86:"v", 87:"w", 88:"x", 89:"y", 90:"z",
-                    96:"0", 97:"1", 98:"2", 99:"3", 100:"4", 101:"5", 102:"6", 103:"7", 104:"8", 105:"9"
-                };
-
-                var keyIndex = [];
-
-                $items.each(function() {
-                    if ($(this).parent().is(':not(.disabled)')) {
-                        if ($.trim($(this).text().toLowerCase()).substring(0,1) == keyCodeMap[e.keyCode]) {
-                            keyIndex.push($(this).parent().index());
-                        }
-                    }
-                });
-
-                var count = $(document).data('keycount');
-                count++;
-                $(document).data('keycount',count);
-
-                var prevKey = $.trim($(':focus').text().toLowerCase()).substring(0,1);
-
-                if (prevKey != keyCodeMap[e.keyCode]) {
-                    count = 1;
-                    $(document).data('keycount',count);
-                } else if (count >= keyIndex.length) {
-                    $(document).data('keycount',0);
-                }
-
-                $items.eq(keyIndex[count - 1]).focus();
-            }
-
-            // select focused option if "Enter" or "Spacebar" are pressed
-            if (/(13|32)/.test(e.keyCode)) {
-                e.preventDefault();
-                $(':focus').click();
-                $(document).data('keycount',0);
+	            if (that.options.container) $parent = that.$menu;
+	
+	            $items = $('[role=menu] li:not(.divider):visible a', $parent);
+	
+	            if (!$items.length) return;
+	
+	            if (/(38|40)/.test(e.keyCode)) {
+	
+	                index = $items.index($items.filter(':focus'));
+	                first = $items.parent(':not(.disabled)').first().index();
+	                last = $items.parent(':not(.disabled)').last().index();
+	                next = $items.eq(index).parent().nextAll(':not(.disabled)').eq(0).index();
+	                prev = $items.eq(index).parent().prevAll(':not(.disabled)').eq(0).index();
+	                nextPrev = $items.eq(next).parent().prevAll(':not(.disabled)').eq(0).index();
+	
+	                if (e.keyCode == 38) {
+	                    if (index != nextPrev && index > prev) index = prev;
+	                    if (index < first) index = first;
+	                }
+	
+	                if (e.keyCode == 40) {
+	                    if (index != nextPrev && index < next) index = next;
+	                    if (index > last) index = last;
+	                    if (index == -1) index = 0;
+	                }
+	
+	                $items.eq(index).focus();
+	            } else {
+	                var keyCodeMap = {
+	                    48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
+	                    65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
+	                    77:"m", 78:"n", 79:"o", 80:"p", 81:"q", 82:"r", 83:"s", 84:"t", 85:"u", 86:"v", 87:"w", 88:"x", 89:"y", 90:"z",
+	                    96:"0", 97:"1", 98:"2", 99:"3", 100:"4", 101:"5", 102:"6", 103:"7", 104:"8", 105:"9"
+	                };
+	
+	                var keyIndex = [];
+	
+	                $items.each(function() {
+	                    if ($(this).parent().is(':not(.disabled)')) {
+	                        if ($.trim($(this).text().toLowerCase()).substring(0,1) == keyCodeMap[e.keyCode]) {
+	                            keyIndex.push($(this).parent().index());
+	                        }
+	                    }
+	                });
+	
+	                var count = $(document).data('keycount');
+	                count++;
+	                $(document).data('keycount',count);
+	
+	                var prevKey = $.trim($(':focus').text().toLowerCase()).substring(0,1);
+	
+	                if (prevKey != keyCodeMap[e.keyCode]) {
+	                    count = 1;
+	                    $(document).data('keycount',count);
+	                } else if (count >= keyIndex.length) {
+	                    $(document).data('keycount',0);
+	                }
+	
+	                $items.eq(keyIndex[count - 1]).focus();
+	            }
+	
+	            // select focused option if "Enter" or "Spacebar" are pressed
+	            if (/(13|32)/.test(e.keyCode)) {
+	                e.preventDefault();
+	                $(':focus').click();
+	                $(document).data('keycount',0);
+	            }
             }
         },
 
