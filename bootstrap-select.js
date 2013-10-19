@@ -532,15 +532,25 @@
 
             this.$searchbox.on('keyup', function(e) {
                 if(e.keyCode == 40) {
+                    // Down-arrow should go to the first visible item.
                     that.$menu.find('li:not(.divider):visible a').first().focus();
                 }
                 else if(e.keyCode == 38) {
+                    // Up-arrow should go to the last visible item.
                     that.$menu.find('li:not(.divider):visible a').last().focus();
                 }
                 else if (that.$searchbox.val()) {
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                 } else {
                     that.$menu.find('li').show();
+                }
+            }).on('keydown', function(e) {
+                if(e.keyCode == 13) {
+                    // Prevent return from submitting any form here (needs to be in keydown instead of keyup).
+                    // Closes the dropdown and focuses it.
+                    that.$button.click().focus();
+                    e.preventDefault();
+                    return false;
                 }
             });
         },
@@ -567,6 +577,15 @@
             this.render();
         },
 
+        keydown: function(e) {
+            var that = $(this).parent().data('this');
+            // If the dropdown is closed, open it and move focus to the search box, if there is one.
+            if(that.$searchbox && that.$searchbox.is(':not(:visible)') && e.keyCode >= 48 && e.keyCode <= 90) {
+                $(':focus').click();
+                that.$searchbox.focus();
+            }
+        },
+
         keyup: function(e) {
             var $this,
                 $items,
@@ -580,13 +599,6 @@
             that = $parent.data('this');
 
             if (that.options.container) $parent = that.$menu;
-
-            // If the dropdown is closed, open it and move focus to the search box, if there is one.
-            if(that.$searchbox && that.$searchbox.is(':not(:visible)') && e.keyCode >= 48 && e.keyCode <= 90) {
-                $(':focus').click();
-                that.$searchbox.val('').focus();
-                return;
-            }
 
             $items = $('[role=menu] li:not(.divider):visible a', $parent);
 
@@ -717,6 +729,7 @@
 
     $(document)
         .data('keycount', 0)
+        .on('keydown', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keydown)
         .on('keyup', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keyup);
 
 }(window.jQuery);
