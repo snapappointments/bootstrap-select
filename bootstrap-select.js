@@ -46,7 +46,7 @@
 
         constructor: Selectpicker,
 
-        init: function() {
+        init: function(e) {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
@@ -77,6 +77,7 @@
             }
             this.$menu.data('this', this);
             this.$newElement.data('this', this);
+            this.registerBlurFocusEvents(that);
         },
 
         createDropdown: function() {
@@ -87,16 +88,16 @@
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
-                        "<div class='filter-option pull-left'></div>&nbsp;" +
-                        "<div class='caret'></div>" +
+                    "<div class='filter-option pull-left'></div>&nbsp;" +
+                    "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
-                        header +
-                        searchbox +
-                        "<ul class='dropdown-menu inner' role='menu'>" +
-                        "</ul>" +
+                    header +
+                    searchbox +
+                    "<ul class='dropdown-menu inner' role='menu'>" +
+                    "</ul>" +
                     "</div>" +
-                "</div>";
+                    "</div>";
 
             return $(drop);
         },
@@ -125,7 +126,7 @@
                 _liA = [],
                 _liHtml = '';
 
-            this.$element.find('option').each(function() {
+            this.$element.find('option').each(function(index) {
                 var $this = $(this);
 
                 //Get the class and text for the option
@@ -145,7 +146,7 @@
 
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
-                } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
+                } else if ($this.parent().is('optgroup') && $this.data('divider') != true) {
                     if ($this.index() == 0) {
                         //Get the opt group label
                         var label = $this.parent().attr('label');
@@ -156,20 +157,20 @@
                         if ($this[0].index != 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+label+'</dt>'+
-                                that.createA(text, "opt " + optionClass, inline )
-                                );
+                                    '<dt>'+label+'</dt>'+
+                                    that.createA(text, "opt " + optionClass, inline )
+                            );
                         } else {
                             _liA.push(
                                 '<dt>'+label+'</dt>'+
-                                that.createA(text, "opt " + optionClass, inline ));
+                                    that.createA(text, "opt " + optionClass, inline ));
                         }
                     } else {
-                         _liA.push(that.createA(text, "opt " + optionClass, inline ));
+                        _liA.push(that.createA(text, "opt " + optionClass, inline ));
                     }
-                } else if ($this.data('divider') === true) {
+                } else if ($this.data('divider') == true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
-                } else if ($(this).data('hidden') === true) {
+                } else if ($(this).data('hidden') == true) {
                     _liA.push('');
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
@@ -190,9 +191,9 @@
 
         createA: function(text, classes, inline) {
             return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
-                 text +
-                 '<i class="glyphicon glyphicon-ok icon-ok check-mark"></i>' +
-                 '</a>';
+                text +
+                '<i class="glyphicon glyphicon-ok icon-ok check-mark"></i>' +
+                '</a>';
         },
 
         render: function() {
@@ -200,13 +201,13 @@
 
             //Update the LI to match the SELECT
             this.$element.find('option').each(function(index) {
-               that.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
-               that.setSelected(index, $(this).is(':selected') );
+                that.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
+                that.setSelected(index, $(this).is(':selected') );
             });
 
             this.tabIndex();
 
-            var selectedItems = this.$element.find('option:selected').map(function() {
+            var selectedItems = this.$element.find('option:selected').map(function(index,value) {
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
@@ -235,7 +236,7 @@
                 if ( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
-             }
+            }
 
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
@@ -277,15 +278,16 @@
             var that = this,
                 menu = this.$menu,
                 menuInner = menu.find('.inner'),
+                menuA = menuInner.find('li > a'),
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 headerHeight = this.$newElement.data('headerHeight'),
                 searchHeight = this.$newElement.data('searchHeight'),
                 divHeight = menu.find('li .divider').outerHeight(true),
                 menuPadding = parseInt(menu.css('padding-top')) +
-                              parseInt(menu.css('padding-bottom')) +
-                              parseInt(menu.css('border-top-width')) +
-                              parseInt(menu.css('border-bottom-width')),
+                    parseInt(menu.css('padding-bottom')) +
+                    parseInt(menu.css('border-top-width')) +
+                    parseInt(menu.css('border-bottom-width')),
                 notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '',
                 $window = $(window),
                 menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2,
@@ -296,8 +298,8 @@
                     selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
                     selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
                 };
-                posVert();
-                if (this.options.header) menu.css('padding-top', 0);
+            posVert();
+            if (this.options.header) menu.css('padding-top', 0);
 
             if (this.options.size == 'auto') {
                 var getSize = function() {
@@ -370,7 +372,7 @@
                     actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
                     $drop.css({'top' : pos.top + actualHeight, 'left' : pos.left, 'width' : $element[0].offsetWidth, 'position' : 'absolute'});
                 };
-            this.$newElement.on('click', function() {
+            this.$newElement.on('click', function(e) {
                 getPlacement($(this));
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
@@ -379,7 +381,7 @@
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
-            $(window).on('scroll', function() {
+            $(window).on('scroll', function(e) {
                 getPlacement(that.$newElement);
             });
             $('html').on('click', function(e) {
@@ -402,7 +404,7 @@
             this.checkDisabled();
             this.liHeight();
         },
-        
+
         update: function() {
             this.reloadLi();
             this.setWidth();
@@ -467,6 +469,7 @@
 
             this.$menu.on('click', 'li a', function(e) {
                 var clickedIndex = $(this).parent().index(),
+                    $this = $(this).parent(),
                     prevValue = that.$element.val();
 
                 //Dont close on multi choice menu
@@ -522,7 +525,7 @@
         liveSearchListener: function() {
             var that = this;
 
-            this.$newElement.on('click.dropdown.data-api', function(){
+            this.$newElement.on('click.dropdown.data-api', function(e){
                 if(that.options.liveSearch) {
                     setTimeout(function() {
                         that.$searchbox.focus();
@@ -659,14 +662,50 @@
         destroy: function() {
             this.$newElement.remove();
             this.$element.remove();
+        },
+        registerBlurFocusEvents:function(that){
+            var hasFocus = false;
+            this.$newElement.on('focusin focusout', function (event) {
+                that.$element.triggerHandler(event.type, event);
+                if (event.type == 'focusin') {
+                    if (!hasFocus) {
+                        hasFocus = true;
+                        that.$element.triggerHandler('focus');
+                    }
+                } else if (event.type == 'focusout') {
+                    if (hasFocus) {
+                        var isBlur = !event.relatedTarget;
+                        if (!isBlur) {
+                            var el = that.$newElement.get(0),
+                                relEl = event.relatedTarget,
+                                found = false;
+                            while (relEl) {
+                                if (relEl == el) {
+                                    found = true;
+                                    break;
+                                }
+                                relEl = relEl.parentNode;
+                            }
+                            if (!found)
+                                isBlur = true;
+                        }
+                        if (isBlur) {
+                            hasFocus = false;
+                            that.$element.triggerHandler('blur');
+                        }
+                    }
+                }
+            });
         }
+
+
     };
 
     $.fn.selectpicker = function(option, event) {
-       //get the args of the outer function..
-       var args = arguments;
-       var value;
-       var chain = this.each(function() {
+        //get the args of the outer function..
+        var args = arguments;
+        var value;
+        var chain = this.each(function() {
             if ($(this).is('select')) {
                 var $this = $(this),
                     data = $this.data('selectpicker'),
@@ -676,7 +715,7 @@
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
                 } else if (options) {
                     for(var i in options) {
-                       data.options[i] = options[i];
+                        data.options[i] = options[i];
                     }
                 }
 
