@@ -86,14 +86,14 @@
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
+                    "<button type='button' class='btn dropdown-toggle selectpicker' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
                         header +
                         searchbox +
-                        "<ul class='dropdown-menu inner' role='menu'>" +
+                        "<ul class='dropdown-menu inner selectpicker' role='menu'>" +
                         "</ul>" +
                     "</div>" +
                 "</div>";
@@ -530,11 +530,27 @@
                 }
             });
 
-            this.$searchbox.on('input', function() {
-                if (that.$searchbox.val()) {
+            this.$searchbox.on('keyup', function(e) {
+                if(e.keyCode == 40) {
+                    // Down-arrow should go to the first visible item.
+                    that.$menu.find('li:not(.divider):visible a').first().focus();
+                }
+                else if(e.keyCode == 38) {
+                    // Up-arrow should go to the last visible item.
+                    that.$menu.find('li:not(.divider):visible a').last().focus();
+                }
+                else if (that.$searchbox.val()) {
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                 } else {
                     that.$menu.find('li').show();
+                }
+            }).on('keydown', function(e) {
+                if(e.keyCode == 13) {
+                    // Prevent return from submitting any form here (needs to be in keydown instead of keyup).
+                    // Closes the dropdown and focuses it.
+                    that.$button.click().focus();
+                    e.preventDefault();
+                    return false;
                 }
             });
         },
@@ -562,15 +578,18 @@
         },
 
         keydown: function(e) {
+            var that = $(this).parent().data('this');
+            // If the dropdown is closed, open it and move focus to the search box, if there is one.
+            if(that.$searchbox && that.$searchbox.is(':not(:visible)') && e.keyCode >= 48 && e.keyCode <= 90) {
+                $(':focus').click();
+                that.$searchbox.focus();
+            }
+        },
+
+        keyup: function(e) {
             var $this,
                 $items,
                 $parent,
-                index,
-                next,
-                first,
-                last,
-                prev,
-                nextPrev,
                 that;
 
             $this = $(this);
@@ -585,28 +604,17 @@
 
             if (!$items.length) return;
 
-            if (/(38|40)/.test(e.keyCode)) {
-
-                index = $items.index($items.filter(':focus'));
-                first = $items.parent(':not(.disabled)').first().index();
-                last = $items.parent(':not(.disabled)').last().index();
-                next = $items.eq(index).parent().nextAll(':not(.disabled)').eq(0).index();
-                prev = $items.eq(index).parent().prevAll(':not(.disabled)').eq(0).index();
-                nextPrev = $items.eq(next).parent().prevAll(':not(.disabled)').eq(0).index();
-
-                if (e.keyCode == 38) {
-                    if (index != nextPrev && index > prev) index = prev;
-                    if (index < first) index = first;
+            if (/(38|40)/.test(e.keyCode) && that.$searchbox) {
+                // Since we bind on keyup, the focus will have already changed here. Keep track of the last focused item and the current,
+                // and if they match (and are at the top or bottom of the list), move the focus to the searchbox.
+                var index = $items.index($(':focus'));
+                var last = $this.data('lastIndex');
+                $this.data('lastIndex', index);
+                if(index == last) {
+                    if(index == 0 || index == $items.length - 1) that.$searchbox.focus();
                 }
-
-                if (e.keyCode == 40) {
-                    if (index != nextPrev && index < next) index = next;
-                    if (index > last) index = last;
-                    if (index == -1) index = 0;
-                }
-
-                $items.eq(index).focus();
-            } else {
+            }
+            else {
                 var keyCodeMap = {
                     48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
                     65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
@@ -640,8 +648,8 @@
                 $items.eq(keyIndex[count - 1]).focus();
             }
 
-            // select focused option if "Enter" or "Spacebar" are pressed
-            if (/(13|32)/.test(e.keyCode)) {
+            // Select focused option if "Enter" or "Spacebar" are pressed inside the menu.
+            if (/(13|32)/.test(e.keyCode) && $this.is('[role=menu]')) {
                 e.preventDefault();
                 $(':focus').click();
                 $(document).data('keycount',0);
@@ -721,6 +729,7 @@
 
     $(document)
         .data('keycount', 0)
-        .on('keydown', '[data-toggle=dropdown], [role=menu]' , Selectpicker.prototype.keydown);
+        .on('keydown', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keydown)
+        .on('keyup', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keyup);
 
 }(window.jQuery);
