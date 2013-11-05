@@ -15,7 +15,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license",
+            "url": "https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license"
         }
     ],
     "dependencies": {
@@ -25,6 +25,6 @@
         "form",
         "bootstrap",
         "select",
-        "replacement",
+        "replacement"
     ]
 }
