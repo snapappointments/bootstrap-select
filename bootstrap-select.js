@@ -52,6 +52,7 @@
             var id = this.$element.attr('id');
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
+            this.$selectAll = this.$newElement.find('#selectAll');
             this.$menu = this.$newElement.find('> .dropdown-menu');
             this.$button = this.$newElement.find('> button');
             this.$searchbox = this.$newElement.find('input');
@@ -84,6 +85,7 @@
             //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
+            var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i style="display: none;" class="checker glyphicon glyphicon-ok icon-ok check-mark"></i></div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
@@ -94,11 +96,11 @@
                     "<div class='dropdown-menu open'>" +
                     header +
                     searchbox +
+                    selectAll +
                     "<ul class='dropdown-menu inner' role='menu'>" +
                     "</ul>" +
                     "</div>" +
                     "</div>";
-
             return $(drop);
         },
 
@@ -502,6 +504,10 @@
                     if (prevValue != that.$element.val()) {
                         that.$element.change();
                     }
+                    if(that.$selectAll){
+                        that.$selectAll.removeClass('allSelected');
+                        that.$selectAll.find('.checker').hide();
+                    }
                 }
             });
 
@@ -519,6 +525,20 @@
 
             this.$element.change(function() {
                 that.render();
+            });
+
+            this.$selectAll.on('click', function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                if(that.$selectAll.hasClass('allSelected')){
+                    that.deselectAll();
+                    that.$selectAll.find('.checker').hide();
+                }else{
+                    that.selectAll();
+                    that.$selectAll.find('.checker').show();
+                }
+
+                that.$selectAll.toggleClass('allSelected');
             });
         },
 
@@ -755,7 +775,8 @@
         showContent: true,
         dropupAuto: true,
         header: false,
-        liveSearch: false
+        liveSearch: false,
+        selectedAllText:'Select all'
     };
 
     $(document)
