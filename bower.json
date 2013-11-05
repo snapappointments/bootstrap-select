@@ -16,7 +16,8 @@
     "replacement"
   ],
   "dependencies": {
-    "jquery": ">=1.7"
+    "jquery": ">=1.7",
+    "bootstrap-select": "https://github.com/kenshoo/bootstrap-select"
   },
   "license": "MIT",
   "ignore": [
