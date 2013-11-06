@@ -23,6 +23,7 @@
         this.$newElement = null;
         this.$button = null;
         this.$menu = null;
+        this.$originalSelected = [];
 
         //Merge defaults, options and data-attributes to make our options
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
@@ -57,6 +58,10 @@
             this.$button = this.$newElement.find('> button');
             this.$searchbox = this.$newElement.find('input');
 
+            this.$element.on('focus',function(){
+                that.$originalSelected = that.$element.find('option:selected');
+            });
+
             if (id !== undefined) {
                 var that = this;
                 this.$button.attr('data-id', id);
@@ -79,6 +84,9 @@
             this.$menu.data('this', this);
             this.$newElement.data('this', this);
             this.registerBlurFocusEvents(that);
+            if($.fn.tooltip){
+                this.$newElement.find('.filter-option').tooltip({placement:'bottom',html:true})
+            }
         },
 
         createDropdown: function() {
@@ -86,11 +94,11 @@
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i style="display: none;" class="checker glyphicon glyphicon-ok icon-ok check-mark"></i></div>' : '';
-            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
+            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox input-group"><input type="text" class="input-block-level form-control" /><span class="pointer input-group-addon"><i class="search glyphicon glyphicon-search"></i></span></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
-                    "<div class='filter-option pull-left'></div>&nbsp;" +
+                    "<button type='button' class='has-info btn dropdown-toggle' data-toggle='dropdown'>" +
+                    "<div class='filter-option pull-left' "+(this.options.showTooltip?'data-toggle="tooltip" data-original-title=""':'')+ "></div>&nbsp;" +
                     "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
@@ -227,14 +235,21 @@
                 }
             }).toArray();
 
+            if(this.multiple){
+                var tooltip = selectedItems.length>0 ? "<div style='text-align: left'>" + selectedItems.join("<br>") + "</div>" : "";
+                this.$newElement.find('.filter-option').attr('data-original-title', tooltip);
+            }
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
             var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
+            if(this.options.trimTitle!=null && selectedItems.length==1 && title.trim().length>=this.options.trimTitle){
+                title = title.substr(0,this.options.trimTitle)+"...";
+            }
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
-                if ( (this.options.trimTitle!=null && title.length >= this.options.trimTitle) || (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
+                if ( ( selectedItems.length>1 && this.options.trimTitle!=null && title.length >= this.options.trimTitle ) || (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
             }
@@ -242,6 +257,9 @@
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
                 title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
+                this.$newElement.find('.filter-option').addClass('nothing');
+            }else{
+                this.$newElement.find('.filter-option').removeClass('nothing');
             }
 
             this.$newElement.find('.filter-option').html(title);
@@ -524,6 +542,14 @@
                 e.stopPropagation();
             });
 
+            this.$searchbox.siblings('span.input-group-addon').on('click', function(e) {
+                e.stopPropagation();
+                if($(e.currentTarget).hasClass('cancel')){
+                    that.$searchbox.val('');
+                    that.$searchbox.trigger('input');
+                }
+            });
+
             this.$element.change(function() {
                 that.render();
             });
@@ -556,9 +582,13 @@
 
             this.$searchbox.on('input', function() {
                 if (that.$searchbox.val()) {
+                    that.$searchbox.siblings('span').removeClass('search').addClass('cancel');
+                    that.$searchbox.siblings('span').find('i').removeClass('glyphicon-search').addClass('glyphicon-remove');
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                 } else {
                     that.$menu.find('li').show();
+                    that.$searchbox.siblings('span').removeClass('cancel').addClass('search');
+                    that.$searchbox.siblings('span').find("i").removeClass('glyphicon-remove').addClass('glyphicon-search');
                 }
             });
         },
@@ -604,6 +634,15 @@
             that = $parent.data('this');
 
             if (that.options.container) $parent = that.$menu;
+
+            //escpae
+            if(e.keyCode==27 && that.$originalSelected.length>0){
+                that.deselectAll();
+                that.$originalSelected.each(function(index,val){
+                    $(val).prop('selected', true).attr('selected', 'selected')
+                });
+                that.render();
+            }
 
             $items = $('[role=menu] li:not(.divider):visible a', $parent);
 
@@ -778,7 +817,8 @@
         dropupAuto: true,
         header: false,
         liveSearch: false,
-        selectedAllText:'Select all'
+        selectedAllText:'Select all',
+        showTooltip:true
     };
 
     $(document)
