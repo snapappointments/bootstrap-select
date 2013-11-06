@@ -230,11 +230,14 @@
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
             var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
+            if(this.options.trimTitle!=null && selectedItems.length==1 && title.trim().length>=this.options.trimTitle){
+                title = title.substr(0,this.options.trimTitle)+"...";
+            }
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
                 var max = this.options.selectedTextFormat.split(">");
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
-                if ( (this.options.trimTitle!=null && title.length >= this.options.trimTitle) || (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
+                if ( ( selectedItems.length>1 && this.options.trimTitle!=null && title.length >= this.options.trimTitle ) || (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
                 }
             }
