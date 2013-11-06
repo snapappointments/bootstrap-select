@@ -79,6 +79,9 @@
             this.$menu.data('this', this);
             this.$newElement.data('this', this);
             this.registerBlurFocusEvents(that);
+            if($.fn.tooltip){
+                this.$newElement.find('.filter-option').tooltip({placement:'bottom',html:true})
+            }
         },
 
         createDropdown: function() {
@@ -89,8 +92,8 @@
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
-                    "<div class='filter-option pull-left'></div>&nbsp;" +
+                    "<button type='button' class='has-info btn dropdown-toggle' data-toggle='dropdown'>" +
+                    "<div class='filter-option pull-left' "+(this.options.showTooltip?'data-toggle="tooltip" data-original-title=""':'')+ "></div>&nbsp;" +
                     "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
@@ -227,6 +230,9 @@
                 }
             }).toArray();
 
+            if(this.multiple){
+                this.$newElement.find('.filter-option').attr('data-original-title',"<div style='text-align: left'>"+selectedItems.join("<br>")+"</div>");
+            }
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
             var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
@@ -781,7 +787,8 @@
         dropupAuto: true,
         header: false,
         liveSearch: false,
-        selectedAllText:'Select all'
+        selectedAllText:'Select all',
+        showTooltip:true
     };
 
     $(document)
