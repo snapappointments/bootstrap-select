@@ -23,6 +23,7 @@
         this.$newElement = null;
         this.$button = null;
         this.$menu = null;
+        this.$originalSelected = [];
 
         //Merge defaults, options and data-attributes to make our options
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
@@ -56,6 +57,10 @@
             this.$menu = this.$newElement.find('> .dropdown-menu');
             this.$button = this.$newElement.find('> button');
             this.$searchbox = this.$newElement.find('input');
+
+            this.$element.on('focus',function(){
+                that.$originalSelected = that.$element.find('option:selected');
+            });
 
             if (id !== undefined) {
                 var that = this;
@@ -629,6 +634,15 @@
             that = $parent.data('this');
 
             if (that.options.container) $parent = that.$menu;
+
+            //escpae
+            if(e.keyCode==27 && that.$originalSelected.length>0){
+                that.deselectAll();
+                that.$originalSelected.each(function(index,val){
+                    $(val).prop('selected', true).attr('selected', 'selected')
+                });
+                that.render();
+            }
 
             $items = $('[role=menu] li:not(.divider):visible a', $parent);
 
