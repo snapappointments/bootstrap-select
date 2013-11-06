@@ -89,7 +89,7 @@
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i style="display: none;" class="checker glyphicon glyphicon-ok icon-ok check-mark"></i></div>' : '';
-            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
+            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox input-group"><input type="text" class="input-block-level form-control" /><span class="pointer input-group-addon"><i class="search glyphicon glyphicon-search"></i></span></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='has-info btn dropdown-toggle' data-toggle='dropdown'>" +
@@ -537,6 +537,14 @@
                 e.stopPropagation();
             });
 
+            this.$searchbox.siblings('span.input-group-addon').on('click', function(e) {
+                e.stopPropagation();
+                if($(e.currentTarget).hasClass('cancel')){
+                    that.$searchbox.val('');
+                    that.$searchbox.trigger('input');
+                }
+            });
+
             this.$element.change(function() {
                 that.render();
             });
@@ -569,9 +577,13 @@
 
             this.$searchbox.on('input', function() {
                 if (that.$searchbox.val()) {
+                    that.$searchbox.siblings('span').removeClass('search').addClass('cancel');
+                    that.$searchbox.siblings('span').find('i').removeClass('glyphicon-search').addClass('glyphicon-remove');
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                 } else {
                     that.$menu.find('li').show();
+                    that.$searchbox.siblings('span').removeClass('cancel').addClass('search');
+                    that.$searchbox.siblings('span').find("i").removeClass('glyphicon-remove').addClass('glyphicon-search');
                 }
             });
         },
