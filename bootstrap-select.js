@@ -231,7 +231,8 @@
             }).toArray();
 
             if(this.multiple){
-                this.$newElement.find('.filter-option').attr('data-original-title',"<div style='text-align: left'>"+selectedItems.join("<br>")+"</div>");
+                var tooltip = selectedItems.length>0 ? "<div style='text-align: left'>" + selectedItems.join("<br>") + "</div>" : "";
+                this.$newElement.find('.filter-option').attr('data-original-title', tooltip);
             }
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
@@ -251,6 +252,9 @@
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
                 title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
+                this.$newElement.find('.filter-option').addClass('nothing');
+            }else{
+                this.$newElement.find('.filter-option').removeClass('nothing');
             }
 
             this.$newElement.find('.filter-option').html(title);
