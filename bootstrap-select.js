@@ -304,7 +304,9 @@
                     var minHeight;
                     posVert();
                     menuHeight = selectOffsetBot - menuExtras;
-                    that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight - menuExtras) < menu.height() && that.options.dropupAuto);
+                    if (that.options.dropupAuto) {
+                        that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && ((menuHeight - menuExtras) < menu.height()));
+                    }
                     if (that.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffsetTop - menuExtras;
                     }
@@ -323,7 +325,9 @@
                 var optIndex = menu.find("li"+notDisabled+" > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
-                this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && menuHeight < menu.height() && this.options.dropupAuto);
+                if (that.options.dropupAuto) {
+                    this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight < menu.height()));
+                }
                 menu.css({'max-height' : menuHeight + headerHeight + searchHeight + 'px', 'overflow' : 'hidden'});
                 menuInner.css({'max-height' : menuHeight - menuPadding + 'px', 'overflow-y' : 'auto'});
             }
