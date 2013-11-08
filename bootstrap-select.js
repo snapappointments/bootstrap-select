@@ -87,8 +87,8 @@
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn dropdown-toggle selectpicker' data-toggle='dropdown'>" +
-                        "<div class='filter-option pull-left'></div>&nbsp;" +
-                        "<div class='caret'></div>" +
+                        "<span class='filter-option pull-left'></span>&nbsp;" +
+                        "<span class='caret'></span>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
                         header +
