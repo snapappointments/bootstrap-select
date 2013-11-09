@@ -133,7 +133,7 @@
                 var inline = $this.attr("style") || '';
                 var text =  $this.data('content') ? $this.data('content') : $this.html();
                 var subtext = $this.data('subtext') !== undefined ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
-                var icon = $this.data('icon') !== undefined ? '<i class="glyphicon '+$this.data('icon')+'"></i> ' : '';
+                var icon = $this.data('icon') !== undefined ? '<i class="fa '+$this.data('icon')+'"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
                 }
@@ -191,7 +191,7 @@
         createA: function(text, classes, inline) {
             return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
                  text +
-                 '<i class="glyphicon glyphicon-ok icon-ok check-mark"></i>' +
+                 '<i class="fa fa-check icon-ok check-mark"></i>' +
                  '</a>';
         },
 
@@ -208,7 +208,7 @@
 
             var selectedItems = this.$element.find('option:selected').map(function() {
                 var $this = $(this);
-                var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
+                var icon = $this.data('icon') && that.options.showIcon ? '<i class="fa ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
                 if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
                     subtext = ' <small class="muted text-muted">'+$this.data('subtext') +'</small>';
