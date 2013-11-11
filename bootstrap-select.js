@@ -588,6 +588,7 @@
 
             this.$newElement.on('click.dropdown.data-api', function(e){
                 if(that.options.liveSearch) {
+                    that.$searchbox.val('').trigger('input');
                     setTimeout(function() {
                         that.$searchbox.focus();
                     }, 10);
