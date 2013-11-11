@@ -94,7 +94,7 @@
             //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
-            var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i style="display: none;" class="checker glyphicon glyphicon-ok icon-ok check-mark"></i></div>' : '';
+            var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i class="checker glyphicon glyphicon-unchecked icon-ok check-mark"></i></div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox input-group"><input type="text" class="input-block-level form-control" /><span class="pointer input-group-addon"><i class="search glyphicon glyphicon-search"></i></span></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + " ' "+(this.options.showTooltip?'data-toggle="tooltip" data-original-title=""':'')+ " >" +
@@ -203,7 +203,7 @@
         createA: function(text, classes, inline) {
             return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
                 text +
-                '<i class="glyphicon glyphicon-ok icon-ok check-mark"></i>' +
+                '<i class="glyphicon glyphicon-unchecked icon-ok check-mark"></i>' +
                 '</a>';
         },
 
@@ -445,6 +445,11 @@
 
         setSelected: function(index, selected) {
             this.$menu.find('li').eq(index).toggleClass('selected', selected);
+            if(this.$menu.find('li').eq(index).hasClass('selected')){
+                this.$menu.find('li').eq(index).find('.glyphicon').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+            }else{
+                this.$menu.find('li').eq(index).find('.glyphicon').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+            }
         },
 
         setDisabled: function(index, disabled) {
@@ -535,7 +540,7 @@
                     }
                     if(that.$selectAll){
                         that.$selectAll.removeClass('allSelected');
-                        that.$selectAll.find('.checker').hide();
+                        that.$selectAll.find('.glyphicon').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
                     }
                 }
             });
@@ -576,10 +581,10 @@
                 e.stopPropagation();
                 if(that.$selectAll.hasClass('allSelected')){
                     that.deselectAll();
-                    that.$selectAll.find('.checker').hide();
+                    that.$selectAll.find('.checker').removeClass('glyphicon-checke').addClass('glyphicon-unchecked');
                 }else{
                     that.selectAll();
-                    that.$selectAll.find('.checker').show();
+                    that.$selectAll.find('.checker').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
                 }
 
                 that.$selectAll.toggleClass('allSelected');
