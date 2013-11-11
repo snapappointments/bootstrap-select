@@ -524,8 +524,9 @@
 
                         $option.prop('selected', !state);
                     }
-
-                    that.$button.focus();
+                    if (!that.multiple) {
+                        that.$button.focus();
+                    }
 
                     // Trigger select 'change'
                     if (prevValue != that.$element.val()) {
@@ -715,7 +716,7 @@
             }
 
             // select focused option if "Enter" or "Spacebar" are pressed
-            if (/(13|32)/.test(e.keyCode)) {
+            if (/(13|32)/.test(e.keyCode) ) {
                 e.preventDefault();
                 $(':focus').click();
                 $(document).data('keycount',0);
