@@ -563,6 +563,7 @@
                 if($(e.currentTarget).hasClass('cancel')){
                     that.$searchbox.val('');
                     that.$searchbox.trigger('input');
+                    that.$selectAll.show();
                 }
             });
 
@@ -602,10 +603,12 @@
                     that.$searchbox.siblings('span').removeClass('search').addClass('cancel');
                     that.$searchbox.siblings('span').find('i').removeClass('glyphicon-search').addClass('glyphicon-remove');
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
+                    that.$selectAll.hide();
                 } else {
                     that.$menu.find('li').show();
                     that.$searchbox.siblings('span').removeClass('cancel').addClass('search');
                     that.$searchbox.siblings('span').find("i").removeClass('glyphicon-remove').addClass('glyphicon-search');
+                    that.$selectAll.show();
                 }
             });
         },
