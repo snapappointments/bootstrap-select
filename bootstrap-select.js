@@ -85,7 +85,8 @@
             this.$newElement.data('this', this);
             this.registerBlurFocusEvents(that);
             if($.fn.tooltip){
-                this.$newElement.find('.filter-option').tooltip({placement:'bottom',html:true})
+                this.$newElement.parent().addClass('has-info');
+                this.$newElement.tooltip({placement:'bottom',html:true})
             }
         },
 
@@ -96,9 +97,9 @@
             var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i style="display: none;" class="checker glyphicon glyphicon-ok icon-ok check-mark"></i></div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox input-group"><input type="text" class="input-block-level form-control" /><span class="pointer input-group-addon"><i class="search glyphicon glyphicon-search"></i></span></div>' : '';
             var drop =
-                "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='has-info btn dropdown-toggle' data-toggle='dropdown'>" +
-                    "<div class='filter-option pull-left' "+(this.options.showTooltip?'data-toggle="tooltip" data-original-title=""':'')+ "></div>&nbsp;" +
+                "<div class='btn-group bootstrap-select" + multiple + " ' "+(this.options.showTooltip?'data-toggle="tooltip" data-original-title=""':'')+ " >" +
+                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
+                    "<div class='filter-option pull-left'></div>&nbsp;" +
                     "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
@@ -237,7 +238,7 @@
 
             if(this.multiple){
                 var tooltip = selectedItems.length>0 ? "<div style='text-align: left'>" + selectedItems.join("<br>") + "</div>" : "";
-                this.$newElement.find('.filter-option').attr('data-original-title', tooltip);
+                this.$newElement.attr('data-original-title', tooltip);
             }
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
