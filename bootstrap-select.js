@@ -434,6 +434,14 @@
             this.liHeight();
         },
 
+        revertSelection:function(){
+            this.deselectAll();
+            this.$originalSelected.each(function (index, val) {
+                $(val).prop('selected', true).attr('selected', 'selected')
+            });
+            this.render();
+        },
+
         setSelected: function(index, selected) {
             this.$menu.find('li').eq(index).toggleClass('selected', selected);
         },
@@ -541,6 +549,12 @@
             this.$searchbox.on('click', function(e) {
                 e.stopPropagation();
             });
+            this.$searchbox.on('keyup', function (e) {
+                if (e.keyCode == 27 && that.$originalSelected.length > 0) {
+                    that.revertSelection();
+                    $('html').click();
+                }
+            });
 
             this.$searchbox.siblings('span.input-group-addon').on('click', function(e) {
                 e.stopPropagation();
@@ -637,11 +651,7 @@
 
             //escpae
             if(e.keyCode==27 && that.$originalSelected.length>0){
-                that.deselectAll();
-                that.$originalSelected.each(function(index,val){
-                    $(val).prop('selected', true).attr('selected', 'selected')
-                });
-                that.render();
+                that.revertSelection();
             }
 
             $items = $('[role=menu] li:not(.divider):visible a', $parent);
