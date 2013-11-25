@@ -86,7 +86,8 @@
             this.registerBlurFocusEvents(that);
             if($.fn.tooltip){
                 this.$newElement.parent().addClass('has-info');
-                this.$newElement.tooltip({placement:'bottom',html:true})
+                this.$newElement.tooltip({placement:'bottom',html:true});
+                this.$newElement.find('[data-original-title]').tooltip({placement:'bottom'})
             }
         },
 
@@ -144,6 +145,11 @@
                 var optionClass = $this.attr("class") || '';
                 var inline = $this.attr("style") || '';
                 var text =  $this.data('content') ? $this.data('content') : $this.html();
+                var origText = "";
+                if(that.options.trimOption!=null && text.trim().length>=that.options.trimOption){
+                    origText = text;
+                    text = text.substr(0,that.options.trimOption)+"...";
+                }
                 var subtext = $this.data('subtext') !== undefined ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="glyphicon '+$this.data('icon')+'"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
@@ -151,8 +157,9 @@
                 }
 
                 if (!$this.data('content')) {
+                    var tooltip = 'data-original-title=" '+origText.trim()+'"';
                     //Prepend any icon and append any subtext to the main text.
-                    text = icon + '<span class="text">' + text + subtext + '</span>';
+                    text = icon + '<span class="text" '+(origText.length>0?tooltip:"")+'>' + text + subtext + '</span>';
                 }
 
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
@@ -827,6 +834,7 @@
         title: null,
         selectedTextFormat : 'values',
         trimTitle:30,
+        trimOption:20,
         noneSelectedText : 'Nothing selected',
         countSelectedText: '{0} of {1} selected',
         width: false,
