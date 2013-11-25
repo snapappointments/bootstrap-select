@@ -229,7 +229,7 @@
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
-                if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
+                if (that.options.showSubtext && that.options.showSubtextOnTitle && $this.attr('data-subtext') && !that.multiple) {
                     subtext = ' <small class="muted text-muted">'+$this.data('subtext') +'</small>';
                 } else {
                     subtext = '';
@@ -251,6 +251,9 @@
             //Convert all the values into a comma delimited string
             var title = !this.multiple ? selectedItems[0] : selectedItems.join(", ");
             if(this.options.trimTitle!=null && selectedItems.length==1 && title.trim().length>=this.options.trimTitle){
+                if(!this.multiple){
+                    this.$newElement.attr('data-original-title', title);
+                }
                 title = title.substr(0,this.options.trimTitle)+"...";
             }
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
@@ -841,6 +844,7 @@
         container: false,
         hideDisabled: false,
         showSubtext: false,
+        showSubtextOnTitle: false,
         showIcon: true,
         showContent: true,
         dropupAuto: true,
