@@ -255,6 +255,8 @@
                     this.$newElement.attr('data-original-title', title);
                 }
                 title = title.substr(0,this.options.trimTitle)+"...";
+            }else{
+                this.$newElement.attr('data-original-title', '');
             }
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
