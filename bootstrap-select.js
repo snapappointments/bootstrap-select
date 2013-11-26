@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.4
+ * bootstrap-select v1.3.5
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -46,7 +46,7 @@
 
         constructor: Selectpicker,
 
-        init: function(e) {
+        init: function() {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
@@ -82,18 +82,18 @@
         createDropdown: function() {
             //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
-            var header = this.options.header ? '<h3 class="popover-title">' + this.options.header + '<button type="button" class="close" aria-hidden="true">&times;</button></h3>' : '';
+            var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
+                    "<button type='button' class='btn dropdown-toggle selectpicker' data-toggle='dropdown'>" +
                         "<div class='filter-option pull-left'></div>&nbsp;" +
                         "<div class='caret'></div>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
                         header +
                         searchbox +
-                        "<ul class='dropdown-menu inner' role='menu'>" +
+                        "<ul class='dropdown-menu inner selectpicker' role='menu'>" +
                         "</ul>" +
                     "</div>" +
                 "</div>";
@@ -125,7 +125,7 @@
                 _liA = [],
                 _liHtml = '';
 
-            this.$element.find('option').each(function(index) {
+            this.$element.find('option').each(function() {
                 var $this = $(this);
 
                 //Get the class and text for the option
@@ -145,7 +145,7 @@
 
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
-                } else if ($this.parent().is('optgroup') && $this.data('divider') != true) {
+                } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
                     if ($this.index() == 0) {
                         //Get the opt group label
                         var label = $this.parent().attr('label');
@@ -167,9 +167,9 @@
                     } else {
                          _liA.push(that.createA(text, "opt " + optionClass, inline ));
                     }
-                } else if ($this.data('divider') == true) {
+                } else if ($this.data('divider') === true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
-                } else if ($(this).data('hidden') == true) {
+                } else if ($(this).data('hidden') === true) {
                     _liA.push('');
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
@@ -206,7 +206,7 @@
 
             this.tabIndex();
 
-            var selectedItems = this.$element.find('option:selected').map(function(index,value) {
+            var selectedItems = this.$element.find('option:selected').map(function() {
                 var $this = $(this);
                 var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
                 var subtext;
@@ -268,7 +268,7 @@
             var $menuClone = selectClone.addClass('open').find('> .dropdown-menu');
             var liHeight = $menuClone.find('li > a').outerHeight();
             var headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0;
-            var searchHeight = this.options.header ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
+            var searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
             selectClone.remove();
             this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight).data('searchHeight', searchHeight);
         },
@@ -277,7 +277,6 @@
             var that = this,
                 menu = this.$menu,
                 menuInner = menu.find('.inner'),
-                menuA = menuInner.find('li > a'),
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 headerHeight = this.$newElement.data('headerHeight'),
@@ -371,7 +370,7 @@
                     actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
                     $drop.css({'top' : pos.top + actualHeight, 'left' : pos.left, 'width' : $element[0].offsetWidth, 'position' : 'absolute'});
                 };
-            this.$newElement.on('click', function(e) {
+            this.$newElement.on('click', function() {
                 getPlacement($(this));
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
@@ -380,7 +379,7 @@
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
-            $(window).on('scroll', function(e) {
+            $(window).on('scroll', function() {
                 getPlacement(that.$newElement);
             });
             $('html').on('click', function(e) {
@@ -468,7 +467,6 @@
 
             this.$menu.on('click', 'li a', function(e) {
                 var clickedIndex = $(this).parent().index(),
-                    $this = $(this).parent(),
                     prevValue = that.$element.val();
 
                 //Dont close on multi choice menu
@@ -524,7 +522,7 @@
         liveSearchListener: function() {
             var that = this;
 
-            this.$newElement.on('click.dropdown.data-api', function(e){
+            this.$newElement.on('click.dropdown.data-api', function(){
                 if(that.options.liveSearch) {
                     setTimeout(function() {
                         that.$searchbox.focus();
@@ -532,11 +530,27 @@
                 }
             });
 
-            this.$searchbox.on('input', function() {
-                if (that.$searchbox.val()) {
+            this.$searchbox.on('keyup', function(e) {
+                if(e.keyCode == 40) {
+                    // Down-arrow should go to the first visible item.
+                    that.$menu.find('li:not(.divider):visible a').first().focus();
+                }
+                else if(e.keyCode == 38) {
+                    // Up-arrow should go to the last visible item.
+                    that.$menu.find('li:not(.divider):visible a').last().focus();
+                }
+                else if (that.$searchbox.val()) {
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                 } else {
                     that.$menu.find('li').show();
+                }
+            }).on('keydown', function(e) {
+                if(e.keyCode == 13) {
+                    // Prevent return from submitting any form here (needs to be in keydown instead of keyup).
+                    // Closes the dropdown and focuses it.
+                    that.$button.click().focus();
+                    e.preventDefault();
+                    return false;
                 }
             });
         },
@@ -564,15 +578,18 @@
         },
 
         keydown: function(e) {
+            var that = $(this).parent().data('this');
+            // If the dropdown is closed, open it and move focus to the search box, if there is one.
+            if(that.$searchbox && that.$searchbox.is(':not(:visible)') && e.keyCode >= 48 && e.keyCode <= 90) {
+                $(':focus').click();
+                that.$searchbox.focus();
+            }
+        },
+
+        keyup: function(e) {
             var $this,
                 $items,
                 $parent,
-                index,
-                next,
-                first,
-                last,
-                prev,
-                nextPrev,
                 that;
 
             $this = $(this);
@@ -587,28 +604,17 @@
 
             if (!$items.length) return;
 
-            if (/(38|40)/.test(e.keyCode)) {
-
-                index = $items.index($items.filter(':focus'));
-                first = $items.parent(':not(.disabled)').first().index();
-                last = $items.parent(':not(.disabled)').last().index();
-                next = $items.eq(index).parent().nextAll(':not(.disabled)').eq(0).index();
-                prev = $items.eq(index).parent().prevAll(':not(.disabled)').eq(0).index();
-                nextPrev = $items.eq(next).parent().prevAll(':not(.disabled)').eq(0).index();
-
-                if (e.keyCode == 38) {
-                    if (index != nextPrev && index > prev) index = prev;
-                    if (index < first) index = first;
+            if (/(38|40)/.test(e.keyCode) && that.$searchbox) {
+                // Since we bind on keyup, the focus will have already changed here. Keep track of the last focused item and the current,
+                // and if they match (and are at the top or bottom of the list), move the focus to the searchbox.
+                var index = $items.index($(':focus'));
+                var last = $this.data('lastIndex');
+                $this.data('lastIndex', index);
+                if(index == last) {
+                    if(index == 0 || index == $items.length - 1) that.$searchbox.focus();
                 }
-
-                if (e.keyCode == 40) {
-                    if (index != nextPrev && index < next) index = next;
-                    if (index > last) index = last;
-                    if (index == -1) index = 0;
-                }
-
-                $items.eq(index).focus();
-            } else {
+            }
+            else {
                 var keyCodeMap = {
                     48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
                     65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
@@ -642,8 +648,8 @@
                 $items.eq(keyIndex[count - 1]).focus();
             }
 
-            // select focused option if "Enter", "Spacebar" or "Tab" are pressed
-            if (/(13|32|9)/.test(e.keyCode)) {
+            // Select focused option if "Enter" or "Spacebar" are pressed inside the menu.
+            if (/(13|32)/.test(e.keyCode) && $this.is('[role=menu]')) {
                 e.preventDefault();
                 $(':focus').click();
                 $(document).data('keycount',0);
@@ -723,6 +729,7 @@
 
     $(document)
         .data('keycount', 0)
-        .on('keydown', '[data-toggle=dropdown], [role=menu]' , Selectpicker.prototype.keydown);
+        .on('keydown', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keydown)
+        .on('keyup', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keyup);
 
 }(window.jQuery);

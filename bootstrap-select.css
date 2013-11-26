@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.4
+ * bootstrap-select v1.3.5
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -19,6 +19,11 @@
     margin-bottom: 0;
 }
 
+.bootstrap-select.form-control {
+    padding: 0;
+    border: none;
+}
+
 .bootstrap-select.btn-group.pull-right,
 .bootstrap-select.btn-group[class*="span"].pull-right,
 .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
@@ -33,13 +38,17 @@
     margin-right: -1px;
 }
 
-.bootstrap-select:not([class*="span"]) {
+.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
     width: 220px;
 }
 
 .bootstrap-select {
     /*width: 220px\9; IE8 and below*/
     width: 220px\0; /*IE9 and below*/
+}
+
+.bootstrap-select.form-control:not([class*="span"]) {
+    width: 100%;
 }
 
 .bootstrap-select > .btn {
