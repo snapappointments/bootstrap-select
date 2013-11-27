@@ -648,8 +648,8 @@
                 $items.eq(keyIndex[count - 1]).focus();
             }
 
-            // Select focused option if "Enter" or "Spacebar" are pressed inside the menu.
-            if (/(13|32)/.test(e.keyCode) && $this.is('[role=menu]')) {
+            // Select focused option if "Enter", "Spacebar", "Tab" are pressed inside the menu.
+            if (/(13|32|9)/.test(e.keyCode) && $this.is('[role=menu]')) {
                 e.preventDefault();
                 $(':focus').click();
                 $(document).data('keycount',0);
