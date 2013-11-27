@@ -96,7 +96,7 @@
             var multiple = this.multiple ? ' show-tick' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var selectAll = this.multiple? '<div id="selectAll" class="selectAll"><span class="text">'+this.options.selectedAllText+'<i class="checker glyphicon glyphicon-unchecked icon-ok check-mark"></i></div>' : '';
-            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox input-group"><input type="text" class="input-block-level form-control" /><span class="pointer input-group-addon"><i class="search glyphicon glyphicon-search"></i></span></div>' : '';
+            var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox input-group"><input type="text" placeholder="'+this.options.liveSearchMask+'" class="input-block-level form-control" /><span class="pointer input-group-addon"><i class="search glyphicon glyphicon-search"></i></span></div>' : '';
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + " ' "+(this.options.showTooltip?'data-toggle="tooltip" data-original-title=""':'')+ " >" +
                     "<button type='button' class='btn dropdown-toggle' data-toggle='dropdown'>" +
@@ -609,9 +609,9 @@
             this.$newElement.on('click.dropdown.data-api', function(e){
                 if(that.options.liveSearch) {
                     that.$searchbox.val('').trigger('input');
-                    setTimeout(function() {
-                        that.$searchbox.focus();
-                    }, 10);
+//                    setTimeout(function() {
+//                        that.$searchbox.focus();
+//                    }, 10);
                 }
             });
 
@@ -621,11 +621,15 @@
                     that.$searchbox.siblings('span').find('i').removeClass('glyphicon-search').addClass('glyphicon-remove');
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                     that.$selectAll.hide();
+                    if($.fn.highlight){
+                        that.$menu.find('li:visible').unhighlight().highlight(that.$searchbox.val());
+                    }
                 } else {
                     that.$menu.find('li').show();
                     that.$searchbox.siblings('span').removeClass('cancel').addClass('search');
                     that.$searchbox.siblings('span').find("i").removeClass('glyphicon-remove').addClass('glyphicon-search');
                     that.$selectAll.show();
+                    that.$menu.find('li').unhighlight();
                 }
             });
         },
@@ -852,6 +856,7 @@
         dropupAuto: true,
         header: false,
         liveSearch: false,
+        liveSearchMask:'search',
         selectedAllText:'Select all',
         showTooltip:true
     };
