@@ -13,5 +13,5 @@
     "license": "MIT",
     "suggest": {
         "components/jquery": "1.8.*"
-    },
+    }
 }
