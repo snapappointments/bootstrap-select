@@ -301,24 +301,28 @@
 
             if (this.options.size == 'auto') {
                 var getSize = function() {
-                    var minHeight;
+                    var minHeight,
+                    	lis = menu.find('li:not(.hide)'),
+                    	liCount = lis.length + lis.find('dt').length;
                     posVert();
                     menuHeight = selectOffsetBot - menuExtras;
                     that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight - menuExtras) < menu.height() && that.options.dropupAuto);
                     if (that.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffsetTop - menuExtras;
                     }
-                    if ((menu.find('li').length + menu.find('dt').length) > 3) {
-                        minHeight = liHeight*3 + menuExtras - 2;
-                    } else {
-                        minHeight = 0;
+                    if (liCount < 3) {
+                    	minHeight = liHeight*liCount + menuExtras - 2;
                     }
-                    menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden', 'min-height' : minHeight + 'px'});
-                    menuInner.css({'max-height' : menuHeight - headerHeight - searchHeight- menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight - menuPadding + 'px'});
+                    else {
+                        minHeight = liHeight*3 + menuExtras - 2;
+                    }
+                    menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden', 'min-height' : minHeight + searchHeight + 'px'});
+                    menuInner.css({'max-height' : menuHeight - headerHeight - searchHeight - menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : (minHeight ? minHeight - menuPadding : 0) + 'px'});
                 };
                 getSize();
-                $(window).resize(getSize);
-                $(window).scroll(getSize);
+                this.$searchbox.off('keyup.getSize').on('keyup.getSize', getSize);
+                $(window).off('resize.getSize').on('resize.getSize', getSize)
+                $(window).off('scroll.getSize').on('scroll.getSize', getSize)
             } else if (this.options.size && this.options.size != 'auto' && menu.find('li'+notDisabled).length > this.options.size) {
                 var optIndex = menu.find("li"+notDisabled+" > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
@@ -540,9 +544,9 @@
                     that.$menu.find('li:not(.divider):visible a').last().focus();
                 }
                 else if (that.$searchbox.val()) {
-                    that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
+                    that.$menu.find('li').removeClass('hide').show().not(':icontains(' + that.$searchbox.val() + ')').addClass('hide').hide();
                 } else {
-                    that.$menu.find('li').show();
+                    that.$menu.find('li').removeClass('hide').show();
                 }
             }).on('keydown', function(e) {
                 if(e.keyCode == 13) {
@@ -733,3 +737,4 @@
         .on('keyup', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keyup);
 
 }(window.jQuery);
+
