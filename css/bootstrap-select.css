@@ -127,27 +127,35 @@
           box-shadow: none;
 }
 
+.bootstrap-select.btn-group .div-contain {
+  overflow: hidden;
+}
+
 .bootstrap-select.btn-group .dropdown-menu dt {
   display: block;
   padding: 3px 20px;
   cursor: default;
 }
 
-.bootstrap-select.btn-group .div-contain {
-  overflow: hidden;
-}
-
 .bootstrap-select.btn-group .dropdown-menu li {
   position: relative;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a i.check-mark {
+  display: none;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a span.text {
+  margin-right: 34px;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li > a {
+  cursor: pointer;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {
   position: relative;
   padding-left: 35px;
-}
-
-.bootstrap-select.btn-group .dropdown-menu li > a {
-  cursor: pointer;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
@@ -159,14 +167,6 @@
   right: 15px;
   display: inline-block;
   margin-top: 2.5px;
-}
-
-.bootstrap-select.btn-group .dropdown-menu li a i.check-mark {
-  display: none;
-}
-
-.bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
-  margin-right: 34px;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li small {
