@@ -74,7 +74,6 @@
 
 .bootstrap-select .btn:focus {
   outline: thin dotted #333333 !important;
-  outline: 5px auto -webkit-focus-ring-color !important;
   outline-offset: -2px;
 }
 
@@ -158,6 +157,10 @@
   padding-left: 35px;
 }
 
+.bootstrap-select.btn-group .dropdown-menu li small {
+  padding-left: 0.5em;
+}
+
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
   font-weight: normal;
 }
@@ -169,25 +172,16 @@
   margin-top: 2.5px;
 }
 
-.bootstrap-select.btn-group .dropdown-menu li small {
-  padding-left: 0.5em;
-}
-
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small,
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
   color: #64b1d8;
   color: rgba(255, 255, 255, 0.4);
 }
 
-.bootstrap-select.btn-group .dropdown-menu li > dt small {
-  font-weight: normal;
-}
-
 .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
   position: absolute;
   bottom: -4px;
   left: 9px;
-  display: inline-block;
   display: none;
   border-right: 7px solid transparent;
   border-bottom: 7px solid #CCC;
@@ -200,7 +194,6 @@
   position: absolute;
   bottom: -4px;
   left: 10px;
-  display: inline-block;
   display: none;
   border-right: 6px solid transparent;
   border-bottom: 6px solid white;
