@@ -25,7 +25,7 @@
         this.$menu = null;
 
         //Merge defaults, options and data-attributes to make our options
-        this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
+        this.options = $.extend({}, $.fn.selectpicker.defaults, typeof options == 'object' && options);
 
         //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
         if (this.options.title == null) {
@@ -670,6 +670,21 @@
         }
     };
 
+    // This was taken from bootstrap-datepicker, licensed under the Apache License
+    function opts_from_el(el, prefix){
+        // Derive options from element data-attrs
+        var data = $(el).data(),
+            out = {}, inkey,
+            replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])'),
+            prefix = new RegExp('^' + prefix.toLowerCase());
+        for (var key in data)
+            if (prefix.test(key)){
+                inkey = key.replace(replace, function(_,a){ return a.toLowerCase(); });
+                out[inkey] = data[key];
+            }
+        return out;
+    }
+
     $.fn.selectpicker = function(option, event) {
        //get the args of the outer function..
        var args = arguments;
@@ -681,6 +696,8 @@
                     options = typeof option == 'object' && option;
 
                 if (!data) {
+                    var elopts = opts_from_el(this, 'select'),
+                        options = $.extend({}, defaults, elopts, options);
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
                 } else if (options) {
                     for(var i in options) {
@@ -709,7 +726,7 @@
         }
     };
 
-    $.fn.selectpicker.defaults = {
+    var defaults = $.fn.selectpicker.defaults = {
         style: 'btn-default',
         size: 'auto',
         title: null,
