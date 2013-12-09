@@ -579,10 +579,18 @@
 
         keydown: function(e) {
             var that = $(this).parent().data('this');
+            var $this = $(this);
             // If the dropdown is closed, open it and move focus to the search box, if there is one.
             if(that.$searchbox && that.$searchbox.is(':not(:visible)') && e.keyCode >= 48 && e.keyCode <= 90) {
                 $(':focus').click();
                 that.$searchbox.focus();
+            }
+
+            // Select focused option if "Enter", "Spacebar", "Tab" are pressed inside the menu.
+            if (/(13|32|9)/.test(e.keyCode) && $this.is('[role=menu]')) {
+                $(':focus').click();
+                e.preventDefault();
+                $(document).data('keycount',0);
             }
         },
 
@@ -646,13 +654,6 @@
                 }
 
                 $items.eq(keyIndex[count - 1]).focus();
-            }
-
-            // Select focused option if "Enter", "Spacebar", "Tab" are pressed inside the menu.
-            if (/(13|32|9)/.test(e.keyCode) && $this.is('[role=menu]')) {
-                e.preventDefault();
-                $(':focus').click();
-                $(document).data('keycount',0);
             }
         },
 
