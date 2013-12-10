@@ -5,7 +5,7 @@ A custom select / multiselect for @twitter bootstrap using button dropdown, desi
 
 ## Demo and Documentation
 
-See a Bootstrap 2.3.2 example [here](http://silviomoreto.github.com/bootstrap-select/).
+See a Bootstrap 2.3.2 example [here](http://silviomoreto.github.com/bootstrap-select/). <br/>
 See a Bootstrap 3.0.2 example [here](http://silviomoreto.github.com/bootstrap-select/3) (work-in-progress).
 
 ## Authors
