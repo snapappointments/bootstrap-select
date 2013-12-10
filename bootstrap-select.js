@@ -25,7 +25,7 @@
         this.$menu = null;
 
         //Merge defaults, options and data-attributes to make our options
-        this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
+        this.options = $.extend({}, $.fn.selectpicker.defaults, typeof options == 'object' && options);
 
         //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
         if (this.options.title == null) {
@@ -133,26 +133,29 @@
                 //Get the class and text for the option
                 var optionClass = $this.attr("class") || '';
                 var inline = $this.attr("style") || '';
-                var text =  $this.data('content') ? $this.data('content') : $this.html();
-                var subtext = $this.data('subtext') !== undefined ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
-                var icon = $this.data('icon') !== undefined ? '<i class="glyphicon '+$this.data('icon')+'"></i> ' : '';
+                var data = opts_from_el($this, 'select');
+                var text = typeof data.content !== "undefined" ? data.content : $this.html();
+                var subtext = typeof data.subtext !== "undefined" ? ' <small class="muted text-muted">' + data.subtext + '</small>' : '';
+                var icon = typeof data.icon !== "undefined" ? '<i class="glyphicon ' + data.icon + '"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
                 }
 
-                if (!$this.data('content')) {
+                if (!data.content) {
                     //Prepend any icon and append any subtext to the main text.
                     text = icon + '<span class="text">' + text + subtext + '</span>';
                 }
 
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
-                } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
+                } else if ($this.parent().is('optgroup') && data.divider !== true) {
                     if ($this.index() == 0) {
                         //Get the opt group label
-                        var label = $this.parent().attr('label');
-                        var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted text-muted">'+$this.parent().data('subtext')+'</small>' : '';
-                        var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
+                        var $parent = $this.parent();
+                        var label = $parent.attr('label');
+                        var parentData = opts_from_el($parent, 'select');
+                        var labelSubtext = typeof parentData.subtext !== "undefined" ? ' <small class="muted text-muted">' + parentData.subtext + '</small>' : '';
+                        var labelIcon = typeof parentData.icon !== "undefined" ? '<i class="glyphicon ' + parentData.icon + '"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
                         if ($this[0].index != 0) {
@@ -169,9 +172,9 @@
                     } else {
                          _liA.push(that.createA(text, "opt " + optionClass, inline ));
                     }
-                } else if ($this.data('divider') === true) {
+                } else if (data.divider === true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
-                } else if ($(this).data('hidden') === true) {
+                } else if (data.hidden === true) {
                     _liA.push('');
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
@@ -210,15 +213,12 @@
 
             var selectedItems = this.$element.find('option:selected').map(function() {
                 var $this = $(this);
-                var icon = $this.data('icon') && that.options.showIcon ? '<i class="glyphicon ' + $this.data('icon') + '"></i> ' : '';
-                var subtext;
-                if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
-                    subtext = ' <small class="muted text-muted">'+$this.data('subtext') +'</small>';
-                } else {
-                    subtext = '';
-                }
-                if ($this.data('content') && that.options.showContent) {
-                    return $this.data('content');
+                var data = opts_from_el($this, 'select');
+                var icon = data.icon && that.options.showIcon ? '<i class="glyphicon ' + data.icon + '"></i> ' : '';
+                var subtext = that.options.showSubtext && data.subtext && !that.multiple ? ' <small class="muted text-muted">' + data.subtext + '</small>' : '';
+
+                if (data.content && that.options.showContent) {
+                    return data.content;
                 } else if ($this.attr('title') != undefined) {
                     return $this.attr('title');
                 } else {
@@ -785,6 +785,21 @@
         }
     };
 
+    // This was taken from bootstrap-datepicker, licensed under the Apache License
+    function opts_from_el(el, prefix){
+        // Derive options from element data-attrs
+        var data = $(el).data(),
+            out = {}, inkey,
+            replace = new RegExp('^' + prefix.toLowerCase() + '([A-Z])'),
+            prefix = new RegExp('^' + prefix.toLowerCase());
+        for (var key in data)
+            if (prefix.test(key)){
+                inkey = key.replace(replace, function(_,a){ return a.toLowerCase(); });
+                out[inkey] = data[key];
+            }
+        return out;
+    }
+
     $.fn.selectpicker = function(option, event) {
        //get the args of the outer function..
        var args = arguments;
@@ -796,6 +811,8 @@
                     options = typeof option == 'object' && option;
 
                 if (!data) {
+                    var elopts = opts_from_el(this, 'select'),
+                        options = $.extend({}, defaults, elopts, options);
                     $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
                 } else if (options) {
                     for(var i in options) {
@@ -824,7 +841,7 @@
         }
     };
 
-    $.fn.selectpicker.defaults = {
+    var defaults = $.fn.selectpicker.defaults = {
         style: 'btn-default',
         size: 'auto',
         title: null,
