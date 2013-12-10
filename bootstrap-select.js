@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.5
+ * bootstrap-select v1.3.6
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -67,7 +67,9 @@
 
             this.checkDisabled();
             this.clickListener();
-            this.liveSearchListener();
+            if (this.options.liveSearch) {
+                this.liveSearchListener();
+            }
             this.render();
             this.liHeight();
             this.setStyle();
@@ -417,9 +419,9 @@
 
         setDisabled: function(index, disabled) {
             if (disabled) {
-                this.$menu.find('li').eq(index).addClass('disabled').find('a').attr('href','#').attr('tabindex',-1);
+                this.$menu.find('li').eq(index).addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
             } else {
-                this.$menu.find('li').eq(index).removeClass('disabled').find('a').removeAttr('href').attr('tabindex',0);
+                this.$menu.find('li').eq(index).removeClass('disabled').find('a').removeAttr('href').attr('tabindex', 0);
             }
         },
 
@@ -463,11 +465,17 @@
 
             this.$newElement.on('click', function() {
                 that.setSize();
+                if (!that.options.liveSearch && !that.multiple) {
+                    setTimeout(function() {
+                        that.$menu.find('.selected a').focus();
+                    }, 10);
+                }
             });
 
             this.$menu.on('click', 'li a', function(e) {
                 var clickedIndex = $(this).parent().index(),
-                    prevValue = that.$element.val();
+                    prevValue = that.$element.val(),
+                    prevIndex = that.$element.prop('selectedIndex');
 
                 //Dont close on multi choice menu
                 if (that.multiple) {
@@ -493,20 +501,28 @@
                         $option.prop('selected', !state);
                     }
 
-                    that.$button.focus();
+                    if (!that.options.liveSearch && !that.multiple) {
+                        that.$button.focus();
+                    } else {
+                        that.$searchbox.focus();
+                    }
 
                     // Trigger select 'change'
-                    if (prevValue != that.$element.val()) {
+                    if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
                         that.$element.change();
                     }
                 }
             });
 
-            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain, h3.popover-title', function(e) {
+            this.$menu.on('click', 'li.disabled a, li dt, li .div-contain, .popover-title, .popover-title :not(.close)', function(e) {
                 if (e.target == this) {
                     e.preventDefault();
                     e.stopPropagation();
-                    that.$button.focus();
+                    if (!that.options.liveSearch) {
+                        that.$button.focus();
+                    } else {
+                        that.$searchbox.focus();
+                    }
                 }
             });
 
@@ -520,38 +536,48 @@
         },
 
         liveSearchListener: function() {
-            var that = this;
+            var that = this,
+                no_results = $('<li class="no-results"></li>');
 
-            this.$newElement.on('click.dropdown.data-api', function(){
-                if(that.options.liveSearch) {
-                    setTimeout(function() {
-                        that.$searchbox.focus();
-                    }, 10);
+            this.$newElement.on('click.dropdown.data-api', function() {
+                that.$menu.find('.active').removeClass('active');
+                if (!!that.$searchbox.val()) {
+                    that.$searchbox.val('');
+                    that.$menu.find('li').show();
                 }
+                if (!that.multiple) that.$menu.find('.selected').addClass('active');
+                setTimeout(function() {
+                    that.$searchbox.focus();
+                }, 10);
             });
 
-            this.$searchbox.on('keyup', function(e) {
-                if(e.keyCode == 40) {
-                    // Down-arrow should go to the first visible item.
-                    that.$menu.find('li:not(.divider):visible a').first().focus();
-                }
-                else if(e.keyCode == 38) {
-                    // Up-arrow should go to the last visible item.
-                    that.$menu.find('li:not(.divider):visible a').last().focus();
-                }
-                else if (that.$searchbox.val()) {
+            this.$searchbox.on('input propertychange', function() {
+                if (that.$searchbox.val()) {
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
+                    
+                    if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
+                        no_results.remove();
+                        no_results.html('No results match "'+ that.$searchbox.val() + '"').show();
+                        that.$menu.find('li').last().after(no_results);
+                    } else {
+                        no_results.remove();
+                    }
+                    
                 } else {
                     that.$menu.find('li').show();
                 }
-            }).on('keydown', function(e) {
-                if(e.keyCode == 13) {
-                    // Prevent return from submitting any form here (needs to be in keydown instead of keyup).
-                    // Closes the dropdown and focuses it.
-                    that.$button.click().focus();
-                    e.preventDefault();
-                    return false;
-                }
+                that.$menu.find('li.active').removeClass('active');
+                that.$menu.find('li').filter(':visible:not(.divider)').eq(0).addClass('active').find('a').focus();
+                $(this).focus();
+            });
+            
+            this.$menu.on('mouseenter', 'a', function(e) {
+              that.$menu.find('.active').removeClass('active');
+              $(e.currentTarget).parent().not('.disabled').addClass('active');
+            });
+            
+            this.$menu.on('mouseleave', 'a', function() {
+              that.$menu.find('.active').removeClass('active');
             });
         },
 
@@ -578,49 +604,115 @@
         },
 
         keydown: function(e) {
-            var that = $(this).parent().data('this');
-            // If the dropdown is closed, open it and move focus to the search box, if there is one.
-            if(that.$searchbox && that.$searchbox.is(':not(:visible)') && e.keyCode >= 48 && e.keyCode <= 90) {
-                $(':focus').click();
-                that.$searchbox.focus();
-            }
-        },
-
-        keyup: function(e) {
             var $this,
                 $items,
                 $parent,
-                that;
+                index,
+                next,
+                first,
+                last,
+                prev,
+                nextPrev,
+                that,
+                prevIndex,
+                isActive,
+                keyCodeMap = {
+                    32:" ", 48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
+                    65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
+                    77:"m", 78:"n", 79:"o", 80:"p", 81:"q", 82:"r", 83:"s", 84:"t", 85:"u", 86:"v", 87:"w", 88:"x", 
+                    89:"y", 90:"z", 96:"0", 97:"1", 98:"2", 99:"3", 100:"4", 101:"5", 102:"6", 103:"7", 104:"8", 105:"9"
+                };
 
             $this = $(this);
 
             $parent = $this.parent();
+            
+            if ($this.is('input')) $parent = $this.parent().parent();
 
             that = $parent.data('this');
+            
+            if (that.options.liveSearch) $parent = $this.parent().parent();
 
             if (that.options.container) $parent = that.$menu;
 
-            $items = $('[role=menu] li:not(.divider):visible a', $parent);
+            $items = $('[role=menu] li:not(.divider) a', $parent);
+            
+            isActive = that.$menu.parent().hasClass('open');
+            
+            if (that.options.liveSearch) {
+                if (/(^9$|27)/.test(e.keyCode) && isActive && that.$menu.find('.active').length == 0) {
+                    e.preventDefault();
+                    that.$menu.parent().removeClass('open');
+                    that.$button.focus();
+                }
+                $items = $('[role=menu] li:not(.divider):visible', $parent);
+                if (!$this.val() && !/(38|40)/.test(e.keyCode)) {
+                    if ($items.filter('.active').length == 0) {
+                        $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
+                    }
+                }
+            }
 
             if (!$items.length) return;
 
-            if (/(38|40)/.test(e.keyCode) && that.$searchbox) {
-                // Since we bind on keyup, the focus will have already changed here. Keep track of the last focused item and the current,
-                // and if they match (and are at the top or bottom of the list), move the focus to the searchbox.
-                var index = $items.index($(':focus'));
-                var last = $this.data('lastIndex');
-                $this.data('lastIndex', index);
-                if(index == last) {
-                    if(index == 0 || index == $items.length - 1) that.$searchbox.focus();
+            if (/(38|40)/.test(e.keyCode)) {
+                
+                if (!isActive) {
+                    that.$menu.parent().addClass('open');
                 }
-            }
-            else {
-                var keyCodeMap = {
-                    48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
-                    65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
-                    77:"m", 78:"n", 79:"o", 80:"p", 81:"q", 82:"r", 83:"s", 84:"t", 85:"u", 86:"v", 87:"w", 88:"x", 89:"y", 90:"z",
-                    96:"0", 97:"1", 98:"2", 99:"3", 100:"4", 101:"5", 102:"6", 103:"7", 104:"8", 105:"9"
-                };
+                
+                index = $items.index($items.filter(':focus'));
+                first = $items.parent(':not(.disabled):visible').first().index();
+                last = $items.parent(':not(.disabled):visible').last().index();
+                next = $items.eq(index).parent().nextAll(':not(.disabled):visible').eq(0).index();
+                prev = $items.eq(index).parent().prevAll(':not(.disabled):visible').eq(0).index();
+                nextPrev = $items.eq(next).parent().prevAll(':not(.disabled):visible').eq(0).index();
+                
+                if (that.options.liveSearch) {
+                    $items.each(function(i) {
+                        if ($(this).is(':not(.disabled)')) {
+                            $(this).data('index', i);
+                        }
+                    });
+                    index = $items.index($items.filter('.active'));
+                    first = $items.filter(':not(.disabled):visible').first().data('index');
+                    last = $items.filter(':not(.disabled):visible').last().data('index');
+                    next = $items.eq(index).nextAll(':not(.disabled):visible').eq(0).data('index');
+                    prev = $items.eq(index).prevAll(':not(.disabled):visible').eq(0).data('index');
+                    nextPrev = $items.eq(next).prevAll(':not(.disabled):visible').eq(0).data('index');
+                }
+                
+                prevIndex = $this.data('prevIndex');
+                
+                if (e.keyCode == 38) {
+                    if (that.options.liveSearch) index -= 1;
+                    if (index != nextPrev && index > prev) index = prev;
+                    if (index < first) index = first;
+                    if (index == prevIndex) index = last;
+                }
+
+                if (e.keyCode == 40) {
+                    if (that.options.liveSearch) index += 1;
+                    if (index == -1) index = 0;
+                    if (index != nextPrev && index < next) index = next;
+                    if (index > last) index = last;
+                    if (index == prevIndex) index = first;
+                }
+
+                $this.data('prevIndex', index);
+                
+                if (!that.options.liveSearch) {
+                    $items.eq(index).focus();
+                } else {
+                    e.preventDefault();
+                    if (!$this.is('.dropdown-toggle')) {
+                        $items.removeClass('active');
+                        $items.eq(index).addClass('active').find('a').focus();
+                        $this.focus();
+                    }
+                }
+                
+            } else if (!$this.is('input')) {
 
                 var keyIndex = [];
 
@@ -649,11 +741,22 @@
             }
 
             // Select focused option if "Enter", "Spacebar", "Tab" are pressed inside the menu.
-            if (/(13|32|9)/.test(e.keyCode) && $this.is('[role=menu]')) {
-                e.preventDefault();
-                $(':focus').click();
+            if (/(13|32|^9$)/.test(e.keyCode) && isActive) {
+                if (!/(32)/.test(e.keyCode)) e.preventDefault();
+                if (!that.options.liveSearch) {
+                    $(':focus').click();
+                } else if (!/(32)/.test(e.keyCode)) {
+                    that.$menu.find('.active a').click();
+                    $this.focus();
+                }
                 $(document).data('keycount',0);
             }
+            
+            if ((/(^9$|27)/.test(e.keyCode) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode) && !isActive)) {
+                that.$menu.parent().removeClass('open');
+                that.$button.focus();
+            }
+
         },
 
         hide: function() {
@@ -729,7 +832,6 @@
 
     $(document)
         .data('keycount', 0)
-        .on('keydown', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keydown)
-        .on('keyup', '.selectpicker[data-toggle=dropdown], .selectpicker[role=menu]' , Selectpicker.prototype.keyup);
+        .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown);
 
 }(window.jQuery);

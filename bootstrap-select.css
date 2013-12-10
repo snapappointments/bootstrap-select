@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.5
+ * bootstrap-select v1.3.6
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -170,7 +170,8 @@
 }
 
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small,
-.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
+.bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small,
+.bootstrap-select.btn-group .dropdown-menu li.active:not(.disabled) > a small {
     color: #64b1d8;
     color: rgba(255,255,255,0.4);
 }
@@ -233,6 +234,12 @@
     display: block;
 }
 
+.bootstrap-select.btn-group .no-results {
+    padding: 3px;
+    background: #f5f5f5;
+    margin: 0 5px;
+}
+
 .mobile-device {
     position: absolute;
     top: 0;
@@ -263,4 +270,8 @@
 
 .bootstrap-select-searchbox {
     padding: 4px 8px;
+}
+
+.bootstrap-select-searchbox input {
+    margin-bottom: 0;
 }
