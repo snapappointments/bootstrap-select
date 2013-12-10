@@ -265,14 +265,18 @@
         },
 
         liHeight: function() {
-            var selectClone = this.$newElement.clone();
-            selectClone.appendTo('body');
-            var $menuClone = selectClone.addClass('open').find('> .dropdown-menu');
-            var liHeight = $menuClone.find('li > a').outerHeight();
-            var headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0;
-            var searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
-            selectClone.remove();
-            this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight).data('searchHeight', searchHeight);
+            var $selectClone = this.$menu.parent().clone().appendTo('body'),
+                $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
+                liHeight = $menuClone.find('li > a').outerHeight(),
+                headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
+                searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
+            
+            $selectClone.remove();
+            
+            this.$newElement
+                .data('liHeight', liHeight)
+                .data('headerHeight', headerHeight)
+                .data('searchHeight', searchHeight);
         },
 
         setSize: function() {
