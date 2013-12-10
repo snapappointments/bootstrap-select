@@ -505,9 +505,9 @@
                         $option.prop('selected', !state);
                     }
 
-                    if (!that.options.liveSearch && !that.multiple) {
+                    if (!that.multiple) {
                         that.$button.focus();
-                    } else {
+                    } else if (that.options.liveSearch) {
                         that.$searchbox.focus();
                     }
 
@@ -528,6 +528,10 @@
                         that.$searchbox.focus();
                     }
                 }
+            });
+            
+            this.$menu.on('click', '.popover-title .close', function() {
+                that.$button.focus();
             });
 
             this.$searchbox.on('click', function(e) {
