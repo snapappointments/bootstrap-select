@@ -556,7 +556,7 @@
                 if (!!that.$searchbox.val()) {
                     that.$searchbox.val('');
                     that.$menu.find('li').show();
-                    no_results.remove();
+                    if (!!no_results.parent().length) no_results.remove();
                 }
                 if (!that.multiple) that.$menu.find('.selected').addClass('active');
                 setTimeout(function() {
@@ -569,16 +569,18 @@
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
                     
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
-                        no_results.remove();
+                        if (!!no_results.parent().length) no_results.remove();
                         no_results.html('No results match "'+ that.$searchbox.val() + '"').show();
                         that.$menu.find('li').last().after(no_results);
-                    } else {
+                    } else if (!!no_results.parent().length) {
                         no_results.remove();
                     }
                     
                 } else {
                     that.$menu.find('li').show();
+                    if (!!no_results.parent().length) no_results.remove();
                 }
+
                 that.$menu.find('li.active').removeClass('active');
                 that.$menu.find('li').filter(':visible:not(.divider)').eq(0).addClass('active').find('a').focus();
                 $(this).focus();
