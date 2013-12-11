@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.6
+ * bootstrap-select v1.3.7
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -89,8 +89,8 @@
             var drop =
                 "<div class='btn-group bootstrap-select" + multiple + "'>" +
                     "<button type='button' class='btn dropdown-toggle selectpicker' data-toggle='dropdown'>" +
-                        "<div class='filter-option pull-left'></div>&nbsp;" +
-                        "<div class='caret'></div>" +
+                        "<span class='filter-option pull-left'></span>&nbsp;" +
+                        "<span class='caret'></span>" +
                     "</button>" +
                     "<div class='dropdown-menu open'>" +
                         header +
@@ -265,14 +265,18 @@
         },
 
         liHeight: function() {
-            var selectClone = this.$newElement.clone();
-            selectClone.appendTo('body');
-            var $menuClone = selectClone.addClass('open').find('> .dropdown-menu');
-            var liHeight = $menuClone.find('li > a').outerHeight();
-            var headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0;
-            var searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
-            selectClone.remove();
-            this.$newElement.data('liHeight', liHeight).data('headerHeight', headerHeight).data('searchHeight', searchHeight);
+            var $selectClone = this.$menu.parent().clone().appendTo('body'),
+                $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
+                liHeight = $menuClone.find('li > a').outerHeight(),
+                headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
+                searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
+            
+            $selectClone.remove();
+            
+            this.$newElement
+                .data('liHeight', liHeight)
+                .data('headerHeight', headerHeight)
+                .data('searchHeight', searchHeight);
         },
 
         setSize: function() {
@@ -306,7 +310,9 @@
                     var minHeight;
                     posVert();
                     menuHeight = selectOffsetBot - menuExtras;
-                    that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight - menuExtras) < menu.height() && that.options.dropupAuto);
+                    if (that.options.dropupAuto) {
+                        that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && ((menuHeight - menuExtras) < menu.height()));
+                    }
                     if (that.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffsetTop - menuExtras;
                     }
@@ -325,7 +331,9 @@
                 var optIndex = menu.find("li"+notDisabled+" > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
-                this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && menuHeight < menu.height() && this.options.dropupAuto);
+                if (that.options.dropupAuto) {
+                    this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight < menu.height()));
+                }
                 menu.css({'max-height' : menuHeight + headerHeight + searchHeight + 'px', 'overflow' : 'hidden'});
                 menuInner.css({'max-height' : menuHeight - menuPadding + 'px', 'overflow-y' : 'auto'});
             }
@@ -501,9 +509,9 @@
                         $option.prop('selected', !state);
                     }
 
-                    if (!that.options.liveSearch && !that.multiple) {
+                    if (!that.multiple) {
                         that.$button.focus();
-                    } else {
+                    } else if (that.options.liveSearch) {
                         that.$searchbox.focus();
                     }
 
@@ -525,6 +533,10 @@
                     }
                 }
             });
+            
+            this.$menu.on('click', '.popover-title .close', function() {
+                that.$button.focus();
+            });
 
             this.$searchbox.on('click', function(e) {
                 e.stopPropagation();
@@ -544,6 +556,7 @@
                 if (!!that.$searchbox.val()) {
                     that.$searchbox.val('');
                     that.$menu.find('li').show();
+                    no_results.remove();
                 }
                 if (!that.multiple) that.$menu.find('.selected').addClass('active');
                 setTimeout(function() {
