@@ -556,6 +556,7 @@
                 if (!!that.$searchbox.val()) {
                     that.$searchbox.val('');
                     that.$menu.find('li').show();
+                    no_results.remove();
                 }
                 if (!that.multiple) that.$menu.find('.selected').addClass('active');
                 setTimeout(function() {
