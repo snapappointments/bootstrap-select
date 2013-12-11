@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.3.6
+ * bootstrap-select v1.3.7
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -20,6 +20,7 @@
 }
 
 .bootstrap-select.form-control {
+    margin-bottom: 0;
     padding: 0;
     border: none;
 }
