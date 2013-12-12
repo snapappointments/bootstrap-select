@@ -28,7 +28,7 @@
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
 
         //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
-        if (this.options.title == null) {
+        if (this.options.title === null) {
             this.options.title = this.$element.attr('title');
         }
 
@@ -148,14 +148,14 @@
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     _liA.push('<a style="min-height: 0; padding: 0"></a>');
                 } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
-                    if ($this.index() == 0) {
+                    if ($this.index() === 0) {
                         //Get the opt group label
                         var label = $this.parent().attr('label');
                         var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted text-muted">'+$this.parent().data('subtext')+'</small>' : '';
                         var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
-                        if ($this[0].index != 0) {
+                        if ($this[0].index !== 0) {
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+label+'</dt>'+
@@ -183,7 +183,7 @@
             });
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
-            if (!this.multiple && this.$element.find('option:selected').length==0 && !this.options.title) {
+            if (!this.multiple && this.$element.find('option:selected').length===0 && !this.options.title) {
                 this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
             }
 
@@ -219,7 +219,7 @@
                 }
                 if ($this.data('content') && that.options.showContent) {
                     return $this.data('content');
-                } else if ($this.attr('title') != undefined) {
+                } else if ($this.attr('title') !== undefined) {
                     return $this.attr('title');
                 } else {
                     return icon + $this.html() + subtext;
@@ -241,7 +241,7 @@
 
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
-                title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
+                title = this.options.title !== undefined ? this.options.title : this.options.noneSelectedText;
             }
 
             this.$button.attr('title', $.trim(title));
@@ -599,7 +599,7 @@
 
         val: function(value) {
 
-            if (value != undefined) {
+            if (value !== undefined) {
                 this.$element.val( value );
 
                 this.$element.change();
@@ -656,14 +656,14 @@
             isActive = that.$menu.parent().hasClass('open');
             
             if (that.options.liveSearch) {
-                if (/(^9$|27)/.test(e.keyCode) && isActive && that.$menu.find('.active').length == 0) {
+                if (/(^9$|27)/.test(e.keyCode) && isActive && that.$menu.find('.active').length === 0) {
                     e.preventDefault();
                     that.$menu.parent().removeClass('open');
                     that.$button.focus();
                 }
                 $items = $('[role=menu] li:not(.divider):visible', $parent);
                 if (!$this.val() && !/(38|40)/.test(e.keyCode)) {
-                    if ($items.filter('.active').length == 0) {
+                    if ($items.filter('.active').length === 0) {
                         $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
                     }
                 }
@@ -821,7 +821,7 @@
             }
         });
 
-        if (value != undefined) {
+        if (value !== undefined) {
             return value;
         } else {
             return chain;
