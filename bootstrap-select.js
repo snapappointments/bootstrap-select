@@ -244,6 +244,7 @@
                 title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
             }
 
+            this.$button.attr("title", title.trim());
             this.$newElement.find('.filter-option').html(title);
         },
 
