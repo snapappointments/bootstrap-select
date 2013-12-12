@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.4.0
+ * bootstrap-select v1.4.1
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -244,7 +244,7 @@
                 title = this.options.title != undefined ? this.options.title : this.options.noneSelectedText;
             }
 
-            this.$button.attr("title", title.trim());
+            this.$button.attr('title', $.trim(title));
             this.$newElement.find('.filter-option').html(title);
         },
 
