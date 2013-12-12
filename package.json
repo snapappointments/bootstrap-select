@@ -3,7 +3,7 @@
 	"title": "bootstrap-select",
     "filename": "bootstrap-select.js",
 	"description": "A custom <select> for @twitter bootstrap using button dropdown as replacement",
-	"version": "1.3.7",
+	"version": "1.4.0",
 	"homepage": "http://silviomoreto.github.io/bootstrap-select/",
 	"author": {
 		"name": "Silvio Moreto",
