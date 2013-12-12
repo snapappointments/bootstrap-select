@@ -8,9 +8,9 @@
 
 !function($) {
 
-    "use strict";
+    'use strict';
 
-    $.expr[":"].icontains = function(obj, index, meta) {
+    $.expr[':'].icontains = function(obj, index, meta) {
         return $(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) >= 0;
     };
 
@@ -87,18 +87,18 @@
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
-                "<div class='btn-group bootstrap-select" + multiple + "'>" +
-                    "<button type='button' class='btn dropdown-toggle selectpicker' data-toggle='dropdown'>" +
-                        "<span class='filter-option pull-left'></span>&nbsp;" +
-                        "<span class='caret'></span>" +
-                    "</button>" +
-                    "<div class='dropdown-menu open'>" +
+                '<div class="btn-group bootstrap-select' + multiple + '">' +
+                    '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown">' +
+                        '<span class="filter-option pull-left"></span>&nbsp;' +
+                        '<span class="caret"></span>' +
+                    '</button>' +
+                    '<div class="dropdown-menu open">' +
                         header +
                         searchbox +
-                        "<ul class='dropdown-menu inner selectpicker' role='menu'>" +
-                        "</ul>" +
-                    "</div>" +
-                "</div>";
+                        '<ul class="dropdown-menu inner selectpicker" role="menu">' +
+                        '</ul>' +
+                    '</div>' +
+                '</div>';
 
             return $(drop);
         },
@@ -131,8 +131,8 @@
                 var $this = $(this);
 
                 //Get the class and text for the option
-                var optionClass = $this.attr("class") || '';
-                var inline = $this.attr("style") || '';
+                var optionClass = $this.attr('class') || '';
+                var inline = $this.attr('style') || '';
                 var text =  $this.data('content') ? $this.data('content') : $this.html();
                 var subtext = $this.data('subtext') !== undefined ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
                 var icon = $this.data('icon') !== undefined ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
@@ -159,15 +159,15 @@
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
                                 '<dt>'+label+'</dt>'+
-                                that.createA(text, "opt " + optionClass, inline )
+                                that.createA(text, 'opt ' + optionClass, inline )
                                 );
                         } else {
                             _liA.push(
                                 '<dt>'+label+'</dt>'+
-                                that.createA(text, "opt " + optionClass, inline ));
+                                that.createA(text, 'opt ' + optionClass, inline ));
                         }
                     } else {
-                         _liA.push(that.createA(text, "opt " + optionClass, inline ));
+                         _liA.push(that.createA(text, 'opt ' + optionClass, inline ));
                     }
                 } else if ($this.data('divider') === true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
@@ -179,7 +179,7 @@
             });
 
             $.each(_liA, function(i, item) {
-                _liHtml += "<li rel=" + i + ">" + item + "</li>";
+                _liHtml += '<li rel=' + i + '>' + item + '</li>';
             });
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
@@ -232,7 +232,7 @@
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
-                var max = this.options.selectedTextFormat.split(">");
+                var max = this.options.selectedTextFormat.split('>');
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if ( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
                     title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
@@ -329,8 +329,8 @@
                 $(window).resize(getSize);
                 $(window).scroll(getSize);
             } else if (this.options.size && this.options.size != 'auto' && menu.find('li'+notDisabled).length > this.options.size) {
-                var optIndex = menu.find("li"+notDisabled+" > *").filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
-                var divLength = menu.find("li").slice(0,optIndex + 1).find('.div-contain').length;
+                var optIndex = menu.find('li'+notDisabled+' > *').filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
+                var divLength = menu.find('li').slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 if (that.options.dropupAuto) {
                     this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight < menu.height()));
@@ -371,7 +371,7 @@
 
         selectPosition: function() {
             var that = this,
-                drop = "<div />",
+                drop = '<div />',
                 $drop = $(drop),
                 pos,
                 actualHeight,
@@ -460,7 +460,7 @@
 
         tabIndex: function() {
             if (this.$element.is('[tabindex]')) {
-                this.$element.data('tabindex', this.$element.attr("tabindex"));
+                this.$element.data('tabindex', this.$element.attr('tabindex'));
                 this.$button.attr('tabindex', this.$element.data('tabindex'));
             }
         },
@@ -633,10 +633,10 @@
                 prevIndex,
                 isActive,
                 keyCodeMap = {
-                    32:" ", 48:"0", 49:"1", 50:"2", 51:"3", 52:"4", 53:"5", 54:"6", 55:"7", 56:"8", 57:"9", 59:";",
-                    65:"a", 66:"b", 67:"c", 68:"d", 69:"e", 70:"f", 71:"g", 72:"h", 73:"i", 74:"j", 75:"k", 76:"l",
-                    77:"m", 78:"n", 79:"o", 80:"p", 81:"q", 82:"r", 83:"s", 84:"t", 85:"u", 86:"v", 87:"w", 88:"x", 
-                    89:"y", 90:"z", 96:"0", 97:"1", 98:"2", 99:"3", 100:"4", 101:"5", 102:"6", 103:"7", 104:"8", 105:"9"
+                    32:' ', 48:'0', 49:'1', 50:'2', 51:'3', 52:'4', 53:'5', 54:'6', 55:'7', 56:'8', 57:'9', 59:';',
+                    65:'a', 66:'b', 67:'c', 68:'d', 69:'e', 70:'f', 71:'g', 72:'h', 73:'i', 74:'j', 75:'k', 76:'l',
+                    77:'m', 78:'n', 79:'o', 80:'p', 81:'q', 82:'r', 83:'s', 84:'t', 85:'u', 86:'v', 87:'w', 88:'x', 
+                    89:'y', 90:'z', 96:'0', 97:'1', 98:'2', 99:'3', 100:'4', 101:'5', 102:'6', 103:'7', 104:'8', 105:'9'
                 };
 
             $this = $(this);
