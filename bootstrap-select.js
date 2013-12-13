@@ -58,6 +58,7 @@
 
             if (id !== undefined) {
                 var that = this;
+                this.$button.attr('id', id+'-bootstrap-select');
                 this.$button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function(e) {
                     e.preventDefault();
