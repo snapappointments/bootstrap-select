@@ -47,6 +47,9 @@
         constructor: Selectpicker,
 
         init: function() {
+            var that = this,
+                id = this.$element.attr('id');
+
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             var id = this.$element.attr('id');
@@ -56,8 +59,7 @@
             this.$button = this.$newElement.find('> button');
             this.$searchbox = this.$newElement.find('input');
 
-            if (id !== undefined) {
-                var that = this;
+            if (id) {
                 this.$button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function(e) {
                     e.preventDefault();
@@ -134,8 +136,8 @@
                 var optionClass = $this.attr('class') || '';
                 var inline = $this.attr('style') || '';
                 var text =  $this.data('content') ? $this.data('content') : $this.html();
-                var subtext = $this.data('subtext') !== undefined ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
-                var icon = $this.data('icon') !== undefined ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
+                var subtext = $this.data('subtext') ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '';
+                var icon = $this.data('icon') ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
                 if (icon !== '' && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
                     icon = '<span>'+icon+'</span>';
                 }
@@ -151,7 +153,7 @@
                     if ($this.index() === 0) {
                         //Get the opt group label
                         var label = $this.parent().attr('label');
-                        var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted text-muted">'+$this.parent().data('subtext')+'</small>' : '';
+                        var labelSubtext = $this.parent().data('subtext') ? '<small class="muted text-muted">'+$this.parent().data('subtext')+'</small>' : '';
                         var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
@@ -219,7 +221,7 @@
                 }
                 if ($this.data('content') && that.options.showContent) {
                     return $this.data('content');
-                } else if ($this.attr('title') !== undefined) {
+                } else if ($this.attr('title')) {
                     return $this.attr('title');
                 } else {
                     return icon + $this.html() + subtext;
@@ -241,7 +243,7 @@
 
             //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
             if (!title) {
-                title = this.options.title !== undefined ? this.options.title : this.options.noneSelectedText;
+                title = this.options.title ? this.options.title : this.options.noneSelectedText;
             }
 
             this.$button.attr('title', $.trim(title));
@@ -598,10 +600,8 @@
         },
 
         val: function(value) {
-
-            if (value !== undefined) {
-                this.$element.val( value );
-
+            if (value) {
+                this.$element.val(value);
                 this.$element.change();
                 return this.$element;
             } else {
