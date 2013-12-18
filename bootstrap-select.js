@@ -143,6 +143,7 @@
 
                 //Get the class and text for the option
                 var optionClass = $this.attr("class") || '';
+                var optionTitle = $this.data('originalTitle');
                 var inline = $this.attr("style") || '';
                 var text =  $this.data('content') ? $this.data('content') : $this.html();
                 var origText = "";
@@ -157,9 +158,9 @@
                 }
 
                 if (!$this.data('content')) {
-                    var tooltip = 'data-original-title=" '+origText.trim()+'"';
+                    var tooltip = 'data-original-title="'+(optionTitle?optionTitle:origText.trim())+'"';
                     //Prepend any icon and append any subtext to the main text.
-                    text = icon + '<span class="text" '+(origText.length>0?tooltip:"")+'>' + text + subtext + '</span>';
+                    text = icon + '<span class="text" '+( (origText.length>0||optionTitle)?tooltip:"")+'>' + text + subtext + '</span>';
                 }
 
                 if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
