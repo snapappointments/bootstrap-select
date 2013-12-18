@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.4.1
+ * bootstrap-select v1.4.2
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -730,7 +730,9 @@
                 
             } else if (!$this.is('input')) {
 
-                var keyIndex = [];
+                var keyIndex = [],
+                    count,
+                    prevKey;
 
                 $items.each(function() {
                     if ($(this).parent().is(':not(.disabled)')) {
@@ -740,17 +742,18 @@
                     }
                 });
 
-                var count = $(document).data('keycount');
+                count = $(document).data('keycount');
                 count++;
                 $(document).data('keycount',count);
 
-                var prevKey = $.trim($(':focus').text().toLowerCase()).substring(0,1);
+                prevKey = $.trim($(':focus').text().toLowerCase()).substring(0,1);
 
                 if (prevKey != keyCodeMap[e.keyCode]) {
                     count = 1;
-                    $(document).data('keycount',count);
+                    $(document).data('keycount', count);
                 } else if (count >= keyIndex.length) {
-                    $(document).data('keycount',0);
+                    $(document).data('keycount', 0);
+                    if (count > keyIndex.length) count = 1;
                 }
 
                 $items.eq(keyIndex[count - 1]).focus();
@@ -851,6 +854,7 @@
 
     $(document)
         .data('keycount', 0)
-        .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown);
+        .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown)
+        .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', function (e) { e.stopPropagation(); });
 
 }(window.jQuery);
