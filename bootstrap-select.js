@@ -2,7 +2,7 @@
  * bootstrap-select v1.4.2
  * http://silviomoreto.github.io/bootstrap-select/
  *
- * Copyright 2013 bootstrap-select
+ * Copyright 2013 Silvio Moreto
  * Licensed under the MIT license
  */
 
@@ -271,9 +271,9 @@
                 liHeight = $menuClone.find('li > a').outerHeight(),
                 headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
                 searchHeight = this.options.liveSearch ? $menuClone.find('.bootstrap-select-searchbox').outerHeight() : 0;
-            
+
             $selectClone.remove();
-            
+
             this.$newElement
                 .data('liHeight', liHeight)
                 .data('headerHeight', headerHeight)
@@ -413,7 +413,7 @@
             this.checkDisabled();
             this.liHeight();
         },
-        
+
         update: function() {
             this.reloadLi();
             this.setWidth();
@@ -534,7 +534,7 @@
                     }
                 }
             });
-            
+
             this.$menu.on('click', '.popover-title .close', function() {
                 that.$button.focus();
             });
@@ -568,7 +568,7 @@
             this.$searchbox.on('input propertychange', function() {
                 if (that.$searchbox.val()) {
                     that.$menu.find('li').show().not(':icontains(' + that.$searchbox.val() + ')').hide();
-                    
+
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
                         no_results.html('No results match "'+ that.$searchbox.val() + '"').show();
@@ -576,7 +576,7 @@
                     } else if (!!no_results.parent().length) {
                         no_results.remove();
                     }
-                    
+
                 } else {
                     that.$menu.find('li').show();
                     if (!!no_results.parent().length) no_results.remove();
@@ -586,12 +586,12 @@
                 that.$menu.find('li').filter(':visible:not(.divider)').eq(0).addClass('active').find('a').focus();
                 $(this).focus();
             });
-            
+
             this.$menu.on('mouseenter', 'a', function(e) {
               that.$menu.find('.active').removeClass('active');
               $(e.currentTarget).parent().not('.disabled').addClass('active');
             });
-            
+
             this.$menu.on('mouseleave', 'a', function() {
               that.$menu.find('.active').removeClass('active');
             });
@@ -642,19 +642,19 @@
             $this = $(this);
 
             $parent = $this.parent();
-            
+
             if ($this.is('input')) $parent = $this.parent().parent();
 
             that = $parent.data('this');
-            
+
             if (that.options.liveSearch) $parent = $this.parent().parent();
 
             if (that.options.container) $parent = that.$menu;
 
             $items = $('[role=menu] li:not(.divider) a', $parent);
-            
+
             isActive = that.$menu.parent().hasClass('open');
-            
+
             if (that.options.liveSearch) {
                 if (/(^9$|27)/.test(e.keyCode) && isActive && that.$menu.find('.active').length === 0) {
                     e.preventDefault();
@@ -672,18 +672,18 @@
             if (!$items.length) return;
 
             if (/(38|40)/.test(e.keyCode)) {
-                
+
                 if (!isActive) {
                     that.$menu.parent().addClass('open');
                 }
-                
+
                 index = $items.index($items.filter(':focus'));
                 first = $items.parent(':not(.disabled):visible').first().index();
                 last = $items.parent(':not(.disabled):visible').last().index();
                 next = $items.eq(index).parent().nextAll(':not(.disabled):visible').eq(0).index();
                 prev = $items.eq(index).parent().prevAll(':not(.disabled):visible').eq(0).index();
                 nextPrev = $items.eq(next).parent().prevAll(':not(.disabled):visible').eq(0).index();
-                
+
                 if (that.options.liveSearch) {
                     $items.each(function(i) {
                         if ($(this).is(':not(.disabled)')) {
@@ -697,9 +697,9 @@
                     prev = $items.eq(index).prevAll(':not(.disabled):visible').eq(0).data('index');
                     nextPrev = $items.eq(next).prevAll(':not(.disabled):visible').eq(0).data('index');
                 }
-                
+
                 prevIndex = $this.data('prevIndex');
-                
+
                 if (e.keyCode == 38) {
                     if (that.options.liveSearch) index -= 1;
                     if (index != nextPrev && index > prev) index = prev;
@@ -716,7 +716,7 @@
                 }
 
                 $this.data('prevIndex', index);
-                
+
                 if (!that.options.liveSearch) {
                     $items.eq(index).focus();
                 } else {
@@ -727,7 +727,7 @@
                         $this.focus();
                     }
                 }
-                
+
             } else if (!$this.is('input')) {
 
                 var keyIndex = [],
@@ -770,7 +770,7 @@
                 }
                 $(document).data('keycount',0);
             }
-            
+
             if ((/(^9$|27)/.test(e.keyCode) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode) && !isActive)) {
                 that.$menu.parent().removeClass('open');
                 that.$button.focus();
