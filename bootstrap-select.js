@@ -268,7 +268,7 @@
         },
 
         liHeight: function() {
-            var $selectClone = this.$menu.parent().clone().appendTo('body'),
+            var $selectClone = this.$menu.parent().clone().find('> .dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
                 $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
                 liHeight = $menuClone.find('li > a').outerHeight(),
                 headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
