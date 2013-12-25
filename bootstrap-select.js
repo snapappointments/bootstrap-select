@@ -571,7 +571,7 @@
                     
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
-                        no_results.html('No results match "'+ that.$searchbox.val() + '"').show();
+                        no_results.html(that.options.noneResultsText + ' "'+ that.$searchbox.val() + '"').show();
                         that.$menu.find('li').last().after(no_results);
                     } else if (!!no_results.parent().length) {
                         no_results.remove();
@@ -837,6 +837,7 @@
         title: null,
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
+        noneResultsText : 'No results match',
         countSelectedText: '{0} of {1} selected',
         width: false,
         container: false,
