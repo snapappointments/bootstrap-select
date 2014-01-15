@@ -195,7 +195,7 @@
         createA: function(text, classes, inline) {
             return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
                  text +
-                 '<i class="' + this.options.iconBase + ' ' + this.options.tickIcon + ' icon-ok check-mark"></i>' +
+                 '<i class="' + this.options.iconBase + ' ' + this.options.tickIcon + ' ' + this.options.iconClass + '"></i>' +
                  '</a>';
         },
 
@@ -852,7 +852,8 @@
         liveSearch: false,
         multipleSeparator: ', ',
         iconBase: 'glyphicon',
-        tickIcon: 'glyphicon-ok'
+        tickIcon: 'glyphicon-ok',
+        iconClass: 'icon-ok'
     };
 
     $(document)
