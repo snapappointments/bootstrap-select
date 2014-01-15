@@ -673,6 +673,8 @@
 
             if (/(38|40)/.test(e.keyCode)) {
                 
+                that.setSize();
+                
                 if (!isActive) {
                     that.$menu.parent().addClass('open');
                 }
