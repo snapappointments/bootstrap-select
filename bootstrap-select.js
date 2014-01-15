@@ -49,6 +49,7 @@
         init: function() {
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
+            this.autofocus = this.$element.prop('autofocus');
             var id = this.$element.attr('id');
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
@@ -84,11 +85,12 @@
         createDropdown: function() {
             //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
+            var autofocus = this.autofocus ? ' autofocus' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
                 '<div class="btn-group bootstrap-select' + multiple + '">' +
-                    '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown">' +
+                    '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
                         '<span class="filter-option pull-left"></span>&nbsp;' +
                         '<span class="caret"></span>' +
                     '</button>' +
@@ -266,7 +268,7 @@
         },
 
         liHeight: function() {
-            var $selectClone = this.$menu.parent().clone().appendTo('body'),
+            var $selectClone = this.$menu.parent().clone().find('> .dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
                 $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
                 liHeight = $menuClone.find('li > a').outerHeight(),
                 headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
