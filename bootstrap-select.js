@@ -23,6 +23,7 @@
         this.$newElement = null;
         this.$button = null;
         this.$menu = null;
+        this.$lis = null;
 
         //Merge defaults, options and data-attributes to make our options
         this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
@@ -47,10 +48,12 @@
         constructor: Selectpicker,
 
         init: function() {
+            var that = this,
+                id = this.$element.attr('id');
+
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             this.autofocus = this.$element.prop('autofocus');
-            var id = this.$element.attr('id');
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
@@ -58,7 +61,6 @@
             this.$searchbox = this.$newElement.find('input');
 
             if (id !== undefined) {
-                var that = this;
                 this.$button.attr('data-id', id);
                 $('label[for="' + id + '"]').click(function(e) {
                     e.preventDefault();
@@ -68,16 +70,12 @@
 
             this.checkDisabled();
             this.clickListener();
-            if (this.options.liveSearch) {
-                this.liveSearchListener();
-            }
+            if (this.options.liveSearch) this.liveSearchListener();
             this.render();
             this.liHeight();
             this.setStyle();
             this.setWidth();
-            if (this.options.container) {
-                this.selectPosition();
-            }
+            if (this.options.container) this.selectPosition();
             this.$menu.data('this', this);
             this.$newElement.data('this', this);
         },
@@ -199,14 +197,16 @@
                  '</a>';
         },
 
-        render: function() {
+        render: function(updateLi) {
             var that = this;
 
             //Update the LI to match the SELECT
-            this.$element.find('option').each(function(index) {
-               that.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
-               that.setSelected(index, $(this).is(':selected') );
-            });
+            if (updateLi !== false) {
+                this.$element.find('option').each(function(index) {
+                   that.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
+                   that.setSelected(index, $(this).is(':selected') );
+                });
+            }
 
             this.tabIndex();
 
@@ -408,6 +408,7 @@
         },
 
         refresh: function() {
+            this.$lis = null;
             this.reloadLi();
             this.render();
             this.setWidth();
@@ -425,14 +426,16 @@
         },
 
         setSelected: function(index, selected) {
-            this.$menu.find('li').eq(index).toggleClass('selected', selected);
+            if (this.$lis == null) this.$lis = this.$menu.find('li');
+            $(this.$lis[index]).toggleClass('selected', selected);
         },
 
         setDisabled: function(index, disabled) {
+            if (this.$lis == null) this.$lis = this.$menu.find('li');
             if (disabled) {
-                this.$menu.find('li').eq(index).addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
+                $(this.$lis[index]).addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
             } else {
-                this.$menu.find('li').eq(index).removeClass('disabled').find('a').removeAttr('href').attr('tabindex', 0);
+                $(this.$lis[index]).removeClass('disabled').find('a').removeAttr('href').attr('tabindex', 0);
             }
         },
 
@@ -497,19 +500,21 @@
 
                 //Dont run if we have been disabled
                 if (!that.isDisabled() && !$(this).parent().hasClass('disabled')) {
-                    var $options = that.$element.find('option');
-                    var $option = $options.eq(clickedIndex);
+                    var $options = that.$element.find('option'),
+                        $option = $options.eq(clickedIndex),
+                        state = $option.prop('selected');
 
                     //Deselect all others if not multi select box
                     if (!that.multiple) {
                         $options.prop('selected', false);
                         $option.prop('selected', true);
+                        that.$menu.find('.selected').removeClass('selected');
+                        that.setSelected(clickedIndex, true);
                     }
                     //Else toggle the one we have chosen if we are multi select.
                     else {
-                        var state = $option.prop('selected');
-
                         $option.prop('selected', !state);
+                        that.setSelected(clickedIndex, !state);
                     }
 
                     if (!that.multiple) {
@@ -546,7 +551,7 @@
             });
 
             this.$element.change(function() {
-                that.render();
+                that.render(false);
             });
         },
 
