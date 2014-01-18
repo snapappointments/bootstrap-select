@@ -661,6 +661,12 @@
             $items = $('[role=menu] li:not(.divider) a', $parent);
             
             isActive = that.$menu.parent().hasClass('open');
+
+            if (!isActive && !/^9$/.test(e.keyCode)) {
+                that.$menu.parent().addClass('open');
+                isActive = that.$menu.parent().hasClass('open');
+                that.$searchbox.focus();
+            }
             
             if (that.options.liveSearch) {
                 if (/(^9$|27)/.test(e.keyCode) && isActive && that.$menu.find('.active').length === 0) {
@@ -679,10 +685,6 @@
             if (!$items.length) return;
 
             if (/(38|40)/.test(e.keyCode)) {
-                
-                if (!isActive) {
-                    that.$menu.parent().addClass('open');
-                }
                 
                 index = $items.index($items.filter(':focus'));
                 first = $items.parent(':not(.disabled):visible').first().index();
