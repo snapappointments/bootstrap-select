@@ -576,10 +576,10 @@
 
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
-                        if (that.options.noResultsHtml) {
-                          no_results.html(that.options.noResultsHtml.replace('{search}', '"'+that.$searchbox.val()+'"')).show();
+                        if (that.options.noneResultsHtml) {
+                          no_results.html(that.options.noneResultsHtml.replace('{search}', '"'+that.$searchbox.val()+'"')).show();
                         } else {
-                          no_results.html(that.options.noResultsText+' "'+ that.$searchbox.val() + '"').show();
+                          no_results.html(that.options.noneResultsText+' "'+ that.$searchbox.val() + '"').show();
                         }
                         that.$menu.append(no_results);
                     } else if (!!no_results.parent().length) {
@@ -849,6 +849,7 @@
         selectedTextFormat : 'values',
         noneSelectedText : 'Nothing selected',
         noneResultsText : 'No results match',
+        noneResultsHtml: '',
         countSelectedText: '{0} of {1} selected',
         width: false,
         container: false,
@@ -859,8 +860,6 @@
         dropupAuto: true,
         header: false,
         liveSearch: false,
-        noResultsHtml: '',
-        noResultsText: 'No results match',
         multipleSeparator: ', ',
         iconBase: 'glyphicon',
         tickIcon: 'glyphicon-ok'
