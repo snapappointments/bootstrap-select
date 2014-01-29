@@ -662,7 +662,8 @@
             
             isActive = that.$menu.parent().hasClass('open');
 
-            if (!isActive && !/^9$/.test(e.keyCode)) {
+            if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
+                that.setSize();
                 that.$menu.parent().addClass('open');
                 isActive = that.$menu.parent().hasClass('open');
                 that.$searchbox.focus();
