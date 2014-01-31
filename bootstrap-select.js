@@ -389,6 +389,15 @@
                 $drop.toggleClass('open', !$(this).hasClass('open'));
                 $drop.append(that.$menu);
             });
+            this.$newElement.on('keydown', function(e){
+                var isActive = that.$menu.parent().hasClass('open');
+                if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
+                    getPlacement($(this));
+                    $drop.appendTo(that.options.container);
+                    $drop.toggleClass('open', !$(this).hasClass('open'));
+                    $drop.append(that.$menu);
+                }
+            });
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
