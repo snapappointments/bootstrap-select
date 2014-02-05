@@ -250,6 +250,10 @@
             this.$newElement.find('.filter-option').html(title);
         },
 
+        updateTitle: function() {
+          this.options.title = this.$element.attr('title');
+        },
+
         setStyle: function(style, status) {
             if (this.$element.attr('class')) {
                 this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device/gi, ''));
@@ -413,6 +417,7 @@
             this.render();
             this.setWidth();
             this.setStyle();
+            this.updateTitle();
             this.checkDisabled();
             this.liHeight();
         },
@@ -421,6 +426,7 @@
             this.reloadLi();
             this.setWidth();
             this.setStyle();
+            this.updateTitle();
             this.checkDisabled();
             this.liHeight();
         },
