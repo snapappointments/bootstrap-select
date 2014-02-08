@@ -366,6 +366,7 @@
                 $drop.toggleClass('open', !$(this).hasClass('open'));
                 $drop.append(that.$menu);
             });
+            
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });

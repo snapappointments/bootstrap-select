@@ -98,6 +98,9 @@
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:focus small {
   color: #999999;
 }
+.bootstrap-select.btn-group .dropdown-menu .bootstrap-select-searchbox {
+  padding: 1px 7px 5px;
+}
 .bootstrap-select.btn-group .filter-option .label {
   line-height: 20px;
 }
