@@ -1,0 +1,26 @@
+{
+  "name": "bootstrap-select",
+  "version": "1.5.0",
+  "dependencies": {
+    "jquery": "",
+    "bootstrap": ""
+  },
+  "homepage": "https://github.com/biggora/bootstrap-select",
+	"author": {
+		"name": "Silvio Moreto",
+		"url": "https://github.com/silviomoreto/"
+	},
+  "description": "A custom select for Twitter Bootstrap using button dropdown",
+  "main": "js/bootstrap-select.js",
+  "keywords": [
+    "select",
+    "bootstrap",
+    "plugin"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

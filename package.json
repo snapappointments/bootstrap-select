@@ -1,25 +1,47 @@
 {
-  "name": "jquery",
-	"title": "jQuery",
-	"description": "JavaScript library for DOM operations",
-	"version": "2.0.0pre",
-	"homepage": "http://jquery.com",
+  "name": "bootstrap-select",
+  "title": "Twitter Bootstrap Select",
+  "version": "1.5.0",
+  "private": true,
+  "keywords": [ "bootstrap", "select", "input", "plugin" ],
+  "homepage": "https://github.com/biggora/bootstrap-select",
+  "demopage": "http://plugins.upbootstrap.com/bootstrap-select",
+	"description": "A custom select for Twitter Bootstrap using button dropdown",
 	"author": {
 		"name": "Silvio Moreto",
 		"url": "https://github.com/silviomoreto/"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/antonellopasella/bootstrap-select.git"
+		"url": "git://github.com/biggora/bootstrap-select.git"
 	},
 	"licenses": [
 		{
-			"type": "Custom",
-			"url": "https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license"
+			"type": "MIT",
+			"url": "https://github.com/biggora/bootstrap-select/blob/master/LICENSE"
 		}
 	],
-	"dependencies": {
-		"jquery": "1.8"
-	},
-	"keywords": []
+	"dependencies": {},
+	"devDependencies": {
+        "grunt": "~0.4.2",
+        "grunt-banner": "~0.2.0",
+        "grunt-contrib-clean": "~0.5.0",
+        "grunt-contrib-concat": "~0.3.0",
+        "grunt-contrib-copy": "~0.5.0",
+        "grunt-contrib-csslint": "~0.2.0",
+        "grunt-contrib-cssmin": "~0.7.0",
+        "grunt-contrib-jshint": "~0.8.0",
+        "grunt-contrib-less": "~0.9.0",
+        "grunt-contrib-qunit": "~0.3.0",
+        "grunt-contrib-uglify": "~0.2.7",
+        "grunt-contrib-watch": "~0.5.3",
+        "grunt-csscomb": "~2.0.1",
+        "grunt-html-validation": "~0.1.13",
+        "grunt-jekyll": "~0.4.1",
+        "grunt-jscs-checker": "~0.3.0",
+        "grunt-saucelabs": "~4.1.2",
+        "grunt-sed": "~0.1.1",
+        "load-grunt-tasks": "~0.2.1",
+        "markdown": "~0.5.0"
+    }
 }
