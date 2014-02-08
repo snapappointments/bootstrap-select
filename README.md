@@ -31,25 +31,24 @@ Installation
 * [Clone in Windows](github-windows://openRepo/https://github.com/biggora/bootstrap-select)
 * Clone the repo: `git clone git://github.com/biggora/bootstrap-select.git`
 
-
 ## Usage
 
 Create your `<select>` with the `.selectpicker` class.
-
+```html
     <select class="selectpicker">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Barbecue</option>
     </select>
-    
+```    
 Enable Bootstrap-Select via JavaScript:
-
+```js
     $('.selectpicker').selectpicker();
-
+```
 Or just
-
+```js
     $('select').selectpicker();
-
+```
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
 ## Authors
