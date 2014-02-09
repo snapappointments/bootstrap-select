@@ -32,6 +32,13 @@ Installation
 * Clone the repo: `git clone git://github.com/biggora/bootstrap-select.git`
 * Install with Bower: `bower install bs-select`
 
+#### Include files in your HTML. The minimum required for this plugin are:
+
+    <link href="/path/to/bootstrap.css" rel="stylesheet">
+    <link href="/path/to/bootstrap-select.css" rel="stylesheet">
+    <script src="/path/to/jquery.js" type="text/javascript"></script>
+    <script src="/path/to/bootstrap-select.js" type="text/javascript"></script>
+
 ## Usage
 
 Create your `<select>` with the `.selectpicker` class.
