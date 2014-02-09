@@ -51,6 +51,43 @@ Or just
 ```
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
+## Compiling CSS and JavaScript
+
+Bootstrap Select uses [Grunt](http://gruntjs.com/) with convenient methods. It's how we compile our code, run tests, and more. To use it, install the required dependencies as directed and then run some Grunt commands.
+
+#### Install Grunt
+
+From the command line:
+
+1. Install `grunt-cli` globally with `npm install -g grunt-cli`.
+2. Navigate to the root `/bootstrap-select` directory, then run `npm install`. npm will look at [package.json](https://github.com/biggora/bootstrap-select/blob/master/package.json) and automatically install the necessary local dependencies listed there.
+
+When completed, you'll be able to run the various Grunt commands provided from the command line.
+
+**Unfamiliar with `npm`? Don't have node installed?** That's a-okay. npm stands for [node packaged modules](http://npmjs.org/) and is a way to manage development dependencies through node.js. [Download and install node.js](http://nodejs.org/download/) before proceeding.
+
+#### Install Bower
+
+From the command line:
+
+1. Install `bower` globally with `npm install -g bower`.
+2. Navigate to the root `/bootstrap-select` directory, then run `bower install`. bower will look at [package.json](https://github.com/twbs/bootstrap/blob/master/bower.json) and automatically install the necessary local dependencies listed there.
+
+#### Available Grunt commands
+
+##### Build - `grunt`
+Run `grunt` to run tests locally and compile the CSS and JavaScript into `/js` and `/css`. **Uses [Less](http://lesscss.org/) and [UglifyJS](http://lisperator.net/uglifyjs/).**
+
+##### Compile all CSS and JavaScript - `grunt build`
+`grunt build` creates the `/js` and `/css` directories with compiled files. **Uses [Less](http://lesscss.org/) and [UglifyJS](http://lisperator.net/uglifyjs/).**
+
+##### Only compile CSS - `grunt build-css`
+`grunt build-css` creates the `/css` directory with compiled files. **Uses [Less](http://lesscss.org/).**
+
+##### Only compile JavaScript - `grunt build-js`
+`grunt build-js` creates the `/js` directory with compiled files. **Uses [UglifyJS](http://lisperator.net/uglifyjs/).**
+
+
 ## Authors
 
 [Silvio Moreto](http://github.com/silviomoreto),
@@ -61,6 +98,7 @@ Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) f
 
 ### Recommend extensions
 
+- [Bootstrap Ajax Typeahead Plugin](http://biggora.github.io/bootstrap-ajax-typeahead/)
 - [Bootstrap Fancy File Plugin](http://biggora.github.io/bootstrap-fancyfile/)
 - [TrinteJS - Javascrpt MVC Framework for Node.JS](http://www.trintejs.com/)
 - [CaminteJS - Cross-db ORM for NodeJS](http://www.camintejs.com/)

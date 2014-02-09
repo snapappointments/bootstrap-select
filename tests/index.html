@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Bootstrap Select Plugin Test Suite</title>
+
+  <!-- jquery -->
+  <script src="vendor/jquery.js"></script>
+
+  <!-- qunit -->
+  <link rel="stylesheet" href="vendor/qunit.css" media="screen">
+  <script src="vendor/qunit.js"></script>
+  <script>
+    // See https://github.com/axemclion/grunt-saucelabs#test-result-details-with-qunit
+    QUnit.done(function(results) {
+      window.global_test_results = results;
+    })
+  </script>
+
+  <!--  plugin sources -->
+  <script>$.support.transition = false</script>
+  <script src="vendor/dropdown.js"></script>
+  <script src="../js/bootstrap-select.js"></script>
+
+  <!-- unit tests -->
+  <script src="unit/select.js"></script>
+
+</head>
+<body>
+  <div>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+  </div>
+</body>
+</html>

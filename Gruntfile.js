@@ -1,4 +1,8 @@
-
+/*!
+ * Bootstrap Select's Gruntfile
+ * Copyright 2014 Alexey Gordeyev
+ * Licensed under MIT (https://github.com/biggora/bootstrap-select/blob/master/LICENSE)
+ */
 module.exports = function(grunt) {
     'use strict';
 
@@ -111,6 +115,39 @@ module.exports = function(grunt) {
             },
             files: {
                 src: 'demo/*.html'
+            }
+        },
+        qunit: {
+            options: {
+                inject: 'tests/unit/phantom.js'
+            },
+            files: 'tests/*.html'
+        },
+        connect: {
+            server: {
+                options: {
+                    port: 3000,
+                    base: '.'
+                }
+            }
+        },
+        /*
+        'saucelabs-qunit': {
+            all: {
+                options: {
+                    build: process.env.TRAVIS_JOB_ID,
+                    concurrency: 10,
+                    urls: ['http://127.0.0.1:3000/js/tests/index.html'],
+                    browsers: grunt.file.readYAML('test-infra/sauce_browsers.yml')
+                }
+            }
+        }, */
+        exec: {
+            npmUpdate: {
+                command: 'npm update'
+            },
+            npmShrinkWrap: {
+                command: 'npm shrinkwrap --dev'
             }
         }
     });

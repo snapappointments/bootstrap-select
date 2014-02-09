@@ -372,7 +372,7 @@
                 $drop.toggleClass('open', !$(this).hasClass('open'));
                 $drop.append(that.$menu);
             });
-            
+
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
@@ -773,6 +773,11 @@
         }
     };
 
+    // SELECT PLUGIN DEFINITION
+    // ==========================
+
+    var old = $.fn.selectpicker;
+
     $.fn.selectpicker = function(option, event) {
         //get the args of the outer function..
         var args = arguments;
@@ -828,6 +833,14 @@
         dropupAuto: true,
         header: false,
         liveSearch: false
+    };
+
+    // SELECT NO CONFLICT
+    // ====================
+
+    $.fn.selectpicker.noConflict = function() {
+        $.fn.selectpicker = old;
+        return this;
     };
 
     $(document)
