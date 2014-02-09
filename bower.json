@@ -1,17 +1,23 @@
 {
-  "name": "bootstrap-select",
+  "name": "bs-select",
   "version": "1.5.0",
   "dependencies": {
-    "jquery": "",
-    "bootstrap": ""
+    "jquery": ">= 1.9.0",
+    "bootstrap": ">= 3.0.0"
   },
   "homepage": "https://github.com/biggora/bootstrap-select",
-	"author": {
-		"name": "Silvio Moreto",
-		"url": "https://github.com/silviomoreto/"
-	},
+  "authors": [
+    "Silvio Moreto <https://github.com/silviomoreto>",
+    "Alexey Gordeyev <https://github.com/biggora>",
+    "Ana Carolina <https://github.com/anacarolinats>",
+    "Matt Bryson <https://github.com/mattbryson>",
+    "caseyjhol <https://github.com/caseyjhol>"
+  ],
   "description": "A custom select for Twitter Bootstrap using button dropdown",
-  "main": "js/bootstrap-select.js",
+  "main": [
+    "./js/bootstrap-select.js",
+    "./css/bootstrap-select.css"
+  ],
   "keywords": [
     "select",
     "bootstrap",
@@ -21,6 +27,8 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "test",
+    "tests"
   ]
 }
