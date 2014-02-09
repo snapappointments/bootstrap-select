@@ -1,3 +1,10 @@
+/*!
+ * Bootstrap Select v1.5.0 (https://github.com/biggora/bootstrap-select)
+ * Copyright 2013-2014 Silvio Moreto
+ * Licensed under MIT (https://github.com/biggora/bootstrap-select/blob/master/LICENSE)
+ * Plugin demo http://plugins.upbootstrap.com/bootstrap-select
+ */
+
 .bootstrap-select,
 .bootstrap-select:not([class*="span"]) {
   width: 220px;

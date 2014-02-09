@@ -54,7 +54,6 @@ module.exports = function(grunt) {
                 options: {
                     cleancss: true,
                     keepSpecialComments: '*',
-                    banner: '<%= banner %>',
                     noAdvanced: true, // turn advanced optimizations off until it's fixed in clean-css
                     report: 'min',
                     selectorsMergeMode: 'ie8'
@@ -69,12 +68,23 @@ module.exports = function(grunt) {
                     strictMath: true,
                     sourceMap: true,
                     outputSourceFiles: true,
-                    banner: '<%= banner %>',
                     sourceMapURL: '<%= pkg.name %>.css.map',
                     sourceMapFilename: 'css/<%= pkg.name %>.css.map'
                 },
                 files: {
-                    'css/<%= pkg.name %>.css': 'src/<%= pkg.name %>.less'
+                    'css/<%= pkg.name %>.css': 'less/<%= pkg.name %>.less'
+                }
+            }
+        },
+        usebanner: {
+            css: {
+                options: {
+                    position: 'top',
+                    banner: '<%= banner %>',
+                    linebreak: true
+                },
+                files: {
+                    src: ['css/<%= pkg.name %>.css']
                 }
             }
         },
@@ -132,16 +142,16 @@ module.exports = function(grunt) {
             }
         },
         /*
-        'saucelabs-qunit': {
-            all: {
-                options: {
-                    build: process.env.TRAVIS_JOB_ID,
-                    concurrency: 10,
-                    urls: ['http://127.0.0.1:3000/js/tests/index.html'],
-                    browsers: grunt.file.readYAML('test-infra/sauce_browsers.yml')
-                }
-            }
-        }, */
+         'saucelabs-qunit': {
+         all: {
+         options: {
+         build: process.env.TRAVIS_JOB_ID,
+         concurrency: 10,
+         urls: ['http://127.0.0.1:3000/js/tests/index.html'],
+         browsers: grunt.file.readYAML('test-infra/sauce_browsers.yml')
+         }
+         }
+         }, */
         exec: {
             npmUpdate: {
                 command: 'npm update'
@@ -161,7 +171,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('build-js', ['clean:js', 'concat:js', 'jshint', 'jscs', 'uglify']);
-    grunt.registerTask('build-css', ['clean:css', 'less', 'csslint', 'cssmin']);
-    grunt.registerTask('build', ['clean', 'concat', 'less', 'jshint', 'jscs', 'csslint', 'uglify', 'cssmin', 'validation']);
+    grunt.registerTask('build-css', ['clean:css', 'less', 'usebanner', 'csslint', 'cssmin']);
+    grunt.registerTask('build', ['clean', 'concat', 'less', 'jshint', 'jscs', 'csslint', 'usebanner', 'uglify', 'cssmin', 'validation']);
     grunt.registerTask('build-all', 'build');
 };

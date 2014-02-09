@@ -6,23 +6,32 @@
   "keywords": [ "bootstrap", "select", "input", "plugin" ],
   "homepage": "https://github.com/biggora/bootstrap-select",
   "demopage": "http://plugins.upbootstrap.com/bootstrap-select",
-	"description": "A custom select for Twitter Bootstrap using button dropdown",
-	"author": {
-		"name": "Silvio Moreto",
-		"url": "https://github.com/silviomoreto/"
+  "description": "A custom select for Twitter Bootstrap using button dropdown",
+  "author": {
+	"name": "Silvio Moreto",
+	"url": "https://github.com/silviomoreto/"
+  },
+  "contributors": [{
+        "name": "Paul Warelis",
+        "url": "https://github.com/pwarelis"
+    },{
+        "name": "Alexey Gordeyev",
+        "url": "https://github.com/biggora"
+    }],
+  "repository": {
+	"type": "git",
+	"url": "git://github.com/biggora/bootstrap-select.git"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/biggora/bootstrap-select.git"
-	},
-	"licenses": [
-		{
-			"type": "MIT",
-			"url": "https://github.com/biggora/bootstrap-select/blob/master/LICENSE"
-		}
-	],
-	"dependencies": {},
-	"devDependencies": {
+  "licenses": [
+	{
+		"type": "MIT",
+		"url": "https://github.com/biggora/bootstrap-select/blob/master/LICENSE"
+	}
+  ],
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+        "bower": "",
         "grunt": "~0.4.2",
         "grunt-banner": "~0.2.0",
         "grunt-contrib-clean": "~0.5.0",
