@@ -30,6 +30,7 @@ Installation
 * [Download the latest release](https://github.com/biggora/bootstrap-select/zipball/master)
 * [Clone in Windows](github-windows://openRepo/https://github.com/biggora/bootstrap-select)
 * Clone the repo: `git clone git://github.com/biggora/bootstrap-select.git`
+* Install with Bower: `bower install bs-select`
 
 ## Usage
 
@@ -51,7 +52,7 @@ Or just
 ```
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
-## Compiling CSS and JavaScript
+### Compiling CSS and JavaScript
 
 Bootstrap Select uses [Grunt](http://gruntjs.com/) with convenient methods. It's how we compile our code, run tests, and more. To use it, install the required dependencies as directed and then run some Grunt commands.
 
