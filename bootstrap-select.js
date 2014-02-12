@@ -54,6 +54,7 @@
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             this.autofocus = this.$element.prop('autofocus');
+            this.hasHiddenTitle = false; // this is set to true on line 177 if <option data-hidden="true"> is used.
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
@@ -173,6 +174,7 @@
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else if ($(this).data('hidden') === true) {
                     _liA.push('');
+                    that.hasHiddenTitle = true;
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
                 }
@@ -756,7 +758,7 @@
                 $items.each(function() {
                     if ($(this).parent().is(':not(.disabled)')) {
                         if ($.trim($(this).text().toLowerCase()).substring(0,1) == keyCodeMap[e.keyCode]) {
-                            keyIndex.push($(this).parent().index());
+                            keyIndex.push($(this).parent().index() - (that.hasHiddenTitle ? 1 : 0));
                         }
                     }
                 });
@@ -775,6 +777,7 @@
                     if (count > keyIndex.length) count = 1;
                 }
 
+                console.log($items, keyIndex[count - 1]);
                 $items.eq(keyIndex[count - 1]).focus();
             }
 
