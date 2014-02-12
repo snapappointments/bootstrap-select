@@ -777,7 +777,6 @@
                     if (count > keyIndex.length) count = 1;
                 }
 
-                console.log($items, keyIndex[count - 1]);
                 $items.eq(keyIndex[count - 1]).focus();
             }
 
