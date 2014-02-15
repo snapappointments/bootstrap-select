@@ -241,7 +241,7 @@
                     titleHTML +=
                         '<div class="label label-default bootstrap-select-label">' +
                             '<span>' + selectedItems[i] + '</span>' + 
-                            ' <a class="close bootstrap-select-close" ' + 
+                            '<a class="close bootstrap-select-close" ' + 
                                  'title="Unselect ' + escapedVal + '" ' +
                                  'data-value="' + escapedVal + '">&times;</a>' +
                         '</div>';

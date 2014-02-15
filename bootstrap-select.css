@@ -29,6 +29,7 @@
 
 .label.bootstrap-select-label > span {
     vertical-align: baseline;
+    margin-right: 3px;
 }
 
 .label.bootstrap-select-label .bootstrap-select-close {
@@ -36,7 +37,7 @@
     position: absolute;
     top: -4px;
     right: 5px;
-    font-size: 19px;
+    font-size: 20px;
     opacity: 0.4;
 }
 
