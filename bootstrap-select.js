@@ -264,7 +264,7 @@
 
             this.$button.attr('title', $.trim(title));
             var $filterOption = this.$newElement.find('.filter-option');
-            $filterOption.html(titleHTML);
+            $filterOption.html(titleHTML || title);
 
             if (this.options.labels) {
                 // Detect clicks on the 'remove' button for each label.
