@@ -84,10 +84,11 @@
             //If we are multiple, then add the show-tick class by default
             var multiple = this.multiple ? ' show-tick' : '';
             var autofocus = this.autofocus ? ' autofocus' : '';
+            var labels = this.options.labels ? ' labels' : '';
             var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
             var searchbox = this.options.liveSearch ? '<div class="bootstrap-select-searchbox"><input type="text" class="input-block-level form-control" /></div>' : '';
             var drop =
-                '<div class="btn-group bootstrap-select' + multiple + '">' +
+                '<div class="btn-group bootstrap-select' + multiple + labels + '">' +
                     '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
                         '<span class="filter-option pull-left"></span>&nbsp;' +
                         '<span class="caret"></span>' +
@@ -230,7 +231,20 @@
 
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
-            var title = !this.multiple ? selectedItems[0] : selectedItems.join(this.options.multipleSeparator);
+            var title = '';
+            if (this.multiple) {
+                if (this.options.labels) {
+                    for (var i in selectedItems) {
+                        title +=
+                            '<div class="label label-default bootstrap-select-label">' +
+                                '<span>' + selectedItems[i] + '</span>' + 
+                                ' <a class="close bootstrap-select-close">&times;</a>' +
+                            '</div>';
+                    }
+                } else
+                    title = selectedItems.join(this.options.multipleSeparator);
+            } else
+                title = selectedItems[0];
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
@@ -247,7 +261,14 @@
             }
 
             this.$button.attr('title', $.trim(title));
-            this.$newElement.find('.filter-option').html(title);
+            var $filterOption = this.$newElement.find('.filter-option');
+            $filterOption.html(title);
+
+            if (this.options.labels) {
+                $('.bootstrap-select-close', $filterOption).click(function(e) {
+                    debugger;
+                });
+            }
         },
 
         setStyle: function(style, status) {
@@ -860,7 +881,8 @@
         liveSearch: false,
         multipleSeparator: ', ',
         iconBase: 'glyphicon',
-        tickIcon: 'glyphicon-ok'
+        tickIcon: 'glyphicon-ok',
+        labels: false // If true, will show chosen style labels. This only works with multi-selects.
     };
 
     $(document)

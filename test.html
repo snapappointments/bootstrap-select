@@ -17,8 +17,15 @@
     <script type="text/javascript">
         $(window).on('load', function () {
 
-            $('.selectpicker').selectpicker({
+            $('#id_select').selectpicker({
                 'selectedText': 'cat'
+            });
+            $('#bs3Select').selectpicker({
+                'selectedText': 'cat'
+            });
+            $('#id_select_label').selectpicker({
+                'selectedText': 'cat',
+                'labels': true
             });
 
             // $('.selectpicker').selectpicker('hide');
@@ -30,6 +37,13 @@
     <select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">
         <option>cow</option>
         <option>bull</option>
+        <option>test</option>
+        <option>another</option>
+        <option>couch</option>
+        <option>television</option>
+        <option>aliens</option>
+        <option>dogs</option>
+        <option>computer</option>
         <option class="get-class" disabled>ox</option>
         <optgroup label="test" data-subtext="another test" data-icon="icon-ok">
             <option>ASD</option>
@@ -57,6 +71,18 @@
               </div>
         <form>
     </div>
+
+    <label for="id_select_label">Multi-select with labels</label>
+    <select id="id_select_label" class="selectpicker bla bla bli" multiple data-live-search="true">
+        <option>cow</option>
+        <option>bull</option>
+        <option class="get-class" disabled>ox</option>
+        <optgroup label="test" data-subtext="another test" data-icon="icon-ok">
+            <option>ASD</option>
+            <option selected>Bla</option>
+            <option>Ble</option>
+        </optgroup>
+    </select>
 
 </body>
 </html>

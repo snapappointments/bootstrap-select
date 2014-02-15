@@ -6,6 +6,44 @@
  * Licensed under the MIT license
  */
 
+.label.bootstrap-select-label {
+    position: relative;
+    top: -2px;
+    margin-right: 5px;
+    padding-right: 18px;
+    border: 1px solid #AAA;
+    border-radius: 3px;
+    background-color: #E4E4E4;
+    color: #333;
+    font-weight: normal;
+    
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
+    background-image: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-image: -moz-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-image: -o-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-image: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+    background-clip: padding-box;
+    box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    cursor: default;
+}
+
+.label.bootstrap-select-label > span {
+    vertical-align: baseline;
+}
+
+.label.bootstrap-select-label .bootstrap-select-close {
+    float: none;
+    position: absolute;
+    top: -4px;
+    right: 5px;
+    font-size: 19px;
+    opacity: 0.4;
+}
+
+.label.bootstrap-select-label .bootstrap-select-close:hover {
+    opacity: 0.75;
+}
+
 .bootstrap-select.btn-group,
 .bootstrap-select.btn-group[class*="span"] {
     float: none;
@@ -41,6 +79,11 @@
 
 .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
     width: 220px;
+}
+
+.bootstrap-select.labels:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
+    min-width: 220px;
+    width: auto;
 }
 
 .bootstrap-select {
@@ -80,6 +123,13 @@
     position: absolute;
     left: 12px;
     right: 25px;
+    text-align: left;
+}
+
+.bootstrap-select.labels.btn-group .btn .filter-option {
+    overflow: visible;
+    position: static;
+    margin-right: 15px;
     text-align: left;
 }
 
