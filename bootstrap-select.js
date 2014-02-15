@@ -231,20 +231,22 @@
 
             //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
             //Convert all the values into a comma delimited string
-            var title = '';
-            if (this.multiple) {
-                if (this.options.labels) {
-                    for (var i in selectedItems) {
-                        title +=
-                            '<div class="label label-default bootstrap-select-label">' +
-                                '<span>' + selectedItems[i] + '</span>' + 
-                                ' <a class="close bootstrap-select-close">&times;</a>' +
-                            '</div>';
-                    }
-                } else
-                    title = selectedItems.join(this.options.multipleSeparator);
-            } else
-                title = selectedItems[0];
+            var title = !this.multiple ? selectedItems[0] : selectedItems.join(this.options.multipleSeparator);
+            var titleHTML = title;
+
+            if (this.multiple && this.options.labels) {
+                titleHTML = '';
+                for (var i in selectedItems) {
+                    var escapedVal = encodeURIComponent(selectedItems[i]);
+                    titleHTML +=
+                        '<div class="label label-default bootstrap-select-label">' +
+                            '<span>' + selectedItems[i] + '</span>' + 
+                            ' <a class="close bootstrap-select-close" ' + 
+                                 'title="Unselect ' + escapedVal + '" ' +
+                                 'data-value="' + escapedVal + '">&times;</a>' +
+                        '</div>';
+                }
+            }
 
             //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
             if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
@@ -262,11 +264,25 @@
 
             this.$button.attr('title', $.trim(title));
             var $filterOption = this.$newElement.find('.filter-option');
-            $filterOption.html(title);
+            $filterOption.html(titleHTML);
 
             if (this.options.labels) {
+                // Detect clicks on the 'remove' button for each label.
                 $('.bootstrap-select-close', $filterOption).click(function(e) {
-                    debugger;
+                    var $closeBtn = $(this);
+                    e.stopPropagation();
+                    // Find the option with the value below.
+                    // De-select and call render.
+                    var val = $closeBtn.data('value');
+                    $('option', that.$element).each(function() {
+                        var $option = $(this);
+                        if ($option.attr('value') !== val && $option.text() !== val) return;
+                        $option.removeAttr('selected');
+                    });
+                    // Calling change() calls render but does not updateLIs.
+                    that.$element.change();
+                    // The LIs need to be updated.
+                    that.render();
                 });
             }
         },

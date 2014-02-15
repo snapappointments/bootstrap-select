@@ -26,6 +26,8 @@
             $('#id_select_label').selectpicker({
                 'selectedText': 'cat',
                 'labels': true
+            }).change(function() {
+                console.log($(this).val());
             });
 
             // $('.selectpicker').selectpicker('hide');
