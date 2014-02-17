@@ -276,7 +276,7 @@
                     var val = $closeBtn.data('value');
                     $('option', that.$element).each(function() {
                         var $option = $(this);
-                        if ($option.attr('value') !== val && $option.text() !== val) return;
+                        if ($option.attr('value') !== val && $option.text() !== decodeURIComponent(val)) return;
                         $option.removeAttr('selected');
                     });
                     // Calling change() calls render but does not updateLIs.
