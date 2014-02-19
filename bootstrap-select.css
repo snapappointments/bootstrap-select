@@ -8,8 +8,8 @@
 
 .label.bootstrap-select-label {
     position: relative;
-    top: -2px;
     margin-right: 5px;
+    margin-bottom: 6px;
     padding-right: 18px;
     border: 1px solid #AAA;
     border-radius: 3px;
@@ -84,7 +84,12 @@
 
 .bootstrap-select.labels:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]) {
     min-width: 220px;
+    max-width: 300px;
     width: auto;
+}
+
+.bootstrap-select.labels > button {
+    padding-bottom: 0px;
 }
 
 .bootstrap-select {

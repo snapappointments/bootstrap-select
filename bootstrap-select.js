@@ -90,7 +90,7 @@
             var drop =
                 '<div class="btn-group bootstrap-select' + multiple + labels + '">' +
                     '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
-                        '<span class="filter-option pull-left"></span>&nbsp;' +
+                        '<div class="filter-option"></div>&nbsp;' +
                         '<span class="caret"></span>' +
                     '</button>' +
                     '<div class="dropdown-menu open">' +
@@ -239,12 +239,12 @@
                 for (var i in selectedItems) {
                     var escapedVal = encodeURIComponent(selectedItems[i]);
                     titleHTML +=
-                        '<div class="label label-default bootstrap-select-label">' +
+                        '<span class="label label-default bootstrap-select-label pull-left">' +
                             '<span>' + selectedItems[i] + '</span>' + 
                             '<a class="close bootstrap-select-close" ' + 
                                  'title="Unselect ' + escapedVal + '" ' +
                                  'data-value="' + escapedVal + '">&times;</a>' +
-                        '</div>';
+                        '</span>';
                 }
             }
 
