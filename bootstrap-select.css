@@ -92,6 +92,10 @@
     padding-bottom: 0px;
 }
 
+.bootstrap-select.labels .filter-option .nothing-selected {
+    margin-bottom: 4px; 
+}
+
 .bootstrap-select {
     /*width: 220px\9; IE8 and below*/
     width: 220px\0; /*IE9 and below*/
@@ -130,6 +134,7 @@
     left: 12px;
     right: 25px;
     text-align: left;
+    float: left;
 }
 
 .bootstrap-select.labels.btn-group .btn .filter-option {
