@@ -293,7 +293,7 @@
         setSize: function() {
             var that = this,
                 menu = this.$menu,
-                menuInner = menu.find('.inner'),
+                menuInner = menu.find('.selectpicker'),
                 selectHeight = this.$newElement.outerHeight(),
                 liHeight = this.$newElement.data('liHeight'),
                 headerHeight = this.$newElement.data('headerHeight'),
@@ -319,7 +319,7 @@
 
             if (this.options.size == 'auto') {
                 var getSize = function() {
-                    var minHeight;
+                    var minHeight, menuInnerMinHeight;
                     posVert();
                     menuHeight = selectOffsetBot - menuExtras;
                     if (that.options.dropupAuto) {
@@ -328,13 +328,14 @@
                     if (that.$newElement.hasClass('dropup')) {
                         menuHeight = selectOffsetTop - menuExtras;
                     }
-                    if ((menu.find('li').length + menu.find('dt').length) > 3) {
+                    if ((menu.find('.selectpicker li').length + menu.find('dt').length) > 3) {
                         minHeight = liHeight*3 + menuExtras - 2;
                     } else {
                         minHeight = 0;
                     }
+                    menuInnerMinHeight = minHeight > menuPadding ? minHeight - menuPadding : 0;
                     menu.css({'max-height' : menuHeight + 'px', 'overflow' : 'hidden', 'min-height' : minHeight + 'px'});
-                    menuInner.css({'max-height' : menuHeight - headerHeight - searchHeight - actionsHeight - menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : minHeight - menuPadding + 'px'});
+                    menuInner.css({'max-height' : menuHeight - headerHeight - searchHeight - actionsHeight - menuPadding + 'px', 'overflow-y' : 'auto', 'min-height' : menuInnerMinHeight + 'px'});
                 };
                 getSize();
                 $(window).resize(getSize);
@@ -565,6 +566,12 @@
                 e.preventDefault();
                 e.stopPropagation();
                 that.selectAll();
+                that.$menu.find('.selectpicker li').each(function (index) {
+                  var $option = that.$element.find('option').eq(index);
+                  if($(this).hasClass('disabled')) {
+                    $option.prop('selected', false);
+                  }
+                });
                 that.$element.change();
             });
 
