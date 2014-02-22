@@ -108,6 +108,7 @@ Run `grunt` to run tests locally and compile the CSS and JavaScript into `/js` a
 
 - [Bootstrap Ajax Typeahead Plugin](http://biggora.github.io/bootstrap-ajax-typeahead/)
 - [Bootstrap Fancy File Plugin](http://biggora.github.io/bootstrap-fancyfile/)
+- [Bootstrap Slider Plugin](http://biggora.github.io/bootstrap-slider/)
 - [TrinteJS - Javascrpt MVC Framework for Node.JS](http://www.trintejs.com/)
 - [CaminteJS - Cross-db ORM for NodeJS](http://www.camintejs.com/)
 - [MongoDB Session Storage for ExpressJS](https://github.com/biggora/express-mongodb)
@@ -118,7 +119,7 @@ Run `grunt` to run tests locally and compile the CSS and JavaScript into `/js` a
 
 (The MIT License)
 
-Copyright (C) 2013 bootstrap-select
+Copyright (C) 2013-2014 Silvio Moreto
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -144,3 +145,5 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 - Visit the [author website](http://www.gordejev.lv).
 - Follow [@biggora](https://twitter.com/#!/biggora) on Twitter for updates.
 - Report issues on the [github issues](https://github.com/biggora/bootstrap-select/issues) page.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-22788134-5/select/readme)](https://github.com/igrigorik/ga-beacon)
