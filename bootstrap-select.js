@@ -302,8 +302,16 @@
                 selectOffsetTop,
                 selectOffsetBot,
                 posVert = function() {
-                    selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
-                    selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
+                    if( that.$newElement.closest('div.modal-body').length )
+                    {
+                        selectOffsetTop = that.$newElement.offset().top-125;
+                        selectOffsetBot = that.$newElement.closest('div.modal-body').height() - selectOffsetTop - selectHeight;
+                    }
+                    else
+                    {
+                        selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
+                        selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
+                    }
                 };
                 posVert();
                 if (this.options.header) menu.css('padding-top', 0);
