@@ -409,6 +409,9 @@
                     $drop.css({'top' : pos.top + actualHeight, 'left' : pos.left, 'width' : $element[0].offsetWidth, 'position' : 'absolute'});
                 };
             this.$newElement.on('click', function() {
+                if (that.isDisabled()) {
+                    return;
+                }
                 getPlacement($(this));
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
