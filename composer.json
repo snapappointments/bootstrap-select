@@ -3,7 +3,7 @@
     "description": "A custom <select> for @twitter bootstrap using button dropdown as replacement",
     "keywords": ["form", "bootstrap", "select", "replacement"],
     "homepage": "https://github.com/silviomoreto/bootstrap-select",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "authors": [
         {
             "name": "Silvio Moreto",

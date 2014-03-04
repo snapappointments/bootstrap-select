@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.5.0
+ * bootstrap-select v1.5.1
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -661,7 +661,7 @@
 
             this.$searchbox.on('input propertychange', function() {
                 if (that.$searchbox.val()) {
-                    that.$lis.find('a').removeClass('hide').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+                    that.$lis.removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
                     
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
