@@ -54,6 +54,7 @@
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
             this.autofocus = this.$element.prop('autofocus');
+            this.hasHiddenTitle = false; // this is set to true on line 177 if <option data-hidden="true"> is used.
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
@@ -185,6 +186,7 @@
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else if ($(this).data('hidden') === true) {
                     _liA.push('');
+                    that.hasHiddenTitle = true;
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
                 }
@@ -416,6 +418,15 @@
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
                 $drop.append(that.$menu);
+            });
+            this.$newElement.on('keydown', function(e){
+                var isActive = that.$menu.parent().hasClass('open');
+                if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
+                    getPlacement($(this));
+                    $drop.appendTo(that.options.container);
+                    $drop.toggleClass('open', !$(this).hasClass('open'));
+                    $drop.append(that.$menu);
+                }
             });
             $(window).resize(function() {
                 getPlacement(that.$newElement);
@@ -838,7 +849,7 @@
                 $items.each(function() {
                     if ($(this).parent().is(':not(.disabled)')) {
                         if ($.trim($(this).text().toLowerCase()).substring(0,1) == keyCodeMap[e.keyCode]) {
-                            keyIndex.push($(this).parent().index());
+                            keyIndex.push($(this).parent().index() - (that.hasHiddenTitle ? 1 : 0));
                         }
                     }
                 });
