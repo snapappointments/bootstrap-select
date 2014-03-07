@@ -1,7 +1,7 @@
 {
     "name": "bootstrap-select",
     "title": "Bootstrap Select",
-    "description": "A custom select / multiselect for @twitter bootstrap using button dropdown, designed to behave like regular Bootstrap selects",
+    "description": "A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects",
     "keywords": [
         "form",
         "bootstrap",

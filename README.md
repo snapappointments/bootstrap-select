@@ -1,7 +1,7 @@
 bootstrap-select
 ================
 
-A custom select / multiselect for @twitter bootstrap using button dropdown, designed to behave like regular Bootstrap selects;
+A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects;
 
 ## Demo and Documentation
 
