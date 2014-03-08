@@ -697,6 +697,21 @@
         val: function(value) {
 
             if (value !== undefined) {
+                
+                //multipleselect support (works perfectly)
+                if(this.multiple) {
+                    var previous_values = this.$element.val();
+
+                    //If not selected : select. Else unselect
+                    if(jQuery.inArray(value, previous_values)) {
+                        previous_values.unshift(value);
+                    }else {
+                        previous_values.splice( $.inArray(value, previous_values), 1 );
+                    };
+
+                    value = previous_values ;
+                }
+                
                 this.$element.val( value );
 
                 this.$element.change();
