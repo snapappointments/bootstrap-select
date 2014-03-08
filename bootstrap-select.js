@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.5.1
+ * bootstrap-select v1.5.2
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -184,13 +184,14 @@
                 } else if ($this.data('divider') === true) {
                     _liA.push('<div class="div-contain"><div class="divider"></div></div>');
                 } else if ($(this).data('hidden') === true) {
-                    _liA.push('');
+                    _liA.push('<a></a>');
                 } else {
                     _liA.push(that.createA(text, optionClass, inline ));
                 }
             });
 
             $.each(_liA, function(i, item) {
+                var hide = item === '<a></a>' ? 'class="hide"' : '';
                 _liHtml += '<li rel=' + i + '>' + item + '</li>';
             });
 
@@ -754,9 +755,7 @@
             isActive = that.$menu.parent().hasClass('open');
 
             if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
-                that.setSize();
-                that.$menu.parent().addClass('open');
-                isActive = that.$menu.parent().hasClass('open');
+                that.$newElement.trigger('click');
                 that.$searchbox.focus();
             }
             
