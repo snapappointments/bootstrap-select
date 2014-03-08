@@ -192,7 +192,7 @@
 
             $.each(_liA, function(i, item) {
                 var hide = item === '<a></a>' ? 'class="hide"' : '';
-                _liHtml += '<li rel=' + i + '>' + item + '</li>';
+                _liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
             });
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
@@ -457,12 +457,12 @@
         },
 
         setSelected: function(index, selected) {
-            if (this.$lis == null) this.$lis = this.$menu.find('li');
+            if (this.$lis == null) this.$lis = this.$menu.find('li:not(.hide)');
             $(this.$lis[index]).toggleClass('selected', selected);
         },
 
         setDisabled: function(index, disabled) {
-            if (this.$lis == null) this.$lis = this.$menu.find('li');
+            if (this.$lis == null) this.$lis = this.$menu.find('li:not(.hide)');
             if (disabled) {
                 $(this.$lis[index]).addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
             } else {
