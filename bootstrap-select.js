@@ -375,9 +375,11 @@
                 // Get correct width if element hidden
                 var selectClone = this.$newElement.clone().appendTo('body');
                 var ulWidth = selectClone.find('> .dropdown-menu').css('width');
+                var btnWidth = selectClone.css('width', 'auto').find('> button').css('width');
                 selectClone.remove();
-
-                this.$newElement.css('width', ulWidth);
+                
+                // Set width to whatever's larger, button title or longest option
+                this.$newElement.css('width', Math.max(parseInt(ulWidth), parseInt(btnWidth)) + 'px');
             } else if (this.options.width == 'fit') {
                 // Remove inline min-width so width can be changed from 'auto'
                 this.$menu.css('min-width', '');
