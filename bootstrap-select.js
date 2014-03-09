@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.5.2
+ * bootstrap-select v1.5.3
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -457,12 +457,12 @@
         },
 
         setSelected: function(index, selected) {
-            if (this.$lis == null) this.$lis = this.$menu.find('li:not(.hide)');
+            if (this.$lis == null) this.$lis = this.$menu.find('li');
             $(this.$lis[index]).toggleClass('selected', selected);
         },
 
         setDisabled: function(index, disabled) {
-            if (this.$lis == null) this.$lis = this.$menu.find('li:not(.hide)');
+            if (this.$lis == null) this.$lis = this.$menu.find('li');
             if (disabled) {
                 $(this.$lis[index]).addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
             } else {
@@ -757,7 +757,13 @@
             isActive = that.$menu.parent().hasClass('open');
 
             if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
-                that.$newElement.trigger('click');
+                if (!that.options.container) {
+                    that.setSize();
+                    that.$menu.parent().addClass('open');
+                    isActive = that.$menu.parent().hasClass('open');
+                } else {
+                    that.$newElement.trigger('click');
+                }
                 that.$searchbox.focus();
             }
             
