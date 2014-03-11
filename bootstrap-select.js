@@ -699,8 +699,8 @@
             if (value !== undefined) {
                 
                 //multipleselect support (works perfectly)
-                if(this.multiple) {
-                    var previous_values = this.$element.val();
+                var previous_values = this.$element.val();
+                if(this.multiple && previous_values) {
 
                     //If not selected : select. Else unselect
                     if(jQuery.inArray(value, previous_values)) {
