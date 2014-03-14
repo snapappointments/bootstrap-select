@@ -118,7 +118,13 @@
         createView: function() {
             var $drop = this.createDropdown();
             var $li = this.createLi();
-            $drop.find('ul').append($li);
+			
+			if(this.options.numberOfStartOpts != undefined){
+				this.triggerOnSroll($li, this.options.numberOfStartOpts, $drop,/*init*/ true);
+			}else{
+				$drop.find('ul').append(this.createHtmlOpts($li));
+			}
+            
             return $drop;
         },
 
@@ -127,7 +133,12 @@
             this.destroyLi();
             //Re build
             var $li = this.createLi();
-            this.$menu.find('ul').append( $li );
+			
+			if(this.options.numberOfStartOpts != undefined){
+				this.triggerOnSroll($li, this.options.numberOfStartOpts,  this.$menu,/*init*/ true);
+			}else{
+				this.$menu.find('ul').append(this.createHtmlOpts($li));
+			}
         },
 
         destroyLi: function() {
@@ -190,19 +201,49 @@
                 }
             });
 
-            $.each(_liA, function(i, item) {
-                var hide = item === '<a></a>' ? 'class="hide"' : '';
-                _liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
-            });
-
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
             if (!this.multiple && this.$element.find('option:selected').length===0 && !this.options.title) {
                 this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
             }
-
-            return $(_liHtml);
+			
+			return _liA;
         },
 
+		createHtmlOpts: function(liArray){
+				var _liHtml = '';
+				
+				$.each(liArray, function(i, item) {
+					var hide = item === '<a></a>' ? 'class="hide"' : '';
+					_liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
+				});
+				
+				return _liHtml;
+		},
+		
+		triggerOnSroll: function(collection, arraySize, elementToAppend, init){
+			
+			var $ul = elementToAppend.find('ul'),
+				that = this;
+ 			
+			if( $ul.prop('offsetHeight') + $ul.prop('scrollTop') >= $ul.prop('scrollHeight') || init){
+				var _liHtml = '',
+					iterationStop = (collection.length >= arraySize) ? (arraySize) : collection.length;
+				
+				
+				_liHtml = this.createHtmlOpts(collection.slice(0, iterationStop));
+				
+				$ul.append($(_liHtml));
+				
+				$ul.off('scrollstop');
+				
+				if( (iterationStop) != collection.length){
+					$ul.on('scrollstop', function(e){
+						that.triggerOnSroll(collection.slice(arraySize), arraySize, elementToAppend);
+					});
+				}
+			}				
+		},
+		
         createA: function(text, classes, inline) {
             return '<a tabindex="0" class="'+classes+'" style="'+inline+'">' +
                  text +
@@ -415,11 +456,13 @@
                 if (that.isDisabled()) {
                     return;
                 }
+				
                 getPlacement($(this));
                 $drop.appendTo(that.options.container);
                 $drop.toggleClass('open', !$(this).hasClass('open'));
                 $drop.append(that.$menu);
-            });
+				
+			});
             $(window).resize(function() {
                 getPlacement(that.$newElement);
             });
@@ -510,11 +553,13 @@
 
             this.$newElement.on('click', function() {
                 that.setSize();
-                if (!that.options.liveSearch && !that.multiple) {
+				if (!that.options.liveSearch && !that.multiple) {
                     setTimeout(function() {
                         that.$menu.find('.selected a').focus();
                     }, 10);
                 }
+				
+				that.$menu.trigger("scrollstop");
             });
 
             this.$menu.on('click', 'li a', function(e) {
@@ -968,5 +1013,41 @@
         .data('keycount', 0)
         .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown)
         .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', function (e) { e.stopPropagation(); });
+		
+	
+	var special = $.event.special,
+        uid2 = 'D' + (+new Date() + 1);
+ 
+    special.scrollstop = {
+        latency: 300,
+        setup: function() {
+ 
+            var timer,
+                    handler = function(evt) {
+ 
+                    var _self = this,
+                        _args = arguments;
+ 
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+ 
+                    timer = setTimeout( function(){
+ 
+                        timer = null;
+                        evt.type = 'scrollstop';
+                        $.event.handle.apply(_self, _args);
+ 
+                    }, special.scrollstop.latency);
+ 
+                };
+ 
+            $(this).bind('scroll', handler).data(uid2, handler);
+ 
+        },
+        teardown: function() {
+            $(this).unbind( 'scroll', $(this).data(uid2) );
+        }
+    };
 
 }(window.jQuery);
