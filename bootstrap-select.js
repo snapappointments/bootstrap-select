@@ -1,5 +1,5 @@
 /*!
- * bootstrap-select v1.5.3
+ * bootstrap-select v1.5.4
  * http://silviomoreto.github.io/bootstrap-select/
  *
  * Copyright 2013 bootstrap-select
@@ -191,7 +191,7 @@
             });
 
             $.each(_liA, function(i, item) {
-                var hide = item === '<a></a>' ? 'class="hide"' : '';
+                var hide = item === '<a></a>' ? 'class="hide is-hidden"' : '';
                 _liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
             });
 
@@ -653,7 +653,7 @@
                 that.$menu.find('.active').removeClass('active');
                 if (!!that.$searchbox.val()) {
                     that.$searchbox.val('');
-                    that.$menu.find('li').show();
+                    that.$lis.not('.is-hidden').removeClass('hide');
                     if (!!no_results.parent().length) no_results.remove();
                 }
                 if (!that.multiple) that.$menu.find('.selected').addClass('active');
@@ -664,7 +664,7 @@
 
             this.$searchbox.on('input propertychange', function() {
                 if (that.$searchbox.val()) {
-                    that.$lis.removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+                    that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
                     
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
@@ -675,7 +675,7 @@
                     }
                     
                 } else {
-                    that.$menu.find('li').removeClass('hide');
+                    that.$lis.not('.is-hidden').removeClass('hide');
                     if (!!no_results.parent().length) no_results.remove();
                 }
 
