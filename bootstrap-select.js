@@ -87,7 +87,7 @@
             if($.fn.tooltip){
                 this.$newElement.parent().addClass('has-info');
                 this.$newElement.tooltip({placement:'bottom',html:true});
-                this.$newElement.find('[data-original-title]').tooltip({placement:'bottom'})
+                this.$newElement.find('[data-original-title]').tooltip({placement:'bottom',container:'body'})
             }
         },
 
