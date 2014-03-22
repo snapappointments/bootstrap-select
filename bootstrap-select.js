@@ -57,7 +57,7 @@
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
-            this.$button = this.$newElement.find('> button');
+            this.$button = this.$newElement.find('> .btn');
             this.$searchbox = this.$newElement.find('input');
 
             if (id !== undefined) {
@@ -99,11 +99,11 @@
                             '</div>' : '';
             var drop =
                 '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-                    '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
+                    '<a type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
                         '<span class="filter-option pull-left"></span>&nbsp;' +
                         '<span class="'+this.options.iconBase+" "+this.options.arrowIcon+' arrow"></span>' +
                         '<span class="'+this.options.iconBase+" "+this.options.removeIcon+' hide remove"></span>' +
-                    '</button>' +
+                    '</a>' +
                     '<div class="dropdown-menu open">' +
                         header +
                         searchbox +
