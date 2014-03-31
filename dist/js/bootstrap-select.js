@@ -1,3 +1,6 @@
+/*! bootstrap-select - v1.4.0 - 2014-03-31
+* https://github.com/silviomoreto/bootstrap-select
+* Copyright (c) 2014 Silvio Moreto; Licensed MIT */
 (function ($) {
 
     "use strict";
