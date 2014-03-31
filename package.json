@@ -1,29 +1,41 @@
 {
-    "name": "bootstrap-select",
-    "title": "bootstrap-select",
-    "description": "A custom select for @twitter bootstrap using button dropdown as replacement",
-    "homepage": "https://github.com/silviomoreto/bootstrap-select",
-    "version": "1.4.0",
-    "author": {
-        "name": "Silvio Moreto",
-        "url": "https://github.com/silviomoreto/"
-    },
-    "contributors": [
-        "t0xicCode"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/silviomoreto/bootstrap-select.git"
-    },
-    "licenses": "MIT",
-    "files": ["js", "css"],
-    "dependencies": {
-        "jquery": ">=1.8"
-    },
-    "keywords": [
-        "form",
-        "bootstrap",
-        "select",
-        "replacement"
-    ]
+  "name": "bootstrap-select",
+  "title": "bootstrap-select",
+  "description": "A custom select for @twitter bootstrap using button dropdown as replacement",
+  "homepage": "https://github.com/silviomoreto/bootstrap-select",
+  "version": "1.4.0",
+  "author": {
+    "name": "Silvio Moreto",
+    "url": "https://github.com/silviomoreto/"
+  },
+  "contributors": [
+    "t0xicCode",
+    "ryanwooten6"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/silviomoreto/bootstrap-select.git"
+  },
+  "license": "MIT",
+  "files": [
+    "js",
+    "css"
+  ],
+  "dependencies": {
+    "jquery": ">=1.8"
+  },
+  "keywords": [
+    "form",
+    "bootstrap",
+    "select",
+    "replacement"
+  ],
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-less": "^0.11.0",
+    "load-grunt-tasks": "^0.4.0",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-jshint": "^0.9.2"
+  }
 }
