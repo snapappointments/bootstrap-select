@@ -35,6 +35,11 @@ Or just
 
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
+## CDN
+
+* https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js
+* https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css
+
 ## Bugs and feature requests
 
 Anyone and everyone is welcome to contribute. Please take a moment to
