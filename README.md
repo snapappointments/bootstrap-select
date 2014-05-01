@@ -1,3 +1,7 @@
+# Fork info
+
+This fork has a bidirectional CSS file that works for both left-to-right and right-to-left pages, as long as the `html` tag has a `direction` attribute set to either `ltr` or `rtl`.
+
 bootstrap-select
 ================
 
