@@ -12,12 +12,12 @@
     display: inline-block;
     margin-bottom: 10px;
 }
-html[direction='ltr'] .bootstrap-select.btn-group:not(.input-group-btn),
-html[direction='ltr'] .bootstrap-select.btn-group[class*="span"] {
+html[dir='ltr'] .bootstrap-select.btn-group:not(.input-group-btn),
+html[dir='ltr'] .bootstrap-select.btn-group[class*="span"] {
     margin-left: 0;
 }
-html[direction='rtl'] .bootstrap-select.btn-group:not(.input-group-btn),
-html[direction='rtl'] .bootstrap-select.btn-group[class*="span"] {
+html[dir='rtl'] .bootstrap-select.btn-group:not(.input-group-btn),
+html[dir='rtl'] .bootstrap-select.btn-group[class*="span"] {
     margin-right: 0;
 }
 .form-search .bootstrap-select.btn-group,
@@ -32,28 +32,28 @@ html[direction='rtl'] .bootstrap-select.btn-group[class*="span"] {
     border: none;
 }
 
-html[direction='ltr'] .bootstrap-select.btn-group.pull-right,
-html[direction='ltr'] .bootstrap-select.btn-group[class*="span"].pull-right,
-html[direction='ltr'] .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
+html[dir='ltr'] .bootstrap-select.btn-group.pull-right,
+html[dir='ltr'] .bootstrap-select.btn-group[class*="span"].pull-right,
+html[dir='ltr'] .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
     float: right;
 }
-html[direction='rtl'] .bootstrap-select.btn-group.pull-left,
-html[direction='rtl'] .bootstrap-select.btn-group[class*="span"].pull-left,
-html[direction='rtl'] .row-fluid .bootstrap-select.btn-group[class*="span"].pull-left {
+html[dir='rtl'] .bootstrap-select.btn-group.pull-left,
+html[dir='rtl'] .bootstrap-select.btn-group[class*="span"].pull-left,
+html[dir='rtl'] .row-fluid .bootstrap-select.btn-group[class*="span"].pull-left {
     float: left;
 }
 
-html[direction='ltr'] .input-append .bootstrap-select.btn-group {
+html[dir='ltr'] .input-append .bootstrap-select.btn-group {
     margin-left: -1px;
 }
-html[direction='rtl'] .input-append .bootstrap-select.btn-group {
+html[dir='rtl'] .input-append .bootstrap-select.btn-group {
     margin-right: -1px;
 }
 
-html[direction='ltr'] .input-prepend .bootstrap-select.btn-group {
+html[dir='ltr'] .input-prepend .bootstrap-select.btn-group {
     margin-right: -1px;
 }
-html[direction='rtl'] .input-prepend .bootstrap-select.btn-group {
+html[dir='rtl'] .input-prepend .bootstrap-select.btn-group {
     margin-left: -1px;
 }
 
@@ -73,10 +73,10 @@ html[direction='rtl'] .input-prepend .bootstrap-select.btn-group {
 .bootstrap-select > .btn {
     width: 100%;
 }
-html[direction='ltr'] .bootstrap-select > .btn {
+html[dir='ltr'] .bootstrap-select > .btn {
     padding-right: 25px;
 }
-html[direction='rtl'] .bootstrap-select > .btn {
+html[dir='rtl'] .bootstrap-select > .btn {
     padding-left: 25px;
 }
 
@@ -99,11 +99,11 @@ html[direction='rtl'] .bootstrap-select > .btn {
     overflow: hidden;
     width: 100%;
 }
-html[direction='ltr'] .bootstrap-select.btn-group .btn .filter-option {
+html[dir='ltr'] .bootstrap-select.btn-group .btn .filter-option {
     float: left;
     text-align: left;
 }
-html[direction='rtl'] .bootstrap-select.btn-group .btn .filter-option {
+html[dir='rtl'] .bootstrap-select.btn-group .btn .filter-option {
     float: right;
     text-align: right;
 }
@@ -114,10 +114,10 @@ html[direction='rtl'] .bootstrap-select.btn-group .btn .filter-option {
     margin-top: -2px;
     vertical-align: middle;
 }
-html[direction='ltr'] .bootstrap-select.btn-group .btn .caret {
+html[dir='ltr'] .bootstrap-select.btn-group .btn .caret {
     right: 12px;
 }
-html[direction='rtl'] .bootstrap-select.btn-group .btn .caret {
+html[dir='rtl'] .bootstrap-select.btn-group .btn .caret {
     left: 12px;
 }
 
@@ -172,10 +172,10 @@ html[direction='rtl'] .bootstrap-select.btn-group .btn .caret {
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     position: relative;
 }
-html[direction='ltr'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
+html[dir='ltr'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     padding-left: 35px;
 }
-html[direction='rtl'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
+html[dir='rtl'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     padding-right: 35px;
 }
 
@@ -192,10 +192,10 @@ html[direction='rtl'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     display: inline-block;
     margin-top: 2.5px;
 }
-html[direction='ltr'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
+html[dir='ltr'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
     right: 15px;
 }
-html[direction='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
+html[dir='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
     left: 15px;
 }
 
@@ -203,17 +203,17 @@ html[direction='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.se
     display: none;
 }
 
-html[direction='ltr'] .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
+html[dir='ltr'] .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     margin-right: 34px;
 }
-html[direction='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
+html[dir='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     margin-left: 34px;
 }
 
-html[direction='ltr'] .bootstrap-select.btn-group .dropdown-menu li small {
+html[dir='ltr'] .bootstrap-select.btn-group .dropdown-menu li small {
     padding-left: 0.5em;
 }
-html[direction='rtl'] .bootstrap-select.btn-group .dropdown-menu li small {
+html[dir='rtl'] .bootstrap-select.btn-group .dropdown-menu li small {
     padding-right: 0.5em;
 }
 
@@ -239,10 +239,10 @@ html[direction='rtl'] .bootstrap-select.btn-group .dropdown-menu li small {
     bottom: -4px;
     display: none;
 }
-html[direction='ltr'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
+html[dir='ltr'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
     left: 9px;
 }
-html[direction='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
+html[dir='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
     right: 9px;
 }
 
@@ -256,10 +256,10 @@ html[direction='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before 
     bottom: -4px;
     display: none;
 }
-html[direction='ltr'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
+html[dir='ltr'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
     left: 10px;
 }
-html[direction='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
+html[dir='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
     right: 10px;
 }
 
@@ -278,19 +278,19 @@ html[direction='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
     border-bottom: 0;
 }
 
-html[direction='ltr'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
+html[dir='ltr'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
     right: 12px;
     left: auto;
 }
-html[direction='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
+html[dir='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
     left: 12px;
     right: auto;
 }
-html[direction='ltr'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
+html[dir='ltr'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
     right: 13px;
     left: auto;
 }
-html[direction='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
+html[dir='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
     left: 13px;
     right: auto;
 }
@@ -331,10 +331,10 @@ html[direction='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-tog
     height: 100% !important;
     opacity: 0;
 }
-html[direction='ltr'] .mobile-device {
+html[dir='ltr'] .mobile-device {
     left: 0;
 }
-html[direction='rtl'] .mobile-device {
+html[dir='rtl'] .mobile-device {
     right: 0;
 }
 
@@ -367,10 +367,10 @@ html[direction='rtl'] .mobile-device {
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
-html[direction='ltr'] .bootstrap-select .bs-actionsbox {
+html[dir='ltr'] .bootstrap-select .bs-actionsbox {
     float: left;
 }
-html[direction='rtl'] .bootstrap-select .bs-actionsbox {
+html[dir='rtl'] .bootstrap-select .bs-actionsbox {
     float: right;
 }
 
