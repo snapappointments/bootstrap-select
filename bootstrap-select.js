@@ -101,7 +101,7 @@
                 '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
                     '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
                         '<span class="filter-option pull-left"></span>&nbsp;' +
-                        '<span class="caret"></span>' +
+                        this.options.caretHTML +
                     '</button>' +
                     '<div class="dropdown-menu open">' +
                         header +
@@ -961,6 +961,7 @@
         multipleSeparator: ', ',
         iconBase: 'glyphicon',
         tickIcon: 'glyphicon-ok',
+        caretHTML: '<span class="caret"></span>',
         maxOptions: false
     };
 
