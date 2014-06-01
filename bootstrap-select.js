@@ -729,7 +729,7 @@
                 this.$element.change();
             }
 
-            return this.$element.val();
+            return this.$element;
         },
 
         selectAll: function() {
