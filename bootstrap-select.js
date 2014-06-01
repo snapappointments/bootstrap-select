@@ -39,6 +39,7 @@
         this.refresh = Selectpicker.prototype.refresh;
         this.setStyle = Selectpicker.prototype.setStyle;
         this.selectAll = Selectpicker.prototype.selectAll;
+        this.toggleVal = Selectpicker.prototype.toggleVal;
         this.deselectAll = Selectpicker.prototype.deselectAll;
         this.init();
     };
@@ -704,6 +705,31 @@
             } else {
                 return this.$element.val();
             }
+        },
+
+        toggleVal: function(value) {
+            if (value !== undefined) {
+                var values = this.$element.val();
+
+                if (values === null) {
+                    this.$element.val(value);
+                }
+                else {
+                    var valueIndex = values.indexOf(value);
+
+                    if (valueIndex === -1) {
+                        values.push(value);
+                    } else {
+                        values.splice(valueIndex, 1);
+                    }
+
+                    this.$element.val(values);
+                }
+
+                this.$element.change();
+            }
+
+            return this.$element.val();
         },
 
         selectAll: function() {
