@@ -267,7 +267,7 @@
 
         setStyle: function(style, status) {
             if (this.$element.attr('class')) {
-                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device/gi, ''));
+                this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|validate\[.*\]/gi, ''));
             }
 
             var buttonClass = style ? style : this.options.style;
