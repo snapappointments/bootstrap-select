@@ -167,16 +167,23 @@
                         var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
-                        if ($this[0].index !== 0) {
+                        if ($this[0].index !== 0) { // if this is NOT first group add a divider
                             _liA.push(
                                 '<div class="div-contain"><div class="divider"></div></div>'+
-                                '<dt>'+label+'</dt>'+
+                                '<dt>'+label+'</dt>'
+                                );
+                            _liA.push(
                                 that.createA(text, 'opt ' + optionClass, inline )
                                 );
                         } else {
                             _liA.push(
-                                '<dt>'+label+'</dt>'+
-                                that.createA(text, 'opt ' + optionClass, inline ));
+                                '<dt>'+label+'</dt>'
+                                //that.createA(text, 'opt ' + optionClass, inline )
+                                );
+                            _liA.push(
+                                that.createA(text, 'opt ' + optionClass, inline )
+                                );
+                        
                         }
                     } else {
                          _liA.push(that.createA(text, 'opt ' + optionClass, inline ));
@@ -189,17 +196,33 @@
                     _liA.push(that.createA(text, optionClass, inline ));
                 }
             });
-
+            var opts_group_count = 0; // i'm counting groups options to check if the group is first or another
+            var optCounter = 0;
             $.each(_liA, function(i, item) {
                 var hide = item === '<a></a>' ? 'class="hide is-hidden"' : '';
-                _liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
+                var opt_group = '';
+                var c='';
+                if ( item.match(/\<dt\>/g) && opts_group_count == 0){
+                    opt_group = '<ol class="options-group plain-list">';
+                }else if ( item.match(/\<dt\>/g) && opts_group_count > 0){
+                    opt_group = '</ol><ol class="options-group plain-list">';
+                }else{
+                    c=optCounter;
+                    optCounter++;
+                }
+                _liHtml += opt_group;
+                _liHtml += '<li rel="' + c + '"' + hide + '>' + item + '</li>';
+                opts_group_count++;
             });
+            if( opts_group_count > 0){
+                _liHtml += '</ol>';
+            }
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
             if (!this.multiple && this.$element.find('option:selected').length===0 && !this.options.title) {
                 this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
             }
-
+            
             return $(_liHtml);
         },
 
@@ -457,8 +480,11 @@
         },
 
         setSelected: function(index, selected) {
+            if(selected){
+                Log.trace(index);
+                Log.trace(selected);}
             if (this.$lis == null) this.$lis = this.$menu.find('li');
-            $(this.$lis[index]).toggleClass('selected', selected);
+            $(this.$lis).filter('[rel='+index+']').toggleClass('selected', selected);
         },
 
         setDisabled: function(index, disabled) {
@@ -518,7 +544,8 @@
             });
 
             this.$menu.on('click', 'li a', function(e) {
-                var clickedIndex = $(this).parent().index(),
+                //var clickedIndex = $(this).parent().index(),
+                var clickedIndex = $(this).parent().attr('rel'),
                     prevValue = that.$element.val(),
                     prevIndex = that.$element.prop('selectedIndex');
 
@@ -665,6 +692,17 @@
             this.$searchbox.on('input propertychange', function() {
                 if (that.$searchbox.val()) {
                     that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+                    
+                    // Hidding options groups that does not have any resoult to show while search
+                    that.$menu.find('.options-group').each( function(){
+                        Log.trace( $(this).find('li:not(.hide)') );
+                        if( $(this).find('li:not(.hide)').length <= 1 ){
+                            $(this).addClass('hide');
+                        }else{
+                            $(this).removeClass('hide');
+                        }
+                    })
+                    
                     
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
