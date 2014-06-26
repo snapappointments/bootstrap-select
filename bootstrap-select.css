@@ -11,7 +11,14 @@
     float: none;
     display: inline-block;
     margin-bottom: 10px;
+}
+html[dir='ltr'] .bootstrap-select.btn-group:not(.input-group-btn),
+html[dir='ltr'] .bootstrap-select.btn-group[class*="span"] {
     margin-left: 0;
+}
+html[dir='rtl'] .bootstrap-select.btn-group:not(.input-group-btn),
+html[dir='rtl'] .bootstrap-select.btn-group[class*="span"] {
+    margin-right: 0;
 }
 .form-search .bootstrap-select.btn-group,
 .form-inline .bootstrap-select.btn-group,
@@ -25,18 +32,29 @@
     border: none;
 }
 
-.bootstrap-select.btn-group.pull-right,
-.bootstrap-select.btn-group[class*="span"].pull-right,
-.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
+html[dir='ltr'] .bootstrap-select.btn-group.pull-right,
+html[dir='ltr'] .bootstrap-select.btn-group[class*="span"].pull-right,
+html[dir='ltr'] .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
     float: right;
 }
-
-.input-append .bootstrap-select.btn-group {
-    margin-left: -1px;
+html[dir='rtl'] .bootstrap-select.btn-group.pull-left,
+html[dir='rtl'] .bootstrap-select.btn-group[class*="span"].pull-left,
+html[dir='rtl'] .row-fluid .bootstrap-select.btn-group[class*="span"].pull-left {
+    float: left;
 }
 
-.input-prepend .bootstrap-select.btn-group {
+html[dir='ltr'] .input-append .bootstrap-select.btn-group {
+    margin-left: -1px;
+}
+html[dir='rtl'] .input-append .bootstrap-select.btn-group {
     margin-right: -1px;
+}
+
+html[dir='ltr'] .input-prepend .bootstrap-select.btn-group {
+    margin-right: -1px;
+}
+html[dir='rtl'] .input-prepend .bootstrap-select.btn-group {
+    margin-left: -1px;
 }
 
 .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
@@ -54,7 +72,12 @@
 
 .bootstrap-select > .btn {
     width: 100%;
+}
+html[dir='ltr'] .bootstrap-select > .btn {
     padding-right: 25px;
+}
+html[dir='rtl'] .bootstrap-select > .btn {
+    padding-left: 25px;
 }
 
 .error .bootstrap-select .btn {
@@ -75,16 +98,27 @@
     display: inline-block;
     overflow: hidden;
     width: 100%;
+}
+html[dir='ltr'] .bootstrap-select.btn-group .btn .filter-option {
     float: left;
     text-align: left;
+}
+html[dir='rtl'] .bootstrap-select.btn-group .btn .filter-option {
+    float: right;
+    text-align: right;
 }
 
 .bootstrap-select.btn-group .btn .caret {
     position: absolute;
     top: 50%;
-    right: 12px;
     margin-top: -2px;
     vertical-align: middle;
+}
+html[dir='ltr'] .bootstrap-select.btn-group .btn .caret {
+    right: 12px;
+}
+html[dir='rtl'] .bootstrap-select.btn-group .btn .caret {
+    left: 12px;
 }
 
 .bootstrap-select.btn-group > .disabled,
@@ -137,7 +171,12 @@
 
 .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     position: relative;
+}
+html[dir='ltr'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
     padding-left: 35px;
+}
+html[dir='rtl'] .bootstrap-select.btn-group .dropdown-menu li > a.opt {
+    padding-right: 35px;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li > a {
@@ -151,20 +190,31 @@
 .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
     position: absolute;
     display: inline-block;
-    right: 15px;
     margin-top: 2.5px;
+}
+html[dir='ltr'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
+    right: 15px;
+}
+html[dir='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
+    left: 15px;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li a i.check-mark {
     display: none;
 }
 
-.bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
+html[dir='ltr'] .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     margin-right: 34px;
 }
+html[dir='rtl'] .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
+    margin-left: 34px;
+}
 
-.bootstrap-select.btn-group .dropdown-menu li small {
+html[dir='ltr'] .bootstrap-select.btn-group .dropdown-menu li small {
     padding-left: 0.5em;
+}
+html[dir='rtl'] .bootstrap-select.btn-group .dropdown-menu li small {
+    padding-right: 0.5em;
 }
 
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) > a:hover small,
@@ -187,8 +237,13 @@
     border-bottom-color: rgba(0, 0, 0, 0.2);
     position: absolute;
     bottom: -4px;
-    left: 9px;
     display: none;
+}
+html[dir='ltr'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
+    left: 9px;
+}
+html[dir='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
+    right: 9px;
 }
 
 .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
@@ -199,8 +254,13 @@
     border-bottom: 6px solid white;
     position: absolute;
     bottom: -4px;
-    left: 10px;
     display: none;
+}
+html[dir='ltr'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
+    left: 10px;
+}
+html[dir='rtl'] .bootstrap-select.show-menu-arrow .dropdown-toggle:after {
+    right: 10px;
 }
 
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:before {
@@ -218,13 +278,21 @@
     border-bottom: 0;
 }
 
-.bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
+html[dir='ltr'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
     right: 12px;
     left: auto;
 }
-.bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
+html[dir='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:before {
+    left: 12px;
+    right: auto;
+}
+html[dir='ltr'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
     right: 13px;
     left: auto;
+}
+html[dir='rtl'] .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle:after {
+    left: 13px;
+    right: auto;
 }
 
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:before,
@@ -258,11 +326,16 @@
 .mobile-device {
     position: absolute;
     top: 0;
-    left: 0;
     display: block !important;
     width: 100%;
     height: 100% !important;
     opacity: 0;
+}
+html[dir='ltr'] .mobile-device {
+    left: 0;
+}
+html[dir='rtl'] .mobile-device {
+    right: 0;
 }
 
 .bootstrap-select.fit-width {
@@ -289,11 +362,16 @@
 }
 
 .bootstrap-select .bs-actionsbox {
-    float: left;
     width: 100%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
+}
+html[dir='ltr'] .bootstrap-select .bs-actionsbox {
+    float: left;
+}
+html[dir='rtl'] .bootstrap-select .bs-actionsbox {
+    float: right;
 }
 
 .bootstrap-select-searchbox + .bs-actionsbox {
