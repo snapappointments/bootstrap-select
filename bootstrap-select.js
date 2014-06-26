@@ -698,8 +698,9 @@
 
             if (value !== undefined) {
                 this.$element.val( value );
-
                 this.$element.change();
+                this.render();
+
                 return this.$element;
             } else {
                 return this.$element.val();
