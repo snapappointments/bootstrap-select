@@ -57,7 +57,7 @@
             this.$newElement = this.createView();
             this.$element.after(this.$newElement);
             this.$menu = this.$newElement.find('> .dropdown-menu');
-            this.$button = this.$newElement.find('> button');
+            this.$button = this.$newElement.find('> .btn');
             this.$searchbox = this.$newElement.find('input');
 
             if (id !== undefined) {
@@ -99,10 +99,11 @@
                             '</div>' : '';
             var drop =
                 '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-                    '<button type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
+                    '<a type="button" class="btn dropdown-toggle selectpicker" data-toggle="dropdown"'+ autofocus +'>' +
                         '<span class="filter-option pull-left"></span>&nbsp;' +
-                        '<span class="caret"></span>' +
-                    '</button>' +
+                        '<span class="'+this.options.iconBase+" "+this.options.arrowIcon+' arrow"></span>' +
+                        '<span class="'+this.options.iconBase+" "+this.options.removeIcon+' hide remove"></span>' +
+                    '</a>' +
                     '<div class="dropdown-menu open">' +
                         header +
                         searchbox +
@@ -459,6 +460,19 @@
         setSelected: function(index, selected) {
             if (this.$lis == null) this.$lis = this.$menu.find('li');
             $(this.$lis[index]).toggleClass('selected', selected);
+
+            if (this.options.removeable == true) {
+              var remove_icon = this.$button.find("."+this.options.removeIcon);
+              var arrow_icon = this.$button.find("."+this.options.arrowIcon);
+              if (this.$element.val() && this.$element.val().length > 0) {
+                remove_icon.removeClass('hide')
+                arrow_icon.addClass('hide')
+              }
+              if (!this.$element.val()) {
+                remove_icon.addClass('hide')
+                arrow_icon.removeClass('hide')
+              }
+            }
         },
 
         setDisabled: function(index, disabled) {
@@ -515,6 +529,16 @@
                         that.$menu.find('.selected a').focus();
                     }, 10);
                 }
+            });
+
+            this.$button.on('click', "."+that.options.removeIcon, function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                that.$button.find("."+that.options.removeIcon).addClass('hide')
+                that.$button.find("."+that.options.arrowIcon).removeClass('hide')
+                that.$menu.find('.selected').removeClass('selected');
+                that.$element.val('');
+                that.$element.change();
             });
 
             this.$menu.on('click', 'li a', function(e) {
@@ -962,6 +986,9 @@
         multipleSeparator: ', ',
         iconBase: 'glyphicon',
         tickIcon: 'glyphicon-ok',
+        removeable: false,
+        arrowIcon: 'caret',
+        removeIcon: 'glyphicon-remove',
         maxOptions: false
     };
 
