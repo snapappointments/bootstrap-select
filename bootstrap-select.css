@@ -159,6 +159,10 @@
     display: none;
 }
 
+.bootstrap-select.btn-group .dropdown-menu li a span.text {
+    display: inline-block;
+}
+
 .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
     margin-right: 34px;
 }
