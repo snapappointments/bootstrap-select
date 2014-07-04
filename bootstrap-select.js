@@ -668,7 +668,7 @@
 
                     if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
                         if (!!no_results.parent().length) no_results.remove();
-                        no_results.html(that.options.noneResultsText + ' "'+ that.$searchbox.val() + '"').show();
+                        no_results.text(that.options.noneResultsText + ' "'+ that.$searchbox.val() + '"').show();
                         that.$menu.find('li').last().after(no_results);
                     } else if (!!no_results.parent().length) {
                         no_results.remove();
