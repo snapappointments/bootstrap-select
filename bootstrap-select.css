@@ -311,3 +311,17 @@
 .bootstrap-select .bs-actionsbox .btn-group button {
     width: 50%;
 }
+
+
+.input-group-addon-bootstrap-select{
+    padding: 0px;
+}
+
+
+.input-group-addon .bootstrap-select > .btn {
+    border: none;
+    background: transparent;
+    border-radius: 0px;
+    box-shadow: none;
+    outline: none!important;
+}
