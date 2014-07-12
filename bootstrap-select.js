@@ -78,6 +78,7 @@
             if (this.options.container) this.selectPosition();
             this.$menu.data('this', this);
             this.$newElement.data('this', this);
+            if (this.options.mobile) this.mobile();
         },
 
         createDropdown: function() {
@@ -962,7 +963,8 @@
         multipleSeparator: ', ',
         iconBase: 'glyphicon',
         tickIcon: 'glyphicon-ok',
-        maxOptions: false
+        maxOptions: false,
+        mobile: false
     };
 
     $(document)
