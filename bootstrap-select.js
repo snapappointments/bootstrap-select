@@ -192,7 +192,7 @@
 
             $.each(_liA, function(i, item) {
                 var hide = item === '<a></a>' ? 'class="hide is-hidden"' : '';
-                _liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
+                _liHtml += '<li ' + hide + '>' + item + '</li>';
             });
 
             //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
