@@ -18,21 +18,21 @@ See a Bootstrap 3.0.2 example [here](http://silviomoreto.github.com/bootstrap-se
 ## Usage
 
 Create your `<select>` with the `.selectpicker` class.
-
-    <select class="selectpicker">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Barbecue</option>
-    </select>
-    
+```html
+<select class="selectpicker">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Barbecue</option>
+</select>
+```
 Enable Bootstrap-Select via JavaScript:
-
-    $('.selectpicker').selectpicker();
-
+```js
+$('.selectpicker').selectpicker();
+```
 Or just
-
-    $('select').selectpicker();
-
+```js
+$('select').selectpicker();
+```
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
 ## CDN
