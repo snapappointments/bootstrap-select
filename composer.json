@@ -1,5 +1,5 @@
 {
-    "name": "bootstrap-select/bootstrap-select", 
+    "name": "bootstrap-select/bootstrap-select",
     "description": "A custom <select> for Bootstrap using button dropdown as replacement",
     "keywords": ["form", "bootstrap", "select", "replacement"],
     "homepage": "https://github.com/silviomoreto/bootstrap-select",
