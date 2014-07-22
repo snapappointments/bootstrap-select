@@ -164,7 +164,7 @@
                         //Get the opt group label
                         var label = $this.parent().attr('label');
                         var labelSubtext = $this.parent().data('subtext') !== undefined ? '<small class="muted text-muted">'+$this.parent().data('subtext')+'</small>' : '';
-                        var labelIcon = $this.parent().data('icon') ? '<i class="'+$this.parent().data('icon')+'"></i> ' : '';
+                        var labelIcon = $this.parent().data('icon') ? '<i class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></i> ' : '';
                         label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
                         if ($this[0].index !== 0) {
