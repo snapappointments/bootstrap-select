@@ -81,7 +81,6 @@
           src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel"
           id="_carbonads_js"></script>
 
-
   <title>Bootstrap-select</title>
 </head>
 
@@ -99,20 +98,22 @@
     <div id="carbonads-container">
       <div class="carbonad">
         <div id="azcarbon"></div>
-        <script type="text/javascript">var z = document.createElement("script");
-        z.type = "text/javascript";
-        z.async = true;
-        z.src = "http://engine.carbonads.com/z/51052/azcarbon_2_1_0_HORIZDARK";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(z, s);</script>
+        <script type="text/javascript">
+          var z = document.createElement("script");
+          z.type = "text/javascript";
+          z.async = true;
+          z.src = "http://engine.carbonads.com/z/51052/azcarbon_2_1_0_HORIZDARK";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(z, s);
+        </script>
       </div>
     </div>
 
     <section id="downloads">
-      <a class="zip_download_link" href="https://github.com/silviomoreto/bootstrap-select/zipball/master">Download this
-        project as a .zip file</a>
-      <a class="tar_download_link" href="https://github.com/silviomoreto/bootstrap-select/tarball/master">Download this
-        project as a tar.gz file</a>
+      <a class="zip_download_link" href="https://github.com/silviomoreto/bootstrap-select/zipball/master">Download
+        this project as a .zip file</a>
+      <a class="tar_download_link" href="https://github.com/silviomoreto/bootstrap-select/tarball/master">Download
+        this project as a tar.gz file</a>
     </section>
   </header>
 </div>
@@ -213,7 +214,6 @@
   &lt;/select>
 </pre>
 
-
 <p id="multiselect">And with multiple selects:</p>
 
 <div class="bs-docs-example">
@@ -270,7 +270,6 @@
     <option>Relish</option>
   </select>
 </div>
-
 <pre class="prettyprint linenums">
   &lt;select class="selectpicker" data-style="btn-primary"&gt;
     ...
@@ -297,7 +296,7 @@
   &lt;/select>
 </pre>
 
-<p id="titles">You can add a search input by passing <code>data-live-search="true"</code> attribute:</p>
+<p id="data-live-search">You can add a search input by passing <code>data-live-search="true"</code> attribute:</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker" data-live-search="true">
@@ -307,7 +306,7 @@
   </select>
 </div>
 
-<p id="titles">You can also use the <code>title</code> attribute as an alternative to display when the option is
+<p id="title">You can also use the <code>title</code> attribute as an alternative to display when the option is
   selected:</p>
 
 <div class="bs-docs-example">
@@ -318,7 +317,7 @@
   </select>
 </div>
 
-<p id="selectTitles">Using the <code>title</code> attribute on a <code>multiple select</code> will show the default
+<p id="titleMultiples">Using the <code>title</code> attribute on a <code>multiple select</code> will show the default
   prompt text when nothing is selected (note: this will not work on single <code>select</code> elements as they must
   have a selected value):</p>
 
@@ -329,9 +328,6 @@
     <option>Relish</option>
   </select>
 </div>
-
-
-
 <pre class="prettyprint linenums">
   &lt;select class="selectpicker" multiple title='Choose one of the following...'&gt;
      &lt;option&gt;Mustard&lt;/option&gt;
@@ -340,19 +336,18 @@
   &lt;/select>
 </pre>
 
-
-<p id="selectTitles">Using the <code>data-selected-text-format</code> attribute on a <code>multiple select</code> you
-  can specify how the selection is displayed.</p>
+<p id="titleMultiplesFormat">Using the <code>data-selected-text-format</code> attribute on a <code>multiple
+  select</code>
+  you can specify how the selection is displayed.</p>
 
 <p>The supported values are:</p>
 <ul>
   <li><code>values</code> A comma delimted list of selected values. (default)</li>
-  <li><code>count</code> If one item is selected, then the value is shown, if more than one is selected then the number
-    of selected items is displayed, eg <span class="label">2 of 6 selected</span></li>
+  <li><code>count</code> If one item is selected, then the value is shown, if more than one is selected then the
+    number of selected items is displayed, eg <span class="label">2 of 6 selected</span></li>
   <li><code>count > x</code> Where X is the number of items selected when the display format changes from
     <code>values</code> to <code>count</code></li>
 </ul>
-
 <div class="bs-docs-example">
   <select class="selectpicker" multiple data-selected-text-format="count">
     <option>Mustard</option>
@@ -360,9 +355,6 @@
     <option>Relish</option>
   </select>
 </div>
-
-
-
 <pre class="prettyprint linenums">
   &lt;select class="selectpicker" multiple data-selected-text-format="count"&gt;
      &lt;option&gt;Mustard&lt;/option&gt;
@@ -379,9 +371,6 @@
     <option>Onions</option>
   </select>
 </div>
-
-
-
 <pre class="prettyprint linenums">
   &lt;select class="selectpicker" multiple data-selected-text-format="count&gt3"&gt;
      &lt;option&gt;Mustard&lt;/option&gt;
@@ -391,8 +380,7 @@
   &lt;/select>
 </pre>
 
-
-<p id="selectTitles">You can also show the tick icon on single <code>select</code> with the <code>show-tick</code>
+<p id="show-tick">You can also show the tick icon on single <code>select</code> with the <code>show-tick</code>
   class:</p>
 
 <div class="bs-docs-example">
@@ -413,7 +401,7 @@
   &lt;/select>
 </pre>
 
-<p id="selectTitles">The bootstrap menu arrow can be added with the <code>show-menu-arrow</code> class:</p>
+<p id="show-menu-arrow">The bootstrap menu arrow can be added with the <code>show-menu-arrow</code> class:</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker show-menu-arrow">
@@ -509,7 +497,7 @@
   &lt;/div&gt;
 </pre>
 
-<p id="datawidth">Alternatively, use the <code>data-width</code> attribute to set the width of the select. Set <code>data-width</code>
+<p id="data-width">Alternatively, use the <code>data-width</code> attribute to set the width of the select. Set <code>data-width</code>
   to <code>'auto'</code> to automatically adjust the width of the select to its widest option. An exact value can also
   be specified, e.g., <code>300px</code> or <code>50%</code>.</p>
 
@@ -626,8 +614,8 @@
 
 <p id="size">The <code>size</code> option is set to <code>'auto'</code> by default. When <code>size</code> is set to
   <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off.
-  Set <code>size</code> to <code>false</code> to always show all items. The size of the menu can also be specifed using
-  the <code>data-size</code> attribute.</p>
+  Set <code>size</code> to <code>false</code> to always show all items. The size of the menu can also be specifed
+  using the <code>data-size</code> attribute.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -693,7 +681,7 @@ Note: this is the same as:<br>
 
 <p id="scrollYou">You can use the plugin <a href="https://github.com/silviomoreto/scrollYou"
                                             target="_blank">scrollYou</a> cross-browser native scroll. The example below
-  behave like mountain lion.</p>
+  behaves like mountain lion.</p>
 
 <div class="bs-docs-example">
   <select class="selectpicker scrollMe" data-size="5">
@@ -902,7 +890,6 @@ Note: this is the same as:<br>
     ...
   &lt;/select>
 </pre>
-
 </section>
 
 <section id="content_options">
@@ -924,14 +911,15 @@ Note: this is the same as:<br>
     <td>container</td>
     <td>string | false</td>
     <td>false</td>
-    <td>appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code></td>
+    <td>appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code>
+    </td>
   </tr>
   <tr>
     <td>countSelectedText</td>
     <td>string</td>
     <td>'{0} of {1} selected'</td>
-    <td>sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>.
-      {0} is the selected amount. {1} is total available for selection.
+    <td>sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count >
+      #</code>. {0} is the selected amount. {1} is total available for selection.
     </td>
   </tr>
   <tr>
@@ -939,8 +927,8 @@ Note: this is the same as:<br>
     <td>boolean</td>
     <td>true</td>
     <td>checks to see which has more room, above or below. If the dropup has enough room to fully open normally, but
-      there is more room above, the dropup still opens normally. Otherwise, it becomes a dropup. If dropupAuto is set to
-      false, dropups must be called manually.
+      there is more room above, the dropup still opens normally. Otherwise, it becomes a dropup. If dropupAuto is
+      set to false, dropups must be called manually.
     </td>
   </tr>
   <tr>
@@ -960,7 +948,7 @@ Note: this is the same as:<br>
     <td>'values' | 'count' | 'count > #' (where # is an integer)</td>
     <td>null</td>
     <td>specifies how the selection is displayed with a multiple select (see <a
-        href="http://silviomoreto.github.io/bootstrap-select/#selectTitles">here</a></td>
+        href="http://silviomoreto.github.io/bootstrap-select/#titleMultiplesFormat">here</a></td>
   </tr>
   <tr>
     <td>size</td>
@@ -975,15 +963,15 @@ Note: this is the same as:<br>
     <td>showSubtext</td>
     <td>boolean</td>
     <td>false</td>
-    <td>subtext associated with a selected option will be displayed in the button <code>data-show-subtext: true</code>
-    </td>
+    <td>subtext associated with a selected option will be displayed in the button <code>data-show-subtext:
+      true</code></td>
   </tr>
   <tr>
     <td>showIcon</td>
     <td>boolean</td>
     <td>true</td>
-    <td>Display icon(s) associated with selected option(s) in the button. If false, icons will not be displayed in the
-      button.
+    <td>Display icon(s) associated with selected option(s) in the button. If false, icons will not be displayed in
+      the button.
     </td>
   </tr>
   <tr>
@@ -1179,7 +1167,6 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 <pre class="prettyprint linenums">
    $('.selectpicker').selectpicker('show');
 </pre>
-
 </section>
 </section>
 </div>
