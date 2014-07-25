@@ -24,6 +24,6 @@
     "docs": "https://github.com/silviomoreto/bootstrap-select",
     "download": "https://github.com/silviomoreto/bootstrap-select/releases",
     "dependencies": {
-        "jquery": ">=1.7"
+        "jquery": ">=1.8"
     }
 }

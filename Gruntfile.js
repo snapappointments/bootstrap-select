@@ -1,0 +1,179 @@
+/*jshint node:true*/
+module.exports = function (grunt) {
+
+    // Project configuration.
+    grunt.initConfig({
+
+        // Metadata.
+        pkg: grunt.file.readJSON('package.json'),
+        banner: '/*!\n' +
+            ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+            ' *\n' +
+            ' * Copyright 2013-<%= grunt.template.today("yyyy") %> bootstrap-select\n' +
+            ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+            ' */\n',
+
+        // Task configuration.
+
+        clean: {
+            css: 'dist/css',
+            js: 'dist/js'
+        },
+
+        jshint: {
+            options: {
+                jshintrc: 'js/.jshintrc'
+            },
+            gruntfile: {
+                options: {
+                    "node": true
+                },
+                src: 'Gruntfile.js'
+            },
+            main: {
+                src: 'js/*.js'
+            },
+            i18n: {
+                src: 'js/i18n/*.js'
+            }
+        },
+
+        concat: {
+            options: {
+                banner: '<%= banner %>',
+                stripBanners: true
+            },
+            main: {
+                src: '<%= jshint.main.src %>',
+                dest: 'dist/js/<%= pkg.name %>.js'
+            },
+            i18n: {
+                files: [
+                    {
+                        expand: true,
+                        src: '<%= jshint.i18n.src %>',
+                        dest: 'dist/'
+                    }
+                ]
+            }
+        },
+
+        uglify: {
+            options: {
+                preserveComments: 'some'
+            },
+            main: {
+                src: '<%= concat.main.dest %>',
+                dest: 'dist/js/<%= pkg.name %>.min.js'
+            },
+            i18n: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'dist/',
+                        src: '<%= jshint.i18n.src %>',
+                        dest: 'dist/',
+                        ext: '.min.js'
+                    }
+                ]
+            }
+        },
+
+        //qunit: {
+        //    files: ['test/**/*.html']
+        //},
+
+        less: {
+            options: {
+                strictMath: true,
+                sourceMap: true,
+                outputSourceFiles: true,
+                sourceMapURL: '<%= pkg.name %>.css.map',
+                sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+            },
+            css: {
+                src: 'less/bootstrap-select.less',
+                dest: 'dist/css/<%= pkg.name %>.css'
+            }
+        },
+
+        usebanner: {
+            css: {
+                options: {
+                    position: 'top',
+                    banner: '<%= banner %>'
+                },
+                src: '<%= less.css.dest %>'
+            }
+        },
+
+        cssmin: {
+            options: {
+                compatibility: 'ie8',
+                keepSpecialComments: '*',
+                noAdvanced: true
+            },
+            css: {
+                src: '<%= less.css.dest %>',
+                dest: 'dist/css/<%= pkg.name %>.min.css'
+            }
+        },
+
+        csslint: {
+            options: {
+                "adjoining-classes": false,
+                "box-sizing": false,
+                "box-model": false,
+                "compatible-vendor-prefixes": false,
+                "floats": false,
+                "font-sizes": false,
+                "gradients": false,
+                "important": false,
+                "known-properties": false,
+                "outline-none": false,
+                "qualified-headings": false,
+                "regex-selectors": false,
+                "shorthand": false,
+                "text-indent": false,
+                "unique-headings": false,
+                "universal-selector": false,
+                "unqualified-attributes": false,
+                "overqualified-elements": false
+            },
+            css: {
+                src: '<%= less.css.dest %>'
+            }
+        },
+
+        watch: {
+            gruntfile: {
+                files: '<%= jshint.gruntfile.src %>',
+                tasks: 'jshint:gruntfile'
+            },
+            js: {
+                files: ['<%= jshint.main.src %>', '<%= jshint.i18n.src %>'],
+                tasks: 'dist-js'
+            },
+            less: {
+                files: 'less/*.less',
+                tasks: 'dist-css'
+            }
+        }
+    });
+
+    // These plugins provide necessary tasks.
+    require('load-grunt-tasks')(grunt);
+
+    // CSS distribution
+    grunt.registerTask('dist-css', ['less', 'usebanner', 'cssmin']);
+
+    // JS distribution
+    grunt.registerTask('dist-js', ['concat', 'uglify']);
+
+    // Full distribution
+    grunt.registerTask('dist', ['clean', 'dist-css', 'dist-js']);
+
+    // Default task.
+    grunt.registerTask('default', ['dist']);
+
+};
