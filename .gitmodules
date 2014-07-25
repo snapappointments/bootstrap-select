@@ -1,4 +1,0 @@
-[submodule "_site"]
-	path = _site
-	url = git://github.com/silviomoreto/bootstrap-select.git
-	branch = gh-pages
