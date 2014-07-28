@@ -899,6 +899,9 @@
         destroy: function() {
             this.$newElement.remove();
             this.$element.remove();
+            if (this.$menu) {
+                this.$menu.remove();
+            }
         }
     };
 
