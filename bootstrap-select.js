@@ -251,7 +251,7 @@
                 var max = this.options.selectedTextFormat.split('>');
                 var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
                 if ( (max.length>1 && selectedItems.length > max[1]) || (max.length==1 && selectedItems.length>=2)) {
-                    title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"]):not([data-hidden="true"])'+notDisabled).length);
+                    title = this.options.countSelectedText.replace('{0}', selectedItems.length).replace('{1}', this.$element.find('option:not([data-divider="true"], [data-hidden="true"])'+notDisabled).length);
                 }
              }
 
@@ -358,7 +358,7 @@
                 $(window).off('resize.getSize').on('resize.getSize', getSize);
                 $(window).off('scroll.getSize').on('scroll.getSize', getSize);
             } else if (this.options.size && this.options.size != 'auto' && menu.find('li'+notDisabled).length > this.options.size) {
-                var optIndex = menu.find('li'+notDisabled+' > *').filter(':not(.div-contain)').slice(0,this.options.size).last().parent().index();
+                var optIndex = menu.find('li'+notDisabled+' > *').not('.div-contain').slice(0,this.options.size).last().parent().index();
                 var divLength = menu.find('li').slice(0,optIndex + 1).find('.div-contain').length;
                 menuHeight = liHeight*this.options.size + divLength*divHeight + menuPadding;
                 if (that.options.dropupAuto) {
@@ -711,14 +711,14 @@
         selectAll: function() {
             if (this.$lis == null) this.$lis = this.$menu.find('li');
             this.$element.find('option:enabled').prop('selected', true);
-            $(this.$lis).filter(':not(.disabled)').addClass('selected');
+            $(this.$lis).not('.disabled').addClass('selected');
             this.render(false);
         },
 
         deselectAll: function() {
             if (this.$lis == null) this.$lis = this.$menu.find('li');
             this.$element.find('option:enabled').prop('selected', false);
-            $(this.$lis).filter(':not(.disabled)').removeClass('selected');
+            $(this.$lis).not('.disabled').removeClass('selected');
             this.render(false);
         },
 
@@ -762,7 +762,7 @@
                 if (!that.options.container) {
                     that.setSize();
                     that.$menu.parent().addClass('open');
-                    isActive = that.$menu.parent().hasClass('open');
+                    isActive = true;
                 } else {
                     that.$newElement.trigger('click');
                 }

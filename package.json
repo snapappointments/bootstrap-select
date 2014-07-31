@@ -1,7 +1,7 @@
 {
-  "name": "bootstrap-select",
+	"name": "bootstrap-select",
 	"title": "bootstrap-select",
-    "filename": "bootstrap-select.js",
+	"filename": "bootstrap-select.js",
 	"description": "A custom <select> for Bootstrap using button dropdown as replacement",
 	"version": "1.5.4",
 	"homepage": "http://silviomoreto.github.io/bootstrap-select/",

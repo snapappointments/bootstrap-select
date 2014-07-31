@@ -6,7 +6,7 @@ A custom select / multiselect for Bootstrap using button dropdown, designed to b
 ## Demo and Documentation
 
 See a Bootstrap 2.3.2 example [here](http://silviomoreto.github.com/bootstrap-select/). <br/>
-See a Bootstrap 3.0.2 example [here](http://silviomoreto.github.com/bootstrap-select/3) (work-in-progress).
+See a Bootstrap 3.0.3 example [here](http://silviomoreto.github.com/bootstrap-select/3) (work-in-progress).
 
 ## Authors
 
@@ -37,8 +37,8 @@ Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) f
 
 ## CDN
 
-* https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.js
-* https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.3.5/bootstrap-select.min.css
+* https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.js
+* https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css
 
 ## Bugs and feature requests
 
