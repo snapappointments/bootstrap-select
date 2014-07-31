@@ -1,8 +1,9 @@
 {
   "name": "bootstrap-select",
   "main": [
-    "bootstrap-select.css",
-    "bootstrap-select.js"
+    "less/bootstrap-select.less",
+    "dist/css/bootstrap-select.css",
+    "dist/js/bootstrap-select.js"
   ],
   "version": "1.5.4",
   "homepage": "https://github.com/silviomoreto/bootstrap-select",
@@ -16,7 +17,7 @@
     "replacement"
   ],
   "dependencies": {
-    "jquery": ">=1.7"
+    "jquery": ">=1.8"
   },
   "license": "MIT",
   "ignore": [

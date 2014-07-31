@@ -1,2 +1,7 @@
+# OS or Editor folders
 .DS_Store
-node_modules/
+.idea
+
+# Folders to ignore
+node_modules
+bower_components
