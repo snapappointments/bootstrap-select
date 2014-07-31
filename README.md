@@ -12,8 +12,9 @@ See a Bootstrap 3.0.3 example [here](http://silviomoreto.github.com/bootstrap-se
 
 [Silvio Moreto](http://github.com/silviomoreto),
 [Ana Carolina](http://github.com/anacarolinats),
-[caseyjhol](https://github.com/caseyjhol), and
-[Matt Bryson](https://github.com/mattbryson).
+[caseyjhol](https://github.com/caseyjhol),
+[Matt Bryson](https://github.com/mattbryson), and
+[t0xicCode](https://github.com/t0xicCode).
 
 ## Usage
 
