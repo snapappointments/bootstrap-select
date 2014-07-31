@@ -542,6 +542,7 @@
           else {
             $option.prop('selected', !state);
             that.setSelected(clickedIndex, !state);
+            $(this).blur();
 
             if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
               var maxReached = maxOptions < $options.filter(':selected').length,
@@ -964,6 +965,7 @@
   $(document)
       .data('keycount', 0)
       .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown)
+      .on('click', '.bootstrap-select a', function() {$(this).blur();})
       .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', function (e) {
         e.stopPropagation();
       });

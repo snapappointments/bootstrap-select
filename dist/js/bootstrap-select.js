@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.5.4 (http://silviomoreto.github.io/bootstrap-select/)
+ * Bootstrap-select dev (http://silviomoreto.github.io/bootstrap-select/)
  *
  * Copyright 2013-2014 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license)
@@ -548,6 +548,7 @@
           else {
             $option.prop('selected', !state);
             that.setSelected(clickedIndex, !state);
+            $(this).blur();
 
             if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
               var maxReached = maxOptions < $options.filter(':selected').length,
@@ -970,6 +971,7 @@
   $(document)
       .data('keycount', 0)
       .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown)
+      .on('click', '.bootstrap-select a', function() {$(this).blur();})
       .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', function (e) {
         e.stopPropagation();
       });

@@ -7,7 +7,7 @@ module.exports = function (grunt) {
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
-        ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+        ' * Bootstrap-select <%= pkg.version %> (<%= pkg.homepage %>)\n' +
         ' *\n' +
         ' * Copyright 2013-<%= grunt.template.today("yyyy") %> bootstrap-select\n' +
         ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
