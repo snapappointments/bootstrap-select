@@ -255,6 +255,10 @@
 
       this.options.title = this.$element.attr('title');
 
+      if (this.options.selectedTextFormat == 'static') {
+        title = this.options.title;
+      }
+
       //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
       if (!title) {
         title = this.options.title !== undefined ? this.options.title : this.options.noneSelectedText;
@@ -944,6 +948,7 @@
     });
 
     if (typeof value !== 'undefined') {
+      //noinspection JSUnusedAssignment
       return value;
     } else {
       return chain;
