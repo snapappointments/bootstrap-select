@@ -12,7 +12,7 @@
     noneSelectedText: 'Aucune(s) sélection(s)',
     noneResultsText: 'Aucun(s) résultat(s)',
     countSelectedText: '{0} sur {1} sélection(s)',
-    maxOptionsText: ['Limite atteinte ({n} {var} max)', 'Limite du groupe atteinte ({n} {var} max)', ['položek', 'položka']],
+    maxOptionsText: ['Limite atteinte ({n} {var} max)', 'Limite du groupe atteinte ({n} {var} max)', ['éléments', 'élément']],
     width: false,
     container: false,
     hideDisabled: false,
