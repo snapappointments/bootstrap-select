@@ -4,7 +4,7 @@
  * Copyright 2013-2014 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/README.md#copyright-and-license)
  */
-!function ($) {
+(function ($) {
 
   'use strict';
 
@@ -17,13 +17,12 @@
       e.stopPropagation();
       e.preventDefault();
     }
+
     this.$element = $(element);
     this.$newElement = null;
     this.$button = null;
     this.$menu = null;
     this.$lis = null;
-
-    //Merge defaults, options and data-attributes to make our options
     this.options = options;
 
     //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
@@ -38,6 +37,10 @@
     this.setStyle = Selectpicker.prototype.setStyle;
     this.selectAll = Selectpicker.prototype.selectAll;
     this.deselectAll = Selectpicker.prototype.deselectAll;
+    this.destroy = Selectpicker.prototype.destroy;
+    this.show = Selectpicker.prototype.show;
+    this.hide = Selectpicker.prototype.hide;
+
     this.init();
   };
 
@@ -209,6 +212,9 @@
           '</a>';
     },
 
+    /**
+     * @param [updateLi]
+     */
     render: function (updateLi) {
       var that = this;
 
@@ -264,6 +270,10 @@
       this.$newElement.find('.filter-option').html(title);
     },
 
+    /**
+     * @param [style]
+     * @param [status]
+     */
     setStyle: function (style, status) {
       if (this.$element.attr('class')) {
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|validate\[.*\]/gi, ''));
@@ -321,6 +331,8 @@
           selectOffsetTop,
           selectOffsetBot,
           posVert = function () {
+            //JQuery defines a scrollTop function, but in pure JS it's a property
+            //noinspection JSValidateTypes
             selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
             selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
           };
@@ -771,13 +783,13 @@
       }
 
       if (that.options.liveSearch) {
-        if (/(^9$|27)/.test(e.keyCode) && isActive && that.$menu.find('.active').length === 0) {
+        if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && that.$menu.find('.active').length === 0) {
           e.preventDefault();
           that.$menu.parent().removeClass('open');
           that.$button.focus();
         }
         $items = $('[role=menu] li:not(.divider):visible', $parent);
-        if (!$this.val() && !/(38|40)/.test(e.keyCode)) {
+        if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
             $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
           }
@@ -786,7 +798,7 @@
 
       if (!$items.length) return;
 
-      if (/(38|40)/.test(e.keyCode)) {
+      if (/(38|40)/.test(e.keyCode.toString(10))) {
 
         index = $items.index($items.filter(':focus'));
         first = $items.parent(':not(.disabled):visible').first().index();
@@ -871,18 +883,18 @@
       }
 
       // Select focused option if "Enter", "Spacebar", "Tab" are pressed inside the menu.
-      if (/(13|32|^9$)/.test(e.keyCode) && isActive) {
-        if (!/(32)/.test(e.keyCode)) e.preventDefault();
+      if (/(13|32|^9$)/.test(e.keyCode.toString(10)) && isActive) {
+        if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
           $(':focus').click();
-        } else if (!/(32)/.test(e.keyCode)) {
+        } else if (!/(32)/.test(e.keyCode.toString(10))) {
           that.$menu.find('.active a').click();
           $this.focus();
         }
         $(document).data('keycount', 0);
       }
 
-      if ((/(^9$|27)/.test(e.keyCode) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode) && !isActive)) {
+      if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) {
         that.$menu.parent().removeClass('open');
         that.$button.focus();
       }
@@ -914,7 +926,7 @@
             options = typeof option == 'object' && option;
 
         if (!data) {
-          $this.data('selectpicker', (data = new Selectpicker(this, $.extend({}, $.fn.selectpicker.defaults, options, $this.data()), event)));
+          $this.data('selectpicker', (data = new Selectpicker(this, $.extend({}, $.fn.selectpicker.defaults, $this.data(), options), event)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
@@ -977,4 +989,4 @@
         e.stopPropagation();
       });
 
-}(jQuery);
+})(jQuery);
