@@ -24,7 +24,7 @@
     this.$lis = null;
 
     //Merge defaults, options and data-attributes to make our options
-    this.options = $.extend({}, $.fn.selectpicker.defaults, this.$element.data(), typeof options == 'object' && options);
+    this.options = options;
 
     //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
     if (this.options.title === null) {
@@ -914,10 +914,12 @@
             options = typeof option == 'object' && option;
 
         if (!data) {
-          $this.data('selectpicker', (data = new Selectpicker(this, options, event)));
+          $this.data('selectpicker', (data = new Selectpicker(this, $.extend({}, $.fn.selectpicker.defaults, options, $this.data()), event)));
         } else if (options) {
           for (var i in options) {
-            data.options[i] = options[i];
+            if (options.hasOwnProperty(i)) {
+              data.options[i] = options[i];
+            }
           }
         }
 
@@ -935,7 +937,7 @@
       }
     });
 
-    if (value !== undefined) {
+    if (typeof value !== 'undefined') {
       return value;
     } else {
       return chain;
@@ -971,7 +973,6 @@
   $(document)
       .data('keycount', 0)
       .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', Selectpicker.prototype.keydown)
-      .on('click', '.bootstrap-select a', function() {$(this).blur();})
       .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bootstrap-select-searchbox input', function (e) {
         e.stopPropagation();
       });
