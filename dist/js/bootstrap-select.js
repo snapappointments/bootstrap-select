@@ -961,6 +961,8 @@
     }
   };
 
+  $.fn.selectpicker.Constructor = Selectpicker;
+
   $.fn.selectpicker.defaults = {
     style: 'btn-default',
     size: 'auto',
