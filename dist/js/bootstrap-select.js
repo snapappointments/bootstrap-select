@@ -575,33 +575,40 @@
                   $notify = $('<div class="notify"></div>');
 
               if ((maxOptions && maxReached) || (maxOptionsGrp && maxReachedGrp)) {
-                // If {var} is set in array, replace it
-                if (maxOptionsArr[2]) {
-                  maxTxt = maxTxt.replace('{var}', maxOptionsArr[2][maxOptions > 1 ? 0 : 1]);
-                  maxTxtGrp = maxTxtGrp.replace('{var}', maxOptionsArr[2][maxOptionsGrp > 1 ? 0 : 1]);
+                if (maxOptions && maxOptions == 1) {
+                  $options.prop('selected', false);
+                  $option.prop('selected', !state);
+                  that.$menu.find('.selected').removeClass('selected');
+                  that.setSelected(clickedIndex, !state);
+                } else {
+                  // If {var} is set in array, replace it
+                  if (maxOptionsArr[2]) {
+                    maxTxt = maxTxt.replace('{var}', maxOptionsArr[2][maxOptions > 1 ? 0 : 1]);
+                    maxTxtGrp = maxTxtGrp.replace('{var}', maxOptionsArr[2][maxOptionsGrp > 1 ? 0 : 1]);
+                  }
+
+                  $option.prop('selected', false);
+
+                  that.$menu.append($notify);
+
+                  if (maxOptions && maxReached) {
+                    $notify.append($('<div>' + maxTxt + '</div>'));
+                    that.$element.trigger('maxReached.bs.select');
+                  }
+
+                  if (maxOptionsGrp && maxReachedGrp) {
+                    $notify.append($('<div>' + maxTxtGrp + '</div>'));
+                    that.$element.trigger('maxReachedGrp.bs.select');
+                  }
+
+                  setTimeout(function () {
+                    that.setSelected(clickedIndex, false);
+                  }, 10);
+
+                  $notify.delay(750).fadeOut(300, function () {
+                    $(this).remove();
+                  });
                 }
-
-                $option.prop('selected', false);
-
-                that.$menu.append($notify);
-
-                if (maxOptions && maxReached) {
-                  $notify.append($('<div>' + maxTxt + '</div>'));
-                  that.$element.trigger('maxReached.bs.select');
-                }
-
-                if (maxOptionsGrp && maxReachedGrp) {
-                  $notify.append($('<div>' + maxTxtGrp + '</div>'));
-                  that.$element.trigger('maxReachedGrp.bs.select');
-                }
-
-                setTimeout(function () {
-                  that.setSelected(clickedIndex, false);
-                }, 10);
-
-                $notify.delay(750).fadeOut(300, function () {
-                  $(this).remove();
-                });
               }
             }
           }
