@@ -139,7 +139,8 @@
     createLi: function () {
       var that = this,
           _liA = [],
-          _liHtml = '';
+          _liHtml = '',
+          optID = 0;
 
       this.$element.find('option').each(function () {
         var $this = $(this);
@@ -169,19 +170,21 @@
             var labelIcon = $this.parent().data('icon') ? '<i class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></i> ' : '';
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
+            optID += 1;
+
             if ($this[0].index !== 0) {
               _liA.push(
                   '<div class="div-contain"><div class="divider"></div></div>' +
                       '<dt>' + label + '</dt>' +
-                      that.createA(text, 'opt ' + optionClass, inline)
+                      that.createA(text, 'opt ' + optionClass, inline, optID)
               );
             } else {
               _liA.push(
                   '<dt>' + label + '</dt>' +
-                      that.createA(text, 'opt ' + optionClass, inline));
+                      that.createA(text, 'opt ' + optionClass, inline, optID));
             }
           } else {
-            _liA.push(that.createA(text, 'opt ' + optionClass, inline));
+            _liA.push(that.createA(text, 'opt ' + optionClass, inline, optID));
           }
         } else if ($this.data('divider') === true) {
           _liA.push('<div class="div-contain"><div class="divider"></div></div>');
@@ -205,8 +208,17 @@
       return $(_liHtml);
     },
 
-    createA: function (text, classes, inline) {
-      return '<a tabindex="0" class="' + classes + '" style="' + inline + '">' +
+    /**
+     *
+     * @param text
+     * @param classes
+     * @param inline
+     * @param [optgroup]
+     * @returns {string}
+     */
+    createA: function (text, classes, inline, optgroup) {
+      return '<a tabindex="0" class="' + classes + '" style="' + inline + '"' +
+          (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') + '>' +
           text +
           '<i class="' + this.options.iconBase + ' ' + this.options.tickIcon + ' icon-ok check-mark"></i>' +
           '</a>';
@@ -577,9 +589,17 @@
               if ((maxOptions && maxReached) || (maxOptionsGrp && maxReachedGrp)) {
                 if (maxOptions && maxOptions == 1) {
                   $options.prop('selected', false);
-                  $option.prop('selected', !state);
+                  $option.prop('selected', true);
                   that.$menu.find('.selected').removeClass('selected');
-                  that.setSelected(clickedIndex, !state);
+                  that.setSelected(clickedIndex, true);
+                } else if (maxOptionsGrp && maxOptionsGrp == 1) {
+                  $optgroup.find('option:selected').prop('selected', false);
+                  $option.prop('selected', true);
+                  var optgroupID = $(this).data('optgroup');
+
+                  that.$menu.find('.selected').has('a[data-optgroup="'+optgroupID+'"]').removeClass('selected');
+
+                  that.setSelected(clickedIndex, true);
                 } else {
                   // If {var} is set in array, replace it
                   if (maxOptionsArr[2]) {
