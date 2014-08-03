@@ -38,6 +38,8 @@
     this.init();
   };
 
+  Selectpicker.VERSION = '1.5.4';
+
   Selectpicker.prototype = {
 
     constructor: Selectpicker,
