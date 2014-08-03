@@ -57,7 +57,8 @@
     "grunt-contrib-clean": "~0.5.0",
     "load-grunt-tasks": "~0.6.0",
     "grunt-banner": "~0.2.3",
-    "grunt-contrib-cssmin": "~0.10.0"
+    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-sed": "~0.1.1"
   },
   "keywords": [
     "form",

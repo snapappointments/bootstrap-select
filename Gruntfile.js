@@ -1,6 +1,11 @@
 /*jshint node:true*/
 module.exports = function (grunt) {
 
+  // From TWBS
+  RegExp.quote = function (string) {
+    return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+  };
+
   // Project configuration.
   grunt.initConfig({
 
@@ -145,6 +150,25 @@ module.exports = function (grunt) {
       }
     },
 
+    sed: {
+      versionNumber: {
+        path: [
+          "less",
+          "js",
+          "bootstrap-select.jquery.json",
+          "bower.json",
+          "composer.json",
+          "package.json"
+        ],
+        pattern: (function () {
+          var old = grunt.option('old');
+          return old ? RegExp.quote(old) : old;
+        })(),
+        replacement: grunt.option('new'),
+        recursive: true
+      }
+    },
+
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -163,6 +187,11 @@ module.exports = function (grunt) {
 
   // These plugins provide necessary tasks.
   require('load-grunt-tasks')(grunt);
+
+  // Version numbering task.
+  // grunt change-version-number --old=A.B.C --new=X.Y.Z
+  // This can be overzealous, so its changes should always be manually reviewed!
+  grunt.registerTask('change-version-number', 'sed');
 
   // CSS distribution
   grunt.registerTask('dist-css', ['less', 'usebanner', 'cssmin']);
