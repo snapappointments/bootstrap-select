@@ -171,9 +171,9 @@ module.exports = function (grunt) {
   grunt.registerTask('dist-js', ['concat', 'uglify']);
 
   // Full distribution
-  grunt.registerTask('dist', ['clean', 'dist-css', 'dist-js']);
+  grunt.registerTask('dist', ['dist-css', 'dist-js']);
 
   // Default task.
-  grunt.registerTask('default', ['dist']);
+  grunt.registerTask('default', ['clean', 'dist']);
 
 };
