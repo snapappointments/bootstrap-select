@@ -49,6 +49,8 @@
       this.$newElement = this.createView();
       this.$element.after(this.$newElement);
       this.$menu = this.$newElement.find('> .dropdown-menu');
+      if (this.options.dropdownAlignRight)
+          this.$menu.addClass('pull-right');
       this.$button = this.$newElement.find('> button');
       this.$searchbox = this.$newElement.find('input');
 
@@ -966,7 +968,8 @@
     tickIcon: 'glyphicon-ok',
     maxOptions: false,
     mobile: false,
-    renderItem: null
+    renderItem: null,
+    dropdownAlignRight: false
   };
 
   $(document)
