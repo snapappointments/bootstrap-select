@@ -150,6 +150,9 @@
           text = icon + '<span class="text">' + text + subtext + '</span>';
         }
 
+        if ($.isFunction(that.options.renderItem))
+          text = that.options.renderItem($this, text);
+
         if (that.options.hideDisabled && ($this.is(':disabled') || $this.parent().is(':disabled'))) {
           _liA.push('<a style="min-height: 0; padding: 0"></a>');
         } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
@@ -219,7 +222,7 @@
       var selectedItems = this.$element.find('option:selected').map(function () {
         var $this = $(this);
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
-        var subtext;
+        var text, subtext;
         if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
           subtext = ' <small class="muted text-muted">' + $this.data('subtext') + '</small>';
         } else {
@@ -230,7 +233,10 @@
         } else if ($this.attr('title') !== undefined) {
           return $this.attr('title');
         } else {
-          return icon + $this.html() + subtext;
+          text = icon + $this.html() + subtext;
+          if ($.isFunction(that.options.renderItem))
+            text = that.options.renderItem($this, text);
+          return text;
         }
       }).toArray();
 
@@ -959,7 +965,8 @@
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
     maxOptions: false,
-    mobile: false
+    mobile: false,
+    renderItem: null
   };
 
   $(document)
