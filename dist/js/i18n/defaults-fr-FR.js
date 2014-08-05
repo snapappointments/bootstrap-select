@@ -10,10 +10,10 @@
     size: 'auto',
     title: null,
     selectedTextFormat: 'values',
-    noneSelectedText: 'Niets geselecteerd',
-    noneResultsText: 'Geen resultaten gevonden voor',
-    countSelectedText: '{0} van {1} geselecteerd',
-    maxOptionsText: ['Limiet bereikt ({n} {var} max)', 'Groep limiet bereikt ({n} {var} max)', ['items', 'item']],
+    noneSelectedText: 'Aucune s&eacute;lection',
+    noneResultsText: 'Aucun r&eacute;sultat',
+    countSelectedText: '{0} sur {1} s&eacute;lection(s)',
+    maxOptionsText: ['Limite atteinte ({n} {var} max)', 'Limite du groupe atteinte ({n} {var} max)', ['&eacute;l&eacute;ments', '&eacute;l&eacute;ment']],
     width: false,
     container: false,
     hideDisabled: false,
@@ -23,10 +23,8 @@
     dropupAuto: true,
     header: false,
     liveSearch: false,
-    actionsBox: false,
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
-    tickIcon: 'glyphicon-ok',
-    maxOptions: false
+    tickIcon: 'glyphicon-ok'
   };
 }(jQuery));
