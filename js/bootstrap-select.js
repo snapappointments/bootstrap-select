@@ -41,7 +41,7 @@
 
   Selectpicker.VERSION = '1.5.4';
 
-  // this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
+  // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
     style: 'btn-default',
     size: 'auto',
