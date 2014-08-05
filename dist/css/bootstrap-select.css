@@ -251,8 +251,10 @@
 .bootstrap-select-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
 }
-.bootstrap-select-searchbox input {
+.bootstrap-select-searchbox input,
+.bootstrap-select-searchbox .form-control {
   margin-bottom: 0;
+  width: 100%;
 }
 .mobile-device {
   position: absolute;
