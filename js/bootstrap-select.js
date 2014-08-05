@@ -54,6 +54,8 @@
       this.$newElement = this.createView();
       this.$element.after(this.$newElement);
       this.$menu = this.$newElement.find('> .dropdown-menu');
+      if (this.options.dropdownAlignRight)
+          this.$menu.addClass('pull-right');
       this.$button = this.$newElement.find('> button');
       this.$searchbox = this.$newElement.find('input');
 
@@ -239,7 +241,7 @@
       var selectedItems = this.$element.find('option:selected').map(function () {
         var $this = $(this);
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
-        var subtext;
+        var text, subtext;
         if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
           subtext = ' <small class="muted text-muted">' + $this.data('subtext') + '</small>';
         } else {
@@ -1009,7 +1011,8 @@
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
     maxOptions: false,
-    mobile: false
+    mobile: false,
+    dropdownAlignRight: false
   };
 
   $(document)
