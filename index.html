@@ -4,7 +4,8 @@
 <head>
   <meta charset='utf-8'/>
   <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
-  <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown."/>
+  <meta name="description"
+        content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown."/>
 
   <meta name="google-site-verification" content="MnGcj9rpP1u1hCUNoIYxo1kad9CxlEhuWtTC-oKVdaM"/>
 
@@ -229,6 +230,44 @@
       &lt;option&gt;Ketchup&lt;/option&gt;
       &lt;option&gt;Relish&lt;/option&gt;
   &lt;/select>
+</pre>
+
+<p id="data-max-option">You can limit the number of elements you are allowed to select via the
+  <code>data-max-option</code> attribute. It also works for option groups. </p>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple data-max-options="2">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+
+  <select class="selectpicker" multiple>
+    <optgroup label="Condiments" data-max-options="2">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </optgroup>
+    <optgroup label="Breads" data-max-options="2">
+      <option>Plain</option>
+      <option>Steamed</option>
+      <option>Toasted</option>
+    </optgroup>
+  </select>
+</div>
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker" multiple  data-max-options="2"&gt;
+    &lt;optgroup label="Condiments" data-max-options="2"&gt;
+      &lt;option&gt;Mustard&lt;/option&gt;
+      &lt;option&gt;Ketchup&lt;/option&gt;
+      &lt;option&gt;Relish&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Breads" data-max-options="2"&gt;
+      &lt;option&gt;Plain&lt;/option&gt;
+      &lt;option&gt;Steamed&lt;/option&gt;
+      &lt;option&gt;Toasted&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;
 </pre>
 
 <p id="data-style">You can set different Bootstrap classes via the <code>data-style</code> attribute:</p>
@@ -1010,6 +1049,14 @@ Note: this is the same as:<br>
       <p><code>auto</code> automatically adjusts the width of the select to accommodate its widest option</p>
 
       <p>set the width of the select manually, e.g. <code>300px</code> or <code>50%</code></p>
+    </td>
+  </tr>
+  <tr>
+    <td>maxOptions</td>
+    <td>integer | false (where # is an integer)</td>
+    <td>false</td>
+    <td>
+      <p>When set and in a multi</p>
     </td>
   </tr>
   </tbody>
