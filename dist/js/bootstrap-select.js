@@ -38,6 +38,7 @@
     this.selectAll = Selectpicker.prototype.selectAll;
     this.deselectAll = Selectpicker.prototype.deselectAll;
     this.destroy = Selectpicker.prototype.destroy;
+    this.remove = Selectpicker.prototype.destroy;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
 
