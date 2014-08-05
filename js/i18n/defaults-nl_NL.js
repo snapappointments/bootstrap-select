@@ -1,7 +1,7 @@
 /*
  * Translated default messages for bootstrap-select.
  * Locale: NL (Dutch; Nederlands)
- * Region: EU (Europe)
+ * Region: NL (Europe)
  * Author: Daan Rosbergen (Badmuts)
  */
 (function ($) {
@@ -27,6 +27,7 @@
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
-    maxOptions: false
+    maxOptions: false,
+    mobile: false
   };
 }(jQuery));

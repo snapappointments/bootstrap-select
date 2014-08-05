@@ -1,7 +1,8 @@
-/*
- * Translated default messages for bootstrap-select.
- * Locale: EU (Basque)
- * Region: 
+/*!
+ * Bootstrap-select v1.5.4 (http://silviomoreto.github.io/bootstrap-select/)
+ *
+ * Copyright 2013-2014 bootstrap-select
+ * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
@@ -9,10 +10,10 @@
     size: 'auto',
     title: null,
     selectedTextFormat: 'values',
-    noneSelectedText: 'Hautapenik ez',
-    noneResultsText: 'Emaitzarik ez',
-    countSelectedText: '{1}(e)tik {0} hautatuta',
-    maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
+    noneSelectedText: 'Nic není vybráno',
+    noneResultsText: 'Žádné výsledky',
+    countSelectedText: 'Označeno {0} z {1}',
+    maxOptionsText: ['Limit překročen ({n} {var} max)', 'Limit skupiny překročen ({n} {var} max)', ['položek', 'položka']],
     width: false,
     container: false,
     hideDisabled: false,

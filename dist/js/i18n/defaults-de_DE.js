@@ -23,8 +23,11 @@
     dropupAuto: true,
     header: false,
     liveSearch: false,
+    actionsBox: false,
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
-    tickIcon: 'glyphicon-ok'
+    tickIcon: 'glyphicon-ok',
+    maxOptions: false,
+    mobile: false
   };
 }(jQuery));

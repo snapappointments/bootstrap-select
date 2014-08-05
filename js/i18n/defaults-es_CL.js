@@ -1,7 +1,7 @@
 /*
  * Translated default messages for bootstrap-select.
- * Locale: RU (Russian; Русский)
- * Region: RU (Russian Federation)
+ * Locale: ES (Spanish)
+ * Region: CL (Chile)
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
@@ -9,10 +9,10 @@
     size: 'auto',
     title: null,
     selectedTextFormat: 'values',
-    noneSelectedText: 'Ничего не выбрано',
-    noneResultsText: 'Не найдено совпадений',
-    countSelectedText: 'Выбрано {0} из {1}',
-    maxOptionsText: ['Достигнут предел ({n} {var} максимум)', 'Достигнут предел в группе ({n} {var} максимум)', ['items', 'item']],
+    noneSelectedText: 'No hay selección',
+    noneResultsText: 'No hay resultados',
+    countSelectedText: 'Seleccionados {0} de {1}',
+    maxOptionsText: ['Límite alcanzado ({n} {var} max)', 'Límite del grupo alcanzado({n} {var} max)', ['elementos', 'element']],
     width: false,
     container: false,
     hideDisabled: false,
@@ -26,6 +26,7 @@
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
-    maxOptions: false
+    maxOptions: false,
+    mobile: false
   };
 }(jQuery));

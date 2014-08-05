@@ -10,10 +10,10 @@
     size: 'auto',
     title: null,
     selectedTextFormat: 'values',
-    noneSelectedText: 'No hay selección',
-    noneResultsText: 'No hay resultados',
-    countSelectedText: 'Seleccionados {0} de {1}',
-    maxOptionsText: ['Límite alcanzado ({n} {var} max)', 'Límite del grupo alcanzado({n} {var} max)', ['elementos', 'element']],
+    noneSelectedText: 'Nothing selected',
+    noneResultsText: 'No results match',
+    countSelectedText: '{0} of {1} selected',
+    maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
     width: false,
     container: false,
     hideDisabled: false,
@@ -23,8 +23,11 @@
     dropupAuto: true,
     header: false,
     liveSearch: false,
+    actionsBox: false,
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
-    tickIcon: 'glyphicon-ok'
+    tickIcon: 'glyphicon-ok',
+    maxOptions: false,
+    mobile: false
   };
 }(jQuery));

@@ -41,6 +41,33 @@
 
   Selectpicker.VERSION = '1.5.4';
 
+  // this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
+  Selectpicker.DEFAULTS = {
+    style: 'btn-default',
+    size: 'auto',
+    title: null,
+    selectedTextFormat: 'values',
+    noneSelectedText: 'Nothing selected',
+    noneResultsText: 'No results match',
+    countSelectedText: '{0} of {1} selected',
+    maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    width: false,
+    container: false,
+    hideDisabled: false,
+    showSubtext: false,
+    showIcon: true,
+    showContent: true,
+    dropupAuto: true,
+    header: false,
+    liveSearch: false,
+    actionsBox: false,
+    multipleSeparator: ', ',
+    iconBase: 'glyphicon',
+    tickIcon: 'glyphicon-ok',
+    maxOptions: false,
+    mobile: false
+  };
+
   Selectpicker.prototype = {
 
     constructor: Selectpicker,
@@ -954,7 +981,7 @@
             options = typeof option == 'object' && option;
 
         if (!data) {
-          $this.data('selectpicker', (data = new Selectpicker(this, $.extend({}, $.fn.selectpicker.defaults, $this.data(), options), event)));
+          $this.data('selectpicker', (data = new Selectpicker(this, $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options), event)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
@@ -986,32 +1013,6 @@
   };
 
   $.fn.selectpicker.Constructor = Selectpicker;
-
-  $.fn.selectpicker.defaults = {
-    style: 'btn-default',
-    size: 'auto',
-    title: null,
-    selectedTextFormat: 'values',
-    noneSelectedText: 'Nothing selected',
-    noneResultsText: 'No results match',
-    countSelectedText: '{0} of {1} selected',
-    maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
-    width: false,
-    container: false,
-    hideDisabled: false,
-    showSubtext: false,
-    showIcon: true,
-    showContent: true,
-    dropupAuto: true,
-    header: false,
-    liveSearch: false,
-    actionsBox: false,
-    multipleSeparator: ', ',
-    iconBase: 'glyphicon',
-    tickIcon: 'glyphicon-ok',
-    maxOptions: false,
-    mobile: false
-  };
 
   $(document)
       .data('keycount', 0)

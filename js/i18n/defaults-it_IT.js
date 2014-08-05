@@ -27,6 +27,7 @@
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
-    maxOptions: false
+    maxOptions: false,
+    mobile: false
   };
 }(jQuery));

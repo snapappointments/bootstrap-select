@@ -1,8 +1,7 @@
-/*!
- * Bootstrap-select v1.5.4 (http://silviomoreto.github.io/bootstrap-select/)
- *
- * Copyright 2013-2014 bootstrap-select
- * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
+/*
+ * Translated default messages for bootstrap-select.
+ * Locale: CZ (Czech Republic)
+ * Region: EU
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
@@ -23,8 +22,11 @@
     dropupAuto: true,
     header: false,
     liveSearch: false,
+    actionsBox: false,
     multipleSeparator: ', ',
     iconBase: 'glyphicon',
-    tickIcon: 'glyphicon-ok'
+    tickIcon: 'glyphicon-ok',
+    maxOptions: false,
+    mobile: false
   };
 }(jQuery));
