@@ -69,7 +69,11 @@ module.exports = function (grunt) {
       },
       main: {
         src: '<%= concat.main.dest %>',
-        dest: 'dist/js/<%= pkg.name %>.min.js'
+        dest: 'dist/js/<%= pkg.name %>.min.js',
+        options: {
+          sourceMap: true,
+          sourceMapName: 'dist/js/<%= pkg.name %>.js.map'
+        }
       },
       i18n: {
         files: [
