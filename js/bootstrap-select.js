@@ -937,8 +937,8 @@
         $items.eq(keyIndex[count - 1]).focus();
       }
 
-      // Select focused option if "Enter", "Spacebar", "Tab" are pressed inside the menu.
-      if (/(13|32|^9$)/.test(e.keyCode.toString(10)) && isActive) {
+      // Select focused option if "Enter", "Spacebar" are pressed inside the menu.
+      if (/(13|32)/.test(e.keyCode.toString(10)) && isActive) {
         if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
           $(':focus').click();
