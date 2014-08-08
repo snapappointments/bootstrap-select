@@ -25,13 +25,6 @@
   margin-left: 0;
 }
 
-.form-search .bootstrap-select.btn-group,
-.form-inline .bootstrap-select.btn-group,
-.form-horizontal .bootstrap-select.btn-group,
-.form-group .bootstrap-select.btn-group{
-  margin-bottom: 0;
-}
-
 .bootstrap-select.form-control {
   margin-bottom: 0;
   padding: 0;
@@ -45,6 +38,13 @@
 }
 
 .bootstrap-select.btn-group {
+  .form-search &,
+  .form-inline &,
+  .form-horizontal &,
+  .form-group & {
+    margin-bottom: 0;
+  }
+
   .input-append & {
     margin-left: -1px;
   }
