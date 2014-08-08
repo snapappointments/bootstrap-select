@@ -27,11 +27,6 @@
   margin-bottom: 10px;
   margin-left: 0;
 }
-.form-search .bootstrap-select.btn-group,
-.form-inline .bootstrap-select.btn-group,
-.form-horizontal .bootstrap-select.btn-group {
-  margin-bottom: 0;
-}
 .bootstrap-select.form-control {
   margin-bottom: 0;
   padding: 0;
@@ -41,6 +36,12 @@
 .bootstrap-select.btn-group[class*="span"].pull-right,
 .row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
   float: right;
+}
+.form-search .bootstrap-select.btn-group,
+.form-inline .bootstrap-select.btn-group,
+.form-horizontal .bootstrap-select.btn-group,
+.form-group .bootstrap-select.btn-group {
+  margin-bottom: 0;
 }
 .input-append .bootstrap-select.btn-group {
   margin-left: -1px;
