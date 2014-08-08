@@ -39,7 +39,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.5.4';
+  Selectpicker.VERSION = '1.6.0';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
