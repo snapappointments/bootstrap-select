@@ -15,6 +15,21 @@
   &.fit-width {
     width: auto !important;
   }
+
+  &:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 220px;
+  }
+}
+
+// the selectpicker button
+.bootstrap-select.form-control {
+  margin-bottom: 0;
+  padding: 0;
+  border: none;
+
+  &:not([class*="span"]):not([class*="col-"]) {
+    width: 100%;
+  }
 }
 
 .bootstrap-select.btn-group:not(.input-group-btn),
@@ -25,16 +40,12 @@
   margin-left: 0;
 }
 
-.bootstrap-select.form-control {
-  margin-bottom: 0;
-  padding: 0;
-  border: none;
-}
-
-.bootstrap-select.btn-group.pull-right,
-.bootstrap-select.btn-group[class*="span"].pull-right,
-.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
-  float: right;
+.bootstrap-select.btn-group {
+  &, &[class*="span"], &[class*="col-"], .row-fluid &[class*="span"], .row-fluid &[class*="col-"] {
+    &.pull-right {
+      float: right;
+    }
+  }
 }
 
 .bootstrap-select.btn-group {
@@ -52,18 +63,11 @@
   .input-prepend & {
     margin-right: -1px;
   }
-}
 
-.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 220px;
-}
-
-.bootstrap-select.form-control:not([class*="span"]) {
-  width: 100%;
-}
-
-.bootstrap-select.show-menu-arrow.open > .btn {
-  z-index: 2051;
+  // Set the width of the live search (and any other form control within an inline form)
+  .form-inline & .form-control {
+    width: 100%;
+  }
 }
 
 .bootstrap-select .btn:focus {
@@ -185,6 +189,10 @@
 }
 
 .bootstrap-select.show-menu-arrow {
+  &.open > .btn {
+    z-index: 2051;
+  }
+
   .dropdown-toggle {
     &:before {
       content: '';

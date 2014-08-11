@@ -20,6 +20,17 @@
 .bootstrap-select.fit-width {
   width: auto !important;
 }
+.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  width: 220px;
+}
+.bootstrap-select.form-control {
+  margin-bottom: 0;
+  padding: 0;
+  border: none;
+}
+.bootstrap-select.form-control:not([class*="span"]):not([class*="col-"]) {
+  width: 100%;
+}
 .bootstrap-select.btn-group:not(.input-group-btn),
 .bootstrap-select.btn-group[class*="span"] {
   float: none;
@@ -27,14 +38,11 @@
   margin-bottom: 10px;
   margin-left: 0;
 }
-.bootstrap-select.form-control {
-  margin-bottom: 0;
-  padding: 0;
-  border: none;
-}
 .bootstrap-select.btn-group.pull-right,
 .bootstrap-select.btn-group[class*="span"].pull-right,
-.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right {
+.bootstrap-select.btn-group[class*="col-"].pull-right,
+.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right,
+.row-fluid .bootstrap-select.btn-group[class*="col-"].pull-right {
   float: right;
 }
 .form-search .bootstrap-select.btn-group,
@@ -49,14 +57,8 @@
 .input-prepend .bootstrap-select.btn-group {
   margin-right: -1px;
 }
-.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 220px;
-}
-.bootstrap-select.form-control:not([class*="span"]) {
+.form-inline .bootstrap-select.btn-group .form-control {
   width: 100%;
-}
-.bootstrap-select.show-menu-arrow.open > .btn {
-  z-index: 2051;
 }
 .bootstrap-select .btn:focus {
   outline: thin dotted #333333 !important;
@@ -152,6 +154,9 @@
 }
 .bootstrap-select.btn-group .dropdown-menu li > dt small {
   font-weight: normal;
+}
+.bootstrap-select.show-menu-arrow.open > .btn {
+  z-index: 2051;
 }
 .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
   content: '';
