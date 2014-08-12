@@ -31,8 +31,8 @@
     this.setStyle = Selectpicker.prototype.setStyle;
     this.selectAll = Selectpicker.prototype.selectAll;
     this.deselectAll = Selectpicker.prototype.deselectAll;
-    this.destroy = Selectpicker.prototype.destroy;
-    this.remove = Selectpicker.prototype.destroy;
+    this.destroy = Selectpicker.prototype.remove;
+    this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
 
@@ -43,14 +43,15 @@
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
-    style: 'btn-default',
-    size: 'auto',
-    title: null,
-    selectedTextFormat: 'values',
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results match',
     countSelectedText: '{0} of {1} selected',
     maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    multipleSeparator: ', ',
+    style: 'btn-default',
+    size: 'auto',
+    title: null,
+    selectedTextFormat: 'values',
     width: false,
     container: false,
     hideDisabled: false,
@@ -61,7 +62,6 @@
     header: false,
     liveSearch: false,
     actionsBox: false,
-    multipleSeparator: ', ',
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
     maxOptions: false,
@@ -484,29 +484,6 @@
       });
     },
 
-    mobile: function () {
-      this.$element.addClass('mobile-device').appendTo(this.$newElement);
-      if (this.options.container) this.$menu.hide();
-    },
-
-    refresh: function () {
-      this.$lis = null;
-      this.reloadLi();
-      this.render();
-      this.setWidth();
-      this.setStyle();
-      this.checkDisabled();
-      this.liHeight();
-    },
-
-    update: function () {
-      this.reloadLi();
-      this.setWidth();
-      this.setStyle();
-      this.checkDisabled();
-      this.liHeight();
-    },
-
     setSelected: function (index, selected) {
       if (this.$lis == null) this.$lis = this.$menu.find('li');
       $(this.$lis[index]).toggleClass('selected', selected);
@@ -621,7 +598,7 @@
                   $option.prop('selected', true);
                   var optgroupID = $(this).data('optgroup');
 
-                  that.$menu.find('.selected').has('a[data-optgroup="'+optgroupID+'"]').removeClass('selected');
+                  that.$menu.find('.selected').has('a[data-optgroup="' + optgroupID + '"]').removeClass('selected');
 
                   that.setSelected(clickedIndex, true);
                 } else {
@@ -764,7 +741,6 @@
     },
 
     val: function (value) {
-
       if (value !== undefined) {
         this.$element.val(value);
         this.$element.change();
@@ -907,7 +883,6 @@
         }
 
       } else if (!$this.is('input')) {
-
         var keyIndex = [],
             count,
             prevKey;
@@ -953,7 +928,29 @@
         that.$menu.parent().removeClass('open');
         that.$button.focus();
       }
+    },
 
+    mobile: function () {
+      this.$element.addClass('mobile-device').appendTo(this.$newElement);
+      if (this.options.container) this.$menu.hide();
+    },
+
+    refresh: function () {
+      this.$lis = null;
+      this.reloadLi();
+      this.render();
+      this.setWidth();
+      this.setStyle();
+      this.checkDisabled();
+      this.liHeight();
+    },
+
+    update: function () {
+      this.reloadLi();
+      this.setWidth();
+      this.setStyle();
+      this.checkDisabled();
+      this.liHeight();
     },
 
     hide: function () {
@@ -964,7 +961,7 @@
       this.$newElement.show();
     },
 
-    destroy: function () {
+    remove: function () {
       this.$newElement.remove();
       this.$element.remove();
     }
