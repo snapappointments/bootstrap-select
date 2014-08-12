@@ -977,17 +977,24 @@
   };
 
   $.fn.selectpicker = function (option, event) {
-    //get the args of the outer function..
+    // get the args of the outer function..
     var args = arguments;
+    // The arguments of the function are explicitely re-defined from the argument list, because the shift causes them
+    // to get lost
+    //noinspection JSDuplicatedDeclaration
+    var option = args[0],
+        event = args[1];
+    [].shift.apply(args);
     var value;
     var chain = this.each(function () {
-      if ($(this).is('select')) {
-        var $this = $(this),
-            data = $this.data('selectpicker'),
+      var $this = $(this);
+      if ($this.is('select')) {
+        var data = $this.data('selectpicker'),
             options = typeof option == 'object' && option;
 
         if (!data) {
-          $this.data('selectpicker', (data = new Selectpicker(this, $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options), event)));
+          var config = $.extend(Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
+          $this.data('selectpicker', (data = new Selectpicker(this, config, event)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
@@ -997,14 +1004,10 @@
         }
 
         if (typeof option == 'string') {
-          //Copy the value of option, as once we shift the arguments
-          //it also shifts the value of option.
-          var property = option;
-          if (data[property] instanceof Function) {
-            [].shift.apply(args);
-            value = data[property].apply(data, args);
+          if (data[option] instanceof Function) {
+            value = data[option].apply(data, args);
           } else {
-            value = data.options[property];
+            value = data.options[option];
           }
         }
       }
