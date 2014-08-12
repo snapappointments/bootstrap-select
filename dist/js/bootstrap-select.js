@@ -5,7 +5,6 @@
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 (function ($) {
-
   'use strict';
 
   $.expr[':'].icontains = function (obj, index, meta) {
@@ -25,7 +24,8 @@
     this.$lis = null;
     this.options = options;
 
-    //If we have no title yet, check the attribute 'title' (this is missed by jq as its not a data-attribute
+    // If we have no title yet, try to pull it from the html title attribute (jQuery doesnt' pick it up as it's not a
+    // data-attribute)
     if (this.options.title === null) {
       this.options.title = this.$element.attr('title');
     }
@@ -749,7 +749,6 @@
     val: function (value) {
       if (typeof value !== 'undefined') {
         this.$element.val(value);
-        this.$element.change();
         this.render();
 
         return this.$element;
