@@ -65,7 +65,8 @@
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
     maxOptions: false,
-    mobile: false
+    mobile: false,
+    selectOnTab: false
   };
 
   Selectpicker.prototype = {
@@ -249,7 +250,7 @@
     },
 
     /**
-     * @param [updateLi]
+     * @param [updateLi] defaults to true
      */
     render: function (updateLi) {
       var that = this;
@@ -911,8 +912,8 @@
         $items.eq(keyIndex[count - 1]).focus();
       }
 
-      // Select focused option if "Enter", "Spacebar" are pressed inside the menu.
-      if (/(13|32)/.test(e.keyCode.toString(10)) && isActive) {
+      // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
+      if ((/(13|32)/.test(e.keyCode.toString(10)) || (that.options.selectOnTab && /(^9$)/.test(e.keyCode.toString(10)))) && isActive) {
         if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
           $(':focus').click();
