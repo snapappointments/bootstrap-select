@@ -72,7 +72,8 @@
     tickIcon: 'glyphicon-ok',
     maxOptions: false,
     mobile: false,
-    selectOnTab: false
+    selectOnTab: false,
+    dropdownAlignRight: false
   };
 
   Selectpicker.prototype = {
@@ -91,6 +92,9 @@
       this.$menu = this.$newElement.find('> .dropdown-menu');
       this.$button = this.$newElement.find('> button');
       this.$searchbox = this.$newElement.find('input');
+
+      if (this.options.dropdownAlignRight)
+        this.$menu.addClass('pull-right');
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
