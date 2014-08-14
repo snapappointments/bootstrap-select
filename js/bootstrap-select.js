@@ -971,7 +971,9 @@
     }
   };
 
-  $.fn.selectpicker = function (option, event) {
+  // SELECTPICKER PLUGIN DEFINITION
+  // ==========================
+  function Plugin (option, event) {
     // get the args of the outer function..
     var args = arguments;
     // The arguments of the function are explicitely re-defined from the argument list, because the shift causes them
@@ -1014,9 +1016,18 @@
     } else {
       return chain;
     }
-  };
+  }
 
+  var old = $.fn.selectpicker;
+  $.fn.selectpicker = Plugin;
   $.fn.selectpicker.Constructor = Selectpicker;
+
+  // SELECTPICKER NO CONFLICT
+  // ====================
+  $.fn.selectpicker.noConflict = function () {
+    $.fn.selectpicker = old;
+    return this;
+  };
 
   $(document)
       .data('keycount', 0)
