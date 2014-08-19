@@ -40,8 +40,9 @@ Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) f
 
 **N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the github page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
 
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.js
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.min.css
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js)
+* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/i18n/defaults-*.min.js (The translation files)
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css)
 
 ## Bugs and feature requests
 
