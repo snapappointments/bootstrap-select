@@ -58,7 +58,8 @@
     "load-grunt-tasks": "~0.6.0",
     "grunt-banner": "~0.2.3",
     "grunt-contrib-cssmin": "~0.10.0",
-    "grunt-sed": "~0.1.1"
+    "grunt-sed": "~0.1.1",
+    "grunt-autoprefixer": "~1.0.0"
   },
   "keywords": [
     "form",

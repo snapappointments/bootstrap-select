@@ -173,6 +173,27 @@ module.exports = function (grunt) {
       }
     },
 
+    autoprefixer: {
+      options: {
+        browsers: [
+          'Android 2.3',
+          'Android >= 4',
+          'Chrome >= 20',
+          'Firefox >= 24', // Firefox 24 is the latest ESR
+          'Explorer >= 8',
+          'iOS >= 6',
+          'Opera >= 12',
+          'Safari >= 6'
+        ]
+      },
+      css: {
+        options: {
+          map: true
+        },
+        src: '<%= less.css.dest %>'
+      }
+    },
+
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -198,7 +219,7 @@ module.exports = function (grunt) {
   grunt.registerTask('change-version-number', 'sed');
 
   // CSS distribution
-  grunt.registerTask('dist-css', ['clean:css', 'less', 'usebanner', 'cssmin']);
+  grunt.registerTask('dist-css', ['clean:css', 'less', 'autoprefixer', 'usebanner', 'cssmin']);
 
   // JS distribution
   grunt.registerTask('dist-js', ['clean:js', 'concat', 'uglify']);

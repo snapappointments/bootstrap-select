@@ -99,20 +99,17 @@
   min-width: 100%;
   z-index: 2000;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .bootstrap-select.btn-group .dropdown-menu.inner {
   position: static;
   border: 0;
   padding: 0;
   margin: 0;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
   border-radius: 0;
   -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+          box-shadow: none;
 }
 .bootstrap-select.btn-group .dropdown-menu dt {
   display: block;
@@ -159,12 +156,13 @@
   padding: 3px 5px;
   background: #f5f5f5;
   border: 1px solid #e3e3e3;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   pointer-events: none;
   opacity: 0.9;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .bootstrap-select.btn-group .div-contain {
   overflow: hidden;
@@ -252,8 +250,8 @@
   float: left;
   width: 100%;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .bootstrap-select .bs-actionsbox .btn-group button {
   width: 50%;
