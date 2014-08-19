@@ -198,10 +198,10 @@ module.exports = function (grunt) {
   grunt.registerTask('change-version-number', 'sed');
 
   // CSS distribution
-  grunt.registerTask('dist-css', ['less', 'usebanner', 'cssmin']);
+  grunt.registerTask('dist-css', ['clean:css', 'less', 'usebanner', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('dist-js', ['concat', 'uglify']);
+  grunt.registerTask('dist-js', ['clean:js', 'concat', 'uglify']);
 
   // Full distribution
   grunt.registerTask('dist', ['dist-css', 'dist-js']);
