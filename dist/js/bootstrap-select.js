@@ -982,7 +982,7 @@
   function Plugin (option, event) {
     // get the args of the outer function..
     var args = arguments;
-    // The arguments of the function are explicitely re-defined from the argument list, because the shift causes them
+    // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
     // to get lost
     //noinspection JSDuplicatedDeclaration
     var option = args[0],
@@ -996,7 +996,7 @@
             options = typeof option == 'object' && option;
 
         if (!data) {
-          var config = $.extend(Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
+          var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults, $this.data(), options);
           $this.data('selectpicker', (data = new Selectpicker(this, config, event)));
         } else if (options) {
           for (var i in options) {
