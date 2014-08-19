@@ -983,7 +983,7 @@
   };
 
   // SELECTPICKER PLUGIN DEFINITION
-  // ==========================
+  // ==============================
   function Plugin(option, event) {
     // get the args of the outer function..
     var args = arguments;
@@ -1034,7 +1034,7 @@
   $.fn.selectpicker.Constructor = Selectpicker;
 
   // SELECTPICKER NO CONFLICT
-  // ====================
+  // ========================
   $.fn.selectpicker.noConflict = function () {
     $.fn.selectpicker = old;
     return this;
@@ -1047,4 +1047,12 @@
         e.stopPropagation();
       });
 
+  // SELECTPICKER DATA-API
+  // =====================
+  $(window).on('load.bs.select.data-api', function () {
+    $('.selectpicker').each(function () {
+      var $selectpicker = $(this);
+      Plugin.call($selectpicker, $selectpicker.data());
+    })
+  });
 })(jQuery);
