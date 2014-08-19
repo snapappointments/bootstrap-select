@@ -242,7 +242,7 @@
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle:after {
   display: block;
 }
-.bootstrap-select-searchbox,
+.bs-searchbox,
 .bootstrap-select .bs-actionsbox {
   padding: 4px 8px;
 }
@@ -256,11 +256,11 @@
 .bootstrap-select .bs-actionsbox .btn-group button {
   width: 50%;
 }
-.bootstrap-select-searchbox + .bs-actionsbox {
+.bs-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
 }
-.bootstrap-select-searchbox input,
-.bootstrap-select-searchbox .form-control {
+.bs-searchbox input,
+.bs-searchbox .form-control {
   margin-bottom: 0;
   width: 100%;
 }
