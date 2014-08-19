@@ -148,40 +148,28 @@
       box-shadow: none;
     }
 
-    dt {
-      display: block;
-      padding: 3px 20px;
-      cursor: default;
-    }
-
     li {
       position: relative;
 
-      &:not(.disabled) > a:hover small,
-      &:not(.disabled) > a:focus small,
-      &.active:not(.disabled) > a small {
+      &:not(.disabled) a:hover small,
+      &:not(.disabled) a:focus small,
+      &.active:not(.disabled) a small {
         color: @color-blue-hover;
         color: fade(@color-blue-hover, 40%);
       }
 
-      > dt small {
-        font-weight: normal;
-      }
-
-      &.disabled > a {
+      &.disabled a {
         .cursor-disabled();
       }
 
-      > a{
+      a {
         cursor: pointer;
 
         &.opt {
           position: relative;
-          padding-left: 35px;
+          padding-left: 2.25em;
         }
-      }
 
-      a {
         span.check-mark {
           display: none;
         }
@@ -209,10 +197,6 @@
       opacity: 0.9;
       box-sizing: border-box;
     }
-  }
-
-  .div-contain {
-    overflow: hidden;
   }
 
   .no-results {

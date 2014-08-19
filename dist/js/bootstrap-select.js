@@ -245,7 +245,7 @@
               _li.push(generateLI('', null, 'divider'));
             }
 
-            _li.push(generateLI('label', null, 'dropdown-header'));
+            _li.push(generateLI(label, null, 'dropdown-header'));
           }
 
           _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, optID), index));
@@ -312,7 +312,7 @@
       //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
         var max = this.options.selectedTextFormat.split('>');
-        var notDisabled = this.options.hideDisabled ? ', ([disabled])' : '';
+        var notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
           title = this.options.countSelectedText.replace('{0}', selectedItems.length.toString())
               .replace('{1}', this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length.toString());
@@ -375,6 +375,7 @@
     },
 
     setSize: function () {
+      this.findLis();
       var that = this,
           menu = this.$menu,
           menuInner = menu.find('.inner'),
@@ -383,19 +384,19 @@
           headerHeight = this.$newElement.data('headerHeight'),
           searchHeight = this.$newElement.data('searchHeight'),
           actionsHeight = this.$newElement.data('actionsHeight'),
-          divHeight = menu.find('li .divider').outerHeight(true),
+          divHeight = this.$lis.hasClass('.divider').outerHeight(true),
           menuPadding = parseInt(menu.css('padding-top')) +
               parseInt(menu.css('padding-bottom')) +
               parseInt(menu.css('border-top-width')) +
               parseInt(menu.css('border-bottom-width')),
-          notDisabled = this.options.hideDisabled ? ':not(.disabled)' : '',
+          notDisabled = this.options.hideDisabled ? ', .disabled' : '',
           $window = $(window),
           menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2,
           menuHeight,
           selectOffsetTop,
           selectOffsetBot,
           posVert = function () {
-            //JQuery defines a scrollTop function, but in pure JS it's a property
+            // JQuery defines a scrollTop function, but in pure JS it's a property
             //noinspection JSValidateTypes
             selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
             selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
@@ -418,7 +419,7 @@
             menuHeight = selectOffsetTop - menuExtras;
           }
 
-          if ((lisVis.length + lisVis.find('dt').length) > 3) {
+          if ((lisVis.length + lisVis.hasClass('.dropdown-header').length) > 3) {
             minHeight = liHeight * 3 + menuExtras - 2;
           } else {
             minHeight = 0;
@@ -432,8 +433,8 @@
         $(window).off('resize.getSize').on('resize.getSize', getSize);
         $(window).off('scroll.getSize').on('scroll.getSize', getSize);
       } else if (this.options.size && this.options.size != 'auto' && menu.find('li' + notDisabled).length > this.options.size) {
-        var optIndex = menu.find('li' + notDisabled + ' > *').not('.div-contain').slice(0, this.options.size).last().parent().index();
-        var divLength = menu.find('li').slice(0, optIndex + 1).find('.div-contain').length;
+        var optIndex = this.$lis.not('.divider' + notDisabled).find(' > *').slice(0, this.options.size).last().parent().index();
+        var divLength = menu.find('li').slice(0, optIndex + 1).hasClass('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
@@ -571,7 +572,8 @@
       });
 
       this.$menu.on('click', 'li a', function (e) {
-        var clickedIndex = $(this).parent().data('originalIndex'),
+        var $this = $(this),
+            clickedIndex = $this.parent().data('originalIndex'),
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex');
 
@@ -583,7 +585,7 @@
         e.preventDefault();
 
         //Don't run if we have been disabled
-        if (!that.isDisabled() && !$(this).parent().hasClass('disabled')) {
+        if (!that.isDisabled() && !$this.parent().hasClass('disabled')) {
           var $options = that.$element.find('option'),
               $option = $options.eq(clickedIndex),
               state = $option.prop('selected'),
@@ -599,7 +601,7 @@
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
             that.setSelected(clickedIndex, !state);
-            $(this).blur();
+            $this.blur();
 
             if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
               var maxReached = maxOptions < $options.filter(':selected').length,
@@ -618,7 +620,7 @@
                 } else if (maxOptionsGrp && maxOptionsGrp == 1) {
                   $optgroup.find('option:selected').prop('selected', false);
                   $option.prop('selected', true);
-                  var optgroupID = $(this).data('optgroup');
+                  var optgroupID = $this.data('optgroup');
 
                   that.$menu.find('.selected').has('a[data-optgroup="' + optgroupID + '"]').removeClass('selected');
 
@@ -669,7 +671,7 @@
         }
       });
 
-      this.$menu.on('click', 'li.disabled a, li dt, li .div-contain, .popover-title, .popover-title :not(.close)', function (e) {
+      this.$menu.on('click', 'li.disabled a, li.divider, li.dropdown-header a, .popover-title, .popover-title :not(.close)', function (e) {
         if (e.target == this) {
           e.preventDefault();
           e.stopPropagation();
