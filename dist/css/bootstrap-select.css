@@ -59,6 +59,10 @@
 .form-group .bootstrap-select.btn-group {
   margin-bottom: 0;
 }
+.form-group-lg .bootstrap-select.btn-group.form-control,
+.form-group-sm .bootstrap-select.btn-group.form-control {
+  padding: 0;
+}
 .form-inline .bootstrap-select.btn-group .form-control {
   width: 100%;
 }
