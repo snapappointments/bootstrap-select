@@ -231,8 +231,8 @@
       });
 
       $.each(_liA, function (i, item) {
-        var hide = item === '<a></a>' ? 'class="hide is-hidden"' : '';
-        _liHtml += '<li rel="' + i + '"' + hide + '>' + item + '</li>';
+        var hide = item === '<a></a>' ? ' class="hide is-hidden"' : '';
+        _liHtml += '<li rel="' + i + '" data-original-index="' + i + '"' + hide + '>' + item + '</li>';
       });
 
       //If we are not multiple, and we dont have a selected item, and we dont have a title, select the first element so something is set in the button
@@ -423,6 +423,7 @@
         var divLength = menu.find('li').slice(0, optIndex + 1).find('.div-contain').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
+          //noinspection JSUnusedAssignment
           this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight < menu.height()));
         }
         menu.css({'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + 'px', 'overflow': 'hidden'});
@@ -557,7 +558,7 @@
       });
 
       this.$menu.on('click', 'li a', function (e) {
-        var clickedIndex = $(this).parent().index(),
+        var clickedIndex = $(this).parent().data('originalIndex'),
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex');
 
