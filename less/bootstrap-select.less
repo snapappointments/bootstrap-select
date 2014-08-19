@@ -36,7 +36,7 @@
     width: auto !important;
   }
 
-  &:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
     width: @width-default;
   }
 
@@ -52,7 +52,7 @@
   padding: 0;
   border: none;
 
-  &:not([class*="span"]):not([class*="col-"]) {
+  &:not([class*="col-"]) {
     width: 100%;
   }
 }
@@ -60,7 +60,6 @@
 // The selectpicker components
 .bootstrap-select.btn-group {
   &:not(.input-group-btn),
-  &[class*="span"],
   &[class*="col-"] {
     float: none;
     display: inline-block;
@@ -69,9 +68,7 @@
 
   // Forces the pull to the right, if necessary
   &,
-  &[class*="span"],
   &[class*="col-"],
-  .row-fluid &[class*="span"],
   .row-fluid &[class*="col-"] {
     &.pull-right {
       float: right;
@@ -130,7 +127,6 @@
     }
   }
 
-  &[class*="span"],
   &[class*="col-"] {
     .btn {
       width: 100%;
@@ -186,7 +182,7 @@
       }
 
       a {
-        i.check-mark {
+        span.check-mark {
           display: none;
         }
         span.text {
@@ -241,7 +237,7 @@
 .bootstrap-select.btn-group.show-tick {
   .dropdown-menu {
     li {
-      &.selected a i.check-mark {
+      &.selected a span.check-mark {
         position: absolute;
         display: inline-block;
         right: 15px;

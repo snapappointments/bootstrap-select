@@ -23,7 +23,7 @@
 .bootstrap-select.fit-width {
   width: auto !important;
 }
-.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
   width: 220px;
 }
 .bootstrap-select .btn:focus {
@@ -36,20 +36,17 @@
   padding: 0;
   border: none;
 }
-.bootstrap-select.form-control:not([class*="span"]):not([class*="col-"]) {
+.bootstrap-select.form-control:not([class*="col-"]) {
   width: 100%;
 }
 .bootstrap-select.btn-group:not(.input-group-btn),
-.bootstrap-select.btn-group[class*="span"],
 .bootstrap-select.btn-group[class*="col-"] {
   float: none;
   display: inline-block;
   margin-left: 0;
 }
 .bootstrap-select.btn-group.pull-right,
-.bootstrap-select.btn-group[class*="span"].pull-right,
 .bootstrap-select.btn-group[class*="col-"].pull-right,
-.row-fluid .bootstrap-select.btn-group[class*="span"].pull-right,
 .row-fluid .bootstrap-select.btn-group[class*="col-"].pull-right {
   float: right;
 }
@@ -91,7 +88,6 @@
   margin-top: -2px;
   vertical-align: middle;
 }
-.bootstrap-select.btn-group[class*="span"] .btn,
 .bootstrap-select.btn-group[class*="col-"] .btn {
   width: 100%;
 }
@@ -138,7 +134,7 @@
   position: relative;
   padding-left: 35px;
 }
-.bootstrap-select.btn-group .dropdown-menu li a i.check-mark {
+.bootstrap-select.btn-group .dropdown-menu li a span.check-mark {
   display: none;
 }
 .bootstrap-select.btn-group .dropdown-menu li a span.text {
@@ -180,7 +176,7 @@
   top: auto;
   margin-top: -1px;
 }
-.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a i.check-mark {
+.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a span.check-mark {
   position: absolute;
   display: inline-block;
   right: 15px;
