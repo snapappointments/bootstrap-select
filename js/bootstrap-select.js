@@ -413,7 +413,7 @@
             menuHeight = selectOffsetTop - menuExtras;
           }
 
-          if ((lisVis.length + lisVis.hasClass('.dropdown-header').length) > 3) {
+          if ((lisVis.length + lisVis.filter('.dropdown-header').length) > 3) {
             minHeight = liHeight * 3 + menuExtras - 2;
           } else {
             minHeight = 0;
@@ -428,7 +428,7 @@
         $(window).off('scroll.getSize').on('scroll.getSize', getSize);
       } else if (this.options.size && this.options.size != 'auto' && menu.find('li' + notDisabled).length > this.options.size) {
         var optIndex = this.$lis.not('.divider' + notDisabled).find(' > *').slice(0, this.options.size).last().parent().index();
-        var divLength = menu.find('li').slice(0, optIndex + 1).hasClass('.divider').length;
+        var divLength = menu.find('li').slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
