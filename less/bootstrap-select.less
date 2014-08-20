@@ -1,9 +1,4 @@
-// Variables
-@color-red-error: rgb(185, 74, 72);
-@color-blue-hover: rgb(100, 177, 216);
-@color-grey-arrow: rgb(204, 204, 204);
-
-@width-default: 220px; // 3 960px-grid columns
+@import "variables";
 
 // Mixins
 .cursor-disabled() {
@@ -136,7 +131,7 @@
   // The selectpicker dropdown
   .dropdown-menu {
     min-width: 100%;
-    z-index: 2000;
+    z-index: @zindex-select-dropdown;
     box-sizing: border-box;
 
     &.inner {
@@ -237,7 +232,7 @@
 
 .bootstrap-select.show-menu-arrow {
   &.open > .btn {
-    z-index: 2051;
+    z-index: @zindex-select-dropdown + 1;
   }
 
   .dropdown-toggle {
