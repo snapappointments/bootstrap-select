@@ -228,24 +228,23 @@
   display: block;
 }
 .bs-searchbox,
-.bootstrap-select .bs-actionsbox {
+.bs-actionsbox {
   padding: 4px 8px;
 }
-.bootstrap-select .bs-actionsbox {
+.bs-actionsbox {
   float: left;
   width: 100%;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
-.bootstrap-select .bs-actionsbox .btn-group button {
+.bs-actionsbox .btn-group button {
   width: 50%;
 }
 .bs-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
 }
-.bs-searchbox input,
-.bs-searchbox .form-control {
+.bs-searchbox input.form-control {
   margin-bottom: 0;
   width: 100%;
 }

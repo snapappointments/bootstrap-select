@@ -115,7 +115,7 @@
 
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <select class="selectpicker" multiple>
+          <select class="selectpicker" multiple data-live-search="true" data-actions-box="true">
             <optgroup label="filter1">
               <option>option1</option>
               <option>option2</option>
@@ -150,6 +150,20 @@
     </div>
     <!-- .container-fluid -->
   </nav>
+  <hr>
+  <select class="selectpicker" data-hide-disabled="true" data-live-search="true">
+    <optgroup disabled="disabled" label="disabled">
+      <option/>
+    </optgroup>
+    <optgroup label="Fruit">
+      <option>Apple</option>
+      <option>Orange</option>
+    </optgroup>
+    <optgroup label="Vegetable">
+      <option>Corn</option>
+      <option>Carrot</option>
+    </optgroup>
+  </select>
 </div>
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

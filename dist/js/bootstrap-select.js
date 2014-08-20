@@ -53,6 +53,8 @@
     noneResultsText: 'No results match',
     countSelectedText: '{0} of {1} selected',
     maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    selectAllText: 'Select All',
+    deselectAllText: 'Deselect All',
     multipleSeparator: ', ',
     style: 'btn-default',
     size: 'auto',
@@ -130,10 +132,10 @@
       var actionsbox = this.options.actionsBox ? '<div class="bs-actionsbox">' +
           '<div class="btn-group btn-block">' +
           '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
-          'Select All' +
+          this.options.selectAllText +
           '</button>' +
           '<button class="actions-btn bs-deselect-all btn btn-sm btn-default">' +
-          'Deselect All' +
+          this.options.deselectAllText +
           '</button>' +
           '</div>' +
           '</div>' : '';
@@ -230,8 +232,10 @@
         }
 
         if (that.options.hideDisabled && isDisabled) {
-          _li.push(generateLI('<a></a>', index, 'hide is-hidden'));
-        } else if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
+          return;
+        }
+
+        if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
           if ($this.index() === 0) {
             optID += 1;
 
@@ -241,7 +245,7 @@
             var labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
-            if ($this[0].index !== 0) {
+            if ($this[0].index !== 0 && _li.length > 0) {
               _li.push(generateLI('', null, 'divider'));
             }
 
@@ -787,16 +791,12 @@
 
     selectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider]').prop('selected', true);
-      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').addClass('selected');
-      this.render(false);
+      this.$lis.not('.divider').not('.disabled').not('.selected').filter(':visible').find('a').click();
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider]').prop('selected', false);
-      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').removeClass('selected');
-      this.render(false);
+      this.$lis.not('.divider').not('.disabled').filter('.selected').filter(':visible').find('a').click();
     },
 
     keydown: function (e) {
