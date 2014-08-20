@@ -9,6 +9,8 @@
     noneResultsText: 'No results match',
     countSelectedText: '{0} of {1} selected',
     maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    selectAllText: 'Select All',
+    deselectAllText: 'Deselect All',
     multipleSeparator: ', '
   };
 }(jQuery));
