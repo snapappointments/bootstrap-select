@@ -378,7 +378,7 @@
           headerHeight = this.$newElement.data('headerHeight'),
           searchHeight = this.$newElement.data('searchHeight'),
           actionsHeight = this.$newElement.data('actionsHeight'),
-          divHeight = this.$lis.hasClass('.divider').outerHeight(true),
+          divHeight = this.$lis.filter('.divider').outerHeight(true),
           menuPadding = parseInt(menu.css('padding-top')) +
               parseInt(menu.css('padding-bottom')) +
               parseInt(menu.css('border-top-width')) +
