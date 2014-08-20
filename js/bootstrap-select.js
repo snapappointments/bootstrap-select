@@ -2,7 +2,7 @@
   'use strict';
 
   $.expr[':'].icontains = function (obj, index, meta) {
-    return $(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) >= 0;
+    return $(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) > -1;
   };
 
   var Selectpicker = function (element, options, e) {
@@ -182,8 +182,8 @@
        */
       var generateLI = function (content, index, classes) {
         return '<li' +
-            (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+            (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
             '>' + content + '</li>';
       };
 
@@ -198,8 +198,8 @@
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-            (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') + '>' +
-            text +
+            (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
+            '>' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' icon-ok check-mark"></span>' +
             '</a>';
       };
@@ -245,7 +245,7 @@
           _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, optID), index));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
-        } else if ($(this).data('hidden') === true) {
+        } else if ($this.data('hidden') === true) {
           _li.push(generateLI('<a></a>', index, 'hide is-hidden'));
         } else {
           _li.push(generateLI(generateA(text, optionClass, inline), index));
@@ -428,7 +428,7 @@
         $(window).off('scroll.getSize').on('scroll.getSize', getSize);
       } else if (this.options.size && this.options.size != 'auto' && menu.find('li' + notDisabled).length > this.options.size) {
         var optIndex = this.$lis.not('.divider' + notDisabled).find(' > *').slice(0, this.options.size).last().parent().index();
-        var divLength = menu.find('li').slice(0, optIndex + 1).filter('.divider').length;
+        var divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
@@ -665,7 +665,7 @@
         }
       });
 
-      this.$menu.on('click', 'li.disabled a, li.divider, li.dropdown-header a, .popover-title, .popover-title :not(.close)', function (e) {
+      this.$menu.on('click', 'li.disabled a, .popover-title, .popover-title :not(.close)', function (e) {
         if (e.target == this) {
           e.preventDefault();
           e.stopPropagation();
@@ -674,6 +674,16 @@
           } else {
             that.$searchbox.focus();
           }
+        }
+      });
+
+      this.$menu.on('click', 'li.divider, li.dropdown-header', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!that.options.liveSearch) {
+          that.$button.focus();
+        } else {
+          that.$searchbox.focus();
         }
       });
 
@@ -771,14 +781,14 @@
 
     selectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').prop('selected', true);
+      this.$element.find('option:enabled').not('[data-divider]').prop('selected', true);
       this.$lis.not('.divider').not('.dropdown-header').not('.disabled').addClass('selected');
       this.render(false);
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').prop('selected', false);
+      this.$element.find('option:enabled').not('[data-divider]').prop('selected', false);
       this.$lis.not('.divider').not('.dropdown-header').not('.disabled').removeClass('selected');
       this.render(false);
     },
@@ -815,7 +825,7 @@
 
       if (that.options.container) $parent = that.$menu;
 
-      $items = $('[role=menu] li:not(.divider) a', $parent);
+      $items = $('[role=menu] li a', $parent);
 
       isActive = that.$menu.parent().hasClass('open');
 
@@ -836,7 +846,7 @@
           that.$menu.parent().removeClass('open');
           that.$button.focus();
         }
-        $items = $('[role=menu] li:not(.divider):visible', $parent);
+        $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
             $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
@@ -847,7 +857,6 @@
       if (!$items.length) return;
 
       if (/(38|40)/.test(e.keyCode.toString(10))) {
-
         index = $items.index($items.filter(':focus'));
         first = $items.parent(':not(.disabled):visible').first().index();
         last = $items.parent(':not(.disabled):visible').last().index();
@@ -930,7 +939,7 @@
       }
 
       // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
-      if ((/(13|32)/.test(e.keyCode.toString(10)) || (that.options.selectOnTab && /(^9$)/.test(e.keyCode.toString(10)))) && isActive) {
+      if ((/(13|32)/.test(e.keyCode.toString(10)) || (/(^9$)/.test(e.keyCode.toString(10)) && that.options.selectOnTab)) && isActive) {
         if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
           $(':focus').click();
