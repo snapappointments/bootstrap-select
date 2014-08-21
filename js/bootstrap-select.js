@@ -1,13 +1,35 @@
 (function ($) {
   'use strict';
 
+  // Case insensitive search
   $.expr[':'].icontains = function (obj, index, meta) {
-    return $(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) > -1;
+    return icontains($(obj).text(), meta[3]);
   };
 
-  // Case insensitive and accented characters insensitive
-  $.expr[':'].iacontains = function (obj, index, meta) {
-    var rExps=[
+  // Case and accent insensitive search
+  $.expr[':'].aicontains = function (obj, index, meta) {
+    return icontains($(obj).data('normalizedText') || $(obj).text(), meta[3]);
+  };
+
+  /**
+   * Actual implementation of the case insensitive search.
+   * @access private
+   * @param {String} haystack
+   * @param {String} needle
+   * @returns {boolean}
+   */
+  function icontains(haystack, needle) {
+    return haystack.toUpperCase().indexOf(needle.toUpperCase()) > -1;
+  }
+
+  /**
+   * Remove all diatrics from the given text.
+   * @access private
+   * @param {String} text
+   * @returns {String}
+   */
+  function normalizeToBase(text) {
+    var rExps = [
       {re: /[\xC0-\xC6]/g, ch: "A"},
       {re: /[\xE0-\xE6]/g, ch: "a"},
       {re: /[\xC8-\xCB]/g, ch: "E"},
@@ -22,14 +44,11 @@
       {re: /[\xD1]/g, ch: "N"},
       {re: /[\xF1]/g, ch: "n"}
     ];
-    var element = $(obj).text();
-    var search = meta[3];
-    $.each(rExps, function() {
-      element = element.replace(this.re, this.ch);
-      search = search.replace(this.re, this.ch);
+    $.each(rExps, function () {
+      text = text.replace(this.re, this.ch);
     });
-    return element.toUpperCase().indexOf(search.toUpperCase()) > -1;
-  };
+    return text;
+  }
 
   var Selectpicker = function (element, options, e) {
     if (e) {
@@ -96,7 +115,7 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    accentInsensitive: false
+    searchAccentInsensitive: false
   };
 
   Selectpicker.prototype = {
@@ -224,16 +243,18 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline, optgroup) {
+        var normText = normalizeToBase($.trim($("<div/>").html(text).text()).replace(/\s\s+/g, ' '));
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
             (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
+            ' data-normalized-text="' + normText + '"' +
             '>' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' icon-ok check-mark"></span>' +
             '</a>';
       };
 
-      this.$element.find('option').each(function (index) {
+      this.$element.find('option').each(function () {
         var $this = $(this);
 
         // Get the class and text for the option
@@ -242,7 +263,8 @@
             text = $this.data('content') ? $this.data('content') : $this.html(),
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled');
+            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled'),
+            index = $this[0].index;
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
@@ -257,7 +279,7 @@
         }
 
         if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
-          if ($this.index() === 0) {
+          if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
@@ -266,7 +288,7 @@
             var labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
-            if ($this[0].index !== 0 && _li.length > 0) {
+            if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               _li.push(generateLI('', null, 'divider'));
             }
 
@@ -277,7 +299,7 @@
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI('<a></a>', index, 'hide is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hide is-hidden'));
         } else {
           _li.push(generateLI(generateA(text, optionClass, inline), index));
         }
@@ -770,8 +792,8 @@
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
 
-          if (that.options.accentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':iacontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          if (that.options.searchAccentInsensitive) {
+            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
           } else {
             that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
           }
@@ -881,8 +903,8 @@
         $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
-            if (that.options.accentInsensitive) {
-              $items = that.$newElement.find('li').filter(':iacontains(' + keyCodeMap[e.keyCode] + ')');
+            if (that.options.searchAccentInsensitive) {
+              $items = that.$newElement.find('li').filter(':aicontains(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
             } else {
               $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
             }
