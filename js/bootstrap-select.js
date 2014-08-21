@@ -5,6 +5,32 @@
     return $(obj).text().toUpperCase().indexOf(meta[3].toUpperCase()) > -1;
   };
 
+  // Case insensitive and accented characters insensitive
+  $.expr[':'].iacontains = function (obj, index, meta) {
+    var rExps=[
+      {re: /[\xC0-\xC6]/g, ch: "A"},
+      {re: /[\xE0-\xE6]/g, ch: "a"},
+      {re: /[\xC8-\xCB]/g, ch: "E"},
+      {re: /[\xE8-\xEB]/g, ch: "e"},
+      {re: /[\xCC-\xCF]/g, ch: "I"},
+      {re: /[\xEC-\xEF]/g, ch: "i"},
+      {re: /[\xD2-\xD6]/g, ch: "O"},
+      {re: /[\xF2-\xF6]/g, ch: "o"},
+      {re: /[\xD9-\xDC]/g, ch: "U"},
+      {re: /[\xF9-\xFC]/g, ch: "u"},
+      {re: /[\xC7-\xE7]/g, ch: "c"},
+      {re: /[\xD1]/g, ch: "N"},
+      {re: /[\xF1]/g, ch: "n"}
+    ];
+    var element = $(obj).text();
+    var search = meta[3];
+    $.each(rExps, function() {
+      element = element.replace(this.re, this.ch);
+      search = search.replace(this.re, this.ch);
+    });
+    return element.toUpperCase().indexOf(search.toUpperCase()) > -1;
+  };
+
   var Selectpicker = function (element, options, e) {
     if (e) {
       e.stopPropagation();
@@ -69,7 +95,8 @@
     maxOptions: false,
     mobile: false,
     selectOnTab: false,
-    dropdownAlignRight: false
+    dropdownAlignRight: false,
+    accentInsensitive: false
   };
 
   Selectpicker.prototype = {
@@ -742,7 +769,12 @@
 
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
-          that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+
+          if (that.options.accentInsensitive) {
+            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':iacontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          } else {
+            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
             if (!!no_results.parent().length) no_results.remove();
@@ -849,7 +881,11 @@
         $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
-            $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
+            if (that.options.accentInsensitive) {
+              $items = that.$newElement.find('li').filter(':iacontains(' + keyCodeMap[e.keyCode] + ')');
+            } else {
+              $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
+            }
           }
         }
       }
