@@ -1,12 +1,19 @@
 bootstrap-select
 ================
 
-A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects;
+[![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
+[![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+
+[![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
+
+A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects.
 
 ## Demo and Documentation
 
-See a Bootstrap 2.3.2 example [here](http://silviomoreto.github.com/bootstrap-select/). <br/>
-See a Bootstrap 3.0.3 example [here](http://silviomoreto.github.com/bootstrap-select/3) (work-in-progress).
+See a Bootstrap 3.2 example [here](http://silviomoreto.github.com/bootstrap-select/3).
+
+See a Bootstrap 2.3.2 example [here](http://silviomoreto.github.com/bootstrap-select/) (deprecated).
 
 ## Authors
 
@@ -26,6 +33,7 @@ Create your `<select>` with the `.selectpicker` class.
   <option>Barbecue</option>
 </select>
 ```
+
 Enable Bootstrap-Select via JavaScript:
 ```js
 $('.selectpicker').selectpicker();
@@ -34,6 +42,9 @@ Or just
 ```js
 $('select').selectpicker();
 ```
+
+***Starting with the current dev version, we support bootstrap's data-api, which means that you don't even have to manually instanciate bootstrap-select.***
+
 Checkout the [documentation](http://silviomoreto.github.com/bootstrap-select/) for further information.
 
 ## CDN
