@@ -65,7 +65,7 @@ review the [guidelines for contributing](CONTRIBUTING.md). Make sure you're usin
 
 ## Copyright and license
 
-Copyright (C) 2013 bootstrap-select
+Copyright (C) 2013-2014 bootstrap-select
 
 Licensed under the MIT license.
 
