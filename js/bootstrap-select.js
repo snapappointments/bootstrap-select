@@ -91,7 +91,14 @@
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results match',
     countSelectedText: '{0} of {1} selected',
-    maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    maxOptionsText: function (numAll, numGroup) {
+      var arr = [];
+
+      arr[0] = (numAll == 1) ? 'Limit reached ({n} item max)' : 'Limit reached ({n} items max)';
+      arr[1] = (numGroup == 1) ? 'Group limit reached ({n} item max)' : 'Group limit reached ({n} items max)';
+
+      return arr;
+    },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
     multipleSeparator: ', ',
@@ -652,11 +659,7 @@
 
             if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
               var maxReached = maxOptions < $options.filter(':selected').length,
-                  maxReachedGrp = maxOptionsGrp < $optgroup.find('option:selected').length,
-                  maxOptionsArr = that.options.maxOptionsText,
-                  maxTxt = maxOptionsArr[0].replace('{n}', maxOptions),
-                  maxTxtGrp = maxOptionsArr[1].replace('{n}', maxOptionsGrp),
-                  $notify = $('<div class="notify"></div>');
+                  maxReachedGrp = maxOptionsGrp < $optgroup.find('option:selected').length;
 
               if ((maxOptions && maxReached) || (maxOptionsGrp && maxReachedGrp)) {
                 if (maxOptions && maxOptions == 1) {
@@ -673,7 +676,13 @@
 
                   that.setSelected(clickedIndex, true);
                 } else {
+                  var maxOptionsArr = (typeof that.options.maxOptionsText === 'function') ?
+                          that.options.maxOptionsText(maxOptions, maxOptionsGrp) : that.options.maxOptionsText,
+                      maxTxt = maxOptionsArr[0].replace('{n}', maxOptions),
+                      maxTxtGrp = maxOptionsArr[1].replace('{n}', maxOptionsGrp),
+                      $notify = $('<div class="notify"></div>');
                   // If {var} is set in array, replace it
+                  /** @deprecated */
                   if (maxOptionsArr[2]) {
                     maxTxt = maxTxt.replace('{var}', maxOptionsArr[2][maxOptions > 1 ? 0 : 1]);
                     maxTxtGrp = maxTxtGrp.replace('{var}', maxOptionsArr[2][maxOptionsGrp > 1 ? 0 : 1]);

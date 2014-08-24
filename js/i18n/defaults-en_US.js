@@ -8,7 +8,14 @@
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results match',
     countSelectedText: '{0} of {1} selected',
-    maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    maxOptionsText: function (numAll, numGroup) {
+      var arr = [];
+
+      arr[0] = (numAll == 1) ? 'Limit reached ({n} item max)' : 'Limit reached ({n} items max)';
+      arr[1] = (numGroup == 1) ? 'Group limit reached ({n} item max)' : 'Group limit reached ({n} items max)';
+
+      return arr;
+    },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
     multipleSeparator: ', '
