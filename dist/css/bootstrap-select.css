@@ -45,9 +45,9 @@
   display: inline-block;
   margin-left: 0;
 }
-.bootstrap-select.btn-group.pull-right,
-.bootstrap-select.btn-group[class*="col-"].pull-right,
-.row-fluid .bootstrap-select.btn-group[class*="col-"].pull-right {
+.bootstrap-select.btn-group.dropdown-menu-right,
+.bootstrap-select.btn-group[class*="col-"].dropdown-menu-right,
+.row-fluid .bootstrap-select.btn-group[class*="col-"].dropdown-menu-right {
   float: right;
 }
 .form-search .bootstrap-select.btn-group,
