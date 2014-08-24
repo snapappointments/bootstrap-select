@@ -90,7 +90,9 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results match',
-    countSelectedText: '{0} of {1} selected',
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
+    },
     maxOptionsText: function (numAll, numGroup) {
       var arr = [];
 
@@ -368,8 +370,9 @@
         var max = this.options.selectedTextFormat.split('>');
         var notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
-          title = this.options.countSelectedText.replace('{0}', selectedItems.length.toString())
-              .replace('{1}', this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length.toString());
+          var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
+              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+          title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
       }
 

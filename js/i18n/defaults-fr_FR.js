@@ -7,7 +7,9 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Aucune s&eacute;lection',
     noneResultsText: 'Aucun r&eacute;sultat',
-    countSelectedText: '{0} sur {1} s&eacute;lection(s)',
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected > 1) ? "{0} &eacute;l&eacute;ments s&eacute;lection&eacute;s" : "{0} &eacute;l&eacute;ment s&eacute;lection&eacute;";
+    },
     maxOptionsText: function (numAll, numGroup) {
       var arr = [];
 
