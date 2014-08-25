@@ -342,7 +342,7 @@
       }
 
       this.tabIndex();
-      var notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
+      var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
       var selectedItems = this.$element.find('option:selected' + notDisabled).map(function () {
         var $this = $(this);
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
@@ -369,6 +369,7 @@
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
         var max = this.options.selectedTextFormat.split('>');
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
+          notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
           var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
           title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
