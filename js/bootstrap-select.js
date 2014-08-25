@@ -90,8 +90,17 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results match',
-    countSelectedText: '{0} of {1} selected',
-    maxOptionsText: ['Limit reached ({n} {var} max)', 'Group limit reached ({n} {var} max)', ['items', 'item']],
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
+    },
+    maxOptionsText: function (numAll, numGroup) {
+      var arr = [];
+
+      arr[0] = (numAll == 1) ? 'Limit reached ({n} item max)' : 'Limit reached ({n} items max)';
+      arr[1] = (numGroup == 1) ? 'Group limit reached ({n} item max)' : 'Group limit reached ({n} items max)';
+
+      return arr;
+    },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
     multipleSeparator: ', ',
@@ -136,7 +145,7 @@
       this.$searchbox = this.$newElement.find('input');
 
       if (this.options.dropdownAlignRight)
-        this.$menu.addClass('pull-right');
+        this.$menu.addClass('dropdown-menu-right');
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
@@ -360,8 +369,9 @@
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
         var max = this.options.selectedTextFormat.split('>');
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
-          title = this.options.countSelectedText.replace('{0}', selectedItems.length.toString())
-              .replace('{1}', this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length.toString());
+          var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
+              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+          title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
       }
 
@@ -406,7 +416,7 @@
 
       var $selectClone = this.$menu.parent().clone().find('> .dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
           $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
-          liHeight = $menuClone.find('li > a').outerHeight(),
+          liHeight = $menuClone.find('li').not('.divider').not('.dropdown-header').filter(':visible').children('a').outerHeight(),
           headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox').outerHeight() : 0,
           actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox').outerHeight() : 0;
@@ -651,11 +661,7 @@
 
             if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
               var maxReached = maxOptions < $options.filter(':selected').length,
-                  maxReachedGrp = maxOptionsGrp < $optgroup.find('option:selected').length,
-                  maxOptionsArr = that.options.maxOptionsText,
-                  maxTxt = maxOptionsArr[0].replace('{n}', maxOptions),
-                  maxTxtGrp = maxOptionsArr[1].replace('{n}', maxOptionsGrp),
-                  $notify = $('<div class="notify"></div>');
+                  maxReachedGrp = maxOptionsGrp < $optgroup.find('option:selected').length;
 
               if ((maxOptions && maxReached) || (maxOptionsGrp && maxReachedGrp)) {
                 if (maxOptions && maxOptions == 1) {
@@ -672,7 +678,13 @@
 
                   that.setSelected(clickedIndex, true);
                 } else {
+                  var maxOptionsArr = (typeof that.options.maxOptionsText === 'function') ?
+                          that.options.maxOptionsText(maxOptions, maxOptionsGrp) : that.options.maxOptionsText,
+                      maxTxt = maxOptionsArr[0].replace('{n}', maxOptions),
+                      maxTxtGrp = maxOptionsArr[1].replace('{n}', maxOptionsGrp),
+                      $notify = $('<div class="notify"></div>');
                   // If {var} is set in array, replace it
+                  /** @deprecated */
                   if (maxOptionsArr[2]) {
                     maxTxt = maxTxt.replace('{var}', maxOptionsArr[2][maxOptions > 1 ? 0 : 1]);
                     maxTxtGrp = maxTxtGrp.replace('{var}', maxOptionsArr[2][maxOptionsGrp > 1 ? 0 : 1]);
