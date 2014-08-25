@@ -18,7 +18,7 @@
    * @param {String} needle
    * @returns {boolean}
    */
-  function icontains(haystack, needle) {
+  function icontains (haystack, needle) {
     return haystack.toUpperCase().indexOf(needle.toUpperCase()) > -1;
   }
 
@@ -28,25 +28,27 @@
    * @param {String} text
    * @returns {String}
    */
-  function normalizeToBase(text) {
+  function normalizeToBase (text) {
     var rExps = [
-      {re: /[\xC0-\xC6]/g, ch: "A"},
-      {re: /[\xE0-\xE6]/g, ch: "a"},
-      {re: /[\xC8-\xCB]/g, ch: "E"},
-      {re: /[\xE8-\xEB]/g, ch: "e"},
-      {re: /[\xCC-\xCF]/g, ch: "I"},
-      {re: /[\xEC-\xEF]/g, ch: "i"},
-      {re: /[\xD2-\xD6]/g, ch: "O"},
-      {re: /[\xF2-\xF6]/g, ch: "o"},
-      {re: /[\xD9-\xDC]/g, ch: "U"},
-      {re: /[\xF9-\xFC]/g, ch: "u"},
-      {re: /[\xC7-\xE7]/g, ch: "c"},
-      {re: /[\xD1]/g, ch: "N"},
-      {re: /[\xF1]/g, ch: "n"}
+      { re: /[\xC0-\xC6]/g, ch: "A" },
+      { re: /[\xE0-\xE6]/g, ch: "a" },
+      { re: /[\xC8-\xCB]/g, ch: "E" },
+      { re: /[\xE8-\xEB]/g, ch: "e" },
+      { re: /[\xCC-\xCF]/g, ch: "I" },
+      { re: /[\xEC-\xEF]/g, ch: "i" },
+      { re: /[\xD2-\xD6]/g, ch: "O" },
+      { re: /[\xF2-\xF6]/g, ch: "o" },
+      { re: /[\xD9-\xDC]/g, ch: "U" },
+      { re: /[\xF9-\xFC]/g, ch: "u" },
+      { re: /[\xC7-\xE7]/g, ch: "c" },
+      { re: /[\xD1]/g, ch: "N" },
+      { re: /[\xF1]/g, ch: "n" }
     ];
+
     $.each(rExps, function () {
       text = text.replace(this.re, this.ch);
     });
+
     return text;
   }
 
@@ -1078,12 +1080,12 @@
     var chain = this.each(function () {
       var $this = $(this);
       if ($this.is('select')) {
-        var data = $this.data('selectpicker'),
+        var data = $this.data('bs.select'),
             options = typeof option == 'object' && option;
 
         if (!data) {
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults, $this.data(), options);
-          $this.data('selectpicker', (data = new Selectpicker(this, config, event)));
+          $this.data('bs.select', (data = new Selectpicker(this, config, event)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
