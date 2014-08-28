@@ -1077,9 +1077,16 @@
     // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
     // to get lost
     //noinspection JSDuplicatedDeclaration
-    var option = args[0],
+    var _option = option,
+        option = args[0],
         event = args[1];
     [].shift.apply(args);
+
+    // This fixes a bug in the js implementation on android 2.3 #715
+    if (typeof option == 'undefined') {
+      option = _option;
+    }
+
     var value;
     var chain = this.each(function () {
       var $this = $(this);

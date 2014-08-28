@@ -52,8 +52,7 @@
       <label for="basic2" class="col-lg-2 control-label">"Basic" #2 (multiple max-option=1)</label>
 
       <div class="col-lg-10">
-        <select id="basic2" class="selectpicker show-tick form-control" data-live-search="true" multiple
-                data-max-options="1">
+        <select id="basic2" class="show-tick form-control" multiple>
           <option>cow</option>
           <option>bull</option>
           <option class="get-class" disabled>ox</option>
@@ -192,6 +191,11 @@
       $('#special').on('click', function () {
         mySelect.find('option:selected').attr('disabled', 'disabled');
         mySelect.selectpicker('refresh');
+      });
+
+      var $basic2 = $('#basic2').selectpicker({
+        liveSearch: true,
+        maxOptions: 1
       });
     });
   </script>
