@@ -1082,7 +1082,7 @@
             options = typeof option == 'object' && option;
 
         if (!data) {
-          var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults, $this.data(), options);
+          var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
           $this.data('selectpicker', (data = new Selectpicker(this, config, event)));
         } else if (options) {
           for (var i in options) {
