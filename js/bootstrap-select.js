@@ -929,6 +929,10 @@
           e.preventDefault();
           that.$menu.parent().removeClass('open');
           that.$button.focus();
+					if ( that.options.onClose !== undefined )
+					{
+						that.options.onClose();
+					}
         }
         $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
@@ -1041,6 +1045,10 @@
       if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) {
         that.$menu.parent().removeClass('open');
         that.$button.focus();
+				if ( that.options.onClose !== undefined )
+				{
+					that.options.onClose();
+				}
       }
     },
 
