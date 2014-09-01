@@ -622,6 +622,23 @@
 
       this.$newElement.on('click', function () {
         that.setSize();
+
+        var isActive = that.$menu.parent().hasClass('open');
+        if ( isActive )
+        {
+          if ( that.options.onClose !== undefined )
+          {
+            that.options.onClose();
+          }
+        }
+        else
+        {
+          if ( that.options.onOpen !== undefined )
+          {
+            that.options.onOpen();
+          }
+        }
+        
         if (!that.options.liveSearch && !that.multiple) {
           setTimeout(function () {
             that.$menu.find('.selected a').focus();
