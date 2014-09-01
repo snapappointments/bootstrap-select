@@ -80,6 +80,7 @@
     this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
+    this.toggle = Selectpicker.prototype.toggle;
 
     this.init();
   };
@@ -1060,6 +1061,10 @@
     remove: function () {
       this.$newElement.remove();
       this.$element.remove();
+    },
+    
+    toggle: function () {
+      this.$button.trigger('click');
     }
   };
 
