@@ -80,6 +80,7 @@
     this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
+    this.option = Selectpicker.prototype.option;
 
     this.init();
   };
@@ -1060,6 +1061,14 @@
     remove: function () {
       this.$newElement.remove();
       this.$element.remove();
+    },
+    
+    option: function (key, value) {
+    	if ( key && typeof value === "undefined" ){
+    		return this.options[ key ];
+    	} else {
+    		this.options[ key ] = value;
+    	}
     }
   };
 
