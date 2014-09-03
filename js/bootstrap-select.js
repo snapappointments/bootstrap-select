@@ -10,6 +10,16 @@
   $.expr[':'].aicontains = function (obj, index, meta) {
     return icontains($(obj).data('normalizedText') || $(obj).text(), meta[3]);
   };
+  
+  // Case insensitive search begins with
+  $.expr[':'].ibegins = function( obj, index, meta ) {
+    return ibegins( $(obj).text(), meta[3] );
+  };
+	
+  // Case and accent insensitive search begins with
+  $.expr[':'].aibegins = function( obj, index, meta ) {
+    return ibegins( $(obj).data('normalizedText') || $(obj).text(), meta[3] );
+  };
 
   /**
    * Actual implementation of the case insensitive search.
@@ -20,6 +30,10 @@
    */
   function icontains(haystack, needle) {
     return haystack.toUpperCase().indexOf(needle.toUpperCase()) > -1;
+  }
+  
+  function ibegins( haystack, needle ) {
+    return haystack.toUpperCase().indexOf(needle.toUpperCase()) == 0;
   }
 
   /**
@@ -125,7 +139,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+    searchBeginsWith: false
   };
 
   Selectpicker.prototype = {
@@ -822,10 +837,21 @@
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
 
-          if (that.options.searchAccentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
-          } else {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          if ( ( that.options.searchAccentInsensitive ) && ( that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aibegins(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
+          }
+          else if ( ( ! that.options.searchAccentInsensitive ) && ( that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':ibegins(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          }
+          else if ( ( that.options.searchAccentInsensitive ) && ( ! that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
+          }
+          else if ( ( ! that.options.searchAccentInsensitive ) && ( ! that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
           }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
