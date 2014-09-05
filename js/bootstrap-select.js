@@ -10,6 +10,16 @@
   $.expr[':'].aicontains = function (obj, index, meta) {
     return icontains($(obj).data('normalizedText') || $(obj).text(), meta[3]);
   };
+  
+  // Case insensitive search begins with
+  $.expr[':'].ibegins = function( obj, index, meta ) {
+    return ibegins( $(obj).text(), meta[3] );
+  };
+	
+  // Case and accent insensitive search begins with
+  $.expr[':'].aibegins = function( obj, index, meta ) {
+    return ibegins( $(obj).data('normalizedText') || $(obj).text(), meta[3] );
+  };
 
   /**
    * Actual implementation of the case insensitive search.
@@ -20,6 +30,10 @@
    */
   function icontains(haystack, needle) {
     return haystack.toUpperCase().indexOf(needle.toUpperCase()) > -1;
+  }
+  
+  function ibegins( haystack, needle ) {
+    return haystack.toUpperCase().indexOf(needle.toUpperCase()) == 0;
   }
 
   /**
@@ -80,6 +94,7 @@
     this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
+    this.toggle = Selectpicker.prototype.toggle;
 
     this.init();
   };
@@ -124,7 +139,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+    searchBeginsWith: false
   };
 
   Selectpicker.prototype = {
@@ -621,6 +637,23 @@
 
       this.$newElement.on('click', function () {
         that.setSize();
+
+        var isActive = that.$menu.parent().hasClass('open');
+        if ( isActive )
+        {
+          if ( that.options.onClose !== undefined )
+          {
+            that.options.onClose();
+          }
+        }
+        else
+        {
+          if ( that.options.onOpen !== undefined )
+          {
+            that.options.onOpen();
+          }
+        }
+        
         if (!that.options.liveSearch && !that.multiple) {
           setTimeout(function () {
             that.$menu.find('.selected a').focus();
@@ -804,10 +837,21 @@
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
 
-          if (that.options.searchAccentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
-          } else {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          if ( ( that.options.searchAccentInsensitive ) && ( that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aibegins(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
+          }
+          else if ( ( ! that.options.searchAccentInsensitive ) && ( that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':ibegins(' + that.$searchbox.val() + ')').parent().addClass('hide');
+          }
+          else if ( ( that.options.searchAccentInsensitive ) && ( ! that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
+          }
+          else if ( ( ! that.options.searchAccentInsensitive ) && ( ! that.options.searchBeginsWith ) )
+          {
+          	that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
           }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
@@ -911,6 +955,10 @@
           e.preventDefault();
           that.$menu.parent().removeClass('open');
           that.$button.focus();
+					if ( that.options.onClose !== undefined )
+					{
+						that.options.onClose();
+					}
         }
         $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
@@ -1023,6 +1071,10 @@
       if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) {
         that.$menu.parent().removeClass('open');
         that.$button.focus();
+				if ( that.options.onClose !== undefined )
+				{
+					that.options.onClose();
+				}
       }
     },
 
@@ -1060,6 +1112,10 @@
     remove: function () {
       this.$newElement.remove();
       this.$element.remove();
+    },
+    
+    toggle: function () {
+      this.$button.trigger('click');
     }
   };
 
