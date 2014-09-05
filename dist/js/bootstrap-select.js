@@ -857,16 +857,16 @@
     },
 
     keydown: function (e) {
-      var $this,
+      var $this = $(this),
+          $parent = ($this.is('input')) ? $this.parent().parent() : $this.parent(),
           $items,
-          $parent,
+          that = $parent.data('this'),
           index,
           next,
           first,
           last,
           prev,
           nextPrev,
-          that,
           prevIndex,
           isActive,
           keyCodeMap = {
@@ -875,14 +875,6 @@
             77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x',
             89: 'y', 90: 'z', 96: '0', 97: '1', 98: '2', 99: '3', 100: '4', 101: '5', 102: '6', 103: '7', 104: '8', 105: '9'
           };
-
-      $this = $(this);
-
-      $parent = $this.parent();
-
-      if ($this.is('input')) $parent = $this.parent().parent();
-
-      that = $parent.data('this');
 
       if (that.options.liveSearch) $parent = $this.parent().parent();
 
