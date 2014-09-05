@@ -833,15 +833,6 @@
         that.$menu.find('li').filter(':visible:not(.divider)').eq(0).addClass('active').find('a').focus();
         $(this).focus();
       });
-
-      this.$menu.on('mouseenter', 'a', function (e) {
-        that.$menu.find('.active').removeClass('active');
-        $(e.currentTarget).parent().not('.disabled').addClass('active');
-      });
-
-      this.$menu.on('mouseleave', 'a', function () {
-        that.$menu.find('.active').removeClass('active');
-      });
     },
 
     val: function (value) {
