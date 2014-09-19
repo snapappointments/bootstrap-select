@@ -788,7 +788,7 @@
       var that = this,
           no_results = $('<li class="no-results"></li>');
 
-      this.$newElement.on('click.dropdown.data-api', function () {
+      this.$newElement.on('click.dropdown.data-api touchstart.dropdown.data-api', function () {
         that.$menu.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
@@ -799,6 +799,10 @@
         setTimeout(function () {
           that.$searchbox.focus();
         }, 10);
+      });
+
+      this.$searchbox.on('click.dropdown.data-api focus.dropdown.data-api touchend.dropdown.data-api', function (e) {
+        e.stopPropagation();
       });
 
       this.$searchbox.on('input propertychange', function () {
