@@ -456,7 +456,7 @@
             // JQuery defines a scrollTop function, but in pure JS it's a property
             //noinspection JSValidateTypes
             selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
-            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
+            selectOffsetBot = $window.height() - that.$newElement.offset().top - selectHeight;
           };
       posVert();
       if (this.options.header) menu.css('padding-top', 0);
