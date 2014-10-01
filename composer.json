@@ -3,7 +3,7 @@
   "description": "A custom <select> for Bootstrap using button dropdown as replacement",
   "keywords": ["form", "bootstrap", "select", "replacement"],
   "homepage": "https://github.com/silviomoreto/bootstrap-select",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "authors": [
     {
       "name": "Silvio Moreto",
