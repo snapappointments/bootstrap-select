@@ -5,3 +5,6 @@
 # Folders to ignore
 node_modules
 bower_components
+
+# Dist zip
+bootstrap-select-*.zip
