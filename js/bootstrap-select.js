@@ -50,6 +50,25 @@
     return text;
   }
 
+
+  function htmlEscape(html) {
+    var escapeMap = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      '`': '&#x60;'
+    };
+    var source = '(?:' + Object.keys(escapeMap).join('|') + ')',
+        testRegexp = new RegExp(source),
+        replaceRegexp = new RegExp(source, 'g'),
+        string = html == null ? '' : '' + html;
+    return testRegexp.test(string) ? string.replace(replaceRegexp, function (match) {
+      return escapeMap[match];
+    }) : string;
+  }
+
   var Selectpicker = function (element, options, e) {
     if (e) {
       e.stopPropagation();
@@ -179,29 +198,29 @@
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
       var searchbox = this.options.liveSearch ? '<div class="bs-searchbox"><input type="text" class="input-block-level form-control" autocomplete="off" /></div>' : '';
       var actionsbox = this.options.actionsBox ? '<div class="bs-actionsbox">' +
-          '<div class="btn-group btn-block">' +
-          '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
-          this.options.selectAllText +
-          '</button>' +
-          '<button class="actions-btn bs-deselect-all btn btn-sm btn-default">' +
-          this.options.deselectAllText +
-          '</button>' +
-          '</div>' +
-          '</div>' : '';
+      '<div class="btn-group btn-block">' +
+      '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
+      this.options.selectAllText +
+      '</button>' +
+      '<button class="actions-btn bs-deselect-all btn btn-sm btn-default">' +
+      this.options.deselectAllText +
+      '</button>' +
+      '</div>' +
+      '</div>' : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-              '<button type="button" class="btn dropdown-toggle selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
-              '<span class="filter-option pull-left"></span>&nbsp;' +
-              '<span class="caret"></span>' +
-              '</button>' +
-              '<div class="dropdown-menu open">' +
-              header +
-              searchbox +
-              actionsbox +
-              '<ul class="dropdown-menu inner selectpicker" role="menu">' +
-              '</ul>' +
-              '</div>' +
-              '</div>';
+          '<button type="button" class="btn dropdown-toggle selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
+          '<span class="filter-option pull-left"></span>&nbsp;' +
+          '<span class="caret"></span>' +
+          '</button>' +
+          '<div class="dropdown-menu open">' +
+          header +
+          searchbox +
+          actionsbox +
+          '<ul class="dropdown-menu inner selectpicker" role="menu">' +
+          '</ul>' +
+          '</div>' +
+          '</div>';
 
       return $(drop);
     },
@@ -239,9 +258,9 @@
        */
       var generateLI = function (content, index, classes) {
         return '<li' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-            (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
-            '>' + content + '</li>';
+        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+        (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
+        '>' + content + '</li>';
       };
 
       /**
@@ -252,15 +271,15 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline, optgroup) {
-        var normText = normalizeToBase($.trim($("<div/>").html(text).text()).replace(/\s\s+/g, ' '));
+        var normText = normalizeToBase(htmlEscape(text));
         return '<a tabindex="0"' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-            (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-            (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
-            ' data-normalized-text="' + normText + '"' +
-            '>' + text +
-            '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
-            '</a>';
+        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+        (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
+        (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
+        ' data-normalized-text="' + normText + '"' +
+        '>' + text +
+        '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
+        '</a>';
       };
 
       this.$element.find('option').each(function () {
@@ -387,7 +406,7 @@
         title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
       }
 
-      this.$button.attr('title', $.trim($("<div/>").html(title).text()).replace(/\s\s+/g, ' '));
+      this.$button.attr('title', htmlEscape(title));
       this.$newElement.find('.filter-option').html(title);
     },
 
@@ -482,8 +501,16 @@
             minHeight = 0;
           }
 
-          menu.css({'max-height': menuHeight + 'px', 'overflow': 'hidden', 'min-height': minHeight + headerHeight + searchHeight + actionsHeight + 'px'});
-          menuInner.css({'max-height': menuHeight - headerHeight - searchHeight - actionsHeight - menuPadding + 'px', 'overflow-y': 'auto', 'min-height': Math.max(minHeight - menuPadding, 0) + 'px'});
+          menu.css({
+            'max-height': menuHeight + 'px',
+            'overflow': 'hidden',
+            'min-height': minHeight + headerHeight + searchHeight + actionsHeight + 'px'
+          });
+          menuInner.css({
+            'max-height': menuHeight - headerHeight - searchHeight - actionsHeight - menuPadding + 'px',
+            'overflow-y': 'auto',
+            'min-height': Math.max(minHeight - menuPadding, 0) + 'px'
+          });
         };
         getSize();
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
@@ -543,7 +570,12 @@
             $drop.addClass($element.attr('class').replace(/form-control/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
             pos = $element.offset();
             actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
-            $drop.css({'top': pos.top + actualHeight, 'left': pos.left, 'width': $element[0].offsetWidth, 'position': 'absolute'});
+            $drop.css({
+              'top': pos.top + actualHeight,
+              'left': pos.left,
+              'width': $element[0].offsetWidth,
+              'position': 'absolute'
+            });
           };
       this.$newElement.on('click', function () {
         if (that.isDisabled()) {
@@ -812,7 +844,7 @@
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
             if (!!no_results.parent().length) no_results.remove();
-            no_results.html(that.options.noneResultsText + ' "' + that.$searchbox.val() + '"').show();
+            no_results.html(that.options.noneResultsText + ' "' + htmlEscape(that.$searchbox.val()) + '"').show();
             that.$menu.find('li').last().after(no_results);
           } else if (!!no_results.parent().length) {
             no_results.remove();
@@ -864,10 +896,54 @@
           prevIndex,
           isActive,
           keyCodeMap = {
-            32: ' ', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 59: ';',
-            65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l',
-            77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x',
-            89: 'y', 90: 'z', 96: '0', 97: '1', 98: '2', 99: '3', 100: '4', 101: '5', 102: '6', 103: '7', 104: '8', 105: '9'
+            32: ' ',
+            48: '0',
+            49: '1',
+            50: '2',
+            51: '3',
+            52: '4',
+            53: '5',
+            54: '6',
+            55: '7',
+            56: '8',
+            57: '9',
+            59: ';',
+            65: 'a',
+            66: 'b',
+            67: 'c',
+            68: 'd',
+            69: 'e',
+            70: 'f',
+            71: 'g',
+            72: 'h',
+            73: 'i',
+            74: 'j',
+            75: 'k',
+            76: 'l',
+            77: 'm',
+            78: 'n',
+            79: 'o',
+            80: 'p',
+            81: 'q',
+            82: 'r',
+            83: 's',
+            84: 't',
+            85: 'u',
+            86: 'v',
+            87: 'w',
+            88: 'x',
+            89: 'y',
+            90: 'z',
+            96: '0',
+            97: '1',
+            98: '2',
+            99: '3',
+            100: '4',
+            101: '5',
+            102: '6',
+            103: '7',
+            104: '8',
+            105: '9'
           };
 
       if (that.options.liveSearch) $parent = $this.parent().parent();
