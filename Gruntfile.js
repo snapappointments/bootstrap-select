@@ -241,9 +241,9 @@ module.exports = function (grunt) {
   grunt.registerTask('dist-js', ['clean:js', 'concat', 'uglify']);
 
   // Full distribution
-  grunt.registerTask('dist', ['dist-css', 'dist-js']);
+  grunt.registerTask('dist', ['dist-css', 'dist-js', 'compress']);
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'dist', 'compress']);
+  grunt.registerTask('default', ['clean', 'dist-css', 'dist-js']);
 
 };

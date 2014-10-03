@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.6.2 (http://silviomoreto.github.io/bootstrap-select/)
+ * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select/)
  *
  * Copyright 2013-2014 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -109,7 +109,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.6.2';
+  Selectpicker.VERSION = '1.6.3';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -826,7 +826,7 @@
       var that = this,
           no_results = $('<li class="no-results"></li>');
 
-      this.$newElement.on('click.dropdown.data-api', function () {
+      this.$newElement.on('click.dropdown.data-api touchstart.dropdown.data-api', function () {
         that.$menu.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
@@ -837,6 +837,10 @@
         setTimeout(function () {
           that.$searchbox.focus();
         }, 10);
+      });
+
+      this.$searchbox.on('click.dropdown.data-api focus.dropdown.data-api touchend.dropdown.data-api', function (e) {
+        e.stopPropagation();
       });
 
       this.$searchbox.on('input propertychange', function () {
