@@ -481,8 +481,6 @@
 
         setSelected: function(index, selected) {
             if(selected){
-                Log.trace(index);
-                Log.trace(selected);}
             if (this.$lis == null) this.$lis = this.$menu.find('li');
             $(this.$lis).filter('[rel='+index+']').toggleClass('selected', selected);
         },
@@ -695,7 +693,6 @@
                     
                     // Hidding options groups that does not have any resoult to show while search
                     that.$menu.find('.options-group').each( function(){
-                        Log.trace( $(this).find('li:not(.hide)') );
                         if( $(this).find('li:not(.hide)').length <= 1 ){
                             $(this).addClass('hide');
                         }else{
