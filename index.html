@@ -4,15 +4,14 @@
 <head>
   <meta charset='utf-8'/>
   <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
-  <meta name="description"
-        content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown."/>
+  <meta name="description" content="Bootstrap-select : A custom select for @twitter bootstrap using button dropdown."/>
 
   <meta name="google-site-verification" content="MnGcj9rpP1u1hCUNoIYxo1kad9CxlEhuWtTC-oKVdaM"/>
 
   <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/bootstrap-select.css">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/scrollYou.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap-select.min.css">
   <style type="text/css">
     .com {
       color: #93a1a1;
@@ -111,9 +110,9 @@
     </div>
 
     <section id="downloads">
-      <a class="zip_download_link" href="https://github.com/silviomoreto/bootstrap-select/zipball/master">Download
+      <a class="zip_download_link" href="https://github.com/silviomoreto/bootstrap-select/zipball/v1.6.3">Download
         this project as a .zip file</a>
-      <a class="tar_download_link" href="https://github.com/silviomoreto/bootstrap-select/tarball/master">Download
+      <a class="tar_download_link" href="https://github.com/silviomoreto/bootstrap-select/tarball/v1.6.3">Download
         this project as a tar.gz file</a>
     </section>
   </header>
@@ -1250,15 +1249,14 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
   </footer>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="javascripts/prettify.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<script src="javascripts/bootstrap-select.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="bootstrap-select.min.js"></script>
 <script src="javascripts/jquery.mousewheel.js"></script>
 <script src="javascripts/scrollYou.js"></script>
 <script type="text/javascript">
   window.onload = function () {
-    $('.selectpicker').selectpicker();
     $('.rm-mustard').click(function () {
       var $re = $('.remove-example');
       $re.find('[value=Mustard]').remove();
