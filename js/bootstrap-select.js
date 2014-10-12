@@ -327,7 +327,7 @@
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hide is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden'));
         } else {
           _li.push(generateLI(generateA(text, optionClass, inline), index));
         }
@@ -483,7 +483,7 @@
       if (this.options.size == 'auto') {
         var getSize = function () {
           var minHeight,
-              lisVis = that.$lis.not('.hide');
+              lisVis = that.$lis.not('.hidden');
 
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
@@ -824,7 +824,7 @@
         that.$menu.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
-          that.$lis.not('.is-hidden').removeClass('hide');
+          that.$lis.not('.is-hidden').removeClass('hidden');
           if (!!no_results.parent().length) no_results.remove();
         }
         if (!that.multiple) that.$menu.find('.selected').addClass('active');
@@ -841,9 +841,9 @@
         if (that.$searchbox.val()) {
 
           if (that.options.searchAccentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
+            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
           } else {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
           }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
@@ -855,7 +855,7 @@
           }
 
         } else {
-          that.$lis.not('.is-hidden').removeClass('hide');
+          that.$lis.not('.is-hidden').removeClass('hidden');
           if (!!no_results.parent().length) no_results.remove();
         }
 
