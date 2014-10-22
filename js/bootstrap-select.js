@@ -196,7 +196,7 @@
           btnSize = this.$element.parents().hasClass('form-group-lg') ? ' btn-lg' : (this.$element.parents().hasClass('form-group-sm') ? ' btn-sm' : '');
       // Elements
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
-      var searchbox = this.options.liveSearch ? '<div class="bs-searchbox"><input type="text" class="input-block-level form-control" autocomplete="off" /></div>' : '';
+      var searchbox = this.options.liveSearch ? '<div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" /></div>' : '';
       var actionsbox = this.options.actionsBox ? '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-block">' +
       '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
