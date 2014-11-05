@@ -202,7 +202,7 @@
           btnSize = this.$element.parents().hasClass('form-group-lg') ? ' btn-lg' : (this.$element.parents().hasClass('form-group-sm') ? ' btn-sm' : '');
       // Elements
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
-      var searchbox = this.options.liveSearch ? '<div class="bs-searchbox"><input type="text" class="input-block-level form-control" autocomplete="off" /></div>' : '';
+      var searchbox = this.options.liveSearch ? '<div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" /></div>' : '';
       var actionsbox = this.options.actionsBox ? '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-block">' +
       '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
@@ -333,7 +333,7 @@
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hide is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden'));
         } else {
           _li.push(generateLI(generateA(text, optionClass, inline), index));
         }
@@ -412,7 +412,7 @@
         title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
       }
 
-      this.$button.attr('title', htmlEscape(title));
+      this.$button.attr('title', htmlEscape($.trim(title)));
       this.$newElement.find('.filter-option').html(title);
     },
 
@@ -489,7 +489,7 @@
       if (this.options.size == 'auto') {
         var getSize = function () {
           var minHeight,
-              lisVis = that.$lis.not('.hide');
+              lisVis = that.$lis.not('.hidden');
 
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
@@ -830,7 +830,7 @@
         that.$menu.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
-          that.$lis.not('.is-hidden').removeClass('hide');
+          that.$lis.not('.is-hidden').removeClass('hidden');
           if (!!no_results.parent().length) no_results.remove();
         }
         if (!that.multiple) that.$menu.find('.selected').addClass('active');
@@ -847,9 +847,9 @@
         if (that.$searchbox.val()) {
 
           if (that.options.searchAccentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
+            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
           } else {
-            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
+            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
           }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
@@ -861,7 +861,7 @@
           }
 
         } else {
-          that.$lis.not('.is-hidden').removeClass('hide');
+          that.$lis.not('.is-hidden').removeClass('hidden');
           if (!!no_results.parent().length) no_results.remove();
         }
 
