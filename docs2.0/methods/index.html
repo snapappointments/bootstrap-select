@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  <title>Methods - Bootstrap-select</title>
+
+  <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+  <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+  <link href="../css/prettify-1.0.css" rel="stylesheet">
+  <link href="../css/base.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" rel="stylesheet">
+  <link href="../css/custom.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+
+  <script async type="text/javascript"
+          src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel"
+          id="_carbonads_js"></script>
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <!-- Collapsed navigation -->
+    <div class="navbar-header">
+      <!-- Expander button -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- Main title -->
+      <a class="navbar-brand" href="../">Bootstrap-select</a>
+    </div>
+    <!-- Expanded navigation -->
+    <div class="navbar-collapse collapse">
+      <!-- Main navigation -->
+      <ul class="nav navbar-nav">
+      
+      
+        <li >
+          <a href="../usage">Usage</a>
+        </li>
+      
+      
+      
+        <li >
+          <a href="../examples">Examples</a>
+        </li>
+      
+      
+      
+        <li >
+          <a href="../options">Options</a>
+        </li>
+      
+      
+      
+        <li class="active">
+          <a href="">Methods</a>
+        </li>
+      
+      
+      </ul>
+      <!-- Search, Navigation and Repo links -->
+      <ul class="nav navbar-nav navbar-right">
+        
+        
+        <li>
+          <a href="https://github.com/silviomoreto/bootstrap-select">
+            <i class="fa fa-github"></i>
+            GitHub
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#methods">Methods</a></li>
+        
+            <li><a href="#val">val()</a></li>
+        
+            <li><a href="#selectall">selectAll()</a></li>
+        
+            <li><a href="#deselectall">deselectAll()</a></li>
+        
+            <li><a href="#render">render()</a></li>
+        
+            <li><a href="#mobile">mobile()</a></li>
+        
+            <li><a href="#setstyle">setStyle()</a></li>
+        
+            <li><a href="#refresh">refresh()</a></li>
+        
+            <li><a href="#hide">hide()</a></li>
+        
+            <li><a href="#show">show()</a></li>
+        
+            <li><a href="#destroy">destroy()</a></li>
+        
+    
+    </ul>
+</div></div>
+  <div class="col-md-9 content" role="main">
+    <div class="jumbotron clearfix">
+      <div id="carbonads-container" class="pull-right">
+        <div class="carbonad">
+          <div id="azcarbon"></div>
+          <script type="text/javascript">
+            var z = document.createElement("script");
+            z.type = "text/javascript";
+            z.async = true;
+            z.src = "http://engine.carbonads.com/z/51052/azcarbon_2_1_0_HORIZDARK";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(z, s);
+          </script>
+        </div>
+      </div>
+      <div class="pull-left">
+        <p>Download bootstrap-select</p>
+        <div class="downloads">
+          <a class="link zip" href="https://github.com/silviomoreto/bootstrap-select/zipball/v1.6.3">Download
+            this project as a .zip file</a>
+          <a class="link tgz" href="https://github.com/silviomoreto/bootstrap-select/tarball/v1.6.3">Download
+            this project as a tar.gz file</a>
+        </div>
+      </div>
+    </div>
+    
+
+<h1 id="methods">Methods</h1>
+<p>Interface with bootstrap-select.</p>
+<hr />
+<h2 id="val">val()</h2>
+<p>You can set the selected value by calling the <code>val</code> method on the element.</p>
+<pre class="prettyprint linenums">
+  $('.selectpicker').selectpicker('val', 'Mustard');
+  $('.selectpicker').selectpicker('val', ['Mustard','Relish']);
+</pre>
+
+<p>This is different to calling <code>val()</code> directly on the <code>select</code> element. If you call <code>val()</code> on the element directly,
+the bootstrap-select ui will not refresh (as the change event only fires from user interaction). You will have to call 
+the ui refresh method yourself.</p>
+<pre class="prettyprint linenums">
+  $('.selectpicker').val('Mustard');
+  $('.selectpicker').selectpicker('render');
+
+  //this is the equivalent of the above
+  $('.selectpicker').selectpicker('val', 'Mustard');
+</pre>
+
+<hr />
+<h2 id="selectall">selectAll()</h2>
+<p>This will select all items in a multi-select.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('selectAll');
+</pre>
+
+<hr />
+<h2 id="deselectall">deselectAll()</h2>
+<p>This will deselect all items in a multi-select.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('deselectAll');
+</pre>
+
+<hr />
+<h2 id="render">render()</h2>
+<p>You can force a re-render of the bootstrap-select ui with the <code>render</code> method. This is useful if you
+programatically change any underlying values that affect the layout of the element.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('render');
+</pre>
+
+<hr />
+<h2 id="mobile">mobile()</h2>
+<p>Enable mobile scrolling by calling <code>$('.selectpicker').selectpicker('mobile')</code>. This enables the device's native menu 
+for select menus.</p>
+<p>The method for detecting the browser is left up to the user.</p>
+<pre class="prettyprint linenums">
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    $('.selectpicker').selectpicker('mobile');
+}
+</pre>
+
+<hr />
+<h2 id="setstyle">setStyle()</h2>
+<p>Modify the class(es) associated with either the button itself or its container.</p>
+<p>If changing the class on the container:</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').addClass('col-lg-12').selectpicker('setStyle');
+</pre>
+
+<p>If changing the class(es) on the button (altering data-style):</p>
+<pre class="prettyprint linenums">
+// Replace Class
+  $('.selectpicker').selectpicker('setStyle', 'btn-danger');
+
+// Add Class
+  $('.selectpicker').selectpicker('setStyle', 'btn-large', 'add');
+
+// Remove Class
+  $('.selectpicker').selectpicker('setStyle', 'btn-large', 'remove');
+</pre>
+
+<hr />
+<h2 id="refresh">refresh()</h2>
+<p>To programmatically update a select with JavaScript, first manipulate the select, then use the <code>refresh</code> method to 
+update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a 
+select via JavaScript.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('refresh');
+</pre>
+
+<div class="bs-docs-example">
+  <select class="selectpicker remove-example">
+    <option value="Mustard">Mustard</option>
+    <option value="Ketchup">Ketchup</option>
+    <option value="Relish">Relish</option>
+  </select>
+  <br/>
+  <button class="btn btn-warning rm-mustard">Remove Mustard</button>
+  <button class="btn btn-danger rm-ketchup">Remove Ketchup</button>
+  <button class="btn btn-success rm-relish">Remove Relish</button>
+</div>
+
+<pre class="prettyprint linenums">
+  &lt;select class="selectpicker remove-example"&gt;
+    &lt;option value="Mustard"&gt;Mustard&lt;/option&gt;
+    &lt;option value="Ketchup"&gt;Ketchup&lt;/option&gt;
+    &lt;option value="Relish"&gt;Relish&lt;/option&gt;
+  &lt;/select&gt;
+
+&lt;button class="btn btn-warning rm-mustard"&gt;Remove Mustard&lt;/button&gt;
+&lt;button class="btn btn-danger rm-ketchup"&gt;Remove Ketchup&lt;/button&gt;
+&lt;button class="btn btn-success rm-relish"&gt;Remove Relish&lt;/button&gt;
+
+  $('.rm-mustard').click(function() {
+    $('.remove-example').find('[value=Mustard]').remove();
+    $('.remove-example').selectpicker('refresh');
+  });
+</pre>
+
+<div class="bs-docs-example">
+  <select class="selectpicker disable-example">
+    <option value="Mustard">Mustard</option>
+    <option value="Ketchup">Ketchup</option>
+    <option value="Relish">Relish</option>
+  </select>
+  <br/>
+  <button class="btn ex-disable"><i class="icon-remove"></i> Disable</button>
+  <button class="btn ex-enable"><i class="icon-ok"></i> Enable</button>
+</div>
+
+<pre class="prettyprint linenums">
+      $('.ex-disable').click(function() {
+          $('.disable-example').prop('disabled',true);
+          $('.disable-example').selectpicker('refresh');
+      });
+      $('.ex-enable').click(function() {
+          $('.disable-example').prop('disabled',false);
+          $('.disable-example').selectpicker('refresh');
+      });
+</pre>
+
+<hr />
+<h2 id="hide">hide()</h2>
+<p>To programmatically hide the bootstrap-select use the <code>hide</code> method.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('hide');
+</pre>
+
+<hr />
+<h2 id="show">show()</h2>
+<p>To programmatically show the bootstrap-select use the <code>show</code> method.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('show');
+</pre>
+
+<hr />
+<h2 id="destroy">destroy()</h2>
+<p>To programmatically destroy (remove) the bootstrap-select use the <code>destroy</code> method.</p>
+<pre class="prettyprint linenums">
+   $('.selectpicker').selectpicker('destroy');
+</pre>
+
+
+  </div>
+</div>
+
+
+
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap-3.0.3.min.js"></script>
+<script src="../js/prettify-1.0.min.js"></script>
+<script src="../js/base.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35848102-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</body>
+</html>
