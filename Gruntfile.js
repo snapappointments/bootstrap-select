@@ -195,7 +195,7 @@ module.exports = function (grunt) {
     },
 
     compress: {
-      main: {
+      zip: {
         options: {
           archive: 'bootstrap-select-<%= pkg.version %>.zip',
           mode: 'zip'
