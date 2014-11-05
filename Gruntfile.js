@@ -217,11 +217,11 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= jshint.main.src %>', '<%= jshint.i18n.src %>'],
-        tasks: 'dist-js'
+        tasks: 'build-js'
       },
       less: {
         files: 'less/*.less',
-        tasks: 'dist-css'
+        tasks: 'build-css'
       }
     }
   });
@@ -235,15 +235,18 @@ module.exports = function (grunt) {
   grunt.registerTask('change-version-number', 'sed');
 
   // CSS distribution
-  grunt.registerTask('dist-css', ['clean:css', 'less', 'autoprefixer', 'usebanner', 'cssmin']);
+  grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('dist-js', ['clean:js', 'concat', 'uglify']);
+  grunt.registerTask('build-js', ['clean:js', 'concat', 'uglify']);
+
+  // Development watch
+  grunt.registerTask('dev-watch', ['build-css', 'build-js', 'watch']);
 
   // Full distribution
-  grunt.registerTask('dist', ['dist-css', 'dist-js', 'compress']);
+  grunt.registerTask('dist', ['build-css', 'build-js', 'compress']);
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'dist-css', 'dist-js']);
+  grunt.registerTask('default', ['clean', 'build-css', 'build-js']);
 
 };
