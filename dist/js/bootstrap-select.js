@@ -1110,14 +1110,6 @@
       this.liHeight();
     },
 
-    update: function () {
-      this.reloadLi();
-      this.setWidth();
-      this.setStyle();
-      this.checkDisabled();
-      this.liHeight();
-    },
-
     hide: function () {
       this.$newElement.hide();
     },
