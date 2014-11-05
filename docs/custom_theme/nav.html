@@ -35,13 +35,8 @@
       {% endif %}
       {% endfor %}
       </ul>
-      <!-- Search, Navigation and Repo links -->
+      <!-- Repo links -->
       <ul class="nav navbar-nav navbar-right">
-        {% if include_search %}
-        <li>
-          <a href="#searchModal" data-toggle="modal"><i class="fa fa-search"></i> Search</a>
-        </li>
-        {% endif %}
         {% if repo_url %}
         <li>
           <a href="{{ repo_url }}">
