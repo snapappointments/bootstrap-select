@@ -769,7 +769,7 @@
       });
 
       this.$menu.on('click', 'li.disabled a, .popover-title, .popover-title :not(.close)', function (e) {
-        if (e.target == this) {
+        if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
           if (!that.options.liveSearch) {
