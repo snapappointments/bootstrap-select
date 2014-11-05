@@ -159,6 +159,36 @@ select via JavaScript.
       });
 </pre>
 
+<script type="text/javascript">
+  window.onload = function () {
+    $('.rm-mustard').click(function () {
+      var $re = $('.remove-example');
+      $re.find('[value=Mustard]').remove();
+      $re.selectpicker('refresh');
+    });
+    $('.rm-ketchup').click(function () {
+      var $re = $('.remove-example');
+      $re.find('[value=Ketchup]').remove();
+      $re.selectpicker('refresh');
+    });
+    $('.rm-relish').click(function () {
+      var $re = $('.remove-example');
+      $re.find('[value=Relish]').remove();
+      $re.selectpicker('refresh');
+    });
+    $('.ex-disable').click(function () {
+      var $de = $('.disable-example');
+      $de.prop('disabled', true);
+      $de.selectpicker('refresh');
+    });
+    $('.ex-enable').click(function () {
+      var $de = $('.disable-example');
+      $de.prop('disabled', false);
+      $de.selectpicker('refresh');
+    });
+  };
+</script>
+
 ---
 
 ## hide()
