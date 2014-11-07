@@ -11,6 +11,24 @@
     return icontains($(obj).data('normalizedText') || $(obj).text(), meta[3]);
   };
 
+  // Case insensitive search that starts with text
+  $.expr[':'].istartcontains = function (obj, index, meta) {
+    return istartscontains($(obj).text(), meta[3]);
+  };
+
+  // Case and accent insensitive search that starts with text
+  $.expr[':'].aistartcontains = function (obj, index, meta) {
+    // Strip html
+    var text = $(obj).text();
+    if ($(obj).data("normalizedText")) {
+      var div = document.createElement("div");
+      div.innerHTML = $(obj).data("normalizedText");
+      text = div.textContent || div.innerText || text;
+    }
+
+    return istartscontains(text, meta[3]);
+  };
+
   /**
    * Actual implementation of the case insensitive search.
    * @access private
@@ -20,6 +38,17 @@
    */
   function icontains(haystack, needle) {
     return haystack.toUpperCase().indexOf(needle.toUpperCase()) > -1;
+  }
+
+  /**
+   * Search for option that starts with the searched text
+   * @access private
+   * @param {String} haystack
+   * @param {String} needle
+   * @returns {boolean}
+   */
+  function istartscontains(haystack, needle) {
+    return $.trim(haystack.toUpperCase()).indexOf(needle.toUpperCase()) === 0;
   }
 
   /**
@@ -143,7 +172,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+    searchStartsWith: false
   };
 
   Selectpicker.prototype = {
@@ -841,9 +871,19 @@
         if (that.$searchbox.val()) {
 
           if (that.options.searchAccentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
+            if (that.options.searchStartsWith) {
+              that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aistartcontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
+            }
+            else {
+              that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
+            }
           } else {
-            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
+            if (that.options.searchStartsWith) {
+              that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':istartcontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
+            }
+            else {
+              that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
+            }
           }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
@@ -979,9 +1019,19 @@
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
             if (that.options.searchAccentInsensitive) {
-              $items = that.$newElement.find('li').filter(':aicontains(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
+              if (that.options.searchStartsWith) {
+                $items = that.$newElement.find('li').filter(':aistartcontains(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
+              }
+              else {
+                $items = that.$newElement.find('li').filter(':aicontains(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
+              }
             } else {
-              $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
+              if (that.options.searchStartsWith) {
+                $items = that.$newElement.find('li').filter(':istartcontains(' + keyCodeMap[e.keyCode] + ')');
+              }
+              else {
+                $items = that.$newElement.find('li').filter(':icontains(' + keyCodeMap[e.keyCode] + ')');
+              }
             }
           }
         }
