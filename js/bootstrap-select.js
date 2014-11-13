@@ -762,7 +762,7 @@
         }
       });
 
-      this.$menu.on('click', 'li.disabled a, .popover-title, .popover-title :not(.close)', function (e) {
+      this.$menu.on('click', 'li.disabled a, .popover-title, .popover-title :not(.close)' + (that.multiple ? ', ul' : ''), function (e) {
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
