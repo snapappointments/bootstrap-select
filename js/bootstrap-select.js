@@ -406,7 +406,8 @@
         title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
       }
 
-      this.$button.attr('title', htmlEscape($.trim(title)));
+      //strip all html-tags and trim the result
+      this.$button.attr('title', $.trim(title.replace(/<[^>]*>?/g, '')));
       this.$newElement.find('.filter-option').html(title);
     },
 
