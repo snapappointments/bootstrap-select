@@ -5,6 +5,15 @@
   cursor: not-allowed;
 }
 
+.user-select (@val) {
+  -webkit-touch-callout:  @val;
+  -webkit-user-select:    @val;
+  -khtml-user-select:     @val;
+  -moz-user-select:       @val;
+  -ms-user-select:        @val;
+  user-select:            @val;
+}
+
 // Rules
 .bootstrap-select {
   /*width: 220px\9; IE8 and below*/
@@ -131,6 +140,7 @@
     min-width: 100%;
     z-index: @zindex-select-dropdown;
     box-sizing: border-box;
+    user-select: none;
 
     &.inner {
       position: static;
