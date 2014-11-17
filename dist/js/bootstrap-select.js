@@ -56,23 +56,19 @@
     return text;
   }
 
+  var escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '`': '&#x60;'
+  };
 
   function htmlEscape(html) {
-    var escapeMap = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;',
-      '`': '&#x60;'
-    };
-    var source = '(?:' + Object.keys(escapeMap).join('|') + ')',
-        testRegexp = new RegExp(source),
-        replaceRegexp = new RegExp(source, 'g'),
-        string = html == null ? '' : '' + html;
-    return testRegexp.test(string) ? string.replace(replaceRegexp, function (match) {
+    return html.replace(/[&<>"'`]/g, function (match) {
       return escapeMap[match];
-    }) : string;
+    });
   }
 
   var Selectpicker = function (element, options, e) {
@@ -233,8 +229,7 @@
 
     createView: function () {
       var $drop = this.createDropdown();
-      var $li = this.createLi();
-      $drop.find('ul').append($li);
+      $drop.find('ul').get(0).innerHTML = this.createLi();
       return $drop;
     },
 
@@ -242,8 +237,7 @@
       //Remove all children.
       this.destroyLi();
       //Re build
-      var $li = this.createLi();
-      this.$menu.find('ul').append($li);
+      this.$menu.find('ul').get(0).innerHTML = this.createLi();
     },
 
     destroyLi: function () {
@@ -265,7 +259,7 @@
       var generateLI = function (content, index, classes) {
         return '<li' +
         (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-        (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
+        (index !== null ? ' data-original-index="' + index + '"' : '') +
         '>' + content + '</li>';
       };
 
@@ -277,44 +271,48 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline, optgroup) {
-        var normText = normalizeToBase(htmlEscape(text));
         return '<a tabindex="0"' +
-        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-        (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
+        (classes !== '' ? ' class="' + classes + '"' : '') +
+        (inline !== null ? ' style="' + inline + '"' : '') +
         (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
-        ' data-normalized-text="' + normText + '"' +
+        (that.options.searchAccentInsensitive ? ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' : '') +
         '>' + text +
         '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
         '</a>';
       };
 
-      this.$element.find('option').each(function () {
-        var $this = $(this);
+      var select = this.$element.get(0);
+      for (var i = 0; i < select.options.length; ++i) {
+
+        var option = select.options[i];
 
         // Get the class and text for the option
-        var optionClass = $this.attr('class') || '',
-            inline = $this.attr('style'),
-            text = $this.data('content') ? $this.data('content') : $this.html(),
-            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '',
-            icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled'),
-            index = $this[0].index;
+        var optionClass = option.className || '',
+            inline = option.getAttribute('style'),
+            content = option.getAttribute('data-content'),
+            text = content !== null ? content : option.innerHTML,
+            icon = '', //typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
+            isDisabled = option.disabled || option.parentElement.disabled,
+            index = option.index;
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
 
-        if (!$this.data('content')) {
+        if (content !== null) {
           // Prepend any icon and append any subtext to the main text.
+          var subtext = option.getAttribute('data-subtext');
+          subtext = subtext !== null ? '<small class="muted text-muted">' + subtext + '</small>' : '',
           text = icon + '<span class="text">' + text + subtext + '</span>';
         }
 
         if (that.options.hideDisabled && isDisabled) {
-          return;
+          continue;
         }
 
-        if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
-          if ($this.index() === 0) { // Is it the first option of the optgroup?
+        if (option.parentElement.tagName == 'OPTGROUP' && $this.data('divider') !== true) {
+          if (option.index === 0) { // Is it the first option of the optgroup?
             optID += 1;
+            var $this = $(select.options[i]);
 
             // Get the opt group label
             var label = $this.parent().attr('label');
@@ -330,21 +328,21 @@
           }
 
           _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, optID), index));
-        } else if ($this.data('divider') === true) {
+        } else if (option.getAttribute('data-divider') === 'true') {
           _li.push(generateLI('', index, 'divider'));
-        } else if ($this.data('hidden') === true) {
+        } else if (option.getAttribute('data-hidden') === 'true') {
           _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden'));
         } else {
           _li.push(generateLI(generateA(text, optionClass, inline), index));
         }
-      });
+      }
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
       if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
         this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
       }
 
-      return $(_li.join(''));
+      return _li.join('');
     },
 
     findLis: function () {
@@ -360,10 +358,7 @@
 
       //Update the LI to match the SELECT
       if (updateLi !== false) {
-        this.$element.find('option').each(function (index) {
-          that.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled'));
-          that.setSelected(index, $(this).is(':selected'));
-        });
+        this.updateSelectedAndDisabled();
       }
 
       this.tabIndex();
@@ -606,17 +601,23 @@
     },
 
     setSelected: function (index, selected) {
-      this.findLis();
-      this.$lis.filter('[data-original-index="' + index + '"]').toggleClass('selected', selected);
+      this.$menu.find('li[data-original-index="' + index + '"]').toggleClass('selected', selected);
     },
 
-    setDisabled: function (index, disabled) {
-      this.findLis();
-      if (disabled) {
-        this.$lis.filter('[data-original-index="' + index + '"]').addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
-      } else {
-        this.$lis.filter('[data-original-index="' + index + '"]').removeClass('disabled').find('a').removeAttr('href').attr('tabindex', 0);
-      }
+    updateSelectedAndDisabled: function () {
+        var select = this.$element.get(0);
+        this.findLis();
+        this.$lis.each(function(i) {
+           var $this = $(this),
+               original_index = $this.data('original-index');
+
+           $this.toggleClass('selected', select.options[original_index].selected);
+           if (select.options[original_index].disabled && !$this.hasClass('disabled')) {
+               $this.addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
+           } else if ($this.hasClass('disabled')) {
+               $this.removeClass('disabled').find('a').removeAttr('href').attr('tabindex', 0);
+           }
+        });
     },
 
     isDisabled: function () {
