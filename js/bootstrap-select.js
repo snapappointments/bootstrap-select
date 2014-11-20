@@ -750,7 +750,9 @@
           }
 
           if (!that.multiple) {
-            that.$button.focus();
+              setTimeout(function () { // BUG FIX: Fixes spacebar selection of dropdown items in FF & IE
+                  that.$button.focus();
+              }, 50);
           } else if (that.options.liveSearch) {
             that.$searchbox.focus();
           }
