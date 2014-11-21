@@ -103,7 +103,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.6.3';
+  Selectpicker.VERSION = '1.6.4';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -123,6 +123,8 @@
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
     multipleSeparator: ', ',
+    buttonBase: 'btn',
+    dropBase: 'btn-group',
     style: 'btn-default',
     size: 'auto',
     title: null,
@@ -208,8 +210,8 @@
       '</div>' +
       '</div>' : '';
       var drop =
-          '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-          '<button type="button" class="btn dropdown-toggle form-control selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
+          '<div class="' + this.options.dropBase + ' bootstrap-select' + multiple + inputGroup + '">' +
+          '<button type="button" class="' + this.options.buttonBase + ' dropdown-toggle form-control selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="caret"></span>' +
           '</button>' +
