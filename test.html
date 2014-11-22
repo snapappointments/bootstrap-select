@@ -46,6 +46,7 @@
       </div>
     </div>
   </form>
+
   <hr>
   <form class="form-horizontal" role="form">
     <div class="form-group">
@@ -65,6 +66,7 @@
       </div>
     </div>
   </form>
+
   <hr>
   <form class="form-horizontal" role="form">
     <div class="form-group">
@@ -80,6 +82,7 @@
       </div>
     </div>
   </form>
+
   <hr>
   <form class="form-inline">
     <div class="form-group">
@@ -95,6 +98,7 @@
       </select>
     </div>
   </form>
+
   <hr>
   <form class="form-horizontal" role="form">
     <div class="form-group form-group-lg">
@@ -109,6 +113,7 @@
       </div>
     </div>
   </form>
+
   <hr>
   <form class="form-horizontal" role="form">
     <div class="form-group has-error form-group-lg">
@@ -125,6 +130,7 @@
       </div>
     </div>
   </form>
+
   <hr>
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
@@ -169,6 +175,7 @@
     </div>
     <!-- .container-fluid -->
   </nav>
+
   <hr>
   <select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
     <optgroup disabled="disabled" label="disabled">
@@ -183,6 +190,7 @@
       <option>Carrot</option>
     </optgroup>
   </select>
+
   <hr>
   <select id="first-disabled2" class="selectpicker" multiple data-hide-disabled="true" data-size="5">
     <option>Apple</option>
@@ -200,21 +208,33 @@
   </select>
   <button id="special" class="btn btn-default">Hide selected by disabling</button>
   <p>Just select 1st element, click button and check list again</p>
-  <script>
-    $(document).ready(function () {
-      var mySelect = $('#first-disabled2');
 
-      $('#special').on('click', function () {
-        mySelect.find('option:selected').attr('disabled', 'disabled');
-        mySelect.selectpicker('refresh');
-      });
-
-      var $basic2 = $('#basic2').selectpicker({
-        liveSearch: true,
-        maxOptions: 1
-      });
-    });
-  </script>
+  <hr>
+  <div class="input-group">
+    <span class="input-group-addon">@</span>
+    <select class="form-control selectpicker">
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+    </select>
+  </div>
+  
 </div>
+
+<script>
+  $(document).ready(function () {
+    var mySelect = $('#first-disabled2');
+
+    $('#special').on('click', function () {
+      mySelect.find('option:selected').attr('disabled', 'disabled');
+      mySelect.selectpicker('refresh');
+    });
+
+    var $basic2 = $('#basic2').selectpicker({
+      liveSearch: true,
+      maxOptions: 1
+    });
+  });
+</script>
 </body>
 </html>
