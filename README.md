@@ -32,16 +32,18 @@ Create your `<select>` with the `.selectpicker` class.
 </select>
 ```
 
-Enable Bootstrap-Select via JavaScript:
+If you use a 1.6.3 or newer, you don't need to to anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
+
+If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](http://api.jquery.com/ready/) block.
 ```js
+// To style only <select>s with the selectpicker class
 $('.selectpicker').selectpicker();
 ```
-Or just
+Or
 ```js
+// To style all <select>s
 $('select').selectpicker();
 ```
-
-***Starting with the current dev version, we support bootstrap's data-api, which means that you don't even have to manually instanciate bootstrap-select.***
 
 Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for further information.
 
