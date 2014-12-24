@@ -1302,6 +1302,7 @@
       this.setStyle();
       this.checkDisabled();
       this.liHeight();
+      this.$searchbox.trigger('propertychange');
     },
 
     hide: function () {
