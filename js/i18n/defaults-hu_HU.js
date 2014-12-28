@@ -6,7 +6,7 @@
 (function ($) {
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Válasszon!',
-    noneResultsText: 'Nincs találat',
+    noneResultsText: 'Nincs találat {0}',
     countSelectedText: function (numSelected, numTotal) {
       return '{n} elem kiválasztva';
     },

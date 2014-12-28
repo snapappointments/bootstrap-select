@@ -7,7 +7,7 @@
 (function ($) {
 $.fn.selectpicker.defaults = {
 noneSelectedText: 'Hiçbiri seçilmedi',
-noneResultsText: 'Hiçbir sonuç bulunamadı',
+noneResultsText: 'Hiçbir sonuç bulunamadı {0}',
 countSelectedText: function (numSelected, numTotal) {
 return (numSelected == 1) ? "{0} öğe seçildi" : "{0} öğe seçildi";
 },
