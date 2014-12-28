@@ -1,4 +1,3 @@
-/*jshint node:true*/
 module.exports = function (grunt) {
 
   // From TWBS
@@ -53,13 +52,9 @@ module.exports = function (grunt) {
         dest: 'dist/js/<%= pkg.name %>.js'
       },
       i18n: {
-        files: [
-          {
-            expand: true,
-            src: '<%= jshint.i18n.src %>',
-            dest: 'dist/'
-          }
-        ]
+        expand: true,
+        src: '<%= jshint.i18n.src %>',
+        dest: 'dist/'
       }
     },
 
@@ -76,15 +71,9 @@ module.exports = function (grunt) {
         }
       },
       i18n: {
-        files: [
-          {
-            expand: true,
-            cwd: 'dist/',
-            src: '<%= jshint.i18n.src %>',
-            dest: 'dist/',
-            ext: '.min.js'
-          }
-        ]
+        expand: true,
+        src: 'dist/<%= jshint.i18n.src %>',
+        ext: '.min.js'
       }
     },
 
@@ -98,7 +87,7 @@ module.exports = function (grunt) {
         sourceMap: true,
         outputSourceFiles: true,
         sourceMapURL: '<%= pkg.name %>.css.map',
-        sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+        sourceMapFilename: '<%= less.css.dest %>.map'
       },
       css: {
         src: 'less/bootstrap-select.less',
@@ -247,6 +236,6 @@ module.exports = function (grunt) {
   grunt.registerTask('dist', ['build-css', 'build-js', 'compress']);
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'build-css', 'build-js']);
+  grunt.registerTask('default', ['build-css', 'build-js']);
 
 };

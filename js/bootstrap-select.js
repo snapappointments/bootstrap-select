@@ -160,8 +160,8 @@
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
       this.$element.after(this.$newElement);
-      this.$menu = this.$newElement.find('> .dropdown-menu');
-      this.$button = this.$newElement.find('> button');
+      this.$menu = this.$newElement.children('.dropdown-menu');
+      this.$button = this.$newElement.children('button');
       this.$searchbox = this.$newElement.find('input');
 
       if (this.options.dropdownAlignRight)
@@ -193,8 +193,7 @@
       // If we are multiple, then add the show-tick class by default
       var multiple = this.multiple ? ' show-tick' : '',
           inputGroup = this.$element.parent().hasClass('input-group') ? ' input-group-btn' : '',
-          autofocus = this.autofocus ? ' autofocus' : '',
-          btnSize = this.$element.parents().hasClass('form-group-lg') ? ' btn-lg' : (this.$element.parents().hasClass('form-group-sm') ? ' btn-sm' : '');
+          autofocus = this.autofocus ? ' autofocus' : '';
       // Elements
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
       var searchbox = this.options.liveSearch ?
@@ -205,11 +204,11 @@
         : '';
       var actionsbox = this.options.actionsBox ?
           '<div class="bs-actionsbox">' +
-          '<div class="btn-group btn-block">' +
-          '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
+          '<div class="btn-group btn-group-sm btn-block">' +
+          '<button class="actions-btn bs-select-all btn btn-default">' +
             this.options.selectAllText +
           '</button>' +
-          '<button class="actions-btn bs-deselect-all btn btn-sm btn-default">' +
+          '<button class="actions-btn bs-deselect-all btn btn-default">' +
             this.options.deselectAllText +
           '</button>' +
           '</div>' +
@@ -217,7 +216,7 @@
         : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-          '<button type="button" class="btn dropdown-toggle form-control selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
+          '<button type="button" class="btn dropdown-toggle form-control selectpicker" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="caret"></span>' +
           '</button>' +
@@ -297,7 +296,7 @@
         var optionClass = $this.attr('class') || '',
             inline = $this.attr('style'),
             text = $this.data('content') ? $this.data('content') : $this.html(),
-            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '',
+            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
             isDisabled = $this.is(':disabled') || $this.parent().is(':disabled'),
             index = $this.index();
@@ -320,7 +319,7 @@
 
             // Get the opt group label
             var label = $this.parent().attr('label');
-            var labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="muted text-muted">' + $this.parent().data('subtext') + '</small>' : '';
+            var labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '';
             var labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
@@ -375,7 +374,7 @@
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
         var subtext;
         if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
-          subtext = ' <small class="muted text-muted">' + $this.data('subtext') + '</small>';
+          subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
         } else {
           subtext = '';
         }
@@ -443,8 +442,8 @@
     liHeight: function () {
       if (this.options.size === false) return;
 
-      var $selectClone = this.$menu.parent().clone().find('> .dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
-          $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
+      var $selectClone = this.$menu.parent().clone().children('.dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
+          $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
           liHeight = $menuClone.find('li').not('.divider').not('.dropdown-header').filter(':visible').children('a').outerHeight(),
           headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox').outerHeight() : 0,
@@ -498,7 +497,7 @@
           menuHeight = selectOffsetBot - menuExtras;
 
           if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && ((menuHeight - menuExtras) < menu.height()));
+            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < menu.height());
           }
           if (that.$newElement.hasClass('dropup')) {
             menuHeight = selectOffsetTop - menuExtras;
@@ -523,15 +522,15 @@
         };
         getSize();
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
-        $(window).off('resize.getSize').on('resize.getSize', getSize);
-        $(window).off('scroll.getSize').on('scroll.getSize', getSize);
+        $window.off('resize.getSize').on('resize.getSize', getSize);
+        $window.off('scroll.getSize').on('scroll.getSize', getSize);
       } else if (this.options.size && this.options.size != 'auto' && menu.find('li' + notDisabled).length > this.options.size) {
-        var optIndex = this.$lis.not('.divider' + notDisabled).find(' > *').slice(0, this.options.size).last().parent().index();
+        var optIndex = this.$lis.not('.divider' + notDisabled).children().slice(0, this.options.size).last().parent().index();
         var divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
-          this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight < menu.height()));
+          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && menuHeight < menu.height());
         }
         menu.css({'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + 'px', 'overflow': 'hidden'});
         menuInner.css({'max-height': menuHeight - menuPadding + 'px', 'overflow-y': 'auto'});
@@ -544,8 +543,8 @@
 
         // Get correct width if element hidden
         var selectClone = this.$newElement.clone().appendTo('body');
-        var ulWidth = selectClone.find('> .dropdown-menu').css('width');
-        var btnWidth = selectClone.css('width', 'auto').find('> button').css('width');
+        var ulWidth = selectClone.children('.dropdown-menu').css('width');
+        var btnWidth = selectClone.css('width', 'auto').children('button').css('width');
         selectClone.remove();
 
         // Set width to whatever's larger, button title or longest option
@@ -701,7 +700,7 @@
             that.setSelected(clickedIndex, !state);
             $this.blur();
 
-            if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
+            if (maxOptions !== false || maxOptionsGrp !== false) {
               var maxReached = maxOptions < $options.filter(':selected').length,
                   maxReachedGrp = maxOptionsGrp < $optgroup.find('option:selected').length;
 
