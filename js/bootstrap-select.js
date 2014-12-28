@@ -197,23 +197,23 @@
       // Elements
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
       var searchbox = this.options.liveSearch ?
-          '<div class="bs-searchbox">' +
-          '<input type="text" class="form-control" autocomplete="off"' +
-          (null === this.options.liveSearchPlaceholder ? '' : ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"') + '>' +
-          '</div>'
-        : '';
+      '<div class="bs-searchbox">' +
+      '<input type="text" class="form-control" autocomplete="off"' +
+      (null === this.options.liveSearchPlaceholder ? '' : ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"') + '>' +
+      '</div>'
+          : '';
       var actionsbox = this.options.actionsBox ?
-          '<div class="bs-actionsbox">' +
-          '<div class="btn-group btn-group-sm btn-block">' +
-          '<button class="actions-btn bs-select-all btn btn-default">' +
-            this.options.selectAllText +
-          '</button>' +
-          '<button class="actions-btn bs-deselect-all btn btn-default">' +
-            this.options.deselectAllText +
-          '</button>' +
-          '</div>' +
-          '</div>'
-        : '';
+      '<div class="bs-actionsbox">' +
+      '<div class="btn-group btn-group-sm btn-block">' +
+      '<button class="actions-btn bs-select-all btn btn-default">' +
+      this.options.selectAllText +
+      '</button>' +
+      '<button class="actions-btn bs-deselect-all btn btn-default">' +
+      this.options.deselectAllText +
+      '</button>' +
+      '</div>' +
+      '</div>'
+          : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
           '<button type="button" class="btn dropdown-toggle form-control selectpicker" data-toggle="dropdown"' + autofocus + '>' +
@@ -261,32 +261,32 @@
        * @param content
        * @param [index]
        * @param [classes]
+       * @param [optgroup]
        * @returns {string}
        */
-      var generateLI = function (content, index, classes) {
+      var generateLI = function (content, index, classes, optgroup) {
         return '<li' +
-        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-        ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
-        '>' + content + '</li>';
+            ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
+            ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
+            ((typeof optgroup !== 'undefined' & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
+            '>' + content + '</li>';
       };
 
       /**
        * @param text
        * @param [classes]
        * @param [inline]
-       * @param [optgroup]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline, optgroup) {
+      var generateA = function (text, classes, inline) {
         var normText = normalizeToBase(htmlEscape(text));
         return '<a tabindex="0"' +
-        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-        (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-        (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
-        ' data-normalized-text="' + normText + '"' +
-        '>' + text +
-        '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
-        '</a>';
+            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+            (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
+            ' data-normalized-text="' + normText + '"' +
+            '>' + text +
+            '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
+            '</a>';
       };
 
       this.$element.find('option').each(function (index) {
@@ -326,10 +326,10 @@
               _li.push(generateLI('', null, 'divider'));
             }
 
-            _li.push(generateLI(label, null, 'dropdown-header'));
+            _li.push(generateLI(label, null, 'dropdown-header', optID));
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, optID), index));
+          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline), index, '', optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
@@ -846,12 +846,20 @@
 
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
-
           if (that.options.searchAccentInsensitive) {
             that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
           } else {
             that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
           }
+
+          that.$lis.filter('.dropdown-header').each(function () {
+            var $this = $(this),
+                optgroup = $this.data('optgroup');
+
+            if (that.$lis.filter('[data-optgroup=' + optgroup + ']').not($this).filter(':visible').length === 0) {
+              $this.addClass('hidden');
+            }
+          });
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
             if (!!no_results.parent().length) {
