@@ -6,7 +6,7 @@
 (function ($) {
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Aucune s&eacute;lection',
-    noneResultsText: 'Aucun r&eacute;sultat',
+    noneResultsText: 'Aucun r&eacute;sultat pour {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected > 1) ? "{0} &eacute;l&eacute;ments s&eacute;lection&eacute;s" : "{0} &eacute;l&eacute;ment s&eacute;lection&eacute;";
     },

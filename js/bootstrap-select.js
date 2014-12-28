@@ -108,7 +108,7 @@
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
-    noneResultsText: 'No results match',
+    noneResultsText: 'No results matched {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
@@ -854,8 +854,10 @@
           }
 
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
-            if (!!no_results.parent().length) no_results.remove();
-            no_results.html(that.options.noneResultsText + ' "' + htmlEscape(that.$searchbox.val()) + '"').show();
+            if (!!no_results.parent().length) {
+              no_results.remove();
+            }
+            no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
             that.$menu.find('li').last().after(no_results);
           } else if (!!no_results.parent().length) {
             no_results.remove();
@@ -863,7 +865,9 @@
 
         } else {
           that.$lis.not('.is-hidden').removeClass('hidden');
-          if (!!no_results.parent().length) no_results.remove();
+          if (!!no_results.parent().length) {
+            no_results.remove();
+          }
         }
 
         that.$menu.find('li.active').removeClass('active');
