@@ -148,7 +148,6 @@ module.exports = function (grunt) {
         path: [
           'less',
           'js',
-          'bootstrap-select.jquery.json',
           'bower.json',
           'composer.json',
           'package.json'
@@ -190,9 +189,13 @@ module.exports = function (grunt) {
           mode: 'zip'
         },
         files: [
-          {expand: true, cwd: 'dist/', src: ['**'], dest: 'bootstrap-select-<%= pkg.version %>/'},
           {
-            src: ['bootstrap-select.jquery.json', 'bower.json', 'composer.json', 'package.json'],
+            expand: true,
+            cwd: 'dist/',
+            src: ['**'],
+            dest: 'bootstrap-select-<%= pkg.version %>/'
+          }, {
+            src: ['bower.json', 'composer.json', 'package.json'],
             dest: 'bootstrap-select-<%= pkg.version %>/'
           }
         ]
