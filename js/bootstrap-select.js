@@ -377,10 +377,10 @@
         } else {
           subtext = '';
         }
-        if ($this.data('content') && that.options.showContent) {
-          return $this.data('content');
-        } else if (typeof $this.attr('title') !== 'undefined') {
+        if (typeof $this.attr('title') !== 'undefined') {
           return $this.attr('title');
+        } else if ($this.data('content') && that.options.showContent) {
+          return $this.data('content');
         } else {
           return icon + $this.html() + subtext;
         }
