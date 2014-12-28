@@ -266,7 +266,7 @@
       var generateLI = function (content, index, classes) {
         return '<li' +
         (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-        (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
+        ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
         '>' + content + '</li>';
       };
 
@@ -289,7 +289,7 @@
         '</a>';
       };
 
-      this.$element.find('option').each(function () {
+      this.$element.find('option').each(function (index) {
         var $this = $(this);
 
         // Get the class and text for the option
@@ -298,8 +298,7 @@
             text = $this.data('content') ? $this.data('content') : $this.html(),
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled'),
-            index = $this.index();
+            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled');
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
