@@ -4,19 +4,19 @@
   "filename": "bootstrap-select.js",
   "description": "A custom <select> for Bootstrap using button dropdown as replacement",
   "version": "1.6.3",
-  "homepage": "http://silviomoreto.github.io/bootstrap-select/",
+  "homepage": "http://silviomoreto.github.io/bootstrap-select",
   "author": {
     "name": "Silvio Moreto",
-    "url": "https://github.com/silviomoreto/"
+    "url": "https://github.com/silviomoreto"
   },
   "contributors": [
     {
       "name": "Silvio Moreto",
-      "url": "http://github.com/silviomoreto"
+      "url": "https://github.com/silviomoreto"
     },
     {
       "name": "Ana Carolina",
-      "url": "http://github.com/anacarolinats"
+      "url": "https://github.com/anacarolinats"
     },
     {
       "name": "caseyjhol",
@@ -56,7 +56,6 @@
     "grunt-contrib-cssmin": "~0.10.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-less": "~0.11.3",
-    "grunt-contrib-qunit": "~0.5.2",
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-sed": "~0.1.1",
