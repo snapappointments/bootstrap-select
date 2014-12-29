@@ -17,8 +17,8 @@
       arr[1] = (numGroup == 1) ? 'Grup limiti aşıldı (maksimum {n} sayıda öğe)' : 'Grup limiti aşıldı (maksimum {n} sayıda öğe)';
       return arr;
     },
-    selectAllText: 'Hepsini seç',
-    deselectAllText: 'Hiçbirini seçme',
+    selectAllText: 'Tümünü Seç',
+    deselectAllText: 'Seçiniz',
     multipleSeparator: ', '
   };
 }(jQuery));
