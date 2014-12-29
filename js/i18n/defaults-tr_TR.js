@@ -2,6 +2,7 @@
  * Translated default messages for bootstrap-select.
  * Locale: TR (Turkey)
  * Region: TR (Europe)
+ * Author: Serhan Güney
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
@@ -16,8 +17,8 @@
       arr[1] = (numGroup == 1) ? 'Grup limiti aşıldı (maksimum {n} sayıda öğe)' : 'Grup limiti aşıldı (maksimum {n} sayıda öğe)';
       return arr;
     },
-    selectAllText: 'Hepsini seç',
-    deselectAllText: 'Hiçbirini seçme',
+    selectAllText: 'Tümünü Seç',
+    deselectAllText: 'Seçiniz',
     multipleSeparator: ', '
   };
 }(jQuery));
