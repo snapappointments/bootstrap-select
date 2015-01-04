@@ -109,6 +109,7 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
+    createItemText: 'Create: {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
@@ -144,7 +145,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+    createItem: false
   };
 
   Selectpicker.prototype = {
@@ -865,7 +867,8 @@
             if (!!no_results.parent().length) {
               no_results.remove();
             }
-            no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
+            var text = that.options.createItem ? that.options.createItemText : that.options.noneResultsText;
+            no_results.html(text.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
             that.$menu.find('li').last().after(no_results);
           } else if (!!no_results.parent().length) {
             no_results.remove();
@@ -1101,7 +1104,12 @@
           // Prevent screen from scrolling if the user hit the spacebar
           e.preventDefault();
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
-          that.$menu.find('.active a').click();
+          var active = that.$menu.find('.active');
+          if(active.hasClass('no-results') && that.options.createItem) {
+            that.createItem(that.$searchbox.val());
+          } else {
+            that.$menu.find('.active a').click();
+          }
           $this.focus();
         }
         $(document).data('keycount', 0);
@@ -1111,6 +1119,13 @@
         that.$menu.parent().removeClass('open');
         that.$button.focus();
       }
+    },
+
+    createItem: function(val) {
+      this.$element.append($('<option value="' + val + '">' + val + '</option>'));
+      this.$newElement.removeClass('open');
+      this.refresh();
+      this.val(val);
     },
 
     mobile: function () {
