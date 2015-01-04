@@ -1126,6 +1126,7 @@
       this.$newElement.removeClass('open');
       this.refresh();
       this.val(val);
+      this.$element.change();
     },
 
     mobile: function () {
