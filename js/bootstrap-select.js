@@ -144,7 +144,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    searchAccentInsensitive: false
+    searchAccentInsensitive: false,
+	select:null
   };
 
   Selectpicker.prototype = {
@@ -186,6 +187,9 @@
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
+      if(typeof(this.options.select) == "function"){
+	    this.$menu.find('.selectpicker li').on('click',this.options.select);
+	  }
     },
 
     createDropdown: function () {
