@@ -122,6 +122,8 @@
     },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
+    doneButton: false,
+    doneButtonText: 'Done',
     multipleSeparator: ', ',
     style: 'btn-default',
     size: 'auto',
@@ -214,6 +216,14 @@
       '</div>' +
       '</div>'
           : '';
+      var donebutton = this.multiple && this.options.doneButton? '<div class="bs-donebutton">' +
+      '<div class="btn-group btn-block">' +
+      '<button class="btn btn-sm btn-default">' +
+      this.options.doneButtonText +
+      '</button>' +
+      '</div>' +
+      '</div>'
+      : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
           '<button type="button" class="btn dropdown-toggle form-control selectpicker" data-toggle="dropdown"' + autofocus + '>' +
@@ -226,6 +236,7 @@
           actionsbox +
           '<ul class="dropdown-menu inner selectpicker" role="menu">' +
           '</ul>' +
+          donebutton +
           '</div>' +
           '</div>';
 
@@ -446,7 +457,8 @@
           liHeight = $menuClone.find('li').not('.divider').not('.dropdown-header').filter(':visible').children('a').outerHeight(),
           headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox').outerHeight() : 0,
-          actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox').outerHeight() : 0;
+          actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox').outerHeight() : 0,
+          doneButtonHeight = this.multiple ? $menuClone.find('.bs-donebutton').outerHeight() : 0;
 
       $selectClone.remove();
 
@@ -454,7 +466,8 @@
           .data('liHeight', liHeight)
           .data('headerHeight', headerHeight)
           .data('searchHeight', searchHeight)
-          .data('actionsHeight', actionsHeight);
+          .data('actionsHeight', actionsHeight)
+          .data('doneButtonHeight', doneButtonHeight);
     },
 
     setSize: function () {
@@ -467,6 +480,7 @@
           headerHeight = this.$newElement.data('headerHeight'),
           searchHeight = this.$newElement.data('searchHeight'),
           actionsHeight = this.$newElement.data('actionsHeight'),
+          doneButtonHeight = this.$newElement.data('doneButtonHeight'),
           divHeight = this.$lis.filter('.divider').outerHeight(true),
           menuPadding = parseInt(menu.css('padding-top')) +
               parseInt(menu.css('padding-bottom')) +
@@ -511,10 +525,10 @@
           menu.css({
             'max-height': menuHeight + 'px',
             'overflow': 'hidden',
-            'min-height': minHeight + headerHeight + searchHeight + actionsHeight + 'px'
+            'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
           });
           menuInner.css({
-            'max-height': menuHeight - headerHeight - searchHeight - actionsHeight - menuPadding + 'px',
+            'max-height': menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding + 'px',
             'overflow-y': 'auto',
             'min-height': Math.max(minHeight - menuPadding, 0) + 'px'
           });
@@ -531,7 +545,7 @@
           //noinspection JSUnusedAssignment
           this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && menuHeight < menu.height());
         }
-        menu.css({'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + 'px', 'overflow': 'hidden'});
+        menu.css({'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px', 'overflow': 'hidden'});
         menuInner.css({'max-height': menuHeight - menuPadding + 'px', 'overflow-y': 'auto'});
       }
     },
