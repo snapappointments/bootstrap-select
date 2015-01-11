@@ -1,7 +1,7 @@
 /*!
  * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2014 bootstrap-select
+ * Copyright 2013-2015 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -225,7 +225,8 @@
   display: block;
 }
 .bs-searchbox,
-.bs-actionsbox {
+.bs-actionsbox,
+.bs-donebutton {
   padding: 4px 8px;
 }
 .bs-actionsbox {
@@ -237,6 +238,16 @@
 }
 .bs-actionsbox .btn-group button {
   width: 50%;
+}
+.bs-donebutton {
+  float: left;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.bs-donebutton .btn-group button {
+  width: 100%;
 }
 .bs-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
