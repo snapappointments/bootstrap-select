@@ -1,7 +1,7 @@
 /*!
  * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2014 bootstrap-select
+ * Copyright 2013-2015 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 (function ($) {
@@ -9,12 +9,12 @@
 
   // Case insensitive search
   $.expr[':'].icontains = function (obj, index, meta) {
-    return icontains($(obj).text(), meta[3]);
+    return icontains($(obj).parent().data('tokens') || $(obj).text(), meta[3]);
   };
 
   // Case and accent insensitive search
   $.expr[':'].aicontains = function (obj, index, meta) {
-    return icontains($(obj).data('normalizedText') || $(obj).text(), meta[3]);
+    return icontains($(obj).parent().data('tokens') || $(obj).data('normalizedText') || $(obj).text(), meta[3]);
   };
 
   /**
@@ -270,11 +270,12 @@
        * @param [optgroup]
        * @returns {string}
        */
-      var generateLI = function (content, index, classes, optgroup) {
+      var generateLI = function (content, index, classes, optgroup, tokens) {
         return '<li' +
             ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
             ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
             ((typeof optgroup !== 'undefined' & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
+            ((typeof tokens !== 'undefined' & null !== tokens) ? 'data-tokens="' + tokens + '"' : '') +
             '>' + content + '</li>';
       };
 
@@ -304,6 +305,7 @@
             text = $this.data('content') ? $this.data('content') : $this.html(),
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
+            tokens = $this.data('tokens') ? $this.data('tokens') : null,
             isDisabled = $this.is(':disabled') || $this.parent().is(':disabled');
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
@@ -335,13 +337,13 @@
             _li.push(generateLI(label, null, 'dropdown-header', optID));
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline), index, '', optID));
+          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline), index, '', optID, tokens));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden', null, tokens));
         } else {
-          _li.push(generateLI(generateA(text, optionClass, inline), index));
+          _li.push(generateLI(generateA(text, optionClass, inline), index, null, null, tokens));
         }
       });
 
