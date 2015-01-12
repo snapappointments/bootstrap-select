@@ -15,7 +15,7 @@
   </style>
 
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script type="text/javascript" src="dist/js/bootstrap-select.js"></script>
+  <script type="text/javascript" src="js/bootstrap-select.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -63,6 +63,26 @@
             <option>Ble</option>
           </optgroup>
         </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="basic2" class="col-lg-2 control-label">live-search = true, tokens in each option</label>
+
+      <div class="col-lg-10">
+        <select id="liveSearchTokens" class="selectpicker show-tick form-control"  data-live-search="true">
+          <option data-tokens="fruits apple">apple</option>
+          <option data-tokens="vegetables carrot">carrot</option>
+          <option data-tokens="fruits orange">orange</option>
+          <option data-tokens="fruits grape">grape</option>
+          <option data-tokens="vegetables cucumber">cucumber</option>
+          <option data-tokens="vegetables spinach">spinach</option>
+        </select>
+
+        <p class="help-block">Try <code>fruits</code> or <code>vegetables</code> in liveSearch box</p>
       </div>
     </div>
   </form>
@@ -218,7 +238,7 @@
       <option>Three</option>
     </select>
   </div>
-  
+
 </div>
 
 <script>

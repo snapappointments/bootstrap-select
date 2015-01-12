@@ -1,6 +1,8 @@
-# OS or Editor folders
+# OS or Editor files or folders
 .DS_Store
 .idea
+Thumbs.db
+*.sublime-*
 
 # Folders to ignore
 node_modules
