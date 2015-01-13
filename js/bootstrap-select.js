@@ -1100,7 +1100,7 @@
           elem.focus();
           
           //Move focus to next control in DOM Tree
-          that.$newElement.next('input').focus();
+          $.Tabit();
           
           // Prevent screen from scrolling if the user hit the spacebar
           e.preventDefault();
@@ -1116,7 +1116,7 @@
         //that.$button.focus();
         
         //Move focus to next control in DOM Tree
-        that.$newElement.next('input').focus();
+        $.Tabit();
       }
     },
 
