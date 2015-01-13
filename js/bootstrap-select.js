@@ -1098,6 +1098,10 @@
           elem.click();
           // Bring back focus for multiselects
           elem.focus();
+          
+          //Move focus to next control in DOM Tree
+          that.$newElement.next('input').focus();
+          
           // Prevent screen from scrolling if the user hit the spacebar
           e.preventDefault();
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
@@ -1109,7 +1113,10 @@
 
       if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) {
         that.$menu.parent().removeClass('open');
-        that.$button.focus();
+        //that.$button.focus();
+        
+        //Move focus to next control in DOM Tree
+        that.$newElement.next('input').focus();
       }
     },
 
