@@ -174,7 +174,11 @@
           that.$button.focus();
         });
       }
-
+	    
+	    if (this.$element.attr('value') != undefined && !this.$element.find('option').is("[selected]")){
+		    this.$element.val( this.$element.attr('value'));
+	    }
+	  
       this.checkDisabled();
       this.clickListener();
       if (this.options.liveSearch) this.liveSearchListener();
@@ -187,7 +191,7 @@
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
     },
-
+this.checkDisabled
     createDropdown: function () {
       // Options
       // If we are multiple, then add the show-tick class by default
