@@ -254,4 +254,16 @@
   height: 100% !important;
   opacity: 0;
 }
+
+/*bootstrap-select RTL support*/
+body[dir='rtl'] ul.selectpicker li {
+    text-align: right;
+}
+body[dir='rtl'] button.selectpicker span {
+    text-align: right !important;
+}
+body[dir='rtl'] .bootstrap-select.btn-group .btn .caret {
+    right: auto;
+    left: 12px;
+}
 /*# sourceMappingURL=bootstrap-select.css.map */
