@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select/)
  *
  * Copyright 2013-2014 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -114,7 +114,7 @@
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
-    noneResultsText: 'No results matched {0}',
+    noneResultsText: 'No results match',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
@@ -142,7 +142,6 @@
     dropupAuto: true,
     header: false,
     liveSearch: false,
-    liveSearchPlaceholder: null,
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
@@ -166,8 +165,8 @@
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
       this.$element.after(this.$newElement);
-      this.$menu = this.$newElement.children('.dropdown-menu');
-      this.$button = this.$newElement.children('button');
+      this.$menu = this.$newElement.find('> .dropdown-menu');
+      this.$button = this.$newElement.find('> button');
       this.$searchbox = this.$newElement.find('input');
 
       if (this.options.dropdownAlignRight)
@@ -199,32 +198,26 @@
       // If we are multiple, then add the show-tick class by default
       var multiple = this.multiple ? ' show-tick' : '',
           inputGroup = this.$element.parent().hasClass('input-group') ? ' input-group-btn' : '',
-          autofocus = this.autofocus ? ' autofocus' : '';
+          autofocus = this.autofocus ? ' autofocus' : '',
+          btnSize = this.$element.parents().hasClass('form-group-lg') ? ' btn-lg' : (this.$element.parents().hasClass('form-group-sm') ? ' btn-sm' : '');
       // Elements
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
-      var searchbox = this.options.liveSearch ?
-      '<div class="bs-searchbox">' +
-      '<input type="text" class="form-control" autocomplete="off"' +
-      (null === this.options.liveSearchPlaceholder ? '' : ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"') + '>' +
-      '</div>'
-          : '';
-      var actionsbox = this.options.actionsBox ?
-      '<div class="bs-actionsbox">' +
-      '<div class="btn-group btn-group-sm btn-block">' +
-      '<button class="actions-btn bs-select-all btn btn-default">' +
+      var searchbox = this.options.liveSearch ? '<div class="bs-searchbox"><input type="text" class="input-block-level form-control" autocomplete="off" /></div>' : '';
+      var actionsbox = this.options.actionsBox ? '<div class="bs-actionsbox">' +
+      '<div class="btn-group btn-block">' +
+      '<button class="actions-btn bs-select-all btn btn-sm btn-default">' +
       this.options.selectAllText +
       '</button>' +
-      '<button class="actions-btn bs-deselect-all btn btn-default">' +
+      '<button class="actions-btn bs-deselect-all btn btn-sm btn-default">' +
       this.options.deselectAllText +
       '</button>' +
       '</div>' +
-      '</div>'
-          : '';
+      '</div>' : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-          '<button type="button" class="btn dropdown-toggle form-control selectpicker" data-toggle="dropdown"' + autofocus + '>' +
+          '<button type="button" class="btn dropdown-toggle selectpicker' + btnSize + '" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
-          '<span class="caret"></span>' +
+          '<span class="icon icon-angle-down"></span>' +
           '</button>' +
           '<div class="dropdown-menu open">' +
           header +
@@ -267,44 +260,45 @@
        * @param content
        * @param [index]
        * @param [classes]
-       * @param [optgroup]
        * @returns {string}
        */
-      var generateLI = function (content, index, classes, optgroup) {
+      var generateLI = function (content, index, classes) {
         return '<li' +
-            ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
-            ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
-            ((typeof optgroup !== 'undefined' & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
-            '>' + content + '</li>';
+        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+        (typeof index !== 'undefined' | null === index ? ' data-original-index="' + index + '"' : '') +
+        '>' + content + '</li>';
       };
 
       /**
        * @param text
        * @param [classes]
        * @param [inline]
+       * @param [optgroup]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline) {
+      var generateA = function (text, classes, inline, optgroup) {
         var normText = normalizeToBase(htmlEscape(text));
         return '<a tabindex="0"' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-            (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-            ' data-normalized-text="' + normText + '"' +
-            '>' + text +
-            '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
-            '</a>';
+        (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+        (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
+        (typeof optgroup !== 'undefined' ? 'data-optgroup="' + optgroup + '"' : '') +
+        ' data-normalized-text="' + normText + '"' +
+        '>' + text +
+        '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
+        '</a>';
       };
 
-      this.$element.find('option').each(function (index) {
+      this.$element.find('option').each(function () {
         var $this = $(this);
 
         // Get the class and text for the option
         var optionClass = $this.attr('class') || '',
             inline = $this.attr('style'),
             text = $this.data('content') ? $this.data('content') : $this.html(),
-            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
+            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="muted text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled');
+            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled'),
+            index = $this[0].index;
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
@@ -324,7 +318,7 @@
 
             // Get the opt group label
             var label = $this.parent().attr('label');
-            var labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '';
+            var labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="muted text-muted">' + $this.parent().data('subtext') + '</small>' : '';
             var labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
@@ -332,14 +326,14 @@
               _li.push(generateLI('', null, 'divider'));
             }
 
-            _li.push(generateLI(label, null, 'dropdown-header', optID));
+            _li.push(generateLI(label, null, 'dropdown-header'));
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline), index, '', optID));
+          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, optID), index));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hide is-hidden'));
         } else {
           _li.push(generateLI(generateA(text, optionClass, inline), index));
         }
@@ -379,14 +373,14 @@
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
         var subtext;
         if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
-          subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
+          subtext = ' <small class="muted text-muted">' + $this.data('subtext') + '</small>';
         } else {
           subtext = '';
         }
-        if (typeof $this.attr('title') !== 'undefined') {
-          return $this.attr('title');
-        } else if ($this.data('content') && that.options.showContent) {
+        if ($this.data('content') && that.options.showContent) {
           return $this.data('content');
+        } else if (typeof $this.attr('title') !== 'undefined') {
+          return $this.attr('title');
         } else {
           return icon + $this.html() + subtext;
         }
@@ -418,8 +412,7 @@
         title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
       }
 
-      //strip all html-tags and trim the result
-      this.$button.attr('title', $.trim(title.replace(/<[^>]*>?/g, '')));
+      this.$button.attr('title', htmlEscape(title));
       this.$newElement.find('.filter-option').html(title);
     },
 
@@ -447,8 +440,8 @@
     liHeight: function () {
       if (this.options.size === false) return;
 
-      var $selectClone = this.$menu.parent().clone().children('.dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
-          $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
+      var $selectClone = this.$menu.parent().clone().find('> .dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
+          $menuClone = $selectClone.addClass('open').find('> .dropdown-menu'),
           liHeight = $menuClone.find('li').not('.divider').not('.dropdown-header').filter(':visible').children('a').outerHeight(),
           headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox').outerHeight() : 0,
@@ -496,13 +489,13 @@
       if (this.options.size == 'auto') {
         var getSize = function () {
           var minHeight,
-              lisVis = that.$lis.not('.hidden');
+              lisVis = that.$lis.not('.hide');
 
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
 
           if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < menu.height());
+            that.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && ((menuHeight - menuExtras) < menu.height()));
           }
           if (that.$newElement.hasClass('dropup')) {
             menuHeight = selectOffsetTop - menuExtras;
@@ -527,15 +520,15 @@
         };
         getSize();
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
-        $window.off('resize.getSize').on('resize.getSize', getSize);
-        $window.off('scroll.getSize').on('scroll.getSize', getSize);
+        $(window).off('resize.getSize').on('resize.getSize', getSize);
+        $(window).off('scroll.getSize').on('scroll.getSize', getSize);
       } else if (this.options.size && this.options.size != 'auto' && menu.find('li' + notDisabled).length > this.options.size) {
-        var optIndex = this.$lis.not('.divider' + notDisabled).children().slice(0, this.options.size).last().parent().index();
+        var optIndex = this.$lis.not('.divider' + notDisabled).find(' > *').slice(0, this.options.size).last().parent().index();
         var divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
-          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && menuHeight < menu.height());
+          this.$newElement.toggleClass('dropup', (selectOffsetTop > selectOffsetBot) && (menuHeight < menu.height()));
         }
         menu.css({'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + 'px', 'overflow': 'hidden'});
         menuInner.css({'max-height': menuHeight - menuPadding + 'px', 'overflow-y': 'auto'});
@@ -548,8 +541,8 @@
 
         // Get correct width if element hidden
         var selectClone = this.$newElement.clone().appendTo('body');
-        var ulWidth = selectClone.children('.dropdown-menu').css('width');
-        var btnWidth = selectClone.css('width', 'auto').children('button').css('width');
+        var ulWidth = selectClone.find('> .dropdown-menu').css('width');
+        var btnWidth = selectClone.css('width', 'auto').find('> button').css('width');
         selectClone.remove();
 
         // Set width to whatever's larger, button title or longest option
@@ -705,7 +698,7 @@
             that.setSelected(clickedIndex, !state);
             $this.blur();
 
-            if (maxOptions !== false || maxOptionsGrp !== false) {
+            if ((maxOptions !== false) || (maxOptionsGrp !== false)) {
               var maxReached = maxOptions < $options.filter(':selected').length,
                   maxReachedGrp = maxOptionsGrp < $optgroup.find('option:selected').length;
 
@@ -776,7 +769,7 @@
       });
 
       this.$menu.on('click', 'li.disabled a, .popover-title, .popover-title :not(.close)', function (e) {
-        if (e.currentTarget == this) {
+        if (e.target == this) {
           e.preventDefault();
           e.stopPropagation();
           if (!that.options.liveSearch) {
@@ -837,7 +830,7 @@
         that.$menu.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
-          that.$lis.not('.is-hidden').removeClass('hidden');
+          that.$lis.not('.is-hidden').removeClass('hide');
           if (!!no_results.parent().length) no_results.remove();
         }
         if (!that.multiple) that.$menu.find('.selected').addClass('active');
@@ -852,36 +845,24 @@
 
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
+
           if (that.options.searchAccentInsensitive) {
-            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hidden');
+            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
           } else {
-            that.$lis.not('.is-hidden').removeClass('hidden').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hidden');
+            that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':icontains(' + that.$searchbox.val() + ')').parent().addClass('hide');
           }
 
-          that.$lis.filter('.dropdown-header').each(function () {
-            var $this = $(this),
-                optgroup = $this.data('optgroup');
-
-            if (that.$lis.filter('[data-optgroup=' + optgroup + ']').not($this).filter(':visible').length === 0) {
-              $this.addClass('hidden');
-            }
-          });
-
           if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
-            if (!!no_results.parent().length) {
-              no_results.remove();
-            }
-            no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
+            if (!!no_results.parent().length) no_results.remove();
+            no_results.html(that.options.noneResultsText + ' "' + htmlEscape(that.$searchbox.val()) + '"').show();
             that.$menu.find('li').last().after(no_results);
           } else if (!!no_results.parent().length) {
             no_results.remove();
           }
 
         } else {
-          that.$lis.not('.is-hidden').removeClass('hidden');
-          if (!!no_results.parent().length) {
-            no_results.remove();
-          }
+          that.$lis.not('.is-hidden').removeClass('hide');
+          if (!!no_results.parent().length) no_results.remove();
         }
 
         that.$menu.find('li.active').removeClass('active');
@@ -1100,12 +1081,7 @@
       if ((/(13|32)/.test(e.keyCode.toString(10)) || (/(^9$)/.test(e.keyCode.toString(10)) && that.options.selectOnTab)) && isActive) {
         if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
-          var elem = $(':focus');
-          elem.click();
-          // Bring back focus for multiselects
-          elem.focus();
-          // Prevent screen from scrolling if the user hit the spacebar
-          e.preventDefault();
+          $(':focus').click();
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
           that.$menu.find('.active a').click();
           $this.focus();
@@ -1128,6 +1104,14 @@
       this.$lis = null;
       this.reloadLi();
       this.render();
+      this.setWidth();
+      this.setStyle();
+      this.checkDisabled();
+      this.liHeight();
+    },
+
+    update: function () {
+      this.reloadLi();
       this.setWidth();
       this.setStyle();
       this.checkDisabled();
