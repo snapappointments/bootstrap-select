@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.6.3 (http://silviomoreto.github.io/bootstrap-select/)
  *
  * Copyright 2013-2014 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -23,9 +23,6 @@
 .bootstrap-select.fit-width {
   width: auto !important;
 }
-.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-  width: 220px;
-}
 .bootstrap-select .btn:focus {
   outline: thin dotted #333333 !important;
   outline: 5px auto -webkit-focus-ring-color !important;
@@ -39,12 +36,12 @@
 .bootstrap-select.form-control:not([class*="col-"]) {
   width: 100%;
 }
-.bootstrap-select.btn-group:not(.input-group-btn),
+/*.bootstrap-select.btn-group:not(.input-group-btn),
 .bootstrap-select.btn-group[class*="col-"] {
   float: none;
   display: inline-block;
   margin-left: 0;
-}
+}*/
 .bootstrap-select.btn-group.dropdown-menu-right,
 .bootstrap-select.btn-group[class*="col-"].dropdown-menu-right,
 .row-fluid .bootstrap-select.btn-group[class*="col-"].dropdown-menu-right {
@@ -113,6 +110,7 @@
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) a:hover small,
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) a:focus small,
 .bootstrap-select.btn-group .dropdown-menu li.active:not(.disabled) a small {
+  color: #64b1d8;
   color: rgba(100, 177, 216, 0.4);
 }
 .bootstrap-select.btn-group .dropdown-menu li.disabled a {
@@ -174,7 +172,7 @@
   margin-right: 34px;
 }
 .bootstrap-select.show-menu-arrow.open > .btn {
-  z-index: 1036;
+  z-index: 1035 + 1;
 }
 .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
   content: '';
@@ -182,6 +180,7 @@
   border-right: 7px solid transparent;
   border-bottom-width: 7px;
   border-bottom-style: solid;
+  border-bottom-color: #cccccc;
   border-bottom-color: rgba(204, 204, 204, 0.2);
   position: absolute;
   bottom: -4px;
@@ -204,6 +203,7 @@
   border-bottom: 0;
   border-top-width: 7px;
   border-top-style: solid;
+  border-top-color: #cccccc;
   border-top-color: rgba(204, 204, 204, 0.2);
 }
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:after {
@@ -254,4 +254,3 @@
   height: 100% !important;
   opacity: 0;
 }
-/*# sourceMappingURL=bootstrap-select.css.map */
