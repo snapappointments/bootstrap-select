@@ -77,10 +77,6 @@ module.exports = function (grunt) {
       }
     },
 
-    //qunit: {
-    //    files: ['test/**/*.html']
-    //},
-
     less: {
       options: {
         strictMath: true,
@@ -98,7 +94,6 @@ module.exports = function (grunt) {
     usebanner: {
       css: {
         options: {
-          position: 'top',
           banner: '<%= banner %>'
         },
         src: '<%= less.css.dest %>'
@@ -109,7 +104,7 @@ module.exports = function (grunt) {
       options: {
         compatibility: 'ie8',
         keepSpecialComments: '*',
-        noAdvanced: true
+        advanced: false
       },
       css: {
         src: '<%= less.css.dest %>',
@@ -146,8 +141,7 @@ module.exports = function (grunt) {
     sed: {
       versionNumber: {
         path: [
-          'less',
-          'js',
+          'js/<%= pkg.name %>.js',
           'bower.json',
           'composer.json',
           'package.json'
@@ -192,7 +186,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: 'dist/',
-            src: ['**'],
+            src: '**',
             dest: 'bootstrap-select-<%= pkg.version %>/'
           }, {
             src: ['bower.json', 'composer.json', 'package.json'],
@@ -219,7 +213,9 @@ module.exports = function (grunt) {
   });
 
   // These plugins provide necessary tasks.
-  require('load-grunt-tasks')(grunt);
+  require('load-grunt-tasks')(grunt, {
+    scope: 'devDependencies'
+  });
 
   // Version numbering task.
   // grunt change-version-number --old=A.B.C --new=X.Y.Z
