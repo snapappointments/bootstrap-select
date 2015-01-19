@@ -207,6 +207,7 @@
     <option>Pineapple2</option>
   </select>
   <button id="special" class="btn btn-default">Hide selected by disabling</button>
+  <button id="special2" class="btn btn-default">Reset</button>
   <p>Just select 1st element, click button and check list again</p>
 
   <hr>
@@ -242,7 +243,11 @@
     var mySelect = $('#first-disabled2');
 
     $('#special').on('click', function () {
-      mySelect.find('option:selected').attr('disabled', 'disabled');
+      mySelect.find('option:selected').prop('disabled', true);
+      mySelect.selectpicker('refresh');
+    });
+    $('#special2').on('click', function () {
+      mySelect.find('option:disabled').prop('disabled', false);
       mySelect.selectpicker('refresh');
     });
 
