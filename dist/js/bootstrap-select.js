@@ -535,7 +535,10 @@
         }
       }
 
-      this.options.title = this.$element.attr('title');
+      if(this.options.title == undefined)
+      {
+      	this.options.title = this.$element.attr('title');
+      }
 
       if (this.options.selectedTextFormat == 'static') {
         title = this.options.title;
