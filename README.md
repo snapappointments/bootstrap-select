@@ -1,10 +1,9 @@
 bootstrap-select
 ================
 
-[![Latest release](http://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
+[![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg?style=flat)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 [![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-
 [![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
 
 A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects.
