@@ -1,14 +1,16 @@
 (function ($) {
   'use strict';
 
-  // Case insensitive search
+  // Case insensitive contains search
   $.expr[':'].icontains = function (obj, index, meta) {
-    return icontains($(obj).text(), meta[3]);
+    var $obj = $(obj);
+    return icontains($obj.data('tokens') || $obj.text(), meta[3]);
   };
 
-  // Case and accent insensitive search
+  // Case and accent insensitive contains search
   $.expr[':'].aicontains = function (obj, index, meta) {
-    return icontains($(obj).data('normalizedText') || $(obj).text(), meta[3]);
+    var $obj = $(obj);
+    return icontains($obj.data('tokens') || $obj.data('normalizedText') || $obj.text(), meta[3]);
   };
 
   /**
@@ -285,14 +287,15 @@
        * @param text
        * @param [classes]
        * @param [inline]
+       * @param [tokens]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline) {
-        var normText = normalizeToBase(htmlEscape(text));
+      var generateA = function (text, classes, inline, tokens) {
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-            ' data-normalized-text="' + normText + '"' +
+            ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' +
+            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             '>' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
             '</a>';
@@ -305,6 +308,7 @@
         var optionClass = $this.attr('class') || '',
             inline = $this.attr('style'),
             text = $this.data('content') ? $this.data('content') : $this.html(),
+            tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
             isDisabled = $this.is(':disabled') || $this.parent().is(':disabled');
@@ -338,13 +342,13 @@
             _li.push(generateLI(label, null, 'dropdown-header', optID));
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline), index, '', optID));
+          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, tokens), index, '', optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI(generateA(text, optionClass, inline), index, 'hidden is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
-          _li.push(generateLI(generateA(text, optionClass, inline), index));
+          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
         }
       });
 
