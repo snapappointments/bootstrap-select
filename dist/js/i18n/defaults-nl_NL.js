@@ -12,4 +12,4 @@
     maxOptionsText: ['Limiet bereikt ({n} {var} max)', 'Groep limiet bereikt ({n} {var} max)', ['items', 'item']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

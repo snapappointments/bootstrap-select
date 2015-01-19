@@ -12,4 +12,4 @@
     maxOptionsText: ['Limit překročen ({n} {var} max)', 'Limit skupiny překročen ({n} {var} max)', ['položek', 'položka']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

@@ -12,4 +12,4 @@
     maxOptionsText: ['Limite raggiunto ({n} {var} max)', 'Limite del gruppo raggiunto ({n} {var} max)', ['elementi', 'elemento']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

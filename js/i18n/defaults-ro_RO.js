@@ -12,4 +12,4 @@
     maxOptionsText: ['Limita a fost atinsa ({n} {var} max)', 'Limita de grup a fost atinsa ({n} {var} max)', ['iteme', 'item']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

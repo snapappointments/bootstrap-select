@@ -63,7 +63,7 @@
     (function () {
       'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
       var defineProperty = (function () {
-      // IE 8 only supports `Object.defineProperty` on DOM elements
+        // IE 8 only supports `Object.defineProperty` on DOM elements
         try {
           var object = {};
           var $defineProperty = Object.defineProperty;
@@ -1373,5 +1373,4 @@
       Plugin.call($selectpicker, $selectpicker.data());
     })
   });
-})
-(jQuery);
+})(jQuery);

@@ -12,15 +12,13 @@
       return (numSelected === 1) ? "{0} alternativ valt" : "{0} alternativ valda";
     },
     maxOptionsText: function (numAll, numGroup) {
-      var arr = [];
-
-      arr[0] = 'Gräns uppnåd (max {n} alternativ)';
-      arr[1] = 'Gräns uppnåd (max {n} gruppalternativ)';
-
-      return arr;
+      return [
+        'Gräns uppnåd (max {n} alternativ)',
+        'Gräns uppnåd (max {n} gruppalternativ)'
+      ];
     },
     selectAllText: 'Markera alla',
     deselectAllText: 'Avmarkera alla',
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

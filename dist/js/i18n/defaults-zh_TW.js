@@ -14,4 +14,4 @@
     deselectAllText: '全部取消',
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

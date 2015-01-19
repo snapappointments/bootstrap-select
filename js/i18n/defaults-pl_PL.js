@@ -13,4 +13,4 @@
     deselectAll: 'Odznacz wszystkie',
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);
