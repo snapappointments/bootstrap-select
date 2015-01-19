@@ -1148,28 +1148,21 @@
     // get the args of the outer function..
     var args = arguments;
     // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
-    // to get lost
-    //noinspection JSDuplicatedDeclaration
+    // to get lost/corrupted in android 2.3 and IE9 #715 #775
     var _option = option,
-        option = args[0],
-        event = args[1];
+        _event = event;
     [].shift.apply(args);
-
-    // This fixes a bug in the js implementation on android 2.3 #715
-    if (typeof option == 'undefined') {
-      option = _option;
-    }
 
     var value;
     var chain = this.each(function () {
       var $this = $(this);
       if ($this.is('select')) {
         var data = $this.data('selectpicker'),
-            options = typeof option == 'object' && option;
+            options = typeof _option == 'object' && _option;
 
         if (!data) {
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
-          $this.data('selectpicker', (data = new Selectpicker(this, config, event)));
+          $this.data('selectpicker', (data = new Selectpicker(this, config, _event)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
@@ -1178,11 +1171,11 @@
           }
         }
 
-        if (typeof option == 'string') {
-          if (data[option] instanceof Function) {
-            value = data[option].apply(data, args);
+        if (typeof _option == 'string') {
+          if (data[_option] instanceof Function) {
+            value = data[_option].apply(data, args);
           } else {
-            value = data.options[option];
+            value = data.options[_option];
           }
         }
       }
