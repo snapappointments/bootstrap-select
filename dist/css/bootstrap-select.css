@@ -6,7 +6,6 @@
  */
 
 .bootstrap-select {
-  /*width: 220px\9; IE8 and below*/
   width: 220px \0;
   /*IE9 and below*/
 }
@@ -14,10 +13,8 @@
   width: 100%;
   padding-right: 25px;
 }
-.error .bootstrap-select .btn {
-  border: 1px solid #b94a48;
-}
-.control-group.error .bootstrap-select .dropdown-toggle {
+.has-error .bootstrap-select .dropdown-toggle,
+.error .bootstrap-select .dropdown-toggle {
   border-color: #b94a48;
 }
 .bootstrap-select.fit-width {
@@ -50,7 +47,6 @@
 .row-fluid .bootstrap-select.btn-group[class*="col-"].dropdown-menu-right {
   float: right;
 }
-.form-search .bootstrap-select.btn-group,
 .form-inline .bootstrap-select.btn-group,
 .form-horizontal .bootstrap-select.btn-group,
 .form-group .bootstrap-select.btn-group {
@@ -62,12 +58,6 @@
 }
 .form-inline .bootstrap-select.btn-group .form-control {
   width: 100%;
-}
-.input-append .bootstrap-select.btn-group {
-  margin-left: -1px;
-}
-.input-prepend .bootstrap-select.btn-group {
-  margin-right: -1px;
 }
 .bootstrap-select.btn-group > .disabled {
   cursor: not-allowed;
@@ -180,9 +170,7 @@
   content: '';
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-bottom-width: 7px;
-  border-bottom-style: solid;
-  border-bottom-color: rgba(204, 204, 204, 0.2);
+  border-bottom: 7px solid rgba(204, 204, 204, 0.2);
   position: absolute;
   bottom: -4px;
   left: 9px;
@@ -201,10 +189,8 @@
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:before {
   bottom: auto;
   top: -3px;
+  border-top: 7px solid rgba(204, 204, 204, 0.2);
   border-bottom: 0;
-  border-top-width: 7px;
-  border-top-style: solid;
-  border-top-color: rgba(204, 204, 204, 0.2);
 }
 .bootstrap-select.show-menu-arrow.dropup .dropdown-toggle:after {
   bottom: auto;
