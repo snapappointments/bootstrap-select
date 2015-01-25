@@ -11,4 +11,4 @@
     maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

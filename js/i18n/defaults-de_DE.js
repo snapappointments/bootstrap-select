@@ -11,4 +11,4 @@
     maxOptionsText: ['Limit erreicht ({n} {var} max.)', 'Gruppen-Limit erreicht ({n} {var} max.)', ['Eintrag', 'Einträge']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

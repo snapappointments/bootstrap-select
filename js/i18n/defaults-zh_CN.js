@@ -11,4 +11,4 @@
     maxOptionsText: ['超出限制 (最多选择{n}项)', '组选择超出限制(最多选择{n}组)'],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

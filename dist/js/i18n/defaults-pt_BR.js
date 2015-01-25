@@ -12,4 +12,4 @@
     maxOptionsText: ['Limite excedido (máx. {n} {var})', 'Limite do grupo excedido (máx. {n} {var})', ['itens', 'item']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

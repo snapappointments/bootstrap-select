@@ -207,6 +207,7 @@
     <option>Pineapple2</option>
   </select>
   <button id="special" class="btn btn-default">Hide selected by disabling</button>
+  <button id="special2" class="btn btn-default">Reset</button>
   <p>Just select 1st element, click button and check list again</p>
 
   <hr>
@@ -218,6 +219,45 @@
       <option>Three</option>
     </select>
   </div>
+
+  <hr>
+  <select id="done" class="selectpicker" multiple data-done-button="true">
+    <option>Apple</option>
+    <option>Banana</option>
+    <option>Orange</option>
+    <option>Pineapple</option>
+    <option>Apple2</option>
+    <option>Banana2</option>
+    <option>Orange2</option>
+    <option>Pineapple2</option>
+    <option>Apple2</option>
+    <option>Banana2</option>
+    <option>Orange2</option>
+    <option>Pineapple2</option>
+  </select>
+
+  <hr>
+  <select id="tokens" class="selectpicker" multiple data-live-search="true">
+    <option data-tokens="first">I actually am called "first"</option>
+    <option data-tokens="second">And me "second"</option>
+    <option data-tokens="last">I am "last"</option>
+  </select>
+
+  <hr>
+  <form class="form-inline">
+    <div class="form-group">
+      <label class="col-md-1 control-label" for="lunch">Lunch (Begins search): </label>
+    </div>
+    <div class="form-group">
+      <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
+        <option>Hot Dog, Fries and a Soda</option>
+        <option>Burger, Shake and a Smile</option>
+        <option>Sugar, Spice and all things nice</option>
+        <option>Baby Back Ribs</option>
+        <option>A really really long option made to illustrate an issue with the live search in an inline form</option>
+      </select>
+    </div>
+  </form>
   
 </div>
 
@@ -226,7 +266,11 @@
     var mySelect = $('#first-disabled2');
 
     $('#special').on('click', function () {
-      mySelect.find('option:selected').attr('disabled', 'disabled');
+      mySelect.find('option:selected').prop('disabled', true);
+      mySelect.selectpicker('refresh');
+    });
+    $('#special2').on('click', function () {
+      mySelect.find('option:disabled').prop('disabled', false);
       mySelect.selectpicker('refresh');
     });
 

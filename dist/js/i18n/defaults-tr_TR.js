@@ -12,13 +12,13 @@
       return (numSelected == 1) ? "{0} öğe seçildi" : "{0} öğe seçildi";
     },
     maxOptionsText: function (numAll, numGroup) {
-      var arr = [];
-      arr[0] = (numAll == 1) ? 'Limit aşıldı (maksimum {n} sayıda öğe )' : 'Limit aşıldı (maksimum {n} sayıda öğe)';
-      arr[1] = (numGroup == 1) ? 'Grup limiti aşıldı (maksimum {n} sayıda öğe)' : 'Grup limiti aşıldı (maksimum {n} sayıda öğe)';
-      return arr;
+      return [
+        (numAll == 1) ? 'Limit aşıldı (maksimum {n} sayıda öğe )' : 'Limit aşıldı (maksimum {n} sayıda öğe)',
+        (numGroup == 1) ? 'Grup limiti aşıldı (maksimum {n} sayıda öğe)' : 'Grup limiti aşıldı (maksimum {n} sayıda öğe)'
+      ];
     },
     selectAllText: 'Tümünü Seç',
     deselectAllText: 'Seçiniz',
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

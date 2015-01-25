@@ -6,19 +6,19 @@
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Válasszon!',
-    noneResultsText: 'Nincs találat {0}',
+    noneSelectedText: 'Nič izbranega',
+    noneResultsText: 'Ni zadetkov za {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return '{n} elem kiválasztva';
+      "Število izbranih: {0}";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        'Legfeljebb {n} elem választható',
-        'A csoportban legfeljebb {n} elem választható'
+        'Omejitev dosežena (max. izbranih: {n})',
+        'Omejitev skupine dosežena (max. izbranih: {n})'
       ];
     },
-    selectAllText: 'Mind',
-    deselectAllText: 'Egyik sem',
+    selectAllText: 'Izberi vse',
+    deselectAllText: 'Počisti izbor',
     multipleSeparator: ', '
   };
 })(jQuery);

@@ -6,19 +6,19 @@
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Válasszon!',
-    noneResultsText: 'Nincs találat {0}',
+    noneSelectedText: 'Inget valt',
+    noneResultsText: 'Inget sökresultat matchar {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return '{n} elem kiválasztva';
+      return (numSelected === 1) ? "{0} alternativ valt" : "{0} alternativ valda";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        'Legfeljebb {n} elem választható',
-        'A csoportban legfeljebb {n} elem választható'
+        'Gräns uppnåd (max {n} alternativ)',
+        'Gräns uppnåd (max {n} gruppalternativ)'
       ];
     },
-    selectAllText: 'Mind',
-    deselectAllText: 'Egyik sem',
+    selectAllText: 'Markera alla',
+    deselectAllText: 'Avmarkera alla',
     multipleSeparator: ', '
   };
 })(jQuery);

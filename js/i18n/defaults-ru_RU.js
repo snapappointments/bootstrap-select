@@ -11,4 +11,4 @@
     maxOptionsText: ['Достигнут предел ({n} {var} максимум)', 'Достигнут предел в группе ({n} {var} максимум)', ['items', 'item']],
     multipleSeparator: ', '
   };
-}(jQuery));
+})(jQuery);

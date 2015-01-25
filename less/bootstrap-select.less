@@ -7,8 +7,6 @@
 
 // Rules
 .bootstrap-select {
-  /*width: 220px\9; IE8 and below*/
-  //noinspection CssShorthandPropertyValue
   width: 220px \0; /*IE9 and below*/
 
   // The selectpicker button
@@ -18,12 +16,8 @@
   }
 
   // Error display
-  .error & .btn {
-    border: 1px solid @color-red-error;
-  }
-
-  // Error display
-  .control-group.error & .dropdown-toggle {
+  .has-error & .dropdown-toggle,
+  .error & .dropdown-toggle {
     border-color: @color-red-error;
   }
 
@@ -70,15 +64,14 @@
     }
   }
 
-  .form-search &,
   .form-inline &,
   .form-horizontal &,
   .form-group & {
     margin-bottom: 0;
   }
 
-  .form-group-lg  &.form-control,
-  .form-group-sm  &.form-control {
+  .form-group-lg &.form-control,
+  .form-group-sm &.form-control {
     padding: 0;
   }
 
@@ -86,14 +79,6 @@
   // see https://github.com/silviomoreto/bootstrap-select/issues/685
   .form-inline & .form-control {
     width: 100%;
-  }
-
-  .input-append & {
-    margin-left: -1px;
-  }
-
-  .input-prepend & {
-    margin-right: -1px;
   }
 
   > .disabled {
@@ -233,9 +218,7 @@
       content: '';
       border-left: 7px solid transparent;
       border-right: 7px solid transparent;
-      border-bottom-width: 7px;
-      border-bottom-style: solid;
-      border-bottom-color: @color-grey-arrow;
+      border-bottom: 7px solid @color-grey-arrow;
       position: absolute;
       bottom: -4px;
       left: 9px;
@@ -258,10 +241,8 @@
     &:before {
       bottom: auto;
       top: -3px;
+      border-top: 7px solid @color-grey-arrow;
       border-bottom: 0;
-      border-top-width: 7px;
-      border-top-style: solid;
-      border-top-color: @color-grey-arrow;
     }
 
     &:after {
@@ -293,7 +274,8 @@
 }
 
 .bs-searchbox,
-.bs-actionsbox {
+.bs-actionsbox,
+.bs-donebutton {
   padding: 4px 8px;
 }
 
@@ -304,6 +286,16 @@
 
   & .btn-group button {
     width: 50%;
+  }
+}
+
+.bs-donebutton {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+
+  & .btn-group button {
+    width: 100%;
   }
 }
 
