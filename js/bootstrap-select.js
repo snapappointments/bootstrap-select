@@ -955,7 +955,8 @@
         that.$element.change();
       });
 
-      this.$element.change(function () {
+      this.$element.change(function (e) {
+        e.stopPropagation();
         that.render(false);
       });
     },
