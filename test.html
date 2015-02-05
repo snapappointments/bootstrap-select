@@ -5,8 +5,8 @@
 
   <meta charset="utf-8">
 
-  <link rel="stylesheet" type="text/css" href="dist/css/bootstrap-select.css">
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dist/css/bootstrap-select.css">
 
   <style>
     body {
@@ -14,9 +14,9 @@
     }
   </style>
 
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script type="text/javascript" src="dist/js/bootstrap-select.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="dist/js/bootstrap-select.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -221,6 +221,17 @@
   </div>
 
   <hr>
+  <div class="input-group">
+    <span class="input-group-addon">@</span>
+    <select class="form-control selectpicker" data-mobile="true">
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+    </select>
+  </div>
+  <p>With <code>data-mobile="true"</code> option.</p>
+
+  <hr>
   <select id="done" class="selectpicker" multiple data-done-button="true">
     <option>Apple</option>
     <option>Banana</option>
@@ -246,7 +257,7 @@
   <hr>
   <form class="form-inline">
     <div class="form-group">
-      <label class="col-md-1 control-label" for="lunch">Lunch (Begins search): </label>
+      <label class="col-md-1 control-label" for="lunchBegins">Lunch (Begins search): </label>
     </div>
     <div class="form-group">
       <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
@@ -258,7 +269,6 @@
       </select>
     </div>
   </form>
-  
 </div>
 
 <script>
