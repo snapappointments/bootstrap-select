@@ -51,5 +51,15 @@
     "bootstrap",
     "select",
     "replacement"
-  ]
+  ],
+  "dependencies": {
+    "browserify": "^8.1.3",
+    "gulp": "^3.8.10",
+    "gulp-uglify": "^1.1.0",
+    "react": "^0.12.2",
+    "react-bootstrap": "^0.13.3",
+    "reactify": "^1.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0"
+  }
 }

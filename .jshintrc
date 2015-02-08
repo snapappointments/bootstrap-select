@@ -1,0 +1,13 @@
+{
+  "indent": 2,
+  "maxdepth": 6,
+  "maxlen": 120,
+  "esnext": true,
+  "expr": true,
+  "trailing": true,
+  "node": true,
+  "esnext": true,
+  "globals": {
+    "$": true
+  }
+}
