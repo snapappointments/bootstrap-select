@@ -2,7 +2,7 @@
   "name": "react-bootstrap-select",
   "main": "dist/js/bootstrap-select.js",
   "description": "A custom <select> for react-bootstrap using button dropdown as replacement",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "homepage": "http://tjwebb.github.io/bootstrap-select",
   "scripts": {
     "postinstall": "gulp build"
