@@ -1,3 +1,4 @@
+*.log
 dist/
 *.sw*
 # OS or Editor folders
