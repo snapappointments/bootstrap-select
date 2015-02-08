@@ -7,6 +7,9 @@
 A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects.
 Tested with React 0.12 and Bootstrap 3.
 
+<img src="http://cdn.tjw.io/videos/react-bootstrap-select-demo.gif"
+height="360px" />
+
 ### 1. Install
 ```sh
 $ npm install react-bootstrap-select --save
