@@ -1,8 +1,7 @@
+/* global React */
 'use strict'; 
 
-require('./bootstrap-select');
-var bs = require('react-bootstrap');
-var React = require('react');
+require('../js/bootstrap-select');
 
 var BootstrapSelect = React.createClass({
   getInitialState: function () {
@@ -39,7 +38,7 @@ var BootstrapSelect = React.createClass({
   },
   render: function () {
     return (
-      <bs.Input {...this.props} type='select' />
+      <React.Bootstrap.Input {...this.props} type='select' />
     );
   }
 });

@@ -1,11 +1,11 @@
 {
   "name": "react-bootstrap-select",
-  "main": "dist/js/bootstrap-select.js",
+  "main": "dist/react-bootstrap-select.js",
   "description": "A custom <select> for react-bootstrap using button dropdown as replacement",
   "version": "0.12.2",
   "homepage": "http://tjwebb.github.io/bootstrap-select",
   "scripts": {
-    "postinstall": "gulp build"
+    "postinstall": "jsx jsx/ dist/"
   },
   "author": {
     "name": "Travis Webb <me@traviswebbcom>",
@@ -58,6 +58,7 @@
     "gulp-uglify": "^1.1.0",
     "react": "^0.12.2",
     "react-bootstrap": "^0.13.3",
+    "react-tools": "^0.12.2",
     "reactify": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0"
