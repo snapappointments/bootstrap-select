@@ -1,3 +1,4 @@
+*.sw*
 # OS or Editor folders
 .DS_Store
 .idea
