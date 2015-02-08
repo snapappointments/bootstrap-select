@@ -6,8 +6,5 @@
   "expr": true,
   "trailing": true,
   "node": true,
-  "esnext": true,
-  "globals": {
-    "$": true
-  }
+  "esnext": true
 }

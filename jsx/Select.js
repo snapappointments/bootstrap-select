@@ -1,4 +1,4 @@
-/* global React */
+/* global React, $ */
 'use strict'; 
 
 require('../js/bootstrap-select');
@@ -23,15 +23,18 @@ var BootstrapSelect = React.createClass({
     $(select).selectpicker();
 
     $('html').click(function () {
+      console.log('outside click');
       self.setState({ open: false });
     });
 
     button.click(function (e) {
+      console.log('button click');
       e.stopPropagation();
       self.setState({ open: !self.state.open });
     });
 
     items.click(function () {
+      console.log('item click');
       if (self.props.multiple) return;
       self.setState({ open: !self.state.open });
     });
