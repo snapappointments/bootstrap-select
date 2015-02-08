@@ -16,16 +16,17 @@ $ npm install react-bootstrap-select --save
 ```
 
 ### 2. Usage
-
-BootstrapSelect = require('react-bootstrap-select');
-
-Create your `<bs.Select>` with the `.selectpicker` class.
+```js
+React = require('react');
+React.Bootstrap = require('react-bootstrap');
+React.Bootstrap.Select = require('react-bootstrap-select');
+```
 ```html
-<BootstrapSelect>
+<React.Bootstrap.Select>
   <option>Mustard</option>
   <option>Ketchup</option>
   <option>Barbecue</option>
-</BootstrapSelect>
+</React.Bootstrap.Select>
 ```
 
 ### 3. Demo and Documentation
