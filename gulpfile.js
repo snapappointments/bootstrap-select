@@ -2,12 +2,11 @@ var path = require('path');
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
-var watchify = require('watchify');
 var reactify = require('reactify'); 
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
  
-gulp.task('build', function() {
+gulp.task('default', function() {
   return browserify({
       entries: [
         './js/react-component.js'

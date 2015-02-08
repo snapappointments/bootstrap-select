@@ -1,3 +1,4 @@
+dist/
 *.sw*
 # OS or Editor folders
 .DS_Store
