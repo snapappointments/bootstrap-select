@@ -10,6 +10,7 @@ var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
     };
   },
   componentDidUpdate: function () {
+    $(this.getDOMNode()).find('select').selectpicker('refresh');
     var select = $(this.getDOMNode()).find('div.bootstrap-select');
     select.toggleClass('open', this.state.open);
   },
