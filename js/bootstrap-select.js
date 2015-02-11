@@ -119,7 +119,6 @@
 
   // Case insensitive begins search
   $.expr[':'].ibegins = function (obj, index, meta) {
-
     var $obj = $(obj);
     var haystack = ($obj.data('tokens') || $obj.text()).toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
