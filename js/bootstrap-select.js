@@ -119,6 +119,7 @@
 
   // Case insensitive begins search
   $.expr[':'].ibegins = function (obj, index, meta) {
+
     var $obj = $(obj);
     var haystack = ($obj.data('tokens') || $obj.text()).toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
@@ -501,7 +502,7 @@
         var $this = $(this);
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
         var subtext;
-        if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
+        if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
           subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
         } else {
           subtext = '';
