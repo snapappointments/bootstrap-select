@@ -1051,12 +1051,16 @@
 
     selectAll: function () {
       this.findLis();
-      this.$lis.not('.divider').not('.disabled').not('.selected').filter(':visible').find('a').click();
+      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', true);
+      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').addClass('selected');
+      this.render(false);
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$lis.not('.divider').not('.disabled').filter('.selected').filter(':visible').find('a').click();
+      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', false);
+      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').removeClass('selected');
+      this.render(false);
     },
 
     keydown: function (e) {

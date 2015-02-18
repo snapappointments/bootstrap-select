@@ -325,7 +325,7 @@
       (null === this.options.liveSearchPlaceholder ? '' : ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"') + '>' +
       '</div>'
           : '';
-      var actionsbox = this.options.actionsBox ?
+      var actionsbox = this.multiple && this.options.actionsBox ?
       '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-group-sm btn-block">' +
       '<button class="actions-btn bs-select-all btn btn-default">' +
@@ -337,7 +337,8 @@
       '</div>' +
       '</div>'
           : '';
-      var donebutton = this.multiple && this.options.doneButton ? '<div class="bs-donebutton">' +
+      var donebutton = this.multiple && this.options.doneButton ?
+      '<div class="bs-donebutton">' +
       '<div class="btn-group btn-block">' +
       '<button class="btn btn-sm btn-default">' +
       this.options.doneButtonText +
@@ -1056,12 +1057,16 @@
 
     selectAll: function () {
       this.findLis();
-      this.$lis.not('.divider').not('.disabled').not('.selected').filter(':visible').find('a').click();
+      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', true);
+      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').addClass('selected');
+      this.render(false);
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$lis.not('.divider').not('.disabled').filter('.selected').filter(':visible').find('a').click();
+      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', false);
+      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').removeClass('selected');
+      this.render(false);
     },
 
     keydown: function (e) {
