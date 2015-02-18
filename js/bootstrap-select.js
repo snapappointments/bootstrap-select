@@ -801,8 +801,9 @@
         }, 10);
       });
 
-      this.$searchbox.on('input propertychange', function () {
-        if (that.$searchbox.val()) {
+      this.$searchbox.on('input propertychange change keyup copy paste cut click mouseup', function () {
+        var oldValue = that.$searchbox.val();
+        if (oldValue) {
 
           if (that.options.searchAccentInsensitive) {
             that.$lis.not('.is-hidden').removeClass('hide').find('a').not(':aicontains(' + normalizeToBase(that.$searchbox.val()) + ')').parent().addClass('hide');
@@ -826,6 +827,15 @@
         that.$menu.find('li.active').removeClass('active');
         that.$menu.find('li').filter(':visible:not(.divider)').eq(0).addClass('active').find('a').focus();
         $(this).focus();
+        
+        if(oldValue !== "") {
+          setTimeout(function() {
+            var newValue = that.$searchbox.val();
+            if (newValue === "") {
+              that.$searchbox.trigger("propertychange");
+            }
+          }, 0);
+        }
       });
     },
 
