@@ -1,7 +1,6 @@
 ## react-bootstrap-select
 
 [![NPM version][npm-image]][npm-url]
-[![Build status][ci-image]][ci-url]
 [![Dependency Status][daviddm-image]][daviddm-url]
 
 A custom select / multiselect for Bootstrap using button dropdown, designed to
