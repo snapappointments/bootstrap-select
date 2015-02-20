@@ -40,9 +40,5 @@ Checkout the [documentation](http://tjwebb.github.io/react-bootstrap-select) for
 
 [npm-image]: https://img.shields.io/npm/v/react-bootstrap-select.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/react-bootstrap-select
-[sails-logo]: http://cdn.tjw.io/images/sails-logo.png
-[sails-url]: https://sailsjs.org
-[ci-image]: https://img.shields.io/circleci/project/tjwebb/react-bootstrap-select.svg?style=flat-square
-[ci-url]: https://circleci.com/gh/tjwebb/react-bootstrap-select
 [daviddm-image]: http://img.shields.io/david/tjwebb/react-bootstrap-select.svg?style=flat-square
 [daviddm-url]: https://david-dm.org/tjwebb/react-bootstrap-select
