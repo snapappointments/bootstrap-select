@@ -1230,8 +1230,13 @@
         } else {
           e.preventDefault();
           if (!$this.is('.dropdown-toggle')) {
-            $items.removeClass('active');
-            $items.eq(index).addClass('active').find('a').focus();
+            $items.each(function(elIndex) {
+              var isCurrentIndex = (elIndex === index);
+              $(this)
+                .toggleClass('active', isCurrentIndex)  // <a> tag
+                .parent()
+                .toggleClass('active', isCurrentIndex); // <li> (parent) tag
+            });
             $this.focus();
           }
         }
