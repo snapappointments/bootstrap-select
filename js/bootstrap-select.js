@@ -219,7 +219,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.6.3';
+  Selectpicker.VERSION = '1.6.4';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -454,7 +454,7 @@
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
-              _li.push(generateLI('', null, 'divider'));
+              _li.push(generateLI('', null, 'divider', optID + 'div'));
             }
 
             _li.push(generateLI(label, null, 'dropdown-header', optID));
@@ -466,6 +466,7 @@
         } else if ($this.data('hidden') === true) {
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
+          if ($this.prev().is('optgroup')) _li.push(generateLI('', null, 'divider', optID + 'div'));
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
         }
       });
@@ -997,12 +998,28 @@
             var $this = $(this),
                 optgroup = $this.data('optgroup');
 
-            if (that.$lis.filter('[data-optgroup=' + optgroup + ']').not($this).filter(':visible').length === 0) {
+            if (that.$lis.filter('[data-optgroup=' + optgroup + ']').not($this).not('.hidden').length === 0) {
               $this.addClass('hidden');
+              that.$lis.filter('[data-optgroup=' + optgroup + 'div]').addClass('hidden');
             }
           });
 
-          if (!that.$menu.find('li').filter(':visible:not(.no-results)').length) {
+          var $lisVisible = that.$lis.not('.hidden');
+
+          // hide divider if first or last visible, or if followed by another divider
+          $lisVisible.each(function(index) {
+              var $this = $(this);
+              
+              if ($this.is('.divider')) {
+                  if ($this.index() === $lisVisible.eq(0).index() || 
+                      $this.index() === $lisVisible.last().index() ||
+                      $lisVisible.eq(index + 1).is('.divider')) {
+                      $this.addClass('hidden');
+                  }
+              }
+          });
+
+          if (!that.$lis.filter(':not(.hidden):not(.no-results)').length) {
             if (!!no_results.parent().length) {
               no_results.remove();
             }
@@ -1020,8 +1037,8 @@
           }
         }
 
-        that.$menu.find('li.active').removeClass('active');
-        that.$menu.find('li').filter(':visible:not(.divider)').eq(0).addClass('active').find('a').focus();
+        that.$lis.filter('.active').removeClass('active');
+        that.$lis.filter(':not(.hidden):not(.divider):not(.dropdown-header)').eq(0).addClass('active').find('a').focus();
         $(this).focus();
       });
     },
@@ -1054,12 +1071,16 @@
 
     selectAll: function () {
       this.findLis();
-      this.$lis.not('.divider').not('.disabled').not('.selected').filter(':visible').find('a').click();
+      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', true);
+      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').addClass('selected');
+      this.render(false);
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$lis.not('.divider').not('.disabled').filter('.selected').filter(':visible').find('a').click();
+      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', false);
+      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').removeClass('selected');
+      this.render(false);
     },
 
     keydown: function (e) {
