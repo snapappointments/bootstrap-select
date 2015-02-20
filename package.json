@@ -3,7 +3,7 @@
   "main": "dist/Select.js",
   "description": "A custom <select> for react-bootstrap using button dropdown as replacement",
   "version": "0.12.10",
-  "homepage": "http://tjwebb.github.io/bootstrap-select",
+  "homepage": "http://tjwebb.github.io/react-bootstrap-select",
   "scripts": {
     "postinstall": "jsx jsx/ dist/"
   },
