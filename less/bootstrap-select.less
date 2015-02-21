@@ -44,6 +44,10 @@
   &:not([class*="col-"]) {
     width: 100%;
   }
+
+  &.input-group-btn {
+    z-index: auto;
+  }
 }
 
 // The selectpicker components
@@ -58,7 +62,7 @@
   // Forces the pull to the right, if necessary
   &,
   &[class*="col-"],
-  .row-fluid &[class*="col-"] {
+  .row &[class*="col-"] {
     &.dropdown-menu-right {
       float: right;
     }
@@ -311,7 +315,7 @@
 }
 
 .mobile-device {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   display: block !important;
