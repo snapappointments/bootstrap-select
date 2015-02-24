@@ -283,9 +283,9 @@
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
       this.$element.after(this.$newElement);
-      this.$menu = this.$newElement.children('.dropdown-menu');
       this.$button = this.$newElement.children('button');
-      this.$searchbox = this.$newElement.find('input');
+      this.$menu = this.$newElement.children('.dropdown-menu');
+      this.$searchbox = this.$menu.find('input');
 
       if (this.options.dropdownAlignRight)
         this.$menu.addClass('dropdown-menu-right');
@@ -348,7 +348,7 @@
           : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-          '<button type="button" class="btn dropdown-toggle form-control selectpicker" data-toggle="dropdown"' + autofocus + '>' +
+          '<button type="button" class="btn dropdown-toggle form-control" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="caret"></span>' +
           '</button>' +
@@ -356,7 +356,7 @@
           header +
           searchbox +
           actionsbox +
-          '<ul class="dropdown-menu inner selectpicker" role="menu">' +
+          '<ul class="dropdown-menu inner" role="menu">' +
           '</ul>' +
           donebutton +
           '</div>' +
@@ -503,12 +503,12 @@
       }
 
       this.tabIndex();
-      var notDisabled = this.options.hideDisabled ? ':not([disabled])' : '';
+      var notDisabled = this.options.hideDisabled ? ':enabled' : '';
       var selectedItems = this.$element.find('option:selected' + notDisabled).map(function () {
         var $this = $(this);
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
         var subtext;
-        if (that.options.showSubtext && $this.attr('data-subtext') && !that.multiple) {
+        if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
           subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
         } else {
           subtext = '';
@@ -552,7 +552,7 @@
 
       //strip all html-tags and trim the result
       this.$button.attr('title', $.trim(title.replace(/<[^>]*>?/g, '')));
-      this.$newElement.find('.filter-option').html(title);
+      this.$button.children('.filter-option').html(title);
     },
 
     /**
@@ -581,7 +581,7 @@
 
       var $selectClone = this.$menu.parent().clone().children('.dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
           $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
-          liHeight = $menuClone.find('li').not('.divider').not('.dropdown-header').filter(':visible').children('a').outerHeight(),
+          liHeight = $menuClone.find('li').not('.divider, .dropdown-header').filter(':visible').children('a').outerHeight(),
           headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox').outerHeight() : 0,
           actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox').outerHeight() : 0,
@@ -600,8 +600,8 @@
     setSize: function () {
       this.findLis();
       var that = this,
-          menu = this.$menu,
-          menuInner = menu.find('.inner'),
+          $menu = this.$menu,
+          $menuInner = $menu.children('.inner'),
           selectHeight = this.$newElement.outerHeight(),
           liHeight = this.$newElement.data('liHeight'),
           headerHeight = this.$newElement.data('headerHeight'),
@@ -609,13 +609,13 @@
           actionsHeight = this.$newElement.data('actionsHeight'),
           doneButtonHeight = this.$newElement.data('doneButtonHeight'),
           divHeight = this.$lis.filter('.divider').outerHeight(true),
-          menuPadding = parseInt(menu.css('padding-top')) +
-              parseInt(menu.css('padding-bottom')) +
-              parseInt(menu.css('border-top-width')) +
-              parseInt(menu.css('border-bottom-width')),
-          notDisabled = this.options.hideDisabled ? ', .disabled' : '',
+          menuPadding = parseInt($menu.css('padding-top')) +
+              parseInt($menu.css('padding-bottom')) +
+              parseInt($menu.css('border-top-width')) +
+              parseInt($menu.css('border-bottom-width')),
+          notDisabled = this.options.hideDisabled ? '.disabled' : '',
           $window = $(window),
-          menuExtras = menuPadding + parseInt(menu.css('margin-top')) + parseInt(menu.css('margin-bottom')) + 2,
+          menuExtras = menuPadding + parseInt($menu.css('margin-top')) + parseInt($menu.css('margin-bottom')) + 2,
           menuHeight,
           selectOffsetTop,
           selectOffsetBot,
@@ -626,7 +626,7 @@
             selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
           };
       posVert();
-      if (this.options.header) menu.css('padding-top', 0);
+      if (this.options.header) $menu.css('padding-top', 0);
 
       if (this.options.size == 'auto') {
         var getSize = function () {
@@ -637,7 +637,7 @@
           menuHeight = selectOffsetBot - menuExtras;
 
           if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < menu.height());
+            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < $menu.height());
           }
           if (that.$newElement.hasClass('dropup')) {
             menuHeight = selectOffsetTop - menuExtras;
@@ -649,12 +649,12 @@
             minHeight = 0;
           }
 
-          menu.css({
+          $menu.css({
             'max-height': menuHeight + 'px',
             'overflow': 'hidden',
             'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
           });
-          menuInner.css({
+          $menuInner.css({
             'max-height': menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding + 'px',
             'overflow-y': 'auto',
             'min-height': Math.max(minHeight - menuPadding, 0) + 'px'
@@ -662,21 +662,23 @@
         };
         getSize();
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
-        $window.off('resize.getSize').on('resize.getSize', getSize);
-        $window.off('scroll.getSize').on('scroll.getSize', getSize);
-      } else if (this.options.size && this.options.size != 'auto' && menu.find('li' + notDisabled).length > this.options.size) {
-        var optIndex = this.$lis.not('.divider' + notDisabled).children().slice(0, this.options.size).last().parent().index();
+        $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
+      } else if (this.options.size && this.options.size != 'auto' && $menu.find('li').not(notDisabled).length > this.options.size) {
+        var optIndex = this.$lis.not('.divider').not(notDisabled).children().slice(0, this.options.size).last().parent().index();
         var divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
-          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && menuHeight < menu.height());
+          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && menuHeight < $menu.height());
         }
-        menu.css({
+        $menu.css({
           'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px',
           'overflow': 'hidden'
         });
-        menuInner.css({'max-height': menuHeight - menuPadding + 'px', 'overflow-y': 'auto'});
+        $menuInner.css({
+          'max-height': menuHeight - menuPadding + 'px',
+          'overflow-y': 'auto'
+        });
       }
     },
 
@@ -737,10 +739,7 @@
         $drop.toggleClass('open', !$(this).hasClass('open'));
         $drop.append(that.$menu);
       });
-      $(window).resize(function () {
-        getPlacement(that.$newElement);
-      });
-      $(window).on('scroll', function () {
+      $(window).on('resize scroll', function () {
         getPlacement(that.$newElement);
       });
       $('html').on('click', function (e) {
@@ -758,9 +757,9 @@
     setDisabled: function (index, disabled) {
       this.findLis();
       if (disabled) {
-        this.$lis.filter('[data-original-index="' + index + '"]').addClass('disabled').find('a').attr('href', '#').attr('tabindex', -1);
+        this.$lis.filter('[data-original-index="' + index + '"]').addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
       } else {
-        this.$lis.filter('[data-original-index="' + index + '"]').removeClass('disabled').find('a').removeAttr('href').attr('tabindex', 0);
+        this.$lis.filter('[data-original-index="' + index + '"]').removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0);
       }
     },
 
@@ -778,8 +777,8 @@
           this.$button.removeClass('disabled');
         }
 
-        if (this.$button.attr('tabindex') == -1) {
-          if (!this.$element.data('tabindex')) this.$button.removeAttr('tabindex');
+        if (this.$button.attr('tabindex') == -1 && !this.$element.data('tabindex')) {
+          this.$button.removeAttr('tabindex');
         }
       }
 
@@ -917,10 +916,10 @@
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
-          if (!that.options.liveSearch) {
-            that.$button.focus();
-          } else {
+          if (that.options.liveSearch) {
             that.$searchbox.focus();
+          } else {
+            that.$button.focus();
           }
         }
       });
@@ -928,10 +927,10 @@
       this.$menu.on('click', 'li.divider, li.dropdown-header', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (!that.options.liveSearch) {
-          that.$button.focus();
-        } else {
+        if (that.options.liveSearch) {
           that.$searchbox.focus();
+        } else {
+          that.$button.focus();
         }
       });
 
@@ -943,7 +942,6 @@
         e.stopPropagation();
       });
 
-
       this.$menu.on('click', '.actions-btn', function (e) {
         if (that.options.liveSearch) {
           that.$searchbox.focus();
@@ -954,7 +952,7 @@
         e.preventDefault();
         e.stopPropagation();
 
-        if ($(this).is('.bs-select-all')) {
+        if ($(this).hasClass('bs-select-all')) {
           that.selectAll();
         } else {
           that.deselectAll();
@@ -969,14 +967,14 @@
 
     liveSearchListener: function () {
       var that = this,
-          no_results = $('<li class="no-results"></li>');
+          $no_results = $('<li class="no-results"></li>');
 
       this.$newElement.on('click.dropdown.data-api touchstart.dropdown.data-api', function () {
         that.$menu.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
           that.$lis.not('.is-hidden').removeClass('hidden');
-          if (!!no_results.parent().length) no_results.remove();
+          if (!!$no_results.parent().length) $no_results.remove();
         }
         if (!that.multiple) that.$menu.find('.selected').addClass('active');
         setTimeout(function () {
@@ -990,7 +988,7 @@
 
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
-          var $searchBase = that.$lis.not('.is-hidden').removeClass('hidden').find('a');
+          var $searchBase = that.$lis.not('.is-hidden').removeClass('hidden').children('a');
           if (that.options.liveSearchNormalize) {
             $searchBase = $searchBase.not(':a' + that._searchStyle() + '(' + normalizeToBase(that.$searchbox.val()) + ')');
           } else {
@@ -1012,36 +1010,35 @@
 
           // hide divider if first or last visible, or if followed by another divider
           $lisVisible.each(function(index) {
-              var $this = $(this);
-              
-              if ($this.is('.divider')) {
-                  if ($this.index() === $lisVisible.eq(0).index() || 
-                      $this.index() === $lisVisible.last().index() ||
-                      $lisVisible.eq(index + 1).is('.divider')) {
-                      $this.addClass('hidden');
-                  }
-              }
+            var $this = $(this);
+
+            if ($this.hasClass('divider') && (
+              $this.index() === $lisVisible.eq(0).index() ||
+              $this.index() === $lisVisible.last().index() ||
+              $lisVisible.eq(index + 1).hasClass('divider'))) {
+              $this.addClass('hidden');
+            }
           });
 
-          if (!that.$lis.filter(':not(.hidden):not(.no-results)').length) {
-            if (!!no_results.parent().length) {
-              no_results.remove();
+          if (!that.$lis.not('.hidden, .no-results').length) {
+            if (!!$no_results.parent().length) {
+              $no_results.remove();
             }
-            no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
-            that.$menu.find('li').last().after(no_results);
-          } else if (!!no_results.parent().length) {
-            no_results.remove();
+            $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
+            that.$menu.append($no_results);
+          } else if (!!$no_results.parent().length) {
+            $no_results.remove();
           }
 
         } else {
           that.$lis.not('.is-hidden').removeClass('hidden');
-          if (!!no_results.parent().length) {
-            no_results.remove();
+          if (!!$no_results.parent().length) {
+            $no_results.remove();
           }
         }
 
         that.$lis.filter('.active').removeClass('active');
-        that.$lis.filter(':not(.hidden):not(.divider):not(.dropdown-header)').eq(0).addClass('active').find('a').focus();
+        that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
         $(this).focus();
       });
     },
@@ -1074,21 +1071,21 @@
 
     selectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', true);
-      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').addClass('selected');
+      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', true);
+      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').addClass('selected');
       this.render(false);
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider]').not('[data-hidden]').prop('selected', false);
-      this.$lis.not('.divider').not('.dropdown-header').not('.disabled').not('.hidden').removeClass('selected');
+      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', false);
+      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').removeClass('selected');
       this.render(false);
     },
 
     keydown: function (e) {
       var $this = $(this),
-          $parent = ($this.is('input')) ? $this.parent().parent() : $this.parent(),
+          $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
           $items,
           that = $parent.data('this'),
           index,
@@ -1200,7 +1197,7 @@
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
-            if ($(this).is(':not(.disabled)')) {
+            if (!$(this).hasClass('disabled')) {
               $(this).data('index', i);
             }
           });
@@ -1219,9 +1216,7 @@
           if (index != nextPrev && index > prev) index = prev;
           if (index < first) index = first;
           if (index == prevIndex) index = last;
-        }
-
-        if (e.keyCode == 40) {
+        } else if (e.keyCode == 40) {
           if (that.options.liveSearch) index += 1;
           if (index == -1) index = 0;
           if (index != nextPrev && index < next) index = next;
@@ -1235,9 +1230,9 @@
           $items.eq(index).focus();
         } else {
           e.preventDefault();
-          if (!$this.is('.dropdown-toggle')) {
+          if (!$this.hasClass('dropdown-toggle')) {
             $items.removeClass('active');
-            $items.eq(index).addClass('active').find('a').focus();
+            $items.eq(index).addClass('active').children('a').focus();
             $this.focus();
           }
         }
@@ -1248,7 +1243,7 @@
             prevKey;
 
         $items.each(function () {
-          if ($(this).parent().is(':not(.disabled)')) {
+          if (!$(this).parent().hasClass('disabled')) {
             if ($.trim($(this).text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
               keyIndex.push($(this).parent().index());
             }
