@@ -246,6 +246,7 @@
     width: false,
     container: false,
     hideDisabled: false,
+    showText: true,
     showSubtext: false,
     showIcon: true,
     showContent: true,
@@ -512,7 +513,8 @@
         } else if ($this.data('content') && that.options.showContent) {
           return $this.data('content');
         } else {
-          return icon + $this.html() + subtext;
+           var text = that.options.showText ? $this.html() : "";
+            return icon + text + subtext;
         }
       }).toArray();
 
