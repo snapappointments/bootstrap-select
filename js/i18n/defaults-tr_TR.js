@@ -5,7 +5,7 @@
  * Author: Serhan Güney
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('tr_TR', {
     noneSelectedText: 'Hiçbiri seçilmedi',
     noneResultsText: 'Hiçbir sonuç bulunamadı {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -20,5 +20,5 @@
     selectAllText: 'Tümünü Seç',
     deselectAllText: 'Seçiniz',
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

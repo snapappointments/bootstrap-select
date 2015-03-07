@@ -4,7 +4,7 @@
  * Region: SI (Slovenia)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('sl_SL', {
     noneSelectedText: 'Nič izbranega',
     noneResultsText: 'Ni zadetkov za {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -19,5 +19,5 @@
     selectAllText: 'Izberi vse',
     deselectAllText: 'Počisti izbor',
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

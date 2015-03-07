@@ -4,7 +4,7 @@
  * Region: FR (France)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('fr_FR', {
     noneSelectedText: 'Aucune s&eacute;lection',
     noneResultsText: 'Aucun r&eacute;sultat pour {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -17,5 +17,5 @@
       ];
     },
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

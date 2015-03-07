@@ -5,11 +5,11 @@
  * Author: Rodrigo de Avila <rodrigo@avila.net.br>
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('pt_BR', {
     noneSelectedText: 'Nada selecionado',
     noneResultsText: 'Nada encontrado contendo {0}',
     countSelectedText: 'Selecionado {0} de {1}',
     maxOptionsText: ['Limite excedido (máx. {n} {var})', 'Limite do grupo excedido (máx. {n} {var})', ['itens', 'item']],
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

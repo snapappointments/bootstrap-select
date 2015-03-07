@@ -4,7 +4,7 @@
  * Region: HU (Hungary)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('hu_HU', {
     noneSelectedText: 'Válasszon!',
     noneResultsText: 'Nincs találat {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -19,5 +19,5 @@
     selectAllText: 'Mind',
     deselectAllText: 'Egyik sem',
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

@@ -5,11 +5,11 @@
  * Alex Florea <alecz.fia@gmail.com>
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('ro_RO', {
     noneSelectedText: 'Nu a fost selectat nimic',
     noneResultsText: 'Nu exista niciun rezultat {0}',
     countSelectedText: '{0} din {1} selectat(e)',
     maxOptionsText: ['Limita a fost atinsa ({n} {var} max)', 'Limita de grup a fost atinsa ({n} {var} max)', ['iteme', 'item']],
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

@@ -215,6 +215,7 @@
     this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
+    this.locale = Selectpicker.prototype.locale;
 
     this.init();
   };
@@ -263,6 +264,60 @@
     selectOnTab: false,
     dropdownAlignRight: false
   };
+  
+  var Locales = {
+      
+      _locales: {},
+      
+      normalize: function (key) {
+          return key ? key.toLowerCase().replace('_', '-') : key;
+      },
+      
+      add: function (name, values) {
+        var key = this.normalize(name);
+        if (values !== null) {
+          this._locales[key] = values;
+        } else {
+          delete this._locales[key];
+        }
+      },
+      
+      get: function (name) {
+        var key = this.normalize(name);
+        return this._locales[key];
+      },
+      
+      _isArray: function(input) {
+        return Object.prototype.toString.call(input) === '[object Array]';
+      },
+      
+      choose: function (names) {
+        var i = 0, j, next, locale, split;
+        
+        if (!this._isArray(names))
+          names = [names];
+
+        while (i < names.length) {
+            split = this.normalize(names[i]).split('-');
+            j = split.length;
+            next = this.normalize(names[i + 1]);
+            next = next ? next.split('-') : null;
+            while (j > 0) {
+                locale = this.get(split.slice(0, j).join('-'));
+                if (locale) {
+                    return locale;
+                }
+                if (next && next.length >= j && compareArrays(split, next, true) >= j - 1) {
+                    //the next array item is better than a shallower substring of this one
+                    break;
+                }
+                j--;
+            }
+            i++;
+        }
+        return null;
+    }
+  };
 
   Selectpicker.prototype = {
 
@@ -271,6 +326,9 @@
     init: function () {
       var that = this,
           id = this.$element.attr('id');
+  
+      if (this.options.locale)
+        this.locale(this.options.locale);
 
       this.$element.hide();
       this.multiple = this.$element.prop('multiple');
@@ -303,6 +361,17 @@
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
+    },
+    
+    locale: function (name) {
+        var data;
+        if (name) {
+            data = Locales.choose(name);
+
+            if (data) {
+                this.options = $.extend({}, this.options, data);
+            }
+        }
     },
 
     createDropdown: function () {
@@ -1332,7 +1401,7 @@
             options = typeof _option == 'object' && _option;
 
         if (!data) {
-          var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
+          var config = $.extend({}, Selectpicker.DEFAULTS, $this.data(), options);
           $this.data('selectpicker', (data = new Selectpicker(this, config, _event)));
         } else if (options) {
           for (var i in options) {
@@ -1363,6 +1432,7 @@
   var old = $.fn.selectpicker;
   $.fn.selectpicker = Plugin;
   $.fn.selectpicker.Constructor = Selectpicker;
+  $.fn.selectpicker.locales = Locales;
 
   // SELECTPICKER NO CONFLICT
   // ========================

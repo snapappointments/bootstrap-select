@@ -4,7 +4,7 @@
  * Region: BG (Bulgaria)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('bg_BG', {
     noneSelectedText: 'Нищо избрано',
     noneResultsText: 'Няма резултат за {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -19,5 +19,5 @@
     selectAllText: 'Избери всички',
     deselectAllText: 'Размаркирай всички',
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

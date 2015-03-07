@@ -4,7 +4,7 @@
  * Region: US (United States)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('en_US', {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results match {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -19,5 +19,5 @@
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

@@ -5,11 +5,11 @@
  * Author: Daan Rosbergen (Badmuts)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('nl_NL', {
     noneSelectedText: 'Niets geselecteerd',
     noneResultsText: 'Geen resultaten gevonden voor {0}',
     countSelectedText: '{0} van {1} geselecteerd',
     maxOptionsText: ['Limiet bereikt ({n} {var} max)', 'Groep limiet bereikt ({n} {var} max)', ['items', 'item']],
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

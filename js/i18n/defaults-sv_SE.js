@@ -4,7 +4,7 @@
  * Region: SE (Sweden)
  */
 (function ($) {
-  $.fn.selectpicker.defaults = {
+  $.fn.selectpicker.locales.add('sv_SE', {
     noneSelectedText: 'Inget valt',
     noneResultsText: 'Inget sökresultat matchar {0}',
     countSelectedText: function (numSelected, numTotal) {
@@ -19,5 +19,5 @@
     selectAllText: 'Markera alla',
     deselectAllText: 'Avmarkera alla',
     multipleSeparator: ', '
-  };
+  });
 })(jQuery);

@@ -8,3 +8,4 @@ bower_components
 
 # Dist zip
 bootstrap-select-*.zip
+/nbproject/private/
