@@ -303,6 +303,7 @@
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
+      if (this.options.expanded) this.expanded();
     },
 
     createDropdown: function () {
@@ -1287,6 +1288,10 @@
     mobile: function () {
       this.$element.addClass('mobile-device').appendTo(this.$newElement);
       if (this.options.container) this.$menu.hide();
+    },
+    
+    expanded: function () {
+        this.$newElement.addClass('expanded');
     },
 
     refresh: function () {
