@@ -53,16 +53,16 @@
     "replacement"
   ],
   "dependencies": {
-    "browserify": "^8.1.3",
+    "browserify": "^9.0",
     "gulp": "^3.8.10",
     "gulp-uglify": "^1.1.0",
-    "react-bootstrap": "^0.15",
-    "react-tools": "^0.12.2",
+    "react-tools": "^0.13",
     "reactify": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0"
   },
   "peerDependencies": {
-    "react": "^0.12.2"
+    "react": "^0.12.2",
+    "react-bootstrap": "^0.16"
   }
 }
