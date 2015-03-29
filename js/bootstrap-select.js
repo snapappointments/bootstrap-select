@@ -906,7 +906,7 @@
           }
 
           // Trigger click event on the option
-          $option.click();
+          $option.triggerHandler('click');
         }
       });
 
