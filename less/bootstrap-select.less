@@ -10,7 +10,7 @@
   width: 220px \0; /*IE9 and below*/
 
   // The selectpicker button
-  > .btn {
+  > .dropdown-toggle {
     width: 100%;
     padding-right: 25px;
   }
@@ -29,7 +29,7 @@
     width: @width-default;
   }
 
-  .btn:focus {
+  .dropdown-toggle:focus {
     outline: thin dotted #333333 !important;
     outline: 5px auto -webkit-focus-ring-color !important;
     outline-offset: -2px;
@@ -94,7 +94,7 @@
   }
 
   // The selectpicker button
-  .btn {
+  .dropdown-toggle {
     .filter-option {
       display: inline-block;
       overflow: hidden;
@@ -111,7 +111,7 @@
     }
   }
 
-  &[class*="col-"] .btn {
+  &[class*="col-"] .dropdown-toggle {
     width: 100%;
   }
 
@@ -186,7 +186,7 @@
     margin: 0 5px;
   }
 
-  &.fit-width .btn {
+  &.fit-width .dropdown-toggle {
     .filter-option {
       position: static;
     }
@@ -213,7 +213,7 @@
 }
 
 .bootstrap-select.show-menu-arrow {
-  &.open > .btn {
+  &.open > .dropdown-toggle {
     z-index: (@zindex-select-dropdown + 1);
   }
 
