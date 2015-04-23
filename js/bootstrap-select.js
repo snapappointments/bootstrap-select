@@ -303,6 +303,7 @@
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
+      that.$element.trigger('done');
     },
 
     createDropdown: function () {
