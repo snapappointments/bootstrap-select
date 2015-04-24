@@ -908,7 +908,7 @@
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
-          if (that.options.liveSearch) {
+          if (that.options.liveSearch && !$(e.target).hasClass('close')) {
             that.$searchbox.focus();
           } else {
             that.$button.focus();
@@ -927,7 +927,7 @@
       });
 
       this.$menu.on('click', '.popover-title .close', function () {
-        that.$button.focus();
+        that.$button.click();
       });
 
       this.$searchbox.on('click', function (e) {
