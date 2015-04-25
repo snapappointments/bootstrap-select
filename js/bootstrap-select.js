@@ -789,10 +789,20 @@
     },
 
     clickListener: function () {
-      var that = this;
+      var that = this,
+          $document = $(document);
 
       this.$newElement.on('touchstart.dropdown', '.dropdown-menu', function (e) {
         e.stopPropagation();
+      });
+
+      $document.data('spaceSelect', false);
+      
+      this.$button.on('keyup', function(e) {
+          if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
+              e.preventDefault();
+              $document.data('spaceSelect', false);
+          }
       });
 
       this.$newElement.on('click', function () {
@@ -1269,6 +1279,8 @@
           elem.focus();
           // Prevent screen from scrolling if the user hit the spacebar
           e.preventDefault();
+          // Fixes spacebar selection of dropdown items in FF & IE
+          $(document).data('spaceSelect', true);
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
           that.$menu.find('.active a').click();
           $this.focus();

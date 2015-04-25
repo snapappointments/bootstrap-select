@@ -795,10 +795,20 @@
     },
 
     clickListener: function () {
-      var that = this;
+      var that = this,
+          $document = $(document);
 
       this.$newElement.on('touchstart.dropdown', '.dropdown-menu', function (e) {
         e.stopPropagation();
+      });
+
+      $document.data('spaceSelect', false);
+      
+      this.$button.on('keyup', function(e) {
+          if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
+              e.preventDefault();
+              $document.data('spaceSelect', false);
+          }
       });
 
       this.$newElement.on('click', function () {
@@ -914,7 +924,7 @@
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
-          if (that.options.liveSearch) {
+          if (that.options.liveSearch && !$(e.target).hasClass('close')) {
             that.$searchbox.focus();
           } else {
             that.$button.focus();
@@ -933,7 +943,7 @@
       });
 
       this.$menu.on('click', '.popover-title .close', function () {
-        that.$button.focus();
+        that.$button.click();
       });
 
       this.$searchbox.on('click', function (e) {
@@ -1275,6 +1285,8 @@
           elem.focus();
           // Prevent screen from scrolling if the user hit the spacebar
           e.preventDefault();
+          // Fixes spacebar selection of dropdown items in FF & IE
+          $(document).data('spaceSelect', true);
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
           that.$menu.find('.active a').click();
           $this.focus();
