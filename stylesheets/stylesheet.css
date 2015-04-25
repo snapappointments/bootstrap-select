@@ -433,3 +433,8 @@ header.inner h2 {
 .carbonad {
   border-width: 0;
 }
+
+.label {
+	color: black;
+	font-weight: bold;
+}
