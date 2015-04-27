@@ -1180,10 +1180,11 @@
           that.$menu.parent().removeClass('open');
           that.$button.focus();
         }
-        $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible a', $parent);
+        // $items contains li elements when liveSearch is enabled
+        $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
-            $items = that.$newElement.find('li a');
+            $items = that.$newElement.find('li');
             if (that.options.liveSearchNormalize) {
               $items = $items.filter(':a' + that._searchStyle() + '(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
             } else {
@@ -1239,8 +1240,7 @@
         } else {
           e.preventDefault();
           if (!$this.hasClass('dropdown-toggle')) {
-            $items.removeClass('active');
-            $items.eq(index).addClass('active').children('a').focus();
+            $items.removeClass('active').eq(index).addClass('active').children('a').focus();
             $this.focus();
           }
         }
