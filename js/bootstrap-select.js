@@ -239,6 +239,7 @@
     doneButton: false,
     doneButtonText: 'Close',
     multipleSeparator: ', ',
+    styleBase: 'btn',
     style: 'btn-default',
     size: 'auto',
     title: null,
@@ -342,7 +343,7 @@
           : '';
       var drop =
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
-          '<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"' + autofocus + '>' +
+          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="caret"></span>' +
           '</button>' +
