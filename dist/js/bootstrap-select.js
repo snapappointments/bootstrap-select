@@ -387,7 +387,8 @@
     createLi: function () {
       var that = this,
           _li = [],
-          optID = 0;
+          optID = 0,
+          titleOption = '<option class="bs-title-option" value="" selected></option>';
 
       // Helper functions
       /**
@@ -423,8 +424,14 @@
             '</a>';
       };
 
+      if (this.options.title && !this.multiple && !this.$element.find('.bs-title-option').length) {
+        this.$element.prepend(titleOption);
+      }
+
       this.$element.find('option').each(function (index) {
         var $this = $(this);
+
+        if ($this.hasClass('bs-title-option')) return;
 
         // Get the class and text for the option
         var optionClass = $this.attr('class') || '',
