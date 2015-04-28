@@ -909,8 +909,12 @@
 
           // Trigger select 'change'
           if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
-            that.$element.change();
+            // pass the recently clicked option, useful for select multiple and validation purposes
+            that.$element.trigger('change', $option);
           }
+
+          // Trigger click event on the option
+          $option.triggerHandler('click');
         }
       });
 
