@@ -310,6 +310,22 @@
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
+
+      this.$newElement.on('hide.bs.dropdown', function(e) {
+          that.$element.trigger('hide.bs.select', e);
+      });
+      
+      this.$newElement.on('hidden.bs.dropdown', function(e) {
+          that.$element.trigger('hidden.bs.select', e);
+      });
+      
+      this.$newElement.on('show.bs.dropdown', function(e) {
+          that.$element.trigger('show.bs.select', e);
+      });
+      
+      this.$newElement.on('shown.bs.dropdown', function(e) {
+          that.$element.trigger('shown.bs.select', e);
+      });
     },
 
     createDropdown: function () {
@@ -813,22 +829,6 @@
       });
 
       $document.data('spaceSelect', false);
-
-      this.$newElement.on('hide.bs.dropdown', function(e) {
-          that.$element.trigger('hide.bs.select', e);
-      });
-      
-      this.$newElement.on('hidden.bs.dropdown', function(e) {
-          that.$element.trigger('hidden.bs.select', e);
-      });
-      
-      this.$newElement.on('show.bs.dropdown', function(e) {
-          that.$element.trigger('show.bs.select', e);
-      });
-      
-      this.$newElement.on('shown.bs.dropdown', function(e) {
-          that.$element.trigger('shown.bs.select', e);
-      });
       
       this.$button.on('keyup', function(e) {
           if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
