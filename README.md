@@ -31,7 +31,7 @@ Create your `<select>` with the `.selectpicker` class.
 </select>
 ```
 
-If you use a 1.6.3 or newer, you don't need to to anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
+If you use a 1.6.3 or newer, you don't need to do anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
 
 If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](http://api.jquery.com/ready/) block.
 ```js
