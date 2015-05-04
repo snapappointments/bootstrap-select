@@ -758,6 +758,13 @@
         $drop.appendTo(that.options.container);
         $drop.toggleClass('open', !$(this).hasClass('open'));
         $drop.append(that.$menu);
+
+        if (that.$menu.offset().left + that.$menu.width() > $(window).width()) {
+          that.$menu.css({
+            left: 'auto', right: 0
+          });
+        }
+
       });
       $(window).on('resize scroll', function () {
         getPlacement(that.$newElement);
