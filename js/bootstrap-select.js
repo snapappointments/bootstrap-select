@@ -1118,6 +1118,7 @@
           $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
           $items,
           that = $parent.data('this'),
+          desc = ':not(.disabled, .divider, .dropdown-header):visible',
           index,
           next,
           first,
@@ -1220,11 +1221,11 @@
 
       if (/(38|40)/.test(e.keyCode.toString(10))) {
         index = $items.index($items.filter(':focus'));
-        first = $items.parent(':not(.disabled):visible').first().index();
-        last = $items.parent(':not(.disabled):visible').last().index();
-        next = $items.eq(index).parent().nextAll(':not(.disabled):visible').eq(0).index();
-        prev = $items.eq(index).parent().prevAll(':not(.disabled):visible').eq(0).index();
-        nextPrev = $items.eq(next).parent().prevAll(':not(.disabled):visible').eq(0).index();
+        first = $items.parent(':not(.disabled):visible').first().data('original-index');
+        last = $items.parent(':not(.disabled):visible').last().data('original-index');
+        next = $items.eq(index).parent().nextAll(desc).eq(0).data('original-index');
+        prev = $items.eq(index).parent().prevAll(desc).eq(0).data('original-index');
+        nextPrev = $items.eq(next).parent().prevAll(desc).eq(0).data('original-index');
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
@@ -1235,9 +1236,9 @@
           index = $items.index($items.filter('.active'));
           first = $items.filter(':not(.disabled):visible').first().data('index');
           last = $items.filter(':not(.disabled):visible').last().data('index');
-          next = $items.eq(index).nextAll(':not(.disabled):visible').eq(0).data('index');
-          prev = $items.eq(index).prevAll(':not(.disabled):visible').eq(0).data('index');
-          nextPrev = $items.eq(next).prevAll(':not(.disabled):visible').eq(0).data('index');
+          next = $items.eq(index).nextAll(desc).eq(0).data('index');
+          prev = $items.eq(index).prevAll(desc).eq(0).data('index');
+          nextPrev = $items.eq(next).prevAll(desc).eq(0).data('index');
         }
 
         prevIndex = $this.data('prevIndex');
