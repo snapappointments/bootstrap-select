@@ -434,23 +434,24 @@ header.inner h2 {
  */
 
 #carbonads {
-  width: auto !important;
-  height: auto !important;
-  padding: 20px !important;
-  margin: 30px -30px -31px !important;
+  position: absolute;
+  right: 0px;
+  width: 330px;
+  border: 1px solid #C0C0C0;
+  border-radius: 3px;
+  top: 50px;
+  padding: 15px;
   overflow: hidden; /* clearfix */
   font-size: 13px !important;
   line-height: 16px !important;
-  text-align: left;
-  background: transparent !important;
-  border: solid #866ab3 !important;
-  border-width: 1px 0 !important;
 }
 .carbon-img {
   margin: 0 !important;
+  float: left;
 }
 .carbon-text,
 .carbon-poweredby {
+  float: left;
   display: block !important;
   float: none !important;
   width: auto !important;
@@ -459,10 +460,17 @@ header.inner h2 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 .carbon-text {
+  color: #FFF !important;
   padding-top: 0 !important;
+  text-decoration: none;
 }
+
+.carbon-text:hover {
+  text-decoration: none;
+}
+
 .carbon-poweredby {
-  color: inherit !important;
+  color: #C0C0C0 !important;
   text-align: left !important;
 }
 .carbon-text a,
