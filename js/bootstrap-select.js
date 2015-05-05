@@ -128,7 +128,7 @@
   $.expr[':'].aicontains = function (obj, index, meta) {
     var $obj = $(obj);
     var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toUpperCase();
-    return haystack.includes(haystack, meta[3]);
+    return haystack.includes(meta[3].toUpperCase());
   };
 
   // Case and accent insensitive begins search
@@ -424,13 +424,13 @@
        * @param [tokens]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline, tokens) {
+      var generateA = function (text, html, classes, inline, tokens) {
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
             ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
-            '>' + text +
+            '>' + html +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
             '</a>';
       };
@@ -447,7 +447,6 @@
         // Get the class and text for the option
         var optionClass = $this.attr('class') || '',
             inline = $this.attr('style'),
-            text = $this.data('content') ? $this.data('content') : $this.html(),
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
@@ -456,9 +455,16 @@
           icon = '<span>' + icon + '</span>';
         }
 
-        if (!$this.data('content')) {
+        var optionText;
+        var optionHtml;
+        if ($this.data('content')) {
+          optionText = $this.data('content');
+          optionHtml = optionText;
+        }
+        else {
           // Prepend any icon and append any subtext to the main text.
-          text = icon + '<span class="text">' + text + subtext + '</span>';
+          optionText = $this.html();
+          optionHtml = icon + '<span class="text">' + optionText + subtext + '</span>';
         }
 
         if (that.options.hideDisabled && isDisabled) {
@@ -482,14 +488,14 @@
             _li.push(generateLI(label, null, 'dropdown-header', optID));
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, tokens), index, '', optID));
+          _li.push(generateLI(generateA(optionText, optionHtml, 'opt ' + optionClass, inline, tokens), index, '', optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
-          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
+          _li.push(generateLI(generateA(optionText, optionHtml, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
           if ($this.prev().is('optgroup')) _li.push(generateLI('', null, 'divider', optID + 'div'));
-          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
+          _li.push(generateLI(generateA(optionText, optionHtml, optionClass, inline, tokens), index));
         }
       });
 
