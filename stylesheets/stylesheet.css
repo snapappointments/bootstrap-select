@@ -433,7 +433,7 @@ header.inner h2 {
  * The hella `!important` is required for any pre-set property.
  */
 
-.carbonad {
+#carbonad {
   width: auto !important;
   height: auto !important;
   padding: 20px !important;
@@ -468,40 +468,4 @@ header.inner h2 {
 .carbonad-text a,
 .carbonad-tag a {
   color: #fff !important;
-}
-.carbonad #azcarbon > img {
-  display: none; /* hide what I assume are tracking images */
-}
-
-@media (min-width: 480px) {
-  .carbonad {
-    width: 330px !important;
-    margin: 20px auto !important;
-    border-width: 1px !important;
-    border-radius: 4px;
-  }
-  .bs-docs-masthead .carbonad {
-    margin: 50px auto 0 !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .carbonad {
-    margin-right: 0 !important;
-    margin-left: 0 !important;
-  }
-}
-
-@media (min-width: 992px) {
-  .carbonad {
-    position: absolute;
-    top: 0;
-    right: 15px; /* 15px instead of 0 since box-sizing */
-    width: 330px !important;
-    padding: 15px !important;
-    margin: 0 !important;
-  }
-  .bs-docs-masthead .carbonad {
-    position: static;
-  }
 }
