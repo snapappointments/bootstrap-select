@@ -303,7 +303,6 @@
       this.clickListener();
       if (this.options.liveSearch) this.liveSearchListener();
       this.render();
-      this.liHeight();
       this.setStyle();
       this.setWidth();
       if (this.options.container) this.selectPosition();
@@ -516,18 +515,19 @@
      * @param [updateLi] defaults to true
      */
     render: function (updateLi) {
-      var that = this;
+      var that = this,
+          notDisabled = this.options.hideDisabled ? ':enabled' : '';
 
       //Update the LI to match the SELECT
       if (updateLi !== false) {
         this.$element.find('option').each(function (index) {
-          that.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled'));
-          that.setSelected(index, $(this).is(':selected'));
+          that.setDisabled(index, this.disabled || this.parentElement.disabled);
+          that.setSelected(index, this.selected);
         });
       }
 
       this.tabIndex();
-      var notDisabled = this.options.hideDisabled ? ':enabled' : '';
+
       var selectedItems = this.$element.find('option:selected' + notDisabled).map(function () {
         var $this = $(this);
         var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
@@ -602,16 +602,16 @@
       }
     },
 
-    liHeight: function () {
-      if (this.options.size === false) return;
+    liHeight: function (refresh) {
+      if (!refresh && (this.options.size === false || this.$newElement.data('liHeight'))) return;
 
       var $selectClone = this.$menu.parent().clone().children('.dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
           $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
-          liHeight = $menuClone.find('li').not('.divider, .dropdown-header').filter(':visible').children('a').outerHeight(),
-          headerHeight = this.options.header ? $menuClone.find('.popover-title').outerHeight() : 0,
-          searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox').outerHeight() : 0,
-          actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox').outerHeight() : 0,
-          doneButtonHeight = this.multiple ? $menuClone.find('.bs-donebutton').outerHeight() : 0;
+          liHeight = $menuClone.find('li').not('.divider, .dropdown-header, .hidden').children('a')[0].offsetHeight,
+          headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
+          searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
+          actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
+          doneButtonHeight = this.multiple && this.doneButton ? $menuClone.find('.bs-donebutton')[0].offsetHeight : 0;
 
       $selectClone.remove();
 
@@ -625,6 +625,7 @@
 
     setSize: function () {
       this.findLis();
+      this.liHeight();
       var that = this,
           $menu = this.$menu,
           $menuInner = $menu.children('.inner'),
@@ -709,18 +710,21 @@
     },
 
     setWidth: function () {
-      if (this.options.width == 'auto') {
+      if (this.options.width === 'auto') {
         this.$menu.css('min-width', '0');
 
-        // Get correct width if element hidden
-        var selectClone = this.$newElement.clone().appendTo('body');
-        var ulWidth = selectClone.children('.dropdown-menu').css('width');
-        var btnWidth = selectClone.css('width', 'auto').children('button').css('width');
-        selectClone.remove();
+        // Get correct width if element is hidden
+        var $selectClone = this.$menu.parent().clone().appendTo('body'),
+            $selectClone2 = this.options.container ? this.$newElement.clone().appendTo('body') : $selectClone,
+            ulWidth = $selectClone.children('.dropdown-menu').outerWidth(),
+            btnWidth = $selectClone2.css('width', 'auto').children('button').outerWidth();
+
+        $selectClone.remove();
+        $selectClone2.remove();
 
         // Set width to whatever's larger, button title or longest option
-        this.$newElement.css('width', Math.max(parseInt(ulWidth), parseInt(btnWidth)) + 'px');
-      } else if (this.options.width == 'fit') {
+        this.$newElement.css('width', Math.max(ulWidth, btnWidth) + 'px');
+      } else if (this.options.width === 'fit') {
         // Remove inline min-width so width can be changed from 'auto'
         this.$menu.css('min-width', '');
         this.$newElement.css('width', '').addClass('fit-width');
@@ -1338,10 +1342,10 @@
       this.$lis = null;
       this.reloadLi();
       this.render();
-      this.setWidth();
-      this.setStyle();
       this.checkDisabled();
-      this.liHeight();
+      this.liHeight(true);
+      this.setStyle();
+      this.setWidth();
 
       this.$element.trigger('refreshed.bs.select');
     },
