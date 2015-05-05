@@ -345,10 +345,10 @@
       var actionsbox = this.multiple && this.options.actionsBox ?
       '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-group-sm btn-block">' +
-      '<button class="actions-btn bs-select-all btn btn-default">' +
+      '<button type="button" class="actions-btn bs-select-all btn btn-default">' +
       this.options.selectAllText +
       '</button>' +
-      '<button class="actions-btn bs-deselect-all btn btn-default">' +
+      '<button type="button" class="actions-btn bs-deselect-all btn btn-default">' +
       this.options.deselectAllText +
       '</button>' +
       '</div>' +
@@ -357,7 +357,7 @@
       var donebutton = this.multiple && this.options.doneButton ?
       '<div class="bs-donebutton">' +
       '<div class="btn-group btn-block">' +
-      '<button class="btn btn-sm btn-default">' +
+      '<button type="button" class="btn btn-sm btn-default">' +
       this.options.doneButtonText +
       '</button>' +
       '</div>' +
@@ -1132,6 +1132,7 @@
           nextPrev,
           prevIndex,
           isActive,
+          selector = ':not(.disabled, .hidden, .dropdown-header, .divider)',
           keyCodeMap = {
             32: ' ',
             48: '0',
@@ -1209,7 +1210,7 @@
           that.$button.focus();
         }
         // $items contains li elements when liveSearch is enabled
-        $items = $('[role=menu] li:not(.divider):not(.dropdown-header):visible', $parent);
+        $items = $('[role=menu] li:not(.disabled, .hidden, .dropdown-header, .divider)', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
             $items = that.$newElement.find('li');
@@ -1226,11 +1227,11 @@
 
       if (/(38|40)/.test(e.keyCode.toString(10))) {
         index = $items.index($items.filter(':focus'));
-        first = $items.parent(':not(.disabled):visible').first().index();
-        last = $items.parent(':not(.disabled):visible').last().index();
-        next = $items.eq(index).parent().nextAll(':not(.disabled):visible').eq(0).index();
-        prev = $items.eq(index).parent().prevAll(':not(.disabled):visible').eq(0).index();
-        nextPrev = $items.eq(next).parent().prevAll(':not(.disabled):visible').eq(0).index();
+        first = $items.parent(selector).first().data('originalIndex');
+        last = $items.parent(selector).last().data('originalIndex');
+        next = $items.eq(index).parent().nextAll(selector).eq(0).data('originalIndex');
+        prev = $items.eq(index).parent().prevAll(selector).eq(0).data('originalIndex');
+        nextPrev = $items.eq(next).parent().prevAll(selector).eq(0).data('originalIndex');
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
@@ -1239,11 +1240,11 @@
             }
           });
           index = $items.index($items.filter('.active'));
-          first = $items.filter(':not(.disabled):visible').first().data('index');
-          last = $items.filter(':not(.disabled):visible').last().data('index');
-          next = $items.eq(index).nextAll(':not(.disabled):visible').eq(0).data('index');
-          prev = $items.eq(index).prevAll(':not(.disabled):visible').eq(0).data('index');
-          nextPrev = $items.eq(next).prevAll(':not(.disabled):visible').eq(0).data('index');
+          first = $items.first().data('index');
+          last = $items.last().data('index');
+          next = $items.eq(index).nextAll().eq(0).data('index');
+          prev = $items.eq(index).prevAll().eq(0).data('index');
+          nextPrev = $items.eq(next).prevAll().eq(0).data('index');
         }
 
         prevIndex = $this.data('prevIndex');
