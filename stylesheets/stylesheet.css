@@ -433,7 +433,7 @@ header.inner h2 {
  * The hella `!important` is required for any pre-set property.
  */
 
-#carbonad {
+#carbonads {
   width: auto !important;
   height: auto !important;
   padding: 20px !important;
@@ -446,11 +446,11 @@ header.inner h2 {
   border: solid #866ab3 !important;
   border-width: 1px 0 !important;
 }
-.carbonad-img {
+.carbon-img {
   margin: 0 !important;
 }
-.carbonad-text,
-.carbonad-tag {
+.carbon-text,
+.carbon-poweredby {
   display: block !important;
   float: none !important;
   width: auto !important;
@@ -458,14 +458,14 @@ header.inner h2 {
   margin-left: 145px !important;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
-.carbonad-text {
+.carbon-text {
   padding-top: 0 !important;
 }
-.carbonad-tag {
+.carbon-poweredby {
   color: inherit !important;
   text-align: left !important;
 }
-.carbonad-text a,
-.carbonad-tag a {
+.carbon-text a,
+.carbon-poweredby a {
   color: #fff !important;
 }
