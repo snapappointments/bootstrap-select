@@ -39,6 +39,7 @@
     "type": "MIT",
     "url": "https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE"
   },
+  "main": "./js/bootstrap-select",
   "dependencies": {
     "jquery": ">=1.8"
   },
