@@ -279,7 +279,7 @@
       var that = this,
           id = this.$element.attr('id');
 
-      this.$element.hide();
+      this.$element.addClass('bs-select-hidden');
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
@@ -382,9 +382,10 @@
     },
 
     createView: function () {
-      var $drop = this.createDropdown();
-      var $li = this.createLi();
-      $drop.find('ul').append($li);
+      var $drop = this.createDropdown(),
+          li = this.createLi();
+
+      $drop.find('ul')[0].innerHTML = li;
       return $drop;
     },
 
@@ -392,8 +393,8 @@
       //Remove all children.
       this.destroyLi();
       //Re build
-      var $li = this.createLi();
-      this.$menu.find('ul').append($li);
+      var li = this.createLi();
+      this.$menu.find('ul')[0].innerHTML = li;
     },
 
     destroyLi: function () {
@@ -456,7 +457,8 @@
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = $this.is(':disabled') || $this.parent().is(':disabled');
+            isDisabled = this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled;
+
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
@@ -470,14 +472,15 @@
           return;
         }
 
-        if ($this.parent().is('optgroup') && $this.data('divider') !== true) {
+        if (this.parentElement.tagName === "OPTGROUP" && $this.data('divider') !== true) {
           if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
-            var label = $this.parent().attr('label');
-            var labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '';
-            var labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
+            var label = this.parentElement.label,
+                labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '',
+                labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
+            
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
@@ -493,7 +496,7 @@
         } else if ($this.data('hidden') === true) {
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
-          if ($this.prev().is('optgroup')) _li.push(generateLI('', null, 'divider', optID + 'div'));
+          if (this.previousElementSibling && this.previousElementSibling.tagName === "OPTGROUP") _li.push(generateLI('', null, 'divider', optID + 'div'));
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
         }
       });
@@ -503,7 +506,7 @@
         this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
       }
 
-      return $(_li.join(''));
+      return _li.join('');
     },
 
     findLis: function () {
@@ -516,33 +519,42 @@
      */
     render: function (updateLi) {
       var that = this,
-          notDisabled = this.options.hideDisabled ? ':enabled' : '';
+          notDisabled;
 
       //Update the LI to match the SELECT
       if (updateLi !== false) {
+        this.findLis();
+
         this.$element.find('option').each(function (index) {
-          that.setDisabled(index, this.disabled || this.parentElement.disabled);
-          that.setSelected(index, this.selected);
+          var $lis = that.$lis.filter('[data-original-index="' + index + '"]');
+
+          that.setDisabled(index, this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled, $lis);
+          that.setSelected(index, this.selected, $lis);
         });
       }
 
       this.tabIndex();
 
-      var selectedItems = this.$element.find('option:selected' + notDisabled).map(function () {
-        var $this = $(this);
-        var icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '';
-        var subtext;
-        if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
-          subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
-        } else {
-          subtext = '';
-        }
-        if (typeof $this.attr('title') !== 'undefined') {
-          return $this.attr('title');
-        } else if ($this.data('content') && that.options.showContent) {
-          return $this.data('content');
-        } else {
-          return icon + $this.html() + subtext;
+      var selectedItems = this.$element.find('option').map(function () {
+        if (this.selected) {
+          if (that.options.hideDisabled && (this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled)) return false;
+
+          var $this = $(this),
+              icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '',
+              subtext;
+
+          if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
+            subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
+          } else {
+            subtext = '';
+          }
+          if (typeof $this.attr('title') !== 'undefined') {
+            return $this.attr('title');
+          } else if ($this.data('content') && that.options.showContent) {
+            return $this.data('content');
+          } else {
+            return icon + $this.html() + subtext;
+          }
         }
       }).toArray();
 
@@ -587,7 +599,7 @@
      */
     setStyle: function (style, status) {
       if (this.$element.attr('class')) {
-        this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|validate\[.*\]/gi, ''));
+        this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
       }
 
       var buttonClass = style ? style : this.options.style;
@@ -779,22 +791,30 @@
       });
     },
 
-    setSelected: function (index, selected) {
-      this.findLis();
-      this.$lis.filter('[data-original-index="' + index + '"]').toggleClass('selected', selected);
+    setSelected: function (index, selected, $lis) {
+      if (!$lis) {
+        this.findLis();
+        var $lis = this.$lis.filter('[data-original-index="' + index + '"]');
+      }
+
+      $lis.toggleClass('selected', selected);
     },
 
-    setDisabled: function (index, disabled) {
-      this.findLis();
+    setDisabled: function (index, disabled, $lis) {
+      if (!$lis) {
+        this.findLis();
+        var $lis = this.$lis.filter('[data-original-index="' + index + '"]');
+      }
+
       if (disabled) {
-        this.$lis.filter('[data-original-index="' + index + '"]').addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
+        $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
       } else {
-        this.$lis.filter('[data-original-index="' + index + '"]').removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0);
+        $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0);
       }
     },
 
     isDisabled: function () {
-      return this.$element.is(':disabled');
+      return this.$element[0].disabled;
     },
 
     checkDisabled: function () {
