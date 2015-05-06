@@ -134,7 +134,7 @@
   $.expr[':'].aicontains = function (obj, index, meta) {
     var $obj = $(obj);
     var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toUpperCase();
-    return haystack.includes(haystack, meta[3]);
+    return haystack.includes(meta[3].toUpperCase());
   };
 
   // Case and accent insensitive begins search
@@ -280,6 +280,7 @@
           id = this.$element.attr('id');
 
       this.$element.addClass('bs-select-hidden');
+      this.liObj = {};
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
@@ -405,7 +406,8 @@
       var that = this,
           _li = [],
           optID = 0,
-          titleOption = '<option class="bs-title-option" value="" selected></option>';
+          titleOption = '<option class="bs-title-option" value="" selected></option>',
+          liIndex = -1;
 
       // Helper functions
       /**
@@ -434,7 +436,7 @@
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-            ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' +
+            (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' : '') +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             '>' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
@@ -448,11 +450,13 @@
       this.$element.find('option').each(function (index) {
         var $this = $(this);
 
+        liIndex++;
+
         if ($this.hasClass('bs-title-option')) return;
 
         // Get the class and text for the option
-        var optionClass = $this.attr('class') || '',
-            inline = $this.attr('style'),
+        var optionClass = this.className || '',
+            inline = this.style.cssText,
             text = $this.data('content') ? $this.data('content') : $this.html(),
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
@@ -463,13 +467,13 @@
           icon = '<span>' + icon + '</span>';
         }
 
+        if (that.options.hideDisabled && isDisabled) {
+          return;
+        }
+
         if (!$this.data('content')) {
           // Prepend any icon and append any subtext to the main text.
           text = icon + '<span class="text">' + text + subtext + '</span>';
-        }
-
-        if (that.options.hideDisabled && isDisabled) {
-          return;
         }
 
         if (this.parentElement.tagName === "OPTGROUP" && $this.data('divider') !== true) {
@@ -484,21 +488,26 @@
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
+              liIndex++;
               _li.push(generateLI('', null, 'divider', optID + 'div'));
             }
-
+            liIndex++;
             _li.push(generateLI(label, null, 'dropdown-header', optID));
           }
-
           _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, tokens), index, '', optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
-          if (this.previousElementSibling && this.previousElementSibling.tagName === "OPTGROUP") _li.push(generateLI('', null, 'divider', optID + 'div'));
+          if (this.previousElementSibling && this.previousElementSibling.tagName === "OPTGROUP") {
+            liIndex++;
+            _li.push(generateLI('', null, 'divider', optID + 'div'));
+          }
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
         }
+
+        that.liObj[index] = liIndex;
       });
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
@@ -523,10 +532,8 @@
 
       //Update the LI to match the SELECT
       if (updateLi !== false) {
-        this.findLis();
-
         this.$element.find('option').each(function (index) {
-          var $lis = that.$lis.filter('[data-original-index="' + index + '"]');
+          var $lis = that.findLis().eq(that.liObj[index]);
 
           that.setDisabled(index, this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled, $lis);
           that.setSelected(index, this.selected, $lis);
@@ -793,8 +800,7 @@
 
     setSelected: function (index, selected, $lis) {
       if (!$lis) {
-        this.findLis();
-        var $lis = this.$lis.filter('[data-original-index="' + index + '"]');
+        var $lis = this.findLis().eq(this.liObj[index]);
       }
 
       $lis.toggleClass('selected', selected);
@@ -802,8 +808,7 @@
 
     setDisabled: function (index, disabled, $lis) {
       if (!$lis) {
-        this.findLis();
-        var $lis = this.$lis.filter('[data-original-index="' + index + '"]');
+        var $lis = this.findLis().eq(this.liObj[index]);
       }
 
       if (disabled) {
