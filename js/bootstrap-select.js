@@ -274,6 +274,8 @@
           id = this.$element.attr('id');
 
       this.$element.addClass('bs-select-hidden');
+      // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
+      // allows us to do this.$lis.eq(that.liObj[index]) instead of this.$lis.filter('[data-original-index="' + index + '"]')
       this.liObj = {};
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
@@ -401,7 +403,7 @@
           _li = [],
           optID = 0,
           titleOption = '<option class="bs-title-option" value="" selected></option>',
-          liIndex = -1;
+          liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure liObj is correct
 
       // Helper functions
       /**
@@ -438,7 +440,7 @@
       };
 
       if (this.options.title && !this.multiple && !this.$element.find('.bs-title-option').length) {
-        this.$element.prepend(titleOption);
+        this.$element.prepend(titleOption).find('option').eq(0).prop('selected', true);
       }
 
       this.$element.find('option').each(function (index) {
@@ -620,10 +622,11 @@
 
       var $selectClone = this.$menu.parent().clone().children('.dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
           $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
-          liHeight = $menuClone.find('li').not('.divider, .dropdown-header, .hidden').children('a')[0].offsetHeight,
+          $liVisible = $menuClone.find('li').not('.divider, .dropdown-header, .hidden'),
+          liHeight = $liVisible.length > 0 ? $liVisible.children('a')[0].offsetHeight : 26,
           headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
-          actionsHeight = this.options.actionsBox ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
+          actionsHeight = this.options.actionsBox && this.multiple ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
           doneButtonHeight = this.multiple && this.doneButton ? $menuClone.find('.bs-donebutton')[0].offsetHeight : 0;
 
       $selectClone.remove();
