@@ -62,9 +62,11 @@
 .form-inline .bootstrap-select.btn-group .form-control {
   width: 100%;
 }
+.bootstrap-select.btn-group.disabled,
 .bootstrap-select.btn-group > .disabled {
   cursor: not-allowed;
 }
+.bootstrap-select.btn-group.disabled:focus,
 .bootstrap-select.btn-group > .disabled:focus {
   outline: none !important;
 }

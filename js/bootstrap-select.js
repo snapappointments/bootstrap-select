@@ -823,9 +823,11 @@
       var that = this;
 
       if (this.isDisabled()) {
+        this.$newElement.addClass('disabled');
         this.$button.addClass('disabled').attr('tabindex', -1);
       } else {
         if (this.$button.hasClass('disabled')) {
+          this.$newElement.removeClass('disabled');
           this.$button.removeClass('disabled');
         }
 
