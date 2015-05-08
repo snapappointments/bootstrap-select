@@ -446,6 +446,7 @@
       };
 
       if (this.options.title && !this.multiple && !this.$element.find('.bs-title-option').length) {
+        liIndex--; // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
         this.$element.prepend(titleOption).find('option').eq(0).prop('selected', true);
       }
 
@@ -865,10 +866,10 @@
       $document.data('spaceSelect', false);
       
       this.$button.on('keyup', function(e) {
-          if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
-              e.preventDefault();
-              $document.data('spaceSelect', false);
-          }
+        if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
+            e.preventDefault();
+            $document.data('spaceSelect', false);
+        }
       });
 
       this.$newElement.on('click', function () {
