@@ -717,11 +717,13 @@
         }
         $menu.css({
           'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px',
-          'overflow': 'hidden'
+          'overflow': 'hidden',
+          'min-height': ''
         });
         $menuInner.css({
           'max-height': menuHeight - menuPadding + 'px',
-          'overflow-y': 'auto'
+          'overflow-y': 'auto',
+          'min-height': ''
         });
       }
     },
