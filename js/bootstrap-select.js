@@ -1238,6 +1238,7 @@
         if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && that.$menu.find('.active').length === 0) {
           e.preventDefault();
           that.$menu.parent().removeClass('open');
+          if (that.options.container) that.$newElement.removeClass('open');
           that.$button.focus();
         }
         // $items contains li elements when liveSearch is enabled
@@ -1356,6 +1357,7 @@
 
       if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) {
         that.$menu.parent().removeClass('open');
+        if (that.options.container) that.$newElement.removeClass('open');
         that.$button.focus();
       }
     },
