@@ -619,25 +619,36 @@
     },
 
     liHeight: function (refresh) {
-      if (!refresh && (this.options.size === false || this.$newElement.data('liHeight'))) return;
+      if (!refresh && (this.options.size === false || this.sizeInfo)) return;
 
-      var $selectClone = this.$menu.parent().clone().children('.dropdown-toggle').prop('autofocus', false).end().appendTo('body'),
+      var selectClone = this.$menu[0].parentNode.cloneNode(true),
+          $selectClone = $(selectClone).children('.dropdown-toggle').prop('autofocus', false).end(),
           $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
-          $liVisible = $menuClone.find('li').not('.divider, .dropdown-header, .hidden'),
-          liHeight = $liVisible.length > 0 ? $liVisible.children('a')[0].offsetHeight : 26,
+          $menuInnerClone = $menuClone.children('.inner'),
+          $li = $menuInnerClone.find('li'),
+          $liVisible = $li.not('.divider, .dropdown-header, .hidden').eq(0);
+
+      if ($liVisible.length > 0) $menuInnerClone[0].innerHTML = $liVisible[0].outerHTML;
+
+      $('body').append(selectClone);
+
+      var liHeight = $liVisible.length > 0 ? $liVisible.children('a')[0].offsetHeight : 30,
           headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
           actionsHeight = this.options.actionsBox && this.multiple ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
-          doneButtonHeight = this.multiple && this.doneButton ? $menuClone.find('.bs-donebutton')[0].offsetHeight : 0;
+          doneButtonHeight = this.options.doneButton && this.multiple ? $menuClone.find('.bs-donebutton')[0].offsetHeight : 0,
+          dividerHeight = $li.find('.divider').outerHeight(true);
 
-      $selectClone.remove();
+      selectClone.parentNode.removeChild(selectClone);
 
-      this.$newElement
-          .data('liHeight', liHeight)
-          .data('headerHeight', headerHeight)
-          .data('searchHeight', searchHeight)
-          .data('actionsHeight', actionsHeight)
-          .data('doneButtonHeight', doneButtonHeight);
+      this.sizeInfo = {
+        liHeight: liHeight,
+        headerHeight: headerHeight,
+        searchHeight: searchHeight,
+        actionsHeight: actionsHeight,
+        doneButtonHeight: doneButtonHeight,
+        dividerHeight: dividerHeight
+      };
     },
 
     setSize: function () {
@@ -646,20 +657,21 @@
       var that = this,
           $menu = this.$menu,
           $menuInner = $menu.children('.inner'),
-          selectHeight = this.$newElement.outerHeight(),
-          liHeight = this.$newElement.data('liHeight'),
-          headerHeight = this.$newElement.data('headerHeight'),
-          searchHeight = this.$newElement.data('searchHeight'),
-          actionsHeight = this.$newElement.data('actionsHeight'),
-          doneButtonHeight = this.$newElement.data('doneButtonHeight'),
-          divHeight = this.$lis.filter('.divider').outerHeight(true),
-          menuPadding = parseInt($menu.css('padding-top')) +
-              parseInt($menu.css('padding-bottom')) +
-              parseInt($menu.css('border-top-width')) +
-              parseInt($menu.css('border-bottom-width')),
-          notDisabled = this.options.hideDisabled ? '.disabled' : '',
           $window = $(window),
-          menuExtras = menuPadding + parseInt($menu.css('margin-top')) + parseInt($menu.css('margin-bottom')) + 2,
+          selectHeight = this.$newElement[0].offsetHeight,
+          liHeight = this.sizeInfo['liHeight'],
+          headerHeight = this.sizeInfo['headerHeight'],
+          searchHeight = this.sizeInfo['searchHeight'],
+          actionsHeight = this.sizeInfo['actionsHeight'],
+          doneButtonHeight = this.sizeInfo['doneButtonHeight'],
+          divHeight = this.sizeInfo['dividerHeight'],
+          menuStyle = getComputedStyle($menu[0]),
+          menuPadding = parseInt(menuStyle.paddingTop) +
+              parseInt(menuStyle.paddingBottom) +
+              parseInt(menuStyle.borderTopWidth) +
+              parseInt(menuStyle.borderBottomWidth),
+          notDisabled = this.options.hideDisabled ? '.disabled' : '',
+          menuExtras = menuPadding + parseInt(menuStyle.marginTop) + parseInt(menuStyle.marginBottom) + 2,
           menuHeight,
           selectOffsetTop,
           selectOffsetBot,
@@ -669,13 +681,15 @@
             selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
             selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
           };
+
       posVert();
+
       if (this.options.header) $menu.css('padding-top', 0);
 
       if (this.options.size == 'auto') {
         var getSize = function () {
           var minHeight,
-              lisVis = that.$lis.not('.hidden');
+              $lisVisible = that.$lis.not('.hidden');
 
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
@@ -687,7 +701,7 @@
             menuHeight = selectOffsetTop - menuExtras;
           }
 
-          if ((lisVis.length + lisVis.filter('.dropdown-header').length) > 3) {
+          if (($lisVisible.length + $lisVisible.filter('.dropdown-header').length) > 3) {
             minHeight = liHeight * 3 + menuExtras - 2;
           } else {
             minHeight = 0;
@@ -707,10 +721,11 @@
         getSize();
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
         $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
-      } else if (this.options.size && this.options.size != 'auto' && $menu.find('li').not(notDisabled).length > this.options.size) {
-        var optIndex = this.$lis.not('.divider').not(notDisabled).children().slice(0, this.options.size).last().parent().index();
-        var divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
+      } else if (this.options.size && this.options.size != 'auto' && this.$lis.not(notDisabled).length > this.options.size) {
+        var optIndex = this.$lis.not('.divider').not(notDisabled).children().slice(0, this.options.size).last().parent().index(),
+            divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
+
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
           this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < $menu.height());
@@ -1453,8 +1468,8 @@
 
   $(document)
       .data('keycount', 0)
-      .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bs-searchbox input', Selectpicker.prototype.keydown)
-      .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role=menu], .bs-searchbox input', function (e) {
+      .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="menu"], .bs-searchbox input', Selectpicker.prototype.keydown)
+      .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="menu"], .bs-searchbox input', function (e) {
         e.stopPropagation();
       });
 
