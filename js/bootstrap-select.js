@@ -402,7 +402,7 @@
       var that = this,
           _li = [],
           optID = 0,
-          titleOption = '<option class="bs-title-option" value="" selected></option>',
+          titleOption = document.createElement('option'),
           liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure liObj is correct
 
       // Helper functions
@@ -441,7 +441,12 @@
 
       if (this.options.title && !this.multiple && !this.$element.find('.bs-title-option').length) {
         liIndex--; // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
-        this.$element.prepend(titleOption).find('option').eq(0).prop('selected', true);
+        // Use native JS to prepend option (faster)
+        var element = this.$element[0];
+        titleOption.className = 'bs-title-option';
+        element.insertBefore(titleOption, element.firstChild);
+        // Check if selected attribute is already set on an option. If not, select the titleOption option.
+        if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
       }
 
       this.$element.find('option').each(function (index) {
