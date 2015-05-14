@@ -289,6 +289,7 @@
       this.$element.after(this.$newElement);
       this.$button = this.$newElement.children('button');
       this.$menu = this.$newElement.children('.dropdown-menu');
+      this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
 
       if (this.options.dropdownAlignRight)
@@ -408,7 +409,7 @@
       var that = this,
           _li = [],
           optID = 0,
-          titleOption = '<option class="bs-title-option" value="" selected></option>',
+          titleOption = document.createElement('option'),
           liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure liObj is correct
 
       // Helper functions
@@ -447,7 +448,12 @@
 
       if (this.options.title && !this.multiple && !this.$element.find('.bs-title-option').length) {
         liIndex--; // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
-        this.$element.prepend(titleOption).find('option').eq(0).prop('selected', true);
+        // Use native JS to prepend option (faster)
+        var element = this.$element[0];
+        titleOption.className = 'bs-title-option';
+        element.insertBefore(titleOption, element.firstChild);
+        // Check if selected attribute is already set on an option. If not, select the titleOption option.
+        if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
       }
 
       this.$element.find('option').each(function (index) {
@@ -638,7 +644,7 @@
 
       $('body').append(selectClone);
 
-      var liHeight = $liVisible.length > 0 ? $liVisible.children('a')[0].offsetHeight : 30,
+      var liHeight = $liVisible.length > 0 ? $menuInnerClone.children('li')[0].offsetHeight : 26,
           headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
           actionsHeight = this.options.actionsBox && this.multiple ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
@@ -891,11 +897,20 @@
 
       this.$newElement.on('click', function () {
         that.setSize();
-        if (!that.options.liveSearch && !that.multiple) {
-          setTimeout(function () {
+        that.$element.on('shown.bs.select', function() {
+          if (!that.options.liveSearch && !that.multiple) {
             that.$menu.find('.selected a').focus();
-          }, 10);
-        }
+          } else if (!that.multiple) {
+            var selectedIndex = that.liObj[that.$element[0].selectedIndex];
+
+            if (typeof selectedIndex !== 'number') return;
+            
+            // scroll to selected option
+            var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
+            offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
+            that.$menuInner[0].scrollTop = offset;
+          }
+        });
       });
 
       this.$menu.on('click', 'li a', function (e) {
