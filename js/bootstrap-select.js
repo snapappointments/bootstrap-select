@@ -283,6 +283,7 @@
       this.$element.after(this.$newElement);
       this.$button = this.$newElement.children('button');
       this.$menu = this.$newElement.children('.dropdown-menu');
+      this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
 
       if (this.options.dropdownAlignRight)
@@ -637,7 +638,7 @@
 
       $('body').append(selectClone);
 
-      var liHeight = $liVisible.length > 0 ? $liVisible.children('a')[0].offsetHeight : 30,
+      var liHeight = $liVisible.length > 0 ? $menuInnerClone.children('li')[0].offsetHeight : 26,
           headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
           searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
           actionsHeight = this.options.actionsBox && this.multiple ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
@@ -890,11 +891,20 @@
 
       this.$newElement.on('click', function () {
         that.setSize();
-        if (!that.options.liveSearch && !that.multiple) {
-          setTimeout(function () {
+        that.$element.on('shown.bs.select', function() {
+          if (!that.options.liveSearch && !that.multiple) {
             that.$menu.find('.selected a').focus();
-          }, 10);
-        }
+          } else if (!that.multiple) {
+            var selectedIndex = that.liObj[that.$element[0].selectedIndex];
+
+            if (typeof selectedIndex !== 'number') return;
+            
+            // scroll to selected option
+            var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
+            offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
+            that.$menuInner[0].scrollTop = offset;
+          }
+        });
       });
 
       this.$menu.on('click', 'li a', function (e) {
