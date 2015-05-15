@@ -663,7 +663,13 @@
           searchHeight = search ? search.offsetHeight : 0,
           actionsHeight = actions ? actions.offsetHeight : 0,
           doneButtonHeight = doneButton && this.multiple ? doneButton.offsetHeight : 0,
-          dividerHeight = $(divider).outerHeight(true);
+          dividerHeight = $(divider).outerHeight(true),
+          menuStyle = getComputedStyle(menu),
+          menuPadding = parseInt(menuStyle.paddingTop) +
+                        parseInt(menuStyle.paddingBottom) +
+                        parseInt(menuStyle.borderTopWidth) +
+                        parseInt(menuStyle.borderBottomWidth),
+          menuExtras = menuPadding + parseInt(menuStyle.marginTop) + parseInt(menuStyle.marginBottom) + 2;
 
       document.body.removeChild(newElement);
 
@@ -673,7 +679,9 @@
         searchHeight: searchHeight,
         actionsHeight: actionsHeight,
         doneButtonHeight: doneButtonHeight,
-        dividerHeight: dividerHeight
+        dividerHeight: dividerHeight,
+        menuPadding: menuPadding,
+        menuExtras: menuExtras
       };
     },
 
@@ -691,13 +699,9 @@
           actionsHeight = this.sizeInfo['actionsHeight'],
           doneButtonHeight = this.sizeInfo['doneButtonHeight'],
           divHeight = this.sizeInfo['dividerHeight'],
-          menuStyle = getComputedStyle($menu[0]),
-          menuPadding = parseInt(menuStyle.paddingTop) +
-              parseInt(menuStyle.paddingBottom) +
-              parseInt(menuStyle.borderTopWidth) +
-              parseInt(menuStyle.borderBottomWidth),
+          menuPadding = this.sizeInfo['menuPadding'],
+          menuExtras = this.sizeInfo['menuExtras'],
           notDisabled = this.options.hideDisabled ? '.disabled' : '',
-          menuExtras = menuPadding + parseInt(menuStyle.marginTop) + parseInt(menuStyle.marginBottom) + 2,
           menuHeight,
           selectOffsetTop,
           selectOffsetBot,
