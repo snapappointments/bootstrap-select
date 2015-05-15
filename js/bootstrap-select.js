@@ -392,7 +392,7 @@
       this.destroyLi();
       //Re build
       var li = this.createLi();
-      this.$menu.find('ul')[0].innerHTML = li;
+      this.$menuInner[0].innerHTML = li;
     },
 
     destroyLi: function () {
@@ -627,25 +627,45 @@
     liHeight: function (refresh) {
       if (!refresh && (this.options.size === false || this.sizeInfo)) return;
 
-      var selectClone = this.$menu[0].parentNode.cloneNode(true),
-          $selectClone = $(selectClone).children('.dropdown-toggle').prop('autofocus', false).end(),
-          $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
-          $menuInnerClone = $menuClone.children('.inner'),
-          $li = $menuInnerClone.find('li'),
-          $liVisible = $li.not('.divider, .dropdown-header, .hidden').eq(0);
+      var newElement = document.createElement('div'),
+          menu = document.createElement('div'),
+          menuInner = document.createElement('ul'),
+          divider = document.createElement('li'),
+          li = document.createElement('li'),
+          a = document.createElement('a'),
+          text = document.createElement('span'),
+          header = this.options.header ? this.$menu.find('.popover-title')[0].cloneNode(true) : null,
+          search = this.options.liveSearch ? this.$menu.find('.bs-searchbox')[0].cloneNode(true) : null,
+          actions = this.options.actionsBox && this.multiple ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
+          doneButton = this.options.doneButton && this.multiple ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
 
-      if ($liVisible.length > 0) $menuInnerClone[0].innerHTML = $liVisible[0].outerHTML;
+      text.className = 'text';
+      newElement.className = this.$menu[0].parentNode.className + ' open';
+      menu.className = this.$menu[0].className;
+      menuInner.className = this.$menuInner[0].className;
+      divider.className = 'divider';
 
-      $('body').append(selectClone);
+      a.appendChild(text);
+      li.appendChild(a);
+      menuInner.appendChild(li);
+      menuInner.appendChild(divider);
+      if (header) menu.appendChild(header);
+      if (search) menu.appendChild(search);
+      if (actions) menu.appendChild(actions);
+      menu.appendChild(menuInner);
+      if (doneButton) menu.appendChild(doneButton);
+      newElement.appendChild(menu);
+      
+      document.body.appendChild(newElement);
 
-      var liHeight = $liVisible.length > 0 ? $menuInnerClone.children('li')[0].offsetHeight : 26,
-          headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
-          searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
-          actionsHeight = this.options.actionsBox && this.multiple ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
-          doneButtonHeight = this.options.doneButton && this.multiple ? $menuClone.find('.bs-donebutton')[0].offsetHeight : 0,
-          dividerHeight = $li.find('.divider').outerHeight(true);
+      var liHeight = a.offsetHeight,
+          headerHeight = header ? header.offsetHeight : 0,
+          searchHeight = search ? search.offsetHeight : 0,
+          actionsHeight = actions ? actions.offsetHeight : 0,
+          doneButtonHeight = doneButton && this.multiple ? doneButton.offsetHeight : 0,
+          dividerHeight = $(divider).outerHeight(true);
 
-      selectClone.parentNode.removeChild(selectClone);
+      document.body.removeChild(newElement);
 
       this.sizeInfo = {
         liHeight: liHeight,
@@ -662,7 +682,7 @@
       this.liHeight();
       var that = this,
           $menu = this.$menu,
-          $menuInner = $menu.children('.inner'),
+          $menuInner = this.$menuInner,
           $window = $(window),
           selectHeight = this.$newElement[0].offsetHeight,
           liHeight = this.sizeInfo['liHeight'],
