@@ -655,7 +655,7 @@
       menu.appendChild(menuInner);
       if (doneButton) menu.appendChild(doneButton);
       newElement.appendChild(menu);
-      
+
       document.body.appendChild(newElement);
 
       var liHeight = a.offsetHeight,
@@ -706,20 +706,29 @@
           selectOffsetTop,
           selectOffsetBot,
           posVert = function () {
-            // JQuery defines a scrollTop function, but in pure JS it's a property
-            //noinspection JSValidateTypes
-            selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
-            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
+            selectOffsetTop = that.$newElement[0].offsetTop - window.scrollY;
+            selectOffsetBot = window.innerHeight - selectOffsetTop - selectHeight;
           };
 
       posVert();
 
       if (this.options.header) $menu.css('padding-top', 0);
 
-      if (this.options.size == 'auto') {
+      if (this.options.size === 'auto') {
         var getSize = function () {
           var minHeight,
-              $lisVisible = that.$lis.not('.hidden');
+              hasClass = function(className, include) {
+                return function (element) {
+                    if (include) {
+                        return element.className === className;
+                    } else {
+                        return element.className !== className;
+                    }
+                };
+              },
+              lis = that.$menuInner[0].getElementsByTagName('li'),
+              lisVisible = Array.prototype.filter ? Array.prototype.filter.call(lis, hasClass('hidden', false)) : that.$lis.not('.hidden'),
+              optGroup = Array.prototype.filter ? Array.prototype.filter.call(lisVisible, hasClass('dropdown-header', true)) : lisVisible.filter('.dropdown-header');
 
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
@@ -731,7 +740,7 @@
             menuHeight = selectOffsetTop - menuExtras;
           }
 
-          if (($lisVisible.length + $lisVisible.filter('.dropdown-header').length) > 3) {
+          if ((lisVisible.length + optGroup.length) > 3) {
             minHeight = liHeight * 3 + menuExtras - 2;
           } else {
             minHeight = 0;
