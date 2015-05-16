@@ -398,7 +398,7 @@
       this.destroyLi();
       //Re build
       var li = this.createLi();
-      this.$menu.find('ul')[0].innerHTML = li;
+      this.$menuInner[0].innerHTML = li;
     },
 
     destroyLi: function () {
@@ -633,25 +633,51 @@
     liHeight: function (refresh) {
       if (!refresh && (this.options.size === false || this.sizeInfo)) return;
 
-      var selectClone = this.$menu[0].parentNode.cloneNode(true),
-          $selectClone = $(selectClone).children('.dropdown-toggle').prop('autofocus', false).end(),
-          $menuClone = $selectClone.addClass('open').children('.dropdown-menu'),
-          $menuInnerClone = $menuClone.children('.inner'),
-          $li = $menuInnerClone.find('li'),
-          $liVisible = $li.not('.divider, .dropdown-header, .hidden').eq(0);
+      var newElement = document.createElement('div'),
+          menu = document.createElement('div'),
+          menuInner = document.createElement('ul'),
+          divider = document.createElement('li'),
+          li = document.createElement('li'),
+          a = document.createElement('a'),
+          text = document.createElement('span'),
+          header = this.options.header ? this.$menu.find('.popover-title')[0].cloneNode(true) : null,
+          search = this.options.liveSearch ? this.$menu.find('.bs-searchbox')[0].cloneNode(true) : null,
+          actions = this.options.actionsBox && this.multiple ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
+          doneButton = this.options.doneButton && this.multiple ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
 
-      if ($liVisible.length > 0) $menuInnerClone[0].innerHTML = $liVisible[0].outerHTML;
+      text.className = 'text';
+      newElement.className = this.$menu[0].parentNode.className + ' open';
+      menu.className = this.$menu[0].className;
+      menuInner.className = this.$menuInner[0].className;
+      divider.className = 'divider';
 
-      $('body').append(selectClone);
+      a.appendChild(text);
+      li.appendChild(a);
+      menuInner.appendChild(li);
+      menuInner.appendChild(divider);
+      if (header) menu.appendChild(header);
+      if (search) menu.appendChild(search);
+      if (actions) menu.appendChild(actions);
+      menu.appendChild(menuInner);
+      if (doneButton) menu.appendChild(doneButton);
+      newElement.appendChild(menu);
 
-      var liHeight = $liVisible.length > 0 ? $menuInnerClone.children('li')[0].offsetHeight : 26,
-          headerHeight = this.options.header ? $menuClone.find('.popover-title')[0].offsetHeight : 0,
-          searchHeight = this.options.liveSearch ? $menuClone.find('.bs-searchbox')[0].offsetHeight : 0,
-          actionsHeight = this.options.actionsBox && this.multiple ? $menuClone.find('.bs-actionsbox')[0].offsetHeight : 0,
-          doneButtonHeight = this.options.doneButton && this.multiple ? $menuClone.find('.bs-donebutton')[0].offsetHeight : 0,
-          dividerHeight = $li.find('.divider').outerHeight(true);
+      document.body.appendChild(newElement);
 
-      selectClone.parentNode.removeChild(selectClone);
+      var liHeight = a.offsetHeight,
+          headerHeight = header ? header.offsetHeight : 0,
+          searchHeight = search ? search.offsetHeight : 0,
+          actionsHeight = actions ? actions.offsetHeight : 0,
+          doneButtonHeight = doneButton && this.multiple ? doneButton.offsetHeight : 0,
+          dividerHeight = $(divider).outerHeight(true),
+          menuStyle = getComputedStyle(menu),
+          menuPadding = parseInt(menuStyle.paddingTop) +
+                        parseInt(menuStyle.paddingBottom) +
+                        parseInt(menuStyle.borderTopWidth) +
+                        parseInt(menuStyle.borderBottomWidth),
+          menuExtras = menuPadding + parseInt(menuStyle.marginTop) + parseInt(menuStyle.marginBottom) + 2;
+
+      document.body.removeChild(newElement);
 
       this.sizeInfo = {
         liHeight: liHeight,
@@ -659,7 +685,9 @@
         searchHeight: searchHeight,
         actionsHeight: actionsHeight,
         doneButtonHeight: doneButtonHeight,
-        dividerHeight: dividerHeight
+        dividerHeight: dividerHeight,
+        menuPadding: menuPadding,
+        menuExtras: menuExtras
       };
     },
 
@@ -668,7 +696,7 @@
       this.liHeight();
       var that = this,
           $menu = this.$menu,
-          $menuInner = $menu.children('.inner'),
+          $menuInner = this.$menuInner,
           $window = $(window),
           selectHeight = this.$newElement[0].offsetHeight,
           liHeight = this.sizeInfo['liHeight'],
@@ -677,31 +705,36 @@
           actionsHeight = this.sizeInfo['actionsHeight'],
           doneButtonHeight = this.sizeInfo['doneButtonHeight'],
           divHeight = this.sizeInfo['dividerHeight'],
-          menuStyle = getComputedStyle($menu[0]),
-          menuPadding = parseInt(menuStyle.paddingTop) +
-              parseInt(menuStyle.paddingBottom) +
-              parseInt(menuStyle.borderTopWidth) +
-              parseInt(menuStyle.borderBottomWidth),
+          menuPadding = this.sizeInfo['menuPadding'],
+          menuExtras = this.sizeInfo['menuExtras'],
           notDisabled = this.options.hideDisabled ? '.disabled' : '',
-          menuExtras = menuPadding + parseInt(menuStyle.marginTop) + parseInt(menuStyle.marginBottom) + 2,
           menuHeight,
           selectOffsetTop,
           selectOffsetBot,
           posVert = function () {
-            // JQuery defines a scrollTop function, but in pure JS it's a property
-            //noinspection JSValidateTypes
-            selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
-            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
+            selectOffsetTop = that.$newElement[0].offsetTop - window.scrollY;
+            selectOffsetBot = window.innerHeight - selectOffsetTop - selectHeight;
           };
 
       posVert();
 
       if (this.options.header) $menu.css('padding-top', 0);
 
-      if (this.options.size == 'auto') {
+      if (this.options.size === 'auto') {
         var getSize = function () {
           var minHeight,
-              $lisVisible = that.$lis.not('.hidden');
+              hasClass = function(className, include) {
+                return function (element) {
+                    if (include) {
+                        return element.className === className;
+                    } else {
+                        return element.className !== className;
+                    }
+                };
+              },
+              lis = that.$menuInner[0].getElementsByTagName('li'),
+              lisVisible = Array.prototype.filter ? Array.prototype.filter.call(lis, hasClass('hidden', false)) : that.$lis.not('.hidden'),
+              optGroup = Array.prototype.filter ? Array.prototype.filter.call(lisVisible, hasClass('dropdown-header', true)) : lisVisible.filter('.dropdown-header');
 
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
@@ -713,7 +746,7 @@
             menuHeight = selectOffsetTop - menuExtras;
           }
 
-          if (($lisVisible.length + $lisVisible.filter('.dropdown-header').length) > 3) {
+          if ((lisVisible.length + optGroup.length) > 3) {
             minHeight = liHeight * 3 + menuExtras - 2;
           } else {
             minHeight = 0;
