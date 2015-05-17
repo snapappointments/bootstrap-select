@@ -57,8 +57,8 @@ Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for
 
 ## Bugs and feature requests
 
-Anyone and everyone is welcome to contribute. Please take a moment to
-review the [guidelines for contributing](CONTRIBUTING.md). Make sure you're using the latest version of bootstrap-select before submitting an issue.
+Anyone and everyone is welcome to contribute. **Please take a moment to
+review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're using the latest version of bootstrap-select before submitting an issue.
 
 * [Bug reports](CONTRIBUTING.md#bug-reports)
 * [Feature requests](CONTRIBUTING.md#feature-requests)
