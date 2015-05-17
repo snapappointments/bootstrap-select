@@ -658,6 +658,7 @@
       menuInner.appendChild(divider);
       if (header) menu.appendChild(header);
       if (search) {
+        // create a span instead of input as creating an input element is slower
         var input = document.createElement('span');
         search.className = 'bs-searchbox';
         input.className = 'form-control';
