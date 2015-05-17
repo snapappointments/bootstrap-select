@@ -1294,7 +1294,7 @@
 
       isActive = that.$menu.parent().hasClass('open');
 
-      if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
+      if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || event.keyCode >= 65 && event.keyCode <= 90)) {
         if (!that.options.container) {
           that.setSize();
           that.$menu.parent().addClass('open');
