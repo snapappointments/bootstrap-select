@@ -149,6 +149,7 @@
   padding: 3px;
   background: #f5f5f5;
   margin: 0 5px;
+  white-space: nowrap;
 }
 .bootstrap-select.btn-group.fit-width .dropdown-toggle .filter-option {
   position: static;
@@ -242,7 +243,7 @@
 .bs-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
 }
-.bs-searchbox input.form-control {
+.bs-searchbox .form-control {
   margin-bottom: 0;
   width: 100%;
 }
