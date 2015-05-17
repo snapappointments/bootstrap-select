@@ -635,22 +635,29 @@
           a = document.createElement('a'),
           text = document.createElement('span'),
           header = this.options.header ? this.$menu.find('.popover-title')[0].cloneNode(true) : null,
-          search = this.options.liveSearch ? this.$menu.find('.bs-searchbox')[0].cloneNode(true) : null,
+          search = this.options.liveSearch ? document.createElement('div') : null,
           actions = this.options.actionsBox && this.multiple ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
 
       text.className = 'text';
       newElement.className = this.$menu[0].parentNode.className + ' open';
-      menu.className = this.$menu[0].className;
-      menuInner.className = this.$menuInner[0].className;
+      menu.className = 'dropdown-menu open';
+      menuInner.className = 'dropdown-menu inner';
       divider.className = 'divider';
 
+      text.appendChild(document.createTextNode('Inner text'));
       a.appendChild(text);
       li.appendChild(a);
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
       if (header) menu.appendChild(header);
-      if (search) menu.appendChild(search);
+      if (search) {
+        var input = document.createElement('span');
+        search.className = 'bs-searchbox';
+        input.className = 'form-control';
+        search.appendChild(input);
+        menu.appendChild(search);
+      }
       if (actions) menu.appendChild(actions);
       menu.appendChild(menuInner);
       if (doneButton) menu.appendChild(doneButton);
@@ -662,7 +669,7 @@
           headerHeight = header ? header.offsetHeight : 0,
           searchHeight = search ? search.offsetHeight : 0,
           actionsHeight = actions ? actions.offsetHeight : 0,
-          doneButtonHeight = doneButton && this.multiple ? doneButton.offsetHeight : 0,
+          doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
           menuStyle = getComputedStyle(menu),
           menuPadding = parseInt(menuStyle.paddingTop) +
@@ -720,9 +727,9 @@
               hasClass = function(className, include) {
                 return function (element) {
                     if (include) {
-                        return element.className === className;
+                        return (element.classList ? element.classList.contains(className) : $(element).hasClass(className));
                     } else {
-                        return element.className !== className;
+                        return !(element.classList ? element.classList.contains(className) : $(element).hasClass(className));
                     }
                 };
               },
@@ -823,7 +830,7 @@
           pos,
           actualHeight,
           getPlacement = function ($element) {
-            $drop.addClass($element.attr('class').replace(/form-control/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
+            $drop.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
             pos = $element.offset();
             actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
             $drop.css({
@@ -1100,13 +1107,13 @@
           $no_results = $('<li class="no-results"></li>');
 
       this.$newElement.on('click.dropdown.data-api touchstart.dropdown.data-api', function () {
-        that.$menu.find('.active').removeClass('active');
+        that.$menuInner.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
           that.$lis.not('.is-hidden').removeClass('hidden');
           if (!!$no_results.parent().length) $no_results.remove();
         }
-        if (!that.multiple) that.$menu.find('.selected').addClass('active');
+        if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
         setTimeout(function () {
           that.$searchbox.focus();
         }, 10);
@@ -1155,7 +1162,7 @@
               $no_results.remove();
             }
             $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
-            that.$menu.append($no_results);
+            that.$menuInner.append($no_results);
           } else if (!!$no_results.parent().length) {
             $no_results.remove();
           }
