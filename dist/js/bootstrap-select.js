@@ -451,6 +451,8 @@
         // Use native JS to prepend option (faster)
         var element = this.$element[0];
         titleOption.className = 'bs-title-option';
+        titleOption.appendChild(document.createTextNode(this.options.title));
+        titleOption.value = '';
         element.insertBefore(titleOption, element.firstChild);
         // Check if selected attribute is already set on an option. If not, select the titleOption option.
         if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
@@ -1300,7 +1302,7 @@
 
       isActive = that.$menu.parent().hasClass('open');
 
-      if (!isActive && /([0-9]|[A-z])/.test(String.fromCharCode(e.keyCode))) {
+      if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || event.keyCode >= 65 && event.keyCode <= 90)) {
         if (!that.options.container) {
           that.setSize();
           that.$menu.parent().addClass('open');
