@@ -316,7 +316,12 @@
   }
 }
 
-.mobile-device {
+select.bs-select-hidden,
+select.selectpicker {
+  display: none !important;
+}
+
+select.mobile-device {
   position: absolute !important;
   top: 0;
   left: 0;
@@ -324,8 +329,4 @@
   width: 100%;
   height: 100% !important;
   opacity: 0;
-}
-
-select.bs-select-hidden {
-  display: none !important;
 }
