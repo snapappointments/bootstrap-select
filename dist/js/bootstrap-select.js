@@ -494,7 +494,8 @@
             // Get the opt group label
             var label = this.parentElement.label,
                 labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '',
-                labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
+                labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '',
+                optGroupClass = ' ' + this.parentElement.className || '';
             
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
@@ -503,9 +504,9 @@
               _li.push(generateLI('', null, 'divider', optID + 'div'));
             }
             liIndex++;
-            _li.push(generateLI(label, null, 'dropdown-header', optID));
+            _li.push(generateLI(label, null, 'dropdown-header' + optGroupClass, optID));
           }
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass, inline, tokens), index, '', optID));
+          _li.push(generateLI(generateA(text, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
