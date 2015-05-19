@@ -4,7 +4,19 @@
  * Copyright 2013-2015 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
-(function ($) {
+(function (root, factory) {
+  if (typeof exports === 'object' && typeof require === 'function') {
+    module.exports = factory(require("jquery"));
+  } else if (typeof define === "function" && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(["jquery"], function(jQuery) {
+      // Use global variables if the locals are undefined.
+      return factory(jQuery || root.jQuery);
+    });
+  } else {
+    factory(jQuery);
+  }
+}(this, function($) {
   'use strict';
 
   //<editor-fold desc="Shims">
@@ -1545,4 +1557,4 @@
       Plugin.call($selectpicker, $selectpicker.data());
     })
   });
-})(jQuery);
+}));
