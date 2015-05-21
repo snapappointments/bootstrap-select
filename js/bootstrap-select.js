@@ -696,9 +696,9 @@
           actionsHeight = actions ? actions.offsetHeight : 0,
           doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
-          menuStyle = getComputedStyle(menu),
-          $menu = $(menu),
+          // fall back to jQuery if getComputedStyle is not supported
           menuStyle = getComputedStyle ? getComputedStyle(menu) : false,
+          $menu = menuStyle ? $(menu) : null,
           menuPadding = parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
                         parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
                         parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
