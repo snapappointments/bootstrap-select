@@ -1472,6 +1472,7 @@
       this.liHeight(true);
       this.setStyle();
       this.setWidth();
+      this.$searchbox.trigger('propertychange');
 
       this.$element.trigger('refreshed.bs.select');
     },
