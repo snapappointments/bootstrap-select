@@ -697,11 +697,15 @@
           doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
           menuStyle = getComputedStyle(menu),
-          menuPadding = parseInt(menuStyle.paddingTop) +
-                        parseInt(menuStyle.paddingBottom) +
-                        parseInt(menuStyle.borderTopWidth) +
-                        parseInt(menuStyle.borderBottomWidth),
-          menuExtras = menuPadding + parseInt(menuStyle.marginTop) + parseInt(menuStyle.marginBottom) + 2;
+          $menu = $(menu),
+          menuStyle = getComputedStyle ? getComputedStyle(menu) : false,
+          menuPadding = parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
+                        parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
+                        parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
+                        parseInt(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
+          menuExtras =  menuPadding + 
+                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) + 
+                        parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2;
 
       document.body.removeChild(newElement);
 
