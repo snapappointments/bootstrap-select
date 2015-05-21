@@ -326,19 +326,23 @@
       if (this.options.mobile) this.mobile();
 
       this.$newElement.on('hide.bs.dropdown', function(e) {
-          that.$element.trigger('hide.bs.select', e);
+        that.$element.trigger('hide.bs.select', e);
       });
       
       this.$newElement.on('hidden.bs.dropdown', function(e) {
-          that.$element.trigger('hidden.bs.select', e);
+        that.$element.trigger('hidden.bs.select', e);
       });
       
       this.$newElement.on('show.bs.dropdown', function(e) {
-          that.$element.trigger('show.bs.select', e);
+        that.$element.trigger('show.bs.select', e);
       });
       
       this.$newElement.on('shown.bs.dropdown', function(e) {
-          that.$element.trigger('shown.bs.select', e);
+        that.$element.trigger('shown.bs.select', e);
+      });
+
+      setTimeout(function() {
+        that.$element.trigger('loaded.bs.select');
       });
     },
 
