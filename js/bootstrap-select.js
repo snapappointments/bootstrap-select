@@ -325,23 +325,23 @@
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
 
-      this.$newElement.on('hide.bs.dropdown', function(e) {
+      this.$newElement.on('hide.bs.dropdown', function (e) {
         that.$element.trigger('hide.bs.select', e);
       });
       
-      this.$newElement.on('hidden.bs.dropdown', function(e) {
+      this.$newElement.on('hidden.bs.dropdown', function (e) {
         that.$element.trigger('hidden.bs.select', e);
       });
       
-      this.$newElement.on('show.bs.dropdown', function(e) {
+      this.$newElement.on('show.bs.dropdown', function (e) {
         that.$element.trigger('show.bs.select', e);
       });
       
-      this.$newElement.on('shown.bs.dropdown', function(e) {
+      this.$newElement.on('shown.bs.dropdown', function (e) {
         that.$element.trigger('shown.bs.select', e);
       });
 
-      setTimeout(function() {
+      setTimeout(function () {
         that.$element.trigger('loaded.bs.select');
       });
     },
@@ -753,7 +753,7 @@
       if (this.options.size === 'auto') {
         var getSize = function () {
           var minHeight,
-              hasClass = function(className, include) {
+              hasClass = function (className, include) {
                 return function (element) {
                     if (include) {
                         return (element.classList ? element.classList.contains(className) : $(element).hasClass(className));
@@ -869,6 +869,7 @@
               'position': 'absolute'
             });
           };
+
       this.$newElement.on('click', function () {
         if (that.isDisabled()) {
           return;
@@ -878,13 +879,13 @@
         $drop.toggleClass('open', !$(this).hasClass('open'));
         $drop.append(that.$menu);
       });
+
       $(window).on('resize scroll', function () {
         getPlacement(that.$newElement);
       });
-      $('html').on('click', function (e) {
-        if ($(e.target).closest(that.$newElement).length < 1) {
-          $drop.removeClass('open');
-        }
+
+      this.$element.on('hide.bs.select', function () {
+        $drop.detach();
       });
     },
 
@@ -951,7 +952,7 @@
 
       $document.data('spaceSelect', false);
       
-      this.$button.on('keyup', function(e) {
+      this.$button.on('keyup', function (e) {
         if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
             e.preventDefault();
             $document.data('spaceSelect', false);
@@ -960,7 +961,7 @@
 
       this.$newElement.on('click', function () {
         that.setSize();
-        that.$element.on('shown.bs.select', function() {
+        that.$element.on('shown.bs.select', function () {
           if (!that.options.liveSearch && !that.multiple) {
             that.$menu.find('.selected a').focus();
           } else if (!that.multiple) {
@@ -1175,7 +1176,7 @@
           var $lisVisible = that.$lis.not('.hidden');
 
           // hide divider if first or last visible, or if followed by another divider
-          $lisVisible.each(function(index) {
+          $lisVisible.each(function (index) {
             var $this = $(this);
 
             if ($this.hasClass('divider') && (
