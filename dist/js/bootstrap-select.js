@@ -745,10 +745,11 @@
           menuExtras = this.sizeInfo['menuExtras'],
           notDisabled = this.options.hideDisabled ? '.disabled' : '',
           menuHeight,
+          getHeight,
           selectOffsetTop,
           selectOffsetBot,
           posVert = function () {
-            selectOffsetTop = that.$newElement[0].offsetTop - window.scrollY;
+            selectOffsetTop = that.$newElement.offset().top - window.scrollY;
             selectOffsetBot = window.innerHeight - selectOffsetTop - selectHeight;
           };
 
@@ -775,8 +776,15 @@
           posVert();
           menuHeight = selectOffsetBot - menuExtras;
 
+          if (that.options.container) {
+            if (!$menu.data('height')) $menu.data('height', $menu.height());
+            getHeight = $menu.data('height');
+          } else {
+            getHeight = $menu.height();
+          }
+
           if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < $menu.height());
+            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < getHeight);
           }
           if (that.$newElement.hasClass('dropup')) {
             menuHeight = selectOffsetTop - menuExtras;
@@ -807,9 +815,16 @@
             divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding;
 
+        if (that.options.container) {
+          if (!$menu.data('height')) $menu.data('height', $menu.height());
+          getHeight = $menu.data('height');
+        } else {
+          getHeight = $menu.height();
+        }
+
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
-          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < $menu.height());
+          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras) < getHeight);
         }
         $menu.css({
           'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px',
@@ -891,6 +906,7 @@
       });
 
       this.$element.on('hide.bs.select', function () {
+        that.$menu.data('height', that.$menu.height());
         $drop.detach();
       });
     },
