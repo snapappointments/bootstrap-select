@@ -743,8 +743,8 @@
           selectOffsetTop,
           selectOffsetBot,
           posVert = function () {
-            selectOffsetTop = that.$newElement.offset().top - window.scrollY;
-            selectOffsetBot = window.innerHeight - selectOffsetTop - selectHeight;
+            selectOffsetTop = that.$newElement.offset().top - $window.scrollTop();
+            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
           };
 
       posVert();
