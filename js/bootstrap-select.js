@@ -499,6 +499,7 @@
         }
 
         if (that.options.hideDisabled && isDisabled) {
+          liIndex--;
           return;
         }
 
