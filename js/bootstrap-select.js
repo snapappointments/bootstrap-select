@@ -461,16 +461,21 @@
             '</a>';
       };
 
-      if (this.options.title && !this.multiple && !this.$element.find('.bs-title-option').length) {
-        liIndex--; // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
-        // Use native JS to prepend option (faster)
-        var element = this.$element[0];
-        titleOption.className = 'bs-title-option';
-        titleOption.appendChild(document.createTextNode(this.options.title));
-        titleOption.value = '';
-        element.insertBefore(titleOption, element.firstChild);
-        // Check if selected attribute is already set on an option. If not, select the titleOption option.
-        if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
+      if (this.options.title && !this.multiple) {
+        // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
+        // since liObj is recalculated on every refresh, liIndex needs to be decreased even if the titleOption is already appended
+        liIndex--;
+
+        if (!this.$element.find('.bs-title-option').length) {
+          // Use native JS to prepend option (faster)
+          var element = this.$element[0];
+          titleOption.className = 'bs-title-option';
+          titleOption.appendChild(document.createTextNode(this.options.title));
+          titleOption.value = '';
+          element.insertBefore(titleOption, element.firstChild);
+          // Check if selected attribute is already set on an option. If not, select the titleOption option.
+          if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
+        }
       }
 
       this.$element.find('option').each(function (index) {
