@@ -44,7 +44,6 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        banner: '<%= banner %>',
         stripBanners: true
       },
       main: {
@@ -55,6 +54,32 @@ module.exports = function (grunt) {
         expand: true,
         src: '<%= jshint.i18n.src %>',
         dest: 'dist/'
+      }
+    },
+
+    umd: {
+      main: {
+        options: {
+          deps: {
+            args: ['jQuery'],
+            amd: ['jquery'],
+            cjs: ['jquery'],
+            global: ['jQuery']
+          }
+        },
+        src: '<%= concat.main.dest %>'
+      },
+      i18n: {
+        options: {
+          deps: {
+            args: ['jQuery'],
+            amd: ['jquery'],
+            cjs: ['jquery'],
+            global: ['jQuery']
+          }
+        },
+        src: 'dist/<%= jshint.i18n.src %>',
+        dest: '.'
       }
     },
 
@@ -97,6 +122,16 @@ module.exports = function (grunt) {
           banner: '<%= banner %>'
         },
         src: '<%= less.css.dest %>'
+      },
+      js: {
+        options: {
+          banner: '<%= banner %>'
+        },
+        src: [
+          '<%= concat.main.dest %>',
+          '<%= uglify.main.dest %>',
+          'dist/<%= jshint.i18n.src %>',
+        ]
       }
     },
 
@@ -223,10 +258,10 @@ module.exports = function (grunt) {
   grunt.registerTask('change-version-number', 'sed');
 
   // CSS distribution
-  grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner', 'cssmin']);
+  grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('build-js', ['clean:js', 'concat', 'uglify']);
+  grunt.registerTask('build-js', ['clean:js', 'concat', 'umd', 'usebanner:js', 'uglify']);
 
   // Development watch
   grunt.registerTask('dev-watch', ['build-css', 'build-js', 'watch']);

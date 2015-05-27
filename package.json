@@ -56,6 +56,7 @@
     "grunt-contrib-uglify": "~0.7.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-sed": "~0.1.1",
+    "grunt-umd": "~2.3.3",
     "load-grunt-tasks": "~2.0.0"
   },
   "keywords": [
