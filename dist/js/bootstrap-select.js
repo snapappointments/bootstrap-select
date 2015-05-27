@@ -4,6 +4,23 @@
  * Copyright 2013-2015 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module unless amdModuleId is set
+    define(["jquery"], function (a0) {
+      return (factory(a0));
+    });
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory(require("jquery"));
+  } else {
+    factory(jQuery);
+  }
+}(this, function () {
+
 (function ($) {
   'use strict';
 
@@ -498,13 +515,14 @@
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled;
+            isDisabled = this.disabled || this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled;
 
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
 
         if (that.options.hideDisabled && isDisabled) {
+          liIndex--;
           return;
         }
 
@@ -513,7 +531,7 @@
           text = icon + '<span class="text">' + text + subtext + '</span>';
         }
 
-        if (this.parentElement.tagName === "OPTGROUP" && $this.data('divider') !== true) {
+        if (this.parentElement.tagName === 'OPTGROUP' && $this.data('divider') !== true) {
           if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
 
@@ -538,7 +556,7 @@
         } else if ($this.data('hidden') === true) {
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
-          if (this.previousElementSibling && this.previousElementSibling.tagName === "OPTGROUP") {
+          if (this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP') {
             liIndex++;
             _li.push(generateLI('', null, 'divider', optID + 'div'));
           }
@@ -573,7 +591,7 @@
         this.$element.find('option').each(function (index) {
           var $lis = that.findLis().eq(that.liObj[index]);
 
-          that.setDisabled(index, this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled, $lis);
+          that.setDisabled(index, this.disabled || this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled, $lis);
           that.setSelected(index, this.selected, $lis);
         });
       }
@@ -582,7 +600,7 @@
 
       var selectedItems = this.$element.find('option').map(function () {
         if (this.selected) {
-          if (that.options.hideDisabled && (this.disabled || this.parentElement.tagName === "OPTGROUP" && this.parentElement.disabled)) return false;
+          if (that.options.hideDisabled && (this.disabled || this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled)) return false;
 
           var $this = $(this),
               icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '',
@@ -1595,3 +1613,6 @@
     })
   });
 })(jQuery);
+
+
+}));
