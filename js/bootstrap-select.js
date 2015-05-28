@@ -125,6 +125,21 @@
       return r
     };
   }
+
+  $.fn.triggerNative = function (eventName) {
+    var event;
+
+    if (typeof Event === 'function') {
+      // For modern browsers
+      event = new Event(eventName);
+    } else {
+      // For IE since it doesn't support Event constructor
+      event = document.createEvent('Event');
+      event.initEvent(eventName);
+    }
+
+    this[0].dispatchEvent(event);
+  };
   //</editor-fold>
 
   // Case insensitive contains search
@@ -1094,7 +1109,7 @@
 
           // Trigger select 'change'
           if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
-            that.$element.change();
+            that.$element.triggerNative('change');
             // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
             that.$element.trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state]);
           }
@@ -1146,7 +1161,7 @@
         } else {
           that.deselectAll();
         }
-        that.$element.change();
+        that.$element.triggerNative('change');
       });
 
       this.$element.change(function () {
