@@ -720,7 +720,7 @@
           doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
           // fall back to jQuery if getComputedStyle is not supported
-          menuStyle = getComputedStyle ? getComputedStyle(menu) : false,
+          menuStyle = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : false,
           $menu = menuStyle ? null : $(menu),
           menuPadding = parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
                         parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
