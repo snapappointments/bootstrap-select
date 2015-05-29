@@ -131,11 +131,13 @@
 
     if (typeof Event === 'function') {
       // For modern browsers
-      event = new Event(eventName);
+      event = new Event(eventName, {
+        bubbles: true
+      });
     } else {
       // For IE since it doesn't support Event constructor
       event = document.createEvent('Event');
-      event.initEvent(eventName);
+      event.initEvent(eventName, true, false);
     }
 
     this[0].dispatchEvent(event);
