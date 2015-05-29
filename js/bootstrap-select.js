@@ -721,7 +721,7 @@
           dividerHeight = $(divider).outerHeight(true),
           // fall back to jQuery if getComputedStyle is not supported
           menuStyle = getComputedStyle ? getComputedStyle(menu) : false,
-          $menu = menuStyle ? $(menu) : null,
+          $menu = menuStyle ? null : $(menu),
           menuPadding = parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
                         parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
                         parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
