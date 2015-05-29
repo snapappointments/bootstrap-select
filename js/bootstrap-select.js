@@ -127,20 +127,31 @@
   }
 
   $.fn.triggerNative = function (eventName) {
-    var event;
+    var el = this[0],
+        event;
 
-    if (typeof Event === 'function') {
-      // For modern browsers
-      event = new Event(eventName, {
-        bubbles: true
-      });
+    if (el.dispatchEvent) {
+      if (typeof Event === 'function') {
+        // For modern browsers
+        event = new Event(eventName, {
+          bubbles: true
+        });
+      } else {
+        // For IE since it doesn't support Event constructor
+        event = document.createEvent('Event');
+        event.initEvent(eventName, true, false);
+      }
+
+      el.dispatchEvent(event);
     } else {
-      // For IE since it doesn't support Event constructor
-      event = document.createEvent('Event');
-      event.initEvent(eventName, true, false);
-    }
+      if (el.fireEvent) {
+        event = document.createEventObject();
+        event.eventType = eventName;
+        el.fireEvent('on' + eventName, event);
+      }
 
-    this[0].dispatchEvent(event);
+      this.trigger(eventName);
+    }
   };
   //</editor-fold>
 
