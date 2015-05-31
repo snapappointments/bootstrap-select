@@ -502,7 +502,7 @@
           titleOption.value = '';
           element.insertBefore(titleOption, element.firstChild);
           // Check if selected attribute is already set on an option. If not, select the titleOption option.
-          if (element.options[element.selectedIndex].getAttribute('selected') === null) titleOption.selected = true;
+          if ($(element.options[element.selectedIndex]).attr('selected') === undefined) titleOption.selected = true;
         }
       }
 
