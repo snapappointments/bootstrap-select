@@ -641,6 +641,11 @@
         }
       }
 
+      //If all options are selected, use the all selected text if specified.
+      if (this.options.allSelectedText !== undefined && selectedItems.length == this.$element.find('option').length) {
+        title = this.options.allSelectedText;
+      }
+	
       if (this.options.title == undefined) {
         this.options.title = this.$element.attr('title');
       }
