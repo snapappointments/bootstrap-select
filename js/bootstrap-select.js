@@ -520,7 +520,7 @@
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = this.disabled || this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled;
+            isDisabled = this.disabled || (this.parentElement.tagName === 'OPTGROUP' && this.parentElement.disabled);
 
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
