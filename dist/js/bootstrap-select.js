@@ -1542,6 +1542,7 @@
 
     refresh: function () {
       this.$lis = null;
+      this.liObj = {};
       this.reloadLi();
       this.render();
       this.checkDisabled();
