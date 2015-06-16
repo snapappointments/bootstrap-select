@@ -1020,7 +1020,7 @@
           } else if (!that.multiple) {
             var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
-            if (typeof selectedIndex !== 'number') return;
+            if (typeof selectedIndex !== 'number' || that.options.size === false) return;
             
             // scroll to selected option
             var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
