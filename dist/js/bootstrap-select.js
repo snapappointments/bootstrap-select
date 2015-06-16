@@ -561,7 +561,7 @@
 
         if (this.parentElement.tagName === 'OPTGROUP' && $this.data('divider') !== true) {
           var optGroupClass = ' ' + this.parentElement.className || '';
-          
+
           if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
 
@@ -782,6 +782,10 @@
     setSize: function () {
       this.findLis();
       this.liHeight();
+
+      if (this.options.header) this.$menu.css('padding-top', 0);
+      if (this.options.size === false) return;
+
       var that = this,
           $menu = this.$menu,
           $menuInner = this.$menuInner,
@@ -806,8 +810,6 @@
           };
 
       posVert();
-
-      if (this.options.header) $menu.css('padding-top', 0);
 
       if (this.options.size === 'auto') {
         var getSize = function () {
