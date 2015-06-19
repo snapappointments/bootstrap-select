@@ -19,11 +19,11 @@
       var indexOf = ''.indexOf;
       var includes = function (search) {
         if (this == null) {
-          throw TypeError();
+          throw new TypeError();
         }
         var string = String(this);
         if (search && toString.call(search) == '[object RegExp]') {
-          throw TypeError();
+          throw new TypeError();
         }
         var stringLength = string.length;
         var searchString = String(search);
@@ -69,11 +69,11 @@
       var toString = {}.toString;
       var startsWith = function (search) {
         if (this == null) {
-          throw TypeError();
+          throw new TypeError();
         }
         var string = String(this);
         if (search && toString.call(search) == '[object RegExp]') {
-          throw TypeError();
+          throw new TypeError();
         }
         var stringLength = string.length;
         var searchString = String(search);
@@ -353,20 +353,19 @@
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
 
-      this.$newElement.on('hide.bs.dropdown', function (e) {
-        that.$element.trigger('hide.bs.select', e);
-      });
-      
-      this.$newElement.on('hidden.bs.dropdown', function (e) {
-        that.$element.trigger('hidden.bs.select', e);
-      });
-      
-      this.$newElement.on('show.bs.dropdown', function (e) {
-        that.$element.trigger('show.bs.select', e);
-      });
-      
-      this.$newElement.on('shown.bs.dropdown', function (e) {
-        that.$element.trigger('shown.bs.select', e);
+      this.$newElement.on({
+        'hide.bs.dropdown': function (e) {
+          that.$element.trigger('hide.bs.select', e);
+        },
+        'hidden.bs.dropdown': function (e) {
+          that.$element.trigger('hidden.bs.select', e);
+        },
+        'show.bs.dropdown': function (e) {
+          that.$element.trigger('show.bs.select', e);
+        },
+        'shown.bs.dropdown': function (e) {
+          that.$element.trigger('shown.bs.select', e);
+        }
       });
 
       setTimeout(function () {
@@ -546,7 +545,7 @@
             var label = this.parentElement.label,
                 labelSubtext = typeof $this.parent().data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.parent().data('subtext') + '</small>' : '',
                 labelIcon = $this.parent().data('icon') ? '<span class="' + that.options.iconBase + ' ' + $this.parent().data('icon') + '"></span> ' : '';
-            
+
             label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
@@ -906,8 +905,7 @@
 
     selectPosition: function () {
       var that = this,
-          drop = '<div />',
-          $drop = $(drop),
+          $drop = $('<div />'),
           pos,
           actualHeight,
           getPlacement = function ($element) {
@@ -1004,7 +1002,7 @@
       });
 
       $document.data('spaceSelect', false);
-      
+
       this.$button.on('keyup', function (e) {
         if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
             e.preventDefault();
@@ -1016,12 +1014,12 @@
         that.setSize();
         that.$element.on('shown.bs.select', function () {
           if (!that.options.liveSearch && !that.multiple) {
-            that.$menu.find('.selected a').focus();
+            that.$menuInner.find('.selected a').focus();
           } else if (!that.multiple) {
             var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
             if (typeof selectedIndex !== 'number' || that.options.size === false) return;
-            
+
             // scroll to selected option
             var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
             offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
@@ -1030,7 +1028,7 @@
         });
       });
 
-      this.$menu.on('click', 'li a', function (e) {
+      this.$menuInner.on('click', 'li a', function (e) {
         var $this = $(this),
             clickedIndex = $this.parent().data('originalIndex'),
             prevValue = that.$element.val(),
@@ -1055,7 +1053,7 @@
           if (!that.multiple) { // Deselect all others if not multi select box
             $options.prop('selected', false);
             $option.prop('selected', true);
-            that.$menu.find('.selected').removeClass('selected');
+            that.$menuInner.find('.selected').removeClass('selected');
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
@@ -1070,13 +1068,13 @@
                 if (maxOptions && maxOptions == 1) {
                   $options.prop('selected', false);
                   $option.prop('selected', true);
-                  that.$menu.find('.selected').removeClass('selected');
+                  that.$menuInner.find('.selected').removeClass('selected');
                   that.setSelected(clickedIndex, true);
                 } else if (maxOptionsGrp && maxOptionsGrp == 1) {
                   $optgroup.find('option:selected').prop('selected', false);
                   $option.prop('selected', true);
                   var optgroupID = $this.parent().data('optgroup');
-                  that.$menu.find('[data-optgroup="' + optgroupID + '"]').removeClass('selected');
+                  that.$menuInner.find('[data-optgroup="' + optgroupID + '"]').removeClass('selected');
                   that.setSelected(clickedIndex, true);
                 } else {
                   var maxOptionsArr = (typeof that.options.maxOptionsText === 'function') ?
@@ -1144,7 +1142,7 @@
         }
       });
 
-      this.$menu.on('click', 'li.divider, li.dropdown-header', function (e) {
+      this.$menuInner.on('click', '.divider, .dropdown-header', function (e) {
         e.preventDefault();
         e.stopPropagation();
         if (that.options.liveSearch) {
@@ -1233,7 +1231,7 @@
             var $this = $(this);
 
             if ($this.hasClass('divider') && (
-              $this.index() === $lisVisible.eq(0).index() ||
+              $this.index() === $lisVisible.first().index() ||
               $this.index() === $lisVisible.last().index() ||
               $lisVisible.eq(index + 1).hasClass('divider'))) {
               $this.addClass('hidden');
@@ -1249,7 +1247,6 @@
           } else if (!!$no_results.parent().length) {
             $no_results.remove();
           }
-
         } else {
           that.$lis.not('.is-hidden').removeClass('hidden');
           if (!!$no_results.parent().length) {
@@ -1398,7 +1395,7 @@
         $items = $('[role=menu] li:not(.disabled, .hidden, .dropdown-header, .divider)', $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
-            $items = that.$newElement.find('li');
+            $items = that.$menuInner.find('li');
             if (that.options.liveSearchNormalize) {
               $items = $items.filter(':a' + that._searchStyle() + '(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
             } else {
@@ -1435,12 +1432,12 @@
         prevIndex = $this.data('prevIndex');
 
         if (e.keyCode == 38) {
-          if (that.options.liveSearch) index -= 1;
+          if (that.options.liveSearch) index--;
           if (index != nextPrev && index > prev) index = prev;
           if (index < first) index = first;
           if (index == prevIndex) index = last;
         } else if (e.keyCode == 40) {
-          if (that.options.liveSearch) index += 1;
+          if (that.options.liveSearch) index++;
           if (index == -1) index = 0;
           if (index != nextPrev && index < next) index = next;
           if (index > last) index = last;
@@ -1502,7 +1499,7 @@
           // Fixes spacebar selection of dropdown items in FF & IE
           $(document).data('spaceSelect', true);
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
-          that.$menu.find('.active a').click();
+          that.$menuInner.find('.active a').click();
           $this.focus();
         }
         $(document).data('keycount', 0);
