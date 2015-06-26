@@ -81,6 +81,8 @@
     this.$menu = null;
     this.$lis = null;
     this.options = options;
+    this.keydownString = '';
+    this.keydownClearTimeout = null;
 
     // If we have no title yet, try to pull it from the html title attribute (jQuery doesnt' pick it up as it's not a
     // data-attribute)
@@ -99,11 +101,10 @@
     this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
-
     this.init();
   };
 
-  Selectpicker.VERSION = '1.6.3';
+  Selectpicker.VERSION = '1.6.3.1';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -886,6 +887,34 @@
       this.$lis.not('.divider').not('.disabled').filter('.selected').filter(':visible').find('a').click();
     },
 
+    keydownStringBuild: function (char) {
+      if(this.keydownString.length == 1) {
+          if(this.keydownString == char) {
+              return;
+          }
+      }
+
+      this.keydownString += char;
+    },
+
+    keydownLifeTime: function () {
+      clearTimeout(this.keydownClearTimeout);
+
+      this.keydownClearTimeout = setTimeout(_.bind(this.keydownClear, this), 1000);
+    },
+
+    keydownClear: function () {
+      this.keydownString = '';
+    },
+
+    keydownGetPrevKey: function () {
+      if(this.keydownString.length == 1){
+          return this.keydownString;
+      }
+
+      return '';
+    },
+
     keydown: function (e) {
       var $this = $(this),
           $parent = ($this.is('input')) ? $this.parent().parent() : $this.parent(),
@@ -1044,11 +1073,15 @@
       } else if (!$this.is('input')) {
         var keyIndex = [],
             count,
-            prevKey;
+            prevKey = that.keydownGetPrevKey();
+
+
+        that.keydownStringBuild(keyCodeMap[e.keyCode]);
+        that.keydownLifeTime();
 
         $items.each(function () {
           if ($(this).parent().is(':not(.disabled)')) {
-            if ($.trim($(this).text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
+            if ($.trim($(this).text().toLowerCase()).substring(0, that.keydownString.length) == that.keydownString) {
               keyIndex.push($(this).parent().index());
             }
           }
@@ -1057,8 +1090,6 @@
         count = $(document).data('keycount');
         count++;
         $(document).data('keycount', count);
-
-        prevKey = $.trim($(':focus').text().toLowerCase()).substring(0, 1);
 
         if (prevKey != keyCodeMap[e.keyCode]) {
           count = 1;
