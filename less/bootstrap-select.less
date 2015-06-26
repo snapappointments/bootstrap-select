@@ -94,6 +94,12 @@
     }
   }
 
+  &.bs-container {
+    .dropdown-menu {
+      z-index: @zindex-select-dropdown;
+    }
+  }
+
   // The selectpicker button
   .dropdown-toggle {
     .filter-option {
@@ -119,7 +125,6 @@
   // The selectpicker dropdown
   .dropdown-menu {
     min-width: 100%;
-    z-index: @zindex-select-dropdown;
     box-sizing: border-box;
 
     &.inner {

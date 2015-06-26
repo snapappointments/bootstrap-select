@@ -905,7 +905,7 @@
 
     selectPosition: function () {
       var that = this,
-          $drop = $('<div />'),
+          $drop = $('<div class="bs-container" />'),
           pos,
           actualHeight,
           getPlacement = function ($element) {
