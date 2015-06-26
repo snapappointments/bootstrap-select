@@ -70,6 +70,9 @@
 .bootstrap-select.btn-group > .disabled:focus {
   outline: none !important;
 }
+.bootstrap-select.btn-group.bs-container .dropdown-menu {
+  z-index: 1060;
+}
 .bootstrap-select.btn-group .dropdown-toggle .filter-option {
   display: inline-block;
   overflow: hidden;
@@ -88,7 +91,6 @@
 }
 .bootstrap-select.btn-group .dropdown-menu {
   min-width: 100%;
-  z-index: 1035;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -169,7 +171,7 @@
   margin-right: 34px;
 }
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle {
-  z-index: 1036;
+  z-index: 1061;
 }
 .bootstrap-select.show-menu-arrow .dropdown-toggle:before {
   content: '';
