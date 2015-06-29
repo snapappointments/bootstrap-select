@@ -5,7 +5,6 @@
     "dist/css/bootstrap-select.css",
     "dist/js/bootstrap-select.js"
   ],
-  "version": "1.7.2",
   "homepage": "http://silviomoreto.github.io/bootstrap-select",
   "authors": [
     "silviomoreto"
