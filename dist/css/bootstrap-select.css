@@ -70,6 +70,9 @@
 .bootstrap-select.btn-group > .disabled:focus {
   outline: none !important;
 }
+.bootstrap-select.btn-group.bs-container {
+  position: absolute;
+}
 .bootstrap-select.btn-group.bs-container .dropdown-menu {
   z-index: 1060;
 }
