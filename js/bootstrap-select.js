@@ -915,8 +915,7 @@
             $drop.css({
               'top': pos.top + actualHeight,
               'left': pos.left,
-              'width': $element[0].offsetWidth,
-              'position': 'absolute'
+              'width': $element[0].offsetWidth
             });
           };
 
