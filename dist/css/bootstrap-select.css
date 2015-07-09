@@ -119,6 +119,10 @@
 }
 .bootstrap-select.btn-group .dropdown-menu li a {
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .bootstrap-select.btn-group .dropdown-menu li a.opt {
   position: relative;
@@ -250,6 +254,7 @@
 .bs-searchbox .form-control {
   margin-bottom: 0;
   width: 100%;
+  float: none;
 }
 select.bs-select-hidden,
 select.selectpicker {
