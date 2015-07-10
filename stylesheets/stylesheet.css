@@ -335,6 +335,7 @@ Full-Width Styles
   text-indent: -5000px;
   overflow: hidden;
   background: url(../images/sprite_download.png) no-repeat bottom left;
+  margin-top: 25px;
 }
 
 .tar_download_link {
@@ -346,6 +347,7 @@ Full-Width Styles
   overflow: hidden;
   background: url(../images/sprite_download.png) no-repeat bottom right;
   margin-left: 10px;
+  margin-top: 25px;
 }
 
 .zip_download_link:hover {
@@ -476,4 +478,13 @@ header.inner h2 {
 .carbon-text a,
 .carbon-poweredby a {
   color: #fff !important;
+}
+
+.charity {
+  color: white;
+  font-size: 9px;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
 }
