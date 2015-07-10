@@ -1,1 +1,3 @@
-console.log('This would be the main JS file.');
+$(document).ready(function () {
+  if($("#carbonads")) { $('.charity').hide() }
+});
