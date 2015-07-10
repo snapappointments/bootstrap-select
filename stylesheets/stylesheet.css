@@ -447,6 +447,7 @@ header.inner h2 {
   font-size: 13px !important;
   line-height: 16px !important;
   background-color: #383838;
+  z-index: 99;
 }
 .carbon-img {
   margin: 0 !important;
