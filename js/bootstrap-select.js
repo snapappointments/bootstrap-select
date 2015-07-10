@@ -304,6 +304,9 @@
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
+    template: {
+      caret: '<span class="caret"></span>'
+    },
     maxOptions: false,
     mobile: false,
     selectOnTab: false,
@@ -412,7 +415,9 @@
           '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
-          '<span class="caret"></span>' +
+          '<span class="bs-caret">' +
+          this.options.template.caret +
+          '</span>' +
           '</button>' +
           '<div class="dropdown-menu open">' +
           header +
