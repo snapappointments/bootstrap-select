@@ -26,7 +26,7 @@
     noneSelectedText: 'Válasszon!',
     noneResultsText: 'Nincs találat {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return '{n} elem kiválasztva';
+      return '{0} elem kiválasztva';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
