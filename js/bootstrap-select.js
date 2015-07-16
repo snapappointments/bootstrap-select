@@ -1569,7 +1569,7 @@
 
         if (!data) {
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
-          config.template = $.extend({}, Selectpicker.DEFAULTS.template, $this.data().template, options.template);
+          config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), $this.data().template, options.template);
           $this.data('selectpicker', (data = new Selectpicker(this, config, _event)));
         } else if (options) {
           for (var i in options) {
