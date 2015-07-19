@@ -61,7 +61,7 @@ module.exports = function (grunt) {
       main: {
         options: {
           deps: {
-            args: ['jQuery'],
+            'default': ['jQuery'],
             amd: ['jquery'],
             cjs: ['jquery'],
             global: ['jQuery']
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
       i18n: {
         options: {
           deps: {
-            args: ['jQuery'],
+            'default': ['jQuery'],
             amd: ['jquery'],
             cjs: ['jquery'],
             global: ['jQuery']
