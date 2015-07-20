@@ -67,6 +67,31 @@
       </div>
     </div>
   </form>
+  
+  
+  
+  <hr>
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="basic3" class="col-lg-2 control-label">"Basic" (with liveSearch and custom search results sorting)</label>
+
+      <div class="col-lg-10">
+        <select id="basic3" class="show-tick form-control" data-live-search="true">
+          <option>AABB</option>
+          <option>AA</option>
+          <option>A</option>
+          <option>BBBB</option>
+          <option>BB</option>
+          <option>B</option>
+          <option>CCAA</option>
+          <option>CCCC</option>
+          <option>CC</option>
+          <option>C</option>
+        </select>
+      </div>
+    </div>
+  </form>
 
   <hr>
   <form class="form-horizontal" role="form">
@@ -309,6 +334,44 @@
     $('#basic2').selectpicker({
       liveSearch: true,
       maxOptions: 1
+    });
+    
+    function sortItemsByText(a, b)
+    {
+      var aName = jQuery("a .text", a).text().toLowerCase();
+    	var bName = jQuery("a .text", b).text().toLowerCase();    
+      return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+    }
+    
+    $('#basic3').selectpicker({
+      liveSearch: true,
+      sortSearchResults: function(searchQuery, filteredLiItems) {
+                                /* for example we want to sort the results list by
+                                   the option text and give priotity to the items starting with the matching string
+                                    */
+                                var i=0;
+                            		var matchesStartWith = [];
+                            		var matchesContains = [];
+                               
+                            		var searchVal = searchQuery;
+                            		for(i=0;i<filteredLiItems.length;i++)
+                            		{
+                            			var currRes = filteredLiItems[i];
+                                  var curText = jQuery("a .text", currRes).text().toLowerCase();
+                            			if(curText.indexOf(searchVal) == 0)
+                            			{
+                            				matchesStartWith.push(currRes);
+                            			}
+                            			else
+                            			{
+                            				matchesContains.push(currRes);
+                            			}
+                            		}
+                                matchesStartWith.sort(sortItemsByText);
+                                matchesContains.sort(sortItemsByText);
+                                var mergedResults = matchesStartWith.concat(matchesContains);
+                                return mergedResults;
+                         }
     });
   });
 </script>

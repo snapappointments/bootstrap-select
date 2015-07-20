@@ -333,7 +333,8 @@
     maxOptions: false,
     mobile: false,
     selectOnTab: false,
-    dropdownAlignRight: false
+    dropdownAlignRight: false,
+    sortSearchResults: null
   };
 
   Selectpicker.prototype = {
@@ -1209,6 +1210,24 @@
         that.render(false);
       });
     },
+    
+    resortItemsByOriginalIndex: function(liItems) {
+          
+          var that = this;
+          liItems.sort(function(a,b){
+          	var an = parseInt(a.getAttribute('data-original-index'),10),
+          		bn =   parseInt(b.getAttribute('data-original-index'),10);
+          
+          	if(an > bn) {
+          		return 1;
+          	}
+          	if(an < bn) {
+          		return -1;
+          	}
+          	return 0;
+          });
+          liItems.detach().appendTo(that.$menuInner);
+    },
 
     liveSearchListener: function () {
       var that = this,
@@ -1233,7 +1252,13 @@
 
       this.$searchbox.on('input propertychange', function () {
         if (that.$searchbox.val()) {
-          var $searchBase = that.$lis.not('.is-hidden').removeClass('hidden').children('a');
+          var $initialLiItems = that.$lis.not('.is-hidden').removeClass('hidden');
+          if (typeof that.options.sortSearchResults == 'function')
+          {
+            that.resortItemsByOriginalIndex($initialLiItems);
+          }
+                    
+          var $searchBase = $initialLiItems.children('a');
           if (that.options.liveSearchNormalize) {
             $searchBase = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
           } else {
@@ -1264,6 +1289,16 @@
               $this.addClass('hidden');
             }
           });
+          
+          var sortedResults = [];
+          var $filteredVisibleItems = that.$lis.not('.hidden, .no-results');
+          if (typeof that.options.sortSearchResults == 'function')
+          {         
+               var searchVal = that.$searchbox.val(); 
+               sortedResults = that.options.sortSearchResults.apply(that, [searchVal, $filteredVisibleItems]);
+               jQuery(sortedResults).detach().appendTo(that.$menuInner); 
+          }
+          
 
           if (!that.$lis.not('.hidden, .no-results').length) {
             if (!!$no_results.parent().length) {
@@ -1275,7 +1310,11 @@
             $no_results.remove();
           }
         } else {
-          that.$lis.not('.is-hidden').removeClass('hidden');
+          var $initialLiItems = that.$lis.not('.is-hidden').removeClass('hidden');
+          if (typeof that.options.sortSearchResults == 'function')
+          {
+            that.resortItemsByOriginalIndex($initialLiItems);
+          }
           if (!!$no_results.parent().length) {
             $no_results.remove();
           }
