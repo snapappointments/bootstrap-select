@@ -334,7 +334,7 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    sortSearchResults: null
+    sortSearchResults: null 
   };
 
   Selectpicker.prototype = {
