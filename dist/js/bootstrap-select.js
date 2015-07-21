@@ -19,7 +19,7 @@
   } else {
     factory(jQuery);
   }
-}(this, function () {
+}(this, function (jQuery) {
 
 (function ($) {
   'use strict';
