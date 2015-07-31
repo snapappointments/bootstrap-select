@@ -1396,7 +1396,7 @@
 
       if (that.options.container) $parent = that.$menu;
 
-      $items = $('[role=menu] li a', $parent);
+      $items = $('[role=menu] li', $parent);
 
       isActive = that.$menu.parent().hasClass('open');
 
@@ -1419,7 +1419,7 @@
           that.$button.focus();
         }
         // $items contains li elements when liveSearch is enabled
-        $items = $('[role=menu] li:not(.disabled, .hidden, .dropdown-header, .divider)', $parent);
+        $items = $('[role=menu] li' + selector, $parent);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
             $items = that.$menuInner.find('li');
@@ -1435,12 +1435,12 @@
       if (!$items.length) return;
 
       if (/(38|40)/.test(e.keyCode.toString(10))) {
-        index = $items.index($items.filter(':focus'));
-        first = $items.parent(selector).first().data('originalIndex');
-        last = $items.parent(selector).last().data('originalIndex');
-        next = $items.eq(index).parent().nextAll(selector).eq(0).data('originalIndex');
-        prev = $items.eq(index).parent().prevAll(selector).eq(0).data('originalIndex');
-        nextPrev = $items.eq(next).parent().prevAll(selector).eq(0).data('originalIndex');
+        index = $items.index($items.find('a').filter(':focus').parent());
+        first = $items.filter(selector).first().index();
+        last = $items.filter(selector).last().index();
+        next = $items.eq(index).nextAll(selector).eq(0).index();
+        prev = $items.eq(index).prevAll(selector).eq(0).index();
+        nextPrev = $items.eq(next).prevAll(selector).eq(0).index(); 
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
@@ -1474,7 +1474,7 @@
         $this.data('prevIndex', index);
 
         if (!that.options.liveSearch) {
-          $items.eq(index).focus();
+          $items.eq(index).children('a').focus();
         } else {
           e.preventDefault();
           if (!$this.hasClass('dropdown-toggle')) {
@@ -1489,9 +1489,9 @@
             prevKey;
 
         $items.each(function () {
-          if (!$(this).parent().hasClass('disabled')) {
-            if ($.trim($(this).text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
-              keyIndex.push($(this).parent().index());
+          if (!$(this).hasClass('disabled')) {
+            if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
+              keyIndex.push($(this).index());
             }
           }
         });
@@ -1510,7 +1510,7 @@
           if (count > keyIndex.length) count = 1;
         }
 
-        $items.eq(keyIndex[count - 1]).focus();
+        $items.eq(keyIndex[count - 1]).children('a').focus();
       }
 
       // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
