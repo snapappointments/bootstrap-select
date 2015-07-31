@@ -1318,7 +1318,6 @@
           prevIndex,
           isActive,
           selector = ':not(.disabled, .hidden, .dropdown-header, .divider)',
-          titleOption = that.$element.find('.bs-title-option').length,
           keyCodeMap = {
             32: ' ',
             48: '0',
@@ -1414,11 +1413,11 @@
 
       if (/(38|40)/.test(e.keyCode.toString(10))) {
         index = $items.index($items.find('a').filter(':focus').parent());
-        first = $items.filter(selector).first().data('originalIndex') - titleOption;
-        last = $items.filter(selector).last().data('originalIndex') - titleOption;
-        next = $items.eq(index).nextAll(selector).eq(0).data('originalIndex') - titleOption;
-        prev = $items.eq(index).prevAll(selector).eq(0).data('originalIndex') - titleOption;
-        nextPrev = $items.eq(next).prevAll(selector).eq(0).data('originalIndex') - titleOption;   
+        first = $items.filter(selector).first().index();
+        last = $items.filter(selector).last().index();
+        next = $items.eq(index).nextAll(selector).eq(0).index();
+        prev = $items.eq(index).prevAll(selector).eq(0).index();
+        nextPrev = $items.eq(next).prevAll(selector).eq(0).index(); 
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
@@ -1467,9 +1466,9 @@
             prevKey;
 
         $items.each(function () {
-          if (!$(this).parent().hasClass('disabled')) {
+          if (!$(this).hasClass('disabled')) {
             if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
-              keyIndex.push($(this).parent().index());
+              keyIndex.push($(this).index());
             }
           }
         });
