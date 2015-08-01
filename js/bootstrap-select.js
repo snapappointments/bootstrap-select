@@ -118,7 +118,7 @@
       // initialize object and result
       r=[];
       // iterate over object keys
-      for (k in o) 
+      for (k in o)
           // fill result array with non-prototypical keys
         r.hasOwnProperty.call(o, k) && r.push(k);
       // return result
@@ -742,8 +742,8 @@
                         parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
                         parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
                         parseInt(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
-          menuExtras =  menuPadding + 
-                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) + 
+          menuExtras =  menuPadding +
+                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
                         parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2;
 
       document.body.removeChild(newElement);
@@ -1417,7 +1417,7 @@
         last = $items.filter(selector).last().index();
         next = $items.eq(index).nextAll(selector).eq(0).index();
         prev = $items.eq(index).prevAll(selector).eq(0).index();
-        nextPrev = $items.eq(next).prevAll(selector).eq(0).index(); 
+        nextPrev = $items.eq(next).prevAll(selector).eq(0).index();
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
@@ -1551,26 +1551,27 @@
 
   // SELECTPICKER PLUGIN DEFINITION
   // ==============================
-  function Plugin(option, event) {
-    // get the args of the outer function..
-    var args = arguments;
-    // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
-    // to get lost/corrupted in android 2.3 and IE9 #715 #775
-    var _option = option,
-        _event = event;
-    [].shift.apply(args);
+  function Plugin(option, e) {
+    var action  = typeof option == 'string' && option,
+        options = typeof option == 'object' && option;
+
+    var args;
+    // Don't bother initializing if there is no chance it's going to be used
+    if (action) {
+      args = Array.prototype.slice.apply(arguments);
+      args.shift();
+    }
 
     var value;
     var chain = this.each(function () {
       var $this = $(this);
       if ($this.is('select')) {
-        var data = $this.data('selectpicker'),
-            options = typeof _option == 'object' && _option;
+        var data = $this.data('selectpicker');
 
         if (!data) {
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
           config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), $this.data().template, options.template);
-          $this.data('selectpicker', (data = new Selectpicker(this, config, _event)));
+          $this.data('selectpicker', (data = new Selectpicker(this, config, !action && e)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
@@ -1579,11 +1580,11 @@
           }
         }
 
-        if (typeof _option == 'string') {
-          if (data[_option] instanceof Function) {
-            value = data[_option].apply(data, args);
+        if (action) {
+          if (data[action] instanceof Function) {
+            value = data[action].apply(data, args);
           } else {
-            value = data.options[_option];
+            value = data.options[action];
           }
         }
       }
