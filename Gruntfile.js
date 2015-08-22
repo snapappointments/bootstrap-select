@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
     ' *\n' +
     ' * Copyright 2013-<%= grunt.template.today(\'yyyy\') %> bootstrap-select\n' +
-    ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+    ' * Licensed under <%= pkg.license %> (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)\n' +
     ' */\n',
 
     // Task configuration.
@@ -177,7 +177,6 @@ module.exports = function (grunt) {
       versionNumber: {
         path: [
           'js/<%= pkg.name %>.js',
-          'bower.json',
           'composer.json',
           'package.json'
         ],
