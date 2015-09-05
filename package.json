@@ -62,7 +62,7 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "peerDependencies": {
-    "react": "^0.12.2",
-    "react-bootstrap": "^0.16"
+    "react": "^0.13.3",
+    "react-bootstrap": "^0.23.2"
   }
 }
