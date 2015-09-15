@@ -66,6 +66,24 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 * [Bug reports](CONTRIBUTING.md#bug-reports)
 * [Feature requests](CONTRIBUTING.md#feature-requests)
 
+
+## composer install with use [component-installer](https://github.com/RobLoach/component-installer)
+
+add to your `composer.json`
+```json
+{
+  //...
+  "require": {
+    "bootstrap-select/bootstrap-select": "*",
+    "robloach/component-installer": "*"
+  },
+  "config": {
+    "component-dir": "web/components"
+  },
+}
+```
+run command `composer update bootstrap-select/bootstrap-select`
+
 ## Copyright and license
 
 Copyright (C) 2013-2015 bootstrap-select
