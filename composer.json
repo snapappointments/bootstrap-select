@@ -1,14 +1,17 @@
 {
   "name": "bootstrap-select/bootstrap-select",
   "description": "A custom <select> for Bootstrap using button dropdown as replacement",
+  "type": "component",
   "keywords": [
     "form",
     "bootstrap",
     "select",
     "replacement"
   ],
+  "require": {
+    "components/jquery": ">=1.8"
+  },
   "homepage": "http://silviomoreto.github.io/bootstrap-select",
-  "version": "1.7.2",
   "authors": [
     {
       "name": "Silvio Moreto",
@@ -17,7 +20,24 @@
   ],
   "license": "MIT",
   "suggest": {
-    "components/jquery": ">=1.8",
-    "twbs/bootstrap": "~3.0.0"
+    "components/bootstrap": "~3.0.0"
+  },
+  "extra": {
+    "component": {
+      "scripts": [
+        "dist/js/bootstrap-select.js"
+      ],
+      "files": [
+        "dist/js/*.js",
+        "dist/js/i18n/*.js",
+        "dist/js/*.map",
+        "dist/css/*.css",
+        "dist/css/*.map",
+        "less/*.less"
+      ],
+      "shim": {
+        "deps": ["jquery"]
+      }
+    }
   }
 }
