@@ -1286,15 +1286,15 @@
 
     selectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', true);
-      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').addClass('selected');
+      this.$element.find('option:enabled').not('[data-divider]').prop('selected', true);
+      this.$lis.not('.divider, .dropdown-header, .disabled').addClass('selected');
       this.render(false);
     },
 
     deselectAll: function () {
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', false);
-      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').removeClass('selected');
+      this.$element.find('option:enabled').not('[data-divider]').prop('selected', false);
+      this.$lis.not('.divider, .dropdown-header, .disabled').removeClass('selected');
       this.render(false);
     },
 
