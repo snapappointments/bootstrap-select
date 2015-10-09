@@ -118,11 +118,11 @@
       // initialize object and result
       r=[];
       // iterate over object keys
-      for (k in o) 
+      for (k in o)
           // fill result array with non-prototypical keys
         r.hasOwnProperty.call(o, k) && r.push(k);
       // return result
-      return r
+      return r;
     };
   }
 
@@ -946,7 +946,7 @@
 
     setSelected: function (index, selected, $lis) {
       if (!$lis) {
-        var $lis = this.findLis().eq(this.liObj[index]);
+        $lis = this.findLis().eq(this.liObj[index]);
       }
 
       $lis.toggleClass('selected', selected);
@@ -954,7 +954,7 @@
 
     setDisabled: function (index, disabled, $lis) {
       if (!$lis) {
-        var $lis = this.findLis().eq(this.liObj[index]);
+        $lis = this.findLis().eq(this.liObj[index]);
       }
 
       if (disabled) {
@@ -1265,18 +1265,12 @@
     },
 
     _searchStyle: function () {
-      var style = 'icontains';
-      switch (this.options.liveSearchStyle) {
-        case 'begins':
-        case 'startsWith':
-          style = 'ibegins';
-          break;
-        case 'contains':
-        default:
-          break; //no need to change the default
-      }
+      var styles = {
+        begins: 'ibegins',
+        startsWith: 'ibegins'
+      };
 
-      return style;
+      return styles[this.options.liveSearchStyle] || 'icontains';
     },
 
     val: function (value) {
