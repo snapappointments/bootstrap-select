@@ -141,11 +141,11 @@
       // initialize object and result
       r=[];
       // iterate over object keys
-      for (k in o) 
+      for (k in o)
           // fill result array with non-prototypical keys
         r.hasOwnProperty.call(o, k) && r.push(k);
       // return result
-      return r
+      return r;
     };
   }
 
@@ -969,7 +969,7 @@
 
     setSelected: function (index, selected, $lis) {
       if (!$lis) {
-        var $lis = this.findLis().eq(this.liObj[index]);
+        $lis = this.findLis().eq(this.liObj[index]);
       }
 
       $lis.toggleClass('selected', selected);
@@ -977,7 +977,7 @@
 
     setDisabled: function (index, disabled, $lis) {
       if (!$lis) {
-        var $lis = this.findLis().eq(this.liObj[index]);
+        $lis = this.findLis().eq(this.liObj[index]);
       }
 
       if (disabled) {
@@ -1288,18 +1288,12 @@
     },
 
     _searchStyle: function () {
-      var style = 'icontains';
-      switch (this.options.liveSearchStyle) {
-        case 'begins':
-        case 'startsWith':
-          style = 'ibegins';
-          break;
-        case 'contains':
-        default:
-          break; //no need to change the default
-      }
+      var styles = {
+        begins: 'ibegins',
+        startsWith: 'ibegins'
+      };
 
-      return style;
+      return styles[this.options.liveSearchStyle] || 'icontains';
     },
 
     val: function (value) {
@@ -1313,18 +1307,32 @@
       }
     },
 
-    selectAll: function () {
+    changeAll: function (status) {
+      if (typeof status === 'undefined') status = true;
+
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', true);
-      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').addClass('selected');
+
+      var $options = this.$element.find('option'),
+          $lisVisible = this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').toggleClass('selected', status),
+          lisVisLen = $lisVisible.length,
+          selectedOptions = [];
+
+      for (var i = 0; i < lisVisLen; i++) {
+        var origIndex = $lisVisible[i].getAttribute('data-original-index');
+        selectedOptions[selectedOptions.length] = $options.eq(origIndex)[0];
+      }
+
+      $(selectedOptions).prop('selected', status);
+
       this.render(false);
     },
 
+    selectAll: function () {
+      return this.changeAll(true);
+    },
+
     deselectAll: function () {
-      this.findLis();
-      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', false);
-      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').removeClass('selected');
-      this.render(false);
+      return this.changeAll(false);
     },
 
     keydown: function (e) {
