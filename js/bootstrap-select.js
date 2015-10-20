@@ -1284,18 +1284,32 @@
       }
     },
 
-    selectAll: function () {
+    changeAll: function (status) {
+      if (typeof status === 'undefined') status = true;
+
       this.findLis();
-      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', true);
-      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').addClass('selected');
+
+      var $options = this.$element.find('option'),
+          $lisVisible = this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').toggleClass('selected', status),
+          lisVisLen = $lisVisible.length,
+          selectedOptions = [];
+
+      for (var i = 0; i < lisVisLen; i++) {
+        var origIndex = $lisVisible[i].getAttribute('data-original-index');
+        selectedOptions[selectedOptions.length] = $options.eq(origIndex)[0];
+      }
+
+      $(selectedOptions).prop('selected', status);
+
       this.render(false);
     },
 
+    selectAll: function () {
+      return this.changeAll(true);
+    },
+
     deselectAll: function () {
-      this.findLis();
-      this.$element.find('option:enabled').not('[data-divider], [data-hidden]').prop('selected', false);
-      this.$lis.not('.divider, .dropdown-header, .disabled, .hidden').removeClass('selected');
-      this.render(false);
+      return this.changeAll(false);
     },
 
     keydown: function (e) {
