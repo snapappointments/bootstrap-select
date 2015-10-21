@@ -765,8 +765,8 @@
                         parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
                         parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
                         parseInt(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
-          menuExtras =  menuPadding + 
-                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) + 
+          menuExtras =  menuPadding +
+                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
                         parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2;
 
       document.body.removeChild(newElement);
@@ -1448,7 +1448,7 @@
         last = $items.filter(selector).last().index();
         next = $items.eq(index).nextAll(selector).eq(0).index();
         prev = $items.eq(index).prevAll(selector).eq(0).index();
-        nextPrev = $items.eq(next).prevAll(selector).eq(0).index(); 
+        nextPrev = $items.eq(next).prevAll(selector).eq(0).index();
 
         if (that.options.liveSearch) {
           $items.each(function (i) {
