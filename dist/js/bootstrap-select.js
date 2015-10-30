@@ -687,6 +687,10 @@
       this.$button.children('.filter-option').html(title);
 
       this.$element.trigger('rendered.bs.select');
+
+      if (!this.multiple && !this.val()) {
+        this.$button.addClass("bs-noneSelected");
+      }
     },
 
     /**
@@ -973,6 +977,12 @@
       }
 
       $lis.toggleClass('selected', selected);
+
+      if (this.val() === null) {
+        this.$button.addClass("bs-noneSelected");
+      } else {
+        this.$button.removeClass("bs-noneSelected");
+      }
     },
 
     setDisabled: function (index, disabled, $lis) {
