@@ -321,7 +321,7 @@
       var that = this,
           id = this.$element.attr('id');
 
-      this.$element.addClass('bs-select-hidden');
+      this.$element.addClass('bs-select-hidden').attr('hidden', '');
       // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
       // allows us to do this.$lis.eq(that.liObj[index]) instead of this.$lis.filter('[data-original-index="' + index + '"]')
       this.liObj = {};
@@ -469,7 +469,7 @@
        */
       var generateLI = function (content, index, classes, optgroup) {
         return '<li' +
-            ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
+            ' class="dropdown-item ' + ((typeof classes !== 'undefined') ? classes : '') + '" ' +
             ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
             ((typeof optgroup !== 'undefined' & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
             '>' + content + '</li>';
@@ -484,7 +484,7 @@
        */
       var generateA = function (text, classes, inline, tokens) {
         return '<a tabindex="0"' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+            (typeof classes !== 'undefined' ? ' class="dropdown-link ' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
             (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' : '') +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
