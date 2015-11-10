@@ -256,7 +256,7 @@
     this.setStyle = Selectpicker.prototype.setStyle;
     this.selectAll = Selectpicker.prototype.selectAll;
     this.deselectAll = Selectpicker.prototype.deselectAll;
-    this.destroy = Selectpicker.prototype.remove;
+    this.destroy = Selectpicker.prototype.destroy;
     this.remove = Selectpicker.prototype.remove;
     this.show = Selectpicker.prototype.show;
     this.hide = Selectpicker.prototype.hide;
@@ -909,15 +909,16 @@
     },
 
     selectPosition: function () {
+      this.$bsContainer = $('<div class="bs-container" />');
+
       var that = this,
-          $drop = $('<div class="bs-container" />'),
           pos,
           actualHeight,
           getPlacement = function ($element) {
-            $drop.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
+            that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
             pos = $element.offset();
             actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
-            $drop.css({
+            that.$bsContainer.css({
               'top': pos.top + actualHeight,
               'left': pos.left,
               'width': $element[0].offsetWidth
@@ -925,13 +926,18 @@
           };
 
       this.$newElement.on('click', function () {
+        var $this = $(this);
+
         if (that.isDisabled()) {
           return;
         }
-        getPlacement($(this));
-        $drop.appendTo(that.options.container);
-        $drop.toggleClass('open', !$(this).hasClass('open'));
-        $drop.append(that.$menu);
+
+        getPlacement($this);
+
+        that.$bsContainer
+          .appendTo(that.options.container)
+          .toggleClass('open', !$this.hasClass('open'))
+          .append(that.$menu);
       });
 
       $(window).on('resize scroll', function () {
@@ -940,7 +946,7 @@
 
       this.$element.on('hide.bs.select', function () {
         that.$menu.data('height', that.$menu.height());
-        $drop.detach();
+        that.$bsContainer.detach();
       });
     },
 
@@ -1554,6 +1560,21 @@
     remove: function () {
       this.$newElement.remove();
       this.$element.remove();
+    },
+
+    destroy: function() {
+        this.$newElement.remove();
+
+        if (this.$bsContainer) {
+            this.$bsContainer.remove();
+        } else {
+            this.$menu.remove();
+        }
+
+        this.$element
+          .off('.bs.select')
+          .removeData('selectpicker')
+          .removeClass('bs-select-hidden selectpicker');
     }
   };
 
@@ -1618,7 +1639,7 @@
 
   $(document)
       .data('keycount', 0)
-      .on('keydown', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="menu"], .bs-searchbox input', Selectpicker.prototype.keydown)
+      .on('keydown.bs.select', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="menu"], .bs-searchbox input', Selectpicker.prototype.keydown)
       .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="menu"], .bs-searchbox input', function (e) {
         e.stopPropagation();
       });
