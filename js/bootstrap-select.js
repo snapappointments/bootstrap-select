@@ -351,6 +351,7 @@
       this.render();
       this.setStyle();
       this.setWidth();
+		this.setMenuWidth();
       if (this.options.container) this.selectPosition();
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
@@ -905,6 +906,21 @@
       // Remove fit-width class if width is changed programmatically
       if (this.$newElement.hasClass('fit-width') && this.options.width !== 'fit') {
         this.$newElement.removeClass('fit-width');
+      }
+    },
+
+    setMenuWidth: function() {
+      var menuWidth = this.options.menuWidth;
+      if (menuWidth) {
+        if (menuWidth.width) {
+          this.$menu.css('width', menuWidth.width);
+        }
+        if (menuWidth.minWidth) {
+          this.$menu.css('min-width', menuWidth.minWidth);
+        }
+        if (menuWidth.maxWidth) {
+          this.$menu.css('max-width', menuWidth.maxWidth);
+        }
       }
     },
 
@@ -1544,6 +1560,7 @@
       this.liHeight(true);
       this.setStyle();
       this.setWidth();
+		this.setMenuWidth();
       if (this.$lis) this.$searchbox.trigger('propertychange');
 
       this.$element.trigger('refreshed.bs.select');
