@@ -351,7 +351,7 @@
       this.render();
       this.setStyle();
       this.setWidth();
-		this.setMenuWidth();
+      this.setMenuWidth();
       if (this.options.container) this.selectPosition();
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
@@ -1560,7 +1560,7 @@
       this.liHeight(true);
       this.setStyle();
       this.setWidth();
-		this.setMenuWidth();
+      this.setMenuWidth();
       if (this.$lis) this.$searchbox.trigger('propertychange');
 
       this.$element.trigger('refreshed.bs.select');
