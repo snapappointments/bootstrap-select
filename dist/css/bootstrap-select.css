@@ -12,6 +12,16 @@
 .bootstrap-select > .dropdown-toggle {
   width: 100%;
   padding-right: 25px;
+  z-index: 1;
+}
+.bootstrap-select > select {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0.11px;
+  height: 100%;
+  opacity: 0;
+  border: none;
 }
 .has-error .bootstrap-select .dropdown-toggle,
 .error .bootstrap-select .dropdown-toggle {
@@ -255,10 +265,6 @@
   margin-bottom: 0;
   width: 100%;
   float: none;
-}
-select.bs-select-hidden,
-select.selectpicker {
-  display: none !important;
 }
 select.mobile-device {
   position: absolute !important;
