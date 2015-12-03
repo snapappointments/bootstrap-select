@@ -321,14 +321,15 @@
       var that = this,
           id = this.$element.attr('id');
 
-      this.$element.addClass('bs-select-hidden');
       // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
       // allows us to do this.$lis.eq(that.liObj[index]) instead of this.$lis.filter('[data-original-index="' + index + '"]')
       this.liObj = {};
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
-      this.$element.after(this.$newElement);
+      this.$element
+        .after(this.$newElement)
+        .appendTo(this.$newElement);
       this.$button = this.$newElement.children('button');
       this.$menu = this.$newElement.children('.dropdown-menu');
       this.$menuInner = this.$menu.children('.inner');
@@ -370,6 +371,32 @@
           that.$element.trigger('shown.bs.select', e);
         }
       });
+
+      if (that.$element[0].hasAttribute('required')) {
+        this.$element.on('invalid', function () {
+          that.$button
+            .addClass('bs-invalid')
+            .focus();
+          
+          that.$element.on({
+            'focus.bs.select': function () {
+              that.$button.focus();
+              that.$element.off('focus.bs.select');
+            },
+            'shown.bs.select': function () {
+              that.$element
+                .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
+                .off('shown.bs.select');
+            },
+            'rendered.bs.select': function () {
+              // if select is no longer invalid, remove the bs-invalid class
+              if (this.validity.valid) that.$button.removeClass('bs-invalid');
+              that.$element.off('rendered.bs.select');
+            }
+          });
+          
+        });
+      }
 
       setTimeout(function () {
         that.$element.trigger('loaded.bs.select');
@@ -1562,7 +1589,7 @@
       this.$element.remove();
     },
 
-    destroy: function() {
+    destroy: function () {
         this.$newElement.remove();
 
         if (this.$bsContainer) {
