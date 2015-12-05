@@ -1,13 +1,20 @@
-# Bootstrap-select
-
-A custom select for @twitter bootstrap using button dropdown.
+# bootstrap-select
 
 ---
 
 ## Overview
 
-Bootstrap-select creates custom select-like elements (selectpickers) using themed bootstrap components to ensure that 
-your select elements are themed appropriately within bootstrap.
+Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to normal select boxes.
+
+---
+
+## Install
+
+```sh
+bower install bootstrap-select --save # bower
+npm install bootstrap-select --save   # npm
+Install-Package bootstrap-select      # NuGet
+```
 
 ---
 
@@ -29,12 +36,12 @@ The folks at CDNJS host a copy of the library. Just use these links:
 
 ```html
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/i18n/defaults-*.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/js/i18n/defaults-*.min.js"></script>
 ```
 

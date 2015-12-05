@@ -1,16 +1,16 @@
 site_name: Bootstrap-select
-site_description: A custom select for @twitter bootstrap using button dropdown.
+site_description: Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to normal select boxes.
 repo_url: https://github.com/silviomoreto/bootstrap-select
-theme: yeti
+theme: bootstrap
 theme_dir: custom_theme
 extra_css:
-- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css
+- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/css/bootstrap-select.min.css
 - css/custom.css
 extra_javascript:
-- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js
+- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/js/bootstrap-select.min.js
 pages:
-- ['index.md', 'Bootstrap-select']
-- ['usage.md', 'Usage']
-- ['examples.md', 'Examples']
-- ['options.md', 'Options']
-- ['methods.md', 'Methods']
+- Bootstrap-select: index.md
+- Usage: usage.md
+- Examples: examples.md
+- Options: options.md
+- Methods: methods.md
