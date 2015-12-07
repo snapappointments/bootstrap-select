@@ -1,4 +1,3 @@
-/*jshint node:true*/
 module.exports = function (grunt) {
 
   // From TWBS
@@ -15,7 +14,7 @@ module.exports = function (grunt) {
     ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
     ' *\n' +
     ' * Copyright 2013-<%= grunt.template.today(\'yyyy\') %> bootstrap-select\n' +
-    ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+    ' * Licensed under <%= pkg.license %> (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)\n' +
     ' */\n',
 
     // Task configuration.
@@ -45,7 +44,6 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        banner: '<%= banner %>',
         stripBanners: true
       },
       main: {
@@ -53,13 +51,35 @@ module.exports = function (grunt) {
         dest: 'dist/js/<%= pkg.name %>.js'
       },
       i18n: {
-        files: [
-          {
-            expand: true,
-            src: '<%= jshint.i18n.src %>',
-            dest: 'dist/'
+        expand: true,
+        src: '<%= jshint.i18n.src %>',
+        dest: 'dist/'
+      }
+    },
+
+    umd: {
+      main: {
+        options: {
+          deps: {
+            'default': ['jQuery'],
+            amd: ['jquery'],
+            cjs: ['jquery'],
+            global: ['jQuery']
           }
-        ]
+        },
+        src: '<%= concat.main.dest %>'
+      },
+      i18n: {
+        options: {
+          deps: {
+            'default': ['jQuery'],
+            amd: ['jquery'],
+            cjs: ['jquery'],
+            global: ['jQuery']
+          }
+        },
+        src: 'dist/<%= jshint.i18n.src %>',
+        dest: '.'
       }
     },
 
@@ -76,21 +96,11 @@ module.exports = function (grunt) {
         }
       },
       i18n: {
-        files: [
-          {
-            expand: true,
-            cwd: 'dist/',
-            src: '<%= jshint.i18n.src %>',
-            dest: 'dist/',
-            ext: '.min.js'
-          }
-        ]
+        expand: true,
+        src: 'dist/<%= jshint.i18n.src %>',
+        ext: '.min.js'
       }
     },
-
-    //qunit: {
-    //    files: ['test/**/*.html']
-    //},
 
     less: {
       options: {
@@ -98,7 +108,7 @@ module.exports = function (grunt) {
         sourceMap: true,
         outputSourceFiles: true,
         sourceMapURL: '<%= pkg.name %>.css.map',
-        sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+        sourceMapFilename: '<%= less.css.dest %>.map'
       },
       css: {
         src: 'less/bootstrap-select.less',
@@ -109,10 +119,19 @@ module.exports = function (grunt) {
     usebanner: {
       css: {
         options: {
-          position: 'top',
           banner: '<%= banner %>'
         },
         src: '<%= less.css.dest %>'
+      },
+      js: {
+        options: {
+          banner: '<%= banner %>'
+        },
+        src: [
+          '<%= concat.main.dest %>',
+          '<%= uglify.main.dest %>',
+          'dist/<%= jshint.i18n.src %>',
+        ]
       }
     },
 
@@ -120,7 +139,7 @@ module.exports = function (grunt) {
       options: {
         compatibility: 'ie8',
         keepSpecialComments: '*',
-        noAdvanced: true
+        advanced: false
       },
       css: {
         src: '<%= less.css.dest %>',
@@ -157,10 +176,7 @@ module.exports = function (grunt) {
     sed: {
       versionNumber: {
         path: [
-          'less',
-          'js',
-          'bootstrap-select.jquery.json',
-          'bower.json',
+          'js/<%= pkg.name %>.js',
           'composer.json',
           'package.json'
         ],
@@ -201,9 +217,13 @@ module.exports = function (grunt) {
           mode: 'zip'
         },
         files: [
-          {expand: true, cwd: 'dist/', src: ['**'], dest: 'bootstrap-select-<%= pkg.version %>/'},
           {
-            src: ['bootstrap-select.jquery.json', 'bower.json', 'composer.json', 'package.json'],
+            expand: true,
+            cwd: 'dist/',
+            src: '**',
+            dest: 'bootstrap-select-<%= pkg.version %>/'
+          }, {
+            src: ['bower.json', 'composer.json', 'package.json'],
             dest: 'bootstrap-select-<%= pkg.version %>/'
           }
         ]
@@ -227,7 +247,9 @@ module.exports = function (grunt) {
   });
 
   // These plugins provide necessary tasks.
-  require('load-grunt-tasks')(grunt);
+  require('load-grunt-tasks')(grunt, {
+    scope: 'devDependencies'
+  });
 
   // Version numbering task.
   // grunt change-version-number --old=A.B.C --new=X.Y.Z
@@ -235,10 +257,10 @@ module.exports = function (grunt) {
   grunt.registerTask('change-version-number', 'sed');
 
   // CSS distribution
-  grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner', 'cssmin']);
+  grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('build-js', ['clean:js', 'concat', 'uglify']);
+  grunt.registerTask('build-js', ['clean:js', 'concat', 'umd', 'usebanner:js', 'uglify']);
 
   // Development watch
   grunt.registerTask('dev-watch', ['build-css', 'build-js', 'watch']);
@@ -247,6 +269,6 @@ module.exports = function (grunt) {
   grunt.registerTask('dist', ['build-css', 'build-js', 'compress']);
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'build-css', 'build-js']);
+  grunt.registerTask('default', ['build-css', 'build-js']);
 
 };

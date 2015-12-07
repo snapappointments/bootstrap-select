@@ -5,8 +5,7 @@
     "dist/css/bootstrap-select.css",
     "dist/js/bootstrap-select.js"
   ],
-  "version": "1.6.3",
-  "homepage": "https://github.com/silviomoreto/bootstrap-select",
+  "homepage": "http://silviomoreto.github.io/bootstrap-select",
   "authors": [
     "silviomoreto"
   ],
@@ -21,10 +20,12 @@
   },
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    ".gitignore",
+    "CONTRIBUTING.md",
+    "Gruntfile.js",
+    "README.md",
+    "composer.json",
+    "package.json",
+    "test.html"
   ]
 }

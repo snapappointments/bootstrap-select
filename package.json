@@ -1,22 +1,22 @@
 {
   "name": "bootstrap-select",
   "title": "bootstrap-select",
-  "filename": "bootstrap-select.js",
+  "main": "dist/js/bootstrap-select.js",
   "description": "A custom <select> for Bootstrap using button dropdown as replacement",
-  "version": "1.6.3",
-  "homepage": "http://silviomoreto.github.io/bootstrap-select/",
+  "version": "1.8.0",
+  "homepage": "http://silviomoreto.github.io/bootstrap-select",
   "author": {
     "name": "Silvio Moreto",
-    "url": "https://github.com/silviomoreto/"
+    "url": "https://github.com/silviomoreto"
   },
   "contributors": [
     {
       "name": "Silvio Moreto",
-      "url": "http://github.com/silviomoreto"
+      "url": "https://github.com/silviomoreto"
     },
     {
       "name": "Ana Carolina",
-      "url": "http://github.com/anacarolinats"
+      "url": "https://github.com/anacarolinats"
     },
     {
       "name": "caseyjhol",
@@ -35,32 +35,26 @@
     "type": "git",
     "url": "git://github.com/silviomoreto/bootstrap-select.git"
   },
-  "bugs": {
-    "url": "https://github.com/silviomoreto/bootstrap-select/issues"
-  },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE"
-  },
+  "license": "MIT",
   "dependencies": {
     "jquery": ">=1.8"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-autoprefixer": "~1.0.0",
-    "grunt-banner": "~0.2.3",
+    "grunt-banner": "~0.3.1",
     "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-compress": "^0.12.0",
+    "grunt-contrib-compress": "~0.13.0",
     "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-csslint": "~0.2.0",
-    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-contrib-cssmin": "~0.11.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-less": "~0.11.3",
-    "grunt-contrib-qunit": "~0.5.2",
-    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-uglify": "~0.7.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-sed": "~0.1.1",
-    "load-grunt-tasks": "~0.6.0"
+    "grunt-umd": "~2.3.3",
+    "load-grunt-tasks": "~2.0.0"
   },
   "keywords": [
     "form",
