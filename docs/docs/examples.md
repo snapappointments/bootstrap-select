@@ -341,100 +341,158 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
   }
 </pre>
 
-<p id="span">Apply <code>.span*</code> class to the selects to set the width.</p>
+<p id="span">Wrap selects in grid columns, or any custom parent element, to easily enforce desired widths.</p>
 
 <div class="bs-docs-example">
-  <div class="row-fluid">
-    <select class="selectpicker span3">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-    <select class="selectpicker span8">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-  </div>
-  <div class="row-fluid">
-    <select class="selectpicker span4">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-    <select class="selectpicker span7">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-  </div>
-  <div class="row-fluid">
-    <select class="selectpicker span5">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-    <select class="selectpicker span6">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </select>
-  </div>
-</div>
-
-<pre class="prettyprint linenums">
-  &lt;div class="row-fluid"&gt;
-    &lt;select class="selectpicker span2"&gt;
-      ...
-    &lt;/select&gt;
-  &lt;/div&gt;
-</pre>
-
-<p id="data-width">Alternatively, use the <code>data-width</code> attribute to set the width of the select. Set <code>data-width</code>
-  to <code>'auto'</code> to automatically adjust the width of the select to its widest option. An exact value can also
-  be specified, e.g., <code>300px</code> or <code>50%</code>.</p>
-
-<div class="bs-docs-example">
-  <div class="row-fluid">
-    <select class="selectpicker" data-width="auto">
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-      <option>All of the above (and much, much more!)</option>
-    </select>
-
-    <div class="row-fluid">
-      <select class="selectpicker" data-width="100px">
-        <option>Mustard</option>
-        <option>Ketchup</option>
-        <option>Relish</option>
-        <option>All of the above (and much, much more!)</option>
-      </select>
+  <div class="row">
+    <div class="col-xs-3">
+      <div class="form-group">
+        <select class="selectpicker form-control">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
     </div>
-    <div class="row-fluid">
-      <select class="selectpicker" data-width="75%">
-        <option>Mustard</option>
-        <option>Ketchup</option>
-        <option>Relish</option>
-        <option>All of the above (and much, much more!)</option>
-      </select>
+    <div class="col-xs-9">
+      <div class="form-group">
+        <select class="selectpicker form-control">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+       <div class="form-group">
+        <select class="selectpicker form-control">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-8">
+       <div class="form-group">
+        <select class="selectpicker form-control">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-5">
+      <div class="form-group">
+        <select class="selectpicker form-control">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-7">
+      <div class="form-group">
+        <select class="selectpicker form-control">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;div class="row-fluid"&gt;
-    &lt;select class="selectpicker" data-width="auto"&gt;
-      ...
-    &lt;/select&gt;
-    &lt;select class="selectpicker" data-width="100px"&gt;
-      ...
-    &lt;/select&gt;
-    &lt;select class="selectpicker" data-width="75%"&gt;
-      ...
-    &lt;/select&gt;
-  &lt;/div&gt;
-</pre>
+```html
+<div class="row">
+  <div class="col-xs-3">
+    <div class="form-group">
+      <select class="selectpicker form-control">
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+      </select>
+    </div>
+  </div>
+</div>
+```
+
+<div id="data-width"></div>
+
+Alternatively, use the `data-width` attribute to set the width of the select. Set `data-width` to `'auto'` to automatically adjust the width of the select to its widest option. `'fit'` automatically adjusts the width of the select to the width of its currently selected option. An exact value can also be specified, e.g., `300px` or `50%`.
+
+<div class="bs-docs-example">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label>width: 'auto'</label>
+        <select class="selectpicker form-control" data-width="auto">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label>width: 'fit'</label>
+        <select class="selectpicker form-control" data-width="fit">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label>width: '100px'</label>
+        <select class="selectpicker form-control" data-width="100px">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group">
+        <label>width: '75%'</label>
+        <select class="selectpicker form-control" data-width="75%">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+          <option>All of the above (and much, much more!)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+```html
+<select class="selectpicker" data-width="auto">
+  ...
+</select>
+<select class="selectpicker" data-width="fit">
+  ...
+</select>
+<select class="selectpicker" data-width="100px">
+  ...
+</select>
+<select class="selectpicker" data-width="75%">
+  ...
+</select>
+```
 
 <p id="disabled-select">Add the <code>disabled</code> attribute to the select to apply the <code>disabled</code> class.
 </p>
@@ -555,29 +613,6 @@ Note: this is the same as:<br>
 
 <div class="bs-docs-example">
   <select class="selectpicker" data-size="5">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-    <option>Mayonnaise</option>
-    <option>Barbecue Sauce</option>
-    <option>Salad Dressing</option>
-    <option>Tabasco</option>
-    <option>Salsa</option>
-  </select>
-</div>
-
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" data-size="5"&gt;
-    ...
-  &lt;/select>
-</pre>
-
-<p id="scrollYou">You can use the plugin <a href="https://github.com/silviomoreto/scrollYou"
-                                            target="_blank">scrollYou</a> cross-browser native scroll. The example below
-  behaves like mountain lion.</p>
-
-<div class="bs-docs-example">
-  <select class="selectpicker scrollMe" data-size="5">
     <option>Mustard</option>
     <option>Ketchup</option>
     <option>Relish</option>
