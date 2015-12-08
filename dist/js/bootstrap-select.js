@@ -1047,10 +1047,13 @@
     },
 
     tabIndex: function () {
-      if (this.$element.is('[tabindex]')) {
+      if (this.$element.data('tabindex') !== this.$element.attr('tabindex') && 
+        (this.$element.attr('tabindex') !== -98 && this.$element.attr('tabindex') !== '-98')) {
         this.$element.data('tabindex', this.$element.attr('tabindex'));
         this.$button.attr('tabindex', this.$element.data('tabindex'));
       }
+      
+      this.$element.attr('tabindex', -98);
     },
 
     clickListener: function () {
@@ -1439,7 +1442,7 @@
 
       $items = $('[role=menu] li', $parent);
 
-      isActive = that.$menu.parent().hasClass('open');
+      isActive = that.$newElement.hasClass('open');
 
       if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode >= 65 && e.keyCode <= 90)) {
         if (!that.options.container) {
