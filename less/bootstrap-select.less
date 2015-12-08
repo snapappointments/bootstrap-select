@@ -26,6 +26,17 @@
     border: none;
   }
 
+  > select.mobile-device {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    display: block !important;
+    width: 100%;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+  }
+
   // Error display
   .has-error & .dropdown-toggle,
   .error & .dropdown-toggle {
@@ -336,14 +347,4 @@
     width: 100%;
     float: none;
   }
-}
-
-select.mobile-device {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  display: block !important;
-  width: 100%;
-  height: 100% !important;
-  opacity: 0;
 }
