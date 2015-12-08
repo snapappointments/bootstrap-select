@@ -23,6 +23,16 @@
   opacity: 0;
   border: none;
 }
+.bootstrap-select > select.mobile-device {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  display: block !important;
+  width: 100%;
+  height: 100% !important;
+  opacity: 0;
+  z-index: 2;
+}
 .has-error .bootstrap-select .dropdown-toggle,
 .error .bootstrap-select .dropdown-toggle {
   border-color: #b94a48;
@@ -265,14 +275,5 @@
   margin-bottom: 0;
   width: 100%;
   float: none;
-}
-select.mobile-device {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  display: block !important;
-  width: 100%;
-  height: 100% !important;
-  opacity: 0;
 }
 /*# sourceMappingURL=bootstrap-select.css.map */

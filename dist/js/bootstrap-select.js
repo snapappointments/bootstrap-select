@@ -1584,8 +1584,7 @@
     },
 
     mobile: function () {
-      this.$element.addClass('mobile-device').appendTo(this.$newElement);
-      if (this.options.container) this.$menu.hide();
+      this.$element.addClass('mobile-device');
     },
 
     refresh: function () {
