@@ -19,8 +19,8 @@
 }
 
 @mixin box-shadow($fmt) {
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: $fmt;
+          box-shadow: $fmt;
 }
 
 @function fade($color, $amnt) {
