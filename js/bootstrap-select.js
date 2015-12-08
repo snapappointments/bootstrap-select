@@ -1024,10 +1024,13 @@
     },
 
     tabIndex: function () {
-      if (this.$element.is('[tabindex]')) {
+      if (this.$element.data('tabindex') !== this.$element.attr('tabindex') && 
+        (this.$element.attr('tabindex') !== -98 && this.$element.attr('tabindex') !== '-98')) {
         this.$element.data('tabindex', this.$element.attr('tabindex'));
         this.$button.attr('tabindex', this.$element.data('tabindex'));
       }
+      
+      this.$element.attr('tabindex', -98);
     },
 
     clickListener: function () {
