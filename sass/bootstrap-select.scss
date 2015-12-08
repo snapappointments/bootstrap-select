@@ -24,6 +24,9 @@
 }
 
 @function fade($color, $amnt) {
+  @if $amnt > 1 {
+    $amnt: $amnt / 100; // convert to percentage if int
+  }
   @return rgba($color, $amnt);
 }
 
@@ -129,7 +132,7 @@
 
   &.bs-container {
     position: absolute;
-    
+
     .dropdown-menu {
       z-index: $zindex-select-dropdown;
     }
