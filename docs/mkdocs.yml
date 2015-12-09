@@ -4,10 +4,10 @@ repo_url: https://github.com/silviomoreto/bootstrap-select
 theme: bootstrap
 theme_dir: custom_theme
 extra_css:
-- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/css/bootstrap-select.min.css
+- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.0/css/bootstrap-select.min.css
 - css/custom.css
 extra_javascript:
-- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.7/js/bootstrap-select.min.js
+- //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.0/js/bootstrap-select.min.js
 pages:
 - Bootstrap-select: index.md
 - Usage: usage.md

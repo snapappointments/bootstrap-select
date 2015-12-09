@@ -21,15 +21,18 @@ See bootstrap-select in action
     <option>Relish</option>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    &lt;option&gt;Mustard&lt;/option&gt;
-    &lt;option&gt;Ketchup&lt;/option&gt;
-    &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
 
-<p id="optgroup">It also works with option groups:</p>
+```html
+<select class="selectpicker">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
+
+<div id="optgroup"></div>
+
+It also works with option groups:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -45,22 +48,24 @@ See bootstrap-select in action
     </optgroup>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    &lt;optgroup label="Picnic"&gt;
-      &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-    &lt;/optgroup&gt;
-    &lt;optgroup label="Camping"&gt;
-      &lt;option&gt;Tent&lt;/option&gt;
-      &lt;option&gt;Flashlight&lt;/option&gt;
-      &lt;option&gt;Toilet Paper&lt;/option&gt;
-    &lt;/optgroup&gt;
-  &lt;/select>
-</pre>
 
-<p id="multiselect">And with multiple selects:</p>
+```html
+<select class="selectpicker">
+  <optgroup label="Picnic">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </optgroup>
+  <optgroup label="Camping">
+    <option>Tent</option>
+    <option>Flashlight</option>
+    <option>Toilet Paper</option>
+  </optgroup>
+</select>
+```
+
+<p id="multiselect"></p>
+And with multiple selects:
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple>
@@ -69,19 +74,17 @@ See bootstrap-select in action
     <option>Relish</option>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" multiple&gt;
-      &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
 
-(Note that you should give your selectpicker a <code>name</code> that ends with array syntax (example: <code>&lt;select name="named[]" class="selectpicker" multiple&gt;</code>) such
-that all items can be processed with php,... This is the same for <code>&lt;select&gt;</code>s without <code>bootstrap-select</code>.)
+```html
+<select class="selectpicker" multiple>
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-<p id="data-max-option">You can limit the number of elements you are allowed to select via the
-  <code>data-max-option</code> attribute. It also works for option groups. </p>
+<div id="data-max-option"></div>
+You can limit the number of elements you are allowed to select via the `data-max-option` attribute. It also works for option groups.
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple data-max-options="2">
@@ -103,95 +106,95 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
     </optgroup>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" multiple data-max-options="2"&gt;
-    &lt;option&gt;Mustard&lt;/option&gt;
-    &lt;option&gt;Ketchup&lt;/option&gt;
-    &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select&gt;
 
-  &lt;select class="selectpicker" multiple  data-max-options="2"&gt;
-    &lt;optgroup label="Condiments" data-max-options="2"&gt;
-      &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-    &lt;/optgroup&gt;
-    &lt;optgroup label="Breads" data-max-options="2"&gt;
-      &lt;option&gt;Plain&lt;/option&gt;
-      &lt;option&gt;Steamed&lt;/option&gt;
-      &lt;option&gt;Toasted&lt;/option&gt;
-    &lt;/optgroup&gt;
-  &lt;/select&gt;
-</pre>
+```html
+<select class="selectpicker" multiple data-max-options="2">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
 
-<p id="data-style">You can set different Bootstrap classes via the <code>data-style</code> attribute:</p>
+<select class="selectpicker" multiple>
+  <optgroup label="Condiments" data-max-options="2">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </optgroup>
+  <optgroup label="Breads" data-max-options="2">
+    <option>Plain</option>
+    <option>Steamed</option>
+    <option>Toasted</option>
+  </optgroup>
+</select>
+```
+
+<div id="data-style"></div>
+You can set different Bootstrap classes via the `data-style` attribute:
 
 <div class="bs-docs-example">
-  <select class="selectpicker" data-style="btn-primary">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-
-  <select class="selectpicker" data-style="btn-info">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-
-  <select class="selectpicker" data-style="btn-success">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-
-  <select class="selectpicker" data-style="btn-warning">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-
-  <select class="selectpicker" data-style="btn-danger">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-
-  <select class="selectpicker" data-style="btn-inverse">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
+  <div class="form-group">
+    <select class="selectpicker" data-style="btn-primary">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="selectpicker" data-style="btn-info">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="selectpicker" data-style="btn-success">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="selectpicker" data-style="btn-warning">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="selectpicker" data-style="btn-danger">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" data-style="btn-primary"&gt;
-    ...
-  &lt;/select>
 
-  &lt;select class="selectpicker" data-style="btn-info"&gt;
-    ...
-  &lt;/select>
+```html
+<select class="selectpicker" data-style="btn-primary">
+  ...
+</select>
 
-  &lt;select class="selectpicker" data-style="btn-success"&gt;
-    ...
-  &lt;/select>
+<select class="selectpicker" data-style="btn-info">
+  ...
+</select>
 
-  &lt;select class="selectpicker" data-style="btn-warning"&gt;
-    ...
-  &lt;/select>
+<select class="selectpicker" data-style="btn-success">
+  ...
+</select>
 
-  &lt;select class="selectpicker" data-style="btn-danger"&gt;
-    ...
-  &lt;/select>
+<select class="selectpicker" data-style="btn-warning">
+  ...
+</select>
 
-  &lt;select class="selectpicker" data-style="btn-inverse"&gt;
-    ...
-  &lt;/select>
-</pre>
+<select class="selectpicker" data-style="btn-danger">
+  ...
+</select>
+```
 
-<p id="data-live-search">You can add a search input by passing <code>data-live-search="true"</code> attribute:</p>
+<div id="data-live-search"></div>
+You can add a search input by passing `data-live-search="true"` attribute:
 
-<div class="bs-docs-example">
+<div class="bs-docs-example no-code">
   <select class="selectpicker" data-live-search="true">
     <option>Hot Dog, Fries and a Soda</option>
     <option>Burger, Shake and a Smile</option>
@@ -199,10 +202,10 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
   </select>
 </div>
 
-<p id="title">You can also use the <code>title</code> attribute as an alternative to display when the option is
-  selected:</p>
+<p id="title"></p>
+You can also use the `title` attribute as an alternative to display when the option is selected:
 
-<div class="bs-docs-example">
+<div class="bs-docs-example no-code">
   <select class="selectpicker">
     <option title="Combo 1">Hot Dog, Fries and a Soda</option>
     <option title="Combo 2">Burger, Shake and a Smile</option>
@@ -210,9 +213,8 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
   </select>
 </div>
 
-<p id="titleMultiples">Using the <code>title</code> attribute on a <code>multiple select</code> will show the default
-  prompt text when nothing is selected (note: this will not work on single <code>select</code> elements as they must
-  have a selected value):</p>
+<p id="titleMultiples"></p>
+Using the `title` attribute on a `multiple select` will show the default prompt text when nothing is selected (note: this will not work on single `select` elements as they must have a selected value):
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple title="Choose one of the following...">
@@ -221,26 +223,24 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
     <option>Relish</option>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" multiple title='Choose one of the following...'&gt;
-     &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
 
-<p id="titleMultiplesFormat">Using the <code>data-selected-text-format</code> attribute on a <code>multiple
-  select</code>
-  you can specify how the selection is displayed.</p>
+```html
+<select class="selectpicker" multiple title="Choose one of the following...">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-<p>The supported values are:</p>
-<ul>
-  <li><code>values</code> A comma delimted list of selected values. (default)</li>
-  <li><code>count</code> If one item is selected, then the value is shown, if more than one is selected then the
-    number of selected items is displayed, eg <span class="label">2 of 6 selected</span></li>
-  <li><code>count > x</code> Where X is the number of items selected when the display format changes from
-    <code>values</code> to <code>count</code></li>
-</ul>
+<p id="titleMultiplesFormat"></p>
+Using the `data-selected-text-format` attribute on a `multiple select` you can specify how the selection is displayed.
+
+The supported values are:
+
+* `values` A comma delimted list of selected values. (default)</li>
+* `count` If one item is selected, then the value is shown, if more than one is selected then the number of selected items is displayed, eg <span class="label">2 of 6 selected</span></li>
+* `count > x` Where X is the number of items selected when the display format changes from `values` to `count`</li>
+
 <div class="bs-docs-example">
   <select class="selectpicker" multiple data-selected-text-format="count">
     <option>Mustard</option>
@@ -248,13 +248,14 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
     <option>Relish</option>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" multiple data-selected-text-format="count"&gt;
-     &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
+
+```html
+<select class="selectpicker" multiple data-selected-text-format="count">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple data-selected-text-format="count > 3">
@@ -264,17 +265,18 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
     <option>Onions</option>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" multiple data-selected-text-format="count&gt3"&gt;
-     &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-      &lt;option&gt;Onions&lt;/option&gt;
-  &lt;/select>
-</pre>
 
-<p id="show-tick">You can also show the tick icon on single <code>select</code> with the <code>show-tick</code>
-  class:</p>
+```html
+<select class="selectpicker" multiple data-selected-text-format="count > 3">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+  <option>Onions</option>
+</select>
+```
+
+<p id="show-tick"></p>
+You can also show the tick icon on single `select` with the `show-tick` class:
 
 <div class="bs-docs-example">
   <select class="selectpicker show-tick">
@@ -284,17 +286,16 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
   </select>
 </div>
 
+```html
+<select class="selectpicker show-tick">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker show-tick"&gt;
-     &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
-
-<p id="show-menu-arrow">The bootstrap menu arrow can be added with the <code>show-menu-arrow</code> class:</p>
+<p id="show-menu-arrow"></p>
+The bootstrap menu arrow can be added with the `show-menu-arrow` class:
 
 <div class="bs-docs-example">
   <select class="selectpicker show-menu-arrow">
@@ -304,18 +305,16 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
   </select>
 </div>
 
+```html
+<select class="selectpicker show-menu-arrow">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker show-menu-arrow"&gt;
-     &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
-
-
-<p id="classes">Classes added to the options are transferred to the select:</p>
+<p id="classes"></p>
+Classes added to the options are transferred to the select:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -325,23 +324,25 @@ that all items can be processed with php,... This is the same for <code>&lt;sele
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    &lt;option&gt;Mustard&lt;/option&gt;
-    &lt;option class="special"&gt;Ketchup&lt;/option&gt;
-    &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
-<pre class="prettyprint linenums">
-  .special {
-    font-style: italic;
-    font-weight: bold !important;
-    color:#bc0000 !important;
-    background:#000;
-  }
-</pre>
+```html
+<select class="selectpicker">
+  <option>Mustard</option>
+  <option class="special">Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-<p id="span">Wrap selects in grid columns, or any custom parent element, to easily enforce desired widths.</p>
+```css
+.special {
+  font-weight: bold !important;
+  color: #fff !important;
+  background: #bc0000 !important;
+  text-transform: uppercase;
+}
+```
+
+<p id="grid"></p>
+Wrap selects in grid columns, or any custom parent element, to easily enforce desired widths.
 
 <div class="bs-docs-example">
   <div class="row">
@@ -494,8 +495,8 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
 </select>
 ```
 
-<p id="disabled-select">Add the <code>disabled</code> attribute to the select to apply the <code>disabled</code> class.
-</p>
+<p id="disabled-select"></p>
+Add the `disabled` attribute to the select to apply the `disabled` class.
 
 <div class="bs-docs-example">
   <select class="selectpicker" disabled>
@@ -505,15 +506,16 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" disabled&gt;
-    &lt;option&gt;Mustard&lt;/option&gt;
-    &lt;option&gt;Ketchup&lt;/option&gt;
-    &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker" disabled>
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-<p id="disabled-option">Adding <code>disabled="disabled"</code> to an option transfers to the menu.</p>
+<p id="disabled-option"></p>
+Adding `disabled="disabled"` to an option transfers to the menu.
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -523,15 +525,16 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" disabled&gt;
-    &lt;option&gt;Mustard&lt;/option&gt;
-    &lt;option disabled="disabled"&gt;Ketchup&lt;/option&gt;
-    &lt;option&gt;Relish&lt;/option&gt;
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker">
+  <option>Mustard</option>
+  <option disabled>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
 
-<p id="disabled-option-group">Adding <code>disabled="disabled"</code> to an option group cascades to the children.</p>
+<p id="disabled-option-group"></p>
+Adding `disabled="disabled"` to an option group cascades to the children.
 
 <div class="bs-docs-example">
   <select class="selectpicker test">
@@ -547,26 +550,24 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
     </optgroup>
   </select>
 </div>
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    &lt;optgroup label="Picnic" disabled&gt;
-      &lt;option&gt;Mustard&lt;/option&gt;
-      &lt;option&gt;Ketchup&lt;/option&gt;
-      &lt;option&gt;Relish&lt;/option&gt;
-    &lt;/optgroup&gt;
-    &lt;optgroup label="Camping"&gt;
-      &lt;option&gt;Tent&lt;/option&gt;
-      &lt;option&gt;Flashlight&lt;/option&gt;
-      &lt;option&gt;Toilet Paper&lt;/option&gt;
-    &lt;/optgroup&gt;
-  &lt;/select>
-</pre>
 
+```html
+<select class="selectpicker test">
+  <optgroup label="Picnic" disabled>
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </optgroup>
+  <optgroup label="Camping">
+    <option>Tent</option>
+    <option>Flashlight</option>
+    <option>Toilet Paper</option>
+  </optgroup>
+</select>
+```
 
-<p id="size">The <code>size</code> option is set to <code>'auto'</code> by default. When <code>size</code> is set to
-  <code>'auto'</code>, the menu always opens up to show as many items as the window will allow without being cut off.
-  Set <code>size</code> to <code>false</code> to always show all items. The size of the menu can also be specifed
-  using the <code>data-size</code> attribute.</p>
+<div id="size"></div>
+The `size` option is set to `'auto'` by default. When `size` is set to `'auto'`, the menu always opens up to show as many items as the window will allow without being cut off. Set `size` to `false` to always show all items. The size of the menu can also be specifed using the `data-size` attribute.
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -597,19 +598,8 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    ...
-  &lt;/select>
-<br>
-Note: this is the same as:<br>
-  &lt;select class="selectpicker" data-size="auto"&gt;
-    ...
-  &lt;/select>
-</pre>
-
-<p id="data-size">Specify a number for <code>data-size</code> to choose the maximum number of items to show in the menu.
-</p>
+<p id="data-size"></p>
+Specify a number for `data-size` to choose the maximum number of items to show in the menu.
 
 <div class="bs-docs-example">
   <select class="selectpicker" data-size="5">
@@ -624,13 +614,14 @@ Note: this is the same as:<br>
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" data-size="5"&gt;
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker" data-size="5">
+  ...
+</select>
+```
 
-<p id="data-divider">Add <code>data-divider="true"</code> to an option to turn it into a divider.</p>
+<p id="data-divider"></p>
+Add `data-divider="true"` to an option to turn it into a divider.
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -646,18 +637,17 @@ Note: this is the same as:<br>
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    ...
-    &lt;option data-divider="true"&gt;&lt;/option>
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker" data-size="5">
+  <option data-divider="true"></option>
+</select>
+```
 
-<p id="data-subtext">Add subtext to an option or optgroup with the <code>data-subtext</code> attribute:</p>
+<p id="data-subtext"></p>
+Add subtext to an option or optgroup with the `data-subtext` attribute:
 
 <div class="bs-docs-example">
-  <div class="row-fluid">
+  <div class="form-group">
     <select class="selectpicker">
       <option data-subtext="French's">Mustard</option>
       <option data-subtext="Heinz">Ketchup</option>
@@ -671,7 +661,7 @@ Note: this is the same as:<br>
     </select>
   </div>
 
-  <div class="row-fluid">
+  <div class="form-group">
     <select class="selectpicker" data-show-subtext="true">
       <option data-subtext="French's">Mustard</option>
       <option data-subtext="Heinz">Ketchup</option>
@@ -683,39 +673,37 @@ Note: this is the same as:<br>
       <option data-subtext="Sweet & Spicy">Tabasco</option>
       <option data-subtext="Chunky">Salsa</option>
     </select>
-    <span class="help-inline">With <code>showSubtext</code> set to true.</span>
+    <span class="help-block">With `showSubtext` set to true.</span>
   </div>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    ...
-    &lt;option data-subtext="Heinz"&gt;Ketchup&lt;/option>
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker" data-size="5">
+  <option data-subtext="Heinz">Ketchup</option>
+</select>
+```
 
-<p id="data-icon">Add an icon to an option or optgroup with the <code>data-icon</code> attribute:</p>
+<p id="data-icon"></p>
+Add an icon to an option or optgroup with the `data-icon` attribute:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
-    <option data-icon="icon-glass">Mustard</option>
-    <option data-icon="icon-heart">Ketchup</option>
-    <option data-icon="icon-film">Relish</option>
-    <option data-icon="icon-home">Mayonnaise</option>
-    <option data-icon="icon-print">Barbecue Sauce</option>
+    <option data-icon="glyphicon-glass">Mustard</option>
+    <option data-icon="glyphicon-heart">Ketchup</option>
+    <option data-icon="glyphicon-film">Relish</option>
+    <option data-icon="glyphicon-home">Mayonnaise</option>
+    <option data-icon="glyphicon-print">Barbecue Sauce</option>
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    ...
-    &lt;option data-icon="icon-heart"&gt;Ketchup&lt;/option>
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker">
+  <option data-icon="glyphicon-heart">Ketchup</option>
+</select>
+```
 
-<p id="data-content">Insert custom HTML into the option with the <code>data-content</code> attribute:</p>
+<p id="data-content"></p>
+Insert custom HTML into the option with the `data-content` attribute:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -726,16 +714,14 @@ Note: this is the same as:<br>
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker"&gt;
-    ...
-    &lt;option data-content="&lt;span class='label label-success'&gt;Relish&lt;/span&gt;"&gt;Relish&lt;/option>
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker">
+  <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
+</select>
+```
 
-<p id="header">Add a header to the dropdown menu, e.g. <code>header: 'Select a condiment'</code> or <code>data-header="Select
-  a condiment"</code></p>
+<p id="header"></p>
+Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-header="Select a condiment"`
 
 <div class="bs-docs-example">
   <div class="row-fluid">
@@ -753,14 +739,14 @@ Note: this is the same as:<br>
   </div>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker" data-header="Select a condiment"&gt;
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker" data-header="Select a condiment">
+  ...
+</select>
+```
 
-<p id="container">Append the select to a specific element, e.g. <code>container: 'body'</code> or <code>data-container=".main-content"</code>
-</p>
+<p id="container"></p>
+Append the select to a specific element, e.g. `container: 'body'` or `data-container=".main-content"`
 
 <div class="bs-docs-example" style="overflow:hidden;">
   <div class="row-fluid">
@@ -789,21 +775,19 @@ Note: this is the same as:<br>
   </div>
 </div>
 
-<pre class="prettyprint linenums">
-&lt;div style="overflow:hidden;"&gt;
-  &lt;select class="selectpicker"&gt;
+```html
+<div style="overflow:hidden;">
+  <select class="selectpicker">
     ...
-  &lt;/select>
-
-  &lt;select class="selectpicker" data-container="body"&gt;
+  </select>
+  <select class="selectpicker" data-container="body">
     ...
-  &lt;/select>
-&lt;div&gt;
-</pre>
+  </select>
+</div>
+```
 
-<p id="dropup"><code>dropupAuto</code> is set to true by default, which automatically determines whether or not the
-  select should be a dropup. If <code>dropupAuto</code> is set to false, manually make the select a dropup menu by
-  adding the <code>.dropup</code> class to the select.</p>
+<div id="dropup"></div>
+`dropupAuto` is set to true by default, which automatically determines whether or not the select should be a dropup. If `dropupAuto` is set to false, manually make the select a dropup menu by adding the `.dropup` class to the select.
 
 <div class="bs-docs-example">
   <select class="selectpicker dropup">
@@ -813,8 +797,8 @@ Note: this is the same as:<br>
   </select>
 </div>
 
-<pre class="prettyprint linenums">
-  &lt;select class="selectpicker dropup"&gt;
-    ...
-  &lt;/select>
-</pre>
+```html
+<select class="selectpicker dropup">
+  ...
+</select>
+```
