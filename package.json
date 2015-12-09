@@ -2,7 +2,7 @@
   "name": "react-bootstrap-select",
   "main": "dist/Select.js",
   "description": "A custom <select> for react-bootstrap using button dropdown as replacement",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "scripts": {
     "postinstall": "jsx jsx/ dist/"
   },
@@ -62,7 +62,8 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "peerDependencies": {
-    "react": "^0.13.3",
-    "react-bootstrap": "^0.23.2"
+    "react": ">=0.14.0",
+    "react-bootstrap": ">=0.27.0",
+    "react-dom": ">=0.14.0"
   }
 }
