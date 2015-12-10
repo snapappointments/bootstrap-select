@@ -1,7 +1,10 @@
 /* global React, $ */
-'use strict'; 
+'use strict';
 
 require('../js/bootstrap-select');
+var React = require('react');
+var Input = require('react-bootstrap').Input;
+var ReactDOM = require('react-dom');
 
 var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
   getInitialState: function () {
@@ -10,17 +13,17 @@ var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
     };
   },
   componentDidUpdate: function () {
-    $(this.getDOMNode()).find('select').selectpicker('refresh');
-    var select = $(this.getDOMNode()).find('div.bootstrap-select');
+    $(ReactDOM.findDOMNode(this)).find('select').selectpicker('refresh');
+    var select = $(ReactDOM.findDOMNode(this)).find('div.bootstrap-select');
     select.toggleClass('open', this.state.open);
   },
   componentWillUnmount: function () {
     var self = this;
-    var select = $(this.getDOMNode()).find('select');
+    var select = $(ReactDOM.findDOMNode(this)).find('select');
 
-    var button = $(this.getDOMNode()).find('button');
-    var dropdown = $(this.getDOMNode()).find('.dropdown-menu.open');
-    var items = $(this.getDOMNode()).find('ul.dropdown-menu li a');
+    var button = $(ReactDOM.findDOMNode(this)).find('button');
+    var dropdown = $(ReactDOM.findDOMNode(this)).find('.dropdown-menu.open');
+    var items = $(ReactDOM.findDOMNode(this)).find('ul.dropdown-menu li a');
 
     $('html').off('click');
     button.off('click');
@@ -28,12 +31,12 @@ var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
   },
   componentDidMount: function () {
     var self = this;
-    var select = $(this.getDOMNode()).find('select');
+    var select = $(ReactDOM.findDOMNode(this)).find('select');
     $(select).selectpicker();
 
-    var button = $(this.getDOMNode()).find('button');
-    var dropdown = $(this.getDOMNode()).find('.dropdown-menu.open');
-    var items = $(this.getDOMNode()).find('ul.dropdown-menu li a');
+    var button = $(ReactDOM.findDOMNode(this)).find('button');
+    var dropdown = $(ReactDOM.findDOMNode(this)).find('.dropdown-menu.open');
+    var items = $(ReactDOM.findDOMNode(this)).find('ul.dropdown-menu li a');
 
     $('html').click(function () {
       self.setState({ open: false });
@@ -51,7 +54,7 @@ var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
   },
   render: function () {
     return (
-      <React.Bootstrap.Input {...this.props} type='select' />
+      <Input {...this.props} type='select' />
     );
   }
 });
