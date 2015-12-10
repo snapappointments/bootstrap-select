@@ -72,6 +72,23 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>multipleSeparator</td>
+    <td><code>string</code></td>
+    <td><code>', '</code></td>
+    <td>
+      <p>Set the character displayed in the button that separates selected options.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>selectedTextFormat</td>
+    <td><code>'values' | 'count' | 'count > #'</code> (where # is an integer)</td>
+    <td><code>null</code></td>
+    <td>
+      <p>Specifies how the selection is displayed with a multiple select (see <a
+        href="http://silviomoreto.github.io/bootstrap-select/#titleMultiplesFormat">here</a></p>
+    </td>
+  </tr>
+  <tr>
     <td>selectedTextFormat</td>
     <td><code>'values' | 'count' | 'count > #'</code> (where # is an integer)</td>
     <td><code>null</code></td>

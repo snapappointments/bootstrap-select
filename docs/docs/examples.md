@@ -1,8 +1,7 @@
-# Examples
-
-See bootstrap-select in action
+# Basic examples
 
 ---
+## Standard select boxes
 
 <div class="bs-docs-example">
   <p>Make this:</p>
@@ -31,8 +30,7 @@ See bootstrap-select in action
 ```
 
 <div id="optgroup"></div>
-
-It also works with option groups:
+## Select boxes with optgroups
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -65,7 +63,7 @@ It also works with option groups:
 ```
 
 <p id="multiselect"></p>
-And with multiple selects:
+## Multiple select boxes
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple>
@@ -83,8 +81,23 @@ And with multiple selects:
 </select>
 ```
 
+<div id="data-live-search"></div>
+## Live search
+
+You can add a search input by passing `data-live-search="true"` attribute:
+
+<div class="bs-docs-example no-code">
+  <select class="selectpicker" data-live-search="true">
+    <option>Hot Dog, Fries and a Soda</option>
+    <option>Burger, Shake and a Smile</option>
+    <option>Sugar, Spice and all things nice</option>
+  </select>
+</div>
+
 <div id="data-max-option"></div>
-You can limit the number of elements you are allowed to select via the `data-max-option` attribute. It also works for option groups.
+# Limit the number of selections
+
+Limit the number of options that can be selected via the `data-max-options` attribute. It also works for option groups. Customize the message displayed when the limit is reached with `maxOptionsText`.
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple data-max-options="2">
@@ -128,8 +141,114 @@ You can limit the number of elements you are allowed to select via the `data-max
 </select>
 ```
 
-<div id="data-style"></div>
-You can set different Bootstrap classes via the `data-style` attribute:
+# Custom button text
+
+---
+
+## Placeholder
+<p id="titleMultiples"></p>
+Using the `title` attribute will set the default placeholder text when nothing is selected. This works for both multiple and standard select boxes:
+
+<div class="bs-docs-example">
+  <div class="form-group">
+    <label>Multiple</label>
+    <select class="selectpicker" multiple title="Choose one of the following...">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Standard</label>
+    <select class="selectpicker" title="Choose one of the following...">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+  </div>
+</div>
+
+```html
+<select class="selectpicker" multiple title="Choose one of the following...">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
+
+## Selected text
+
+<p id="title"></p>
+Set the `title` attribute on individual options to display alternative text when the option is selected:
+
+<div class="bs-docs-example no-code">
+  <select class="selectpicker">
+    <option title="Combo 1">Hot Dog, Fries and a Soda</option>
+    <option title="Combo 2">Burger, Shake and a Smile</option>
+    <option title="Combo 3">Sugar, Spice and all things nice</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker">
+  <option title="Combo 1">Hot Dog, Fries and a Soda</option>
+  <option title="Combo 2">Burger, Shake and a Smile</option>
+  <option title="Combo 3">Sugar, Spice and all things nice</option>
+</select>
+```
+## Selected text format
+
+<p id="titleMultiplesFormat"></p>
+Specify how the selection is displayed with the `data-selected-text-format` attribute on a multiple select.
+
+The supported values are:
+
+* `values`: A comma delimited list of selected values. (default)</li>
+* `count`: If one item is selected, then the option value is shown. If more than one is selected then the number of selected items is displayed, e.g. `2 of 6 selected`
+* `count > x`: Where `x` is the number of items selected when the display format changes from `values` to `count`</li>
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple data-selected-text-format="count">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker" multiple data-selected-text-format="count">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple data-selected-text-format="count > 3">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+    <option>Onions</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker" multiple data-selected-text-format="count > 3">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+  <option>Onions</option>
+</select>
+```
+
+# Styling
+
+---
+
+## Button classes
+
+You can set the button classes via the `data-style` attribute:
 
 <div class="bs-docs-example">
   <div class="form-group">
@@ -191,92 +310,9 @@ You can set different Bootstrap classes via the `data-style` attribute:
 </select>
 ```
 
-<div id="data-live-search"></div>
-You can add a search input by passing `data-live-search="true"` attribute:
+## Checkmark on selected option
 
-<div class="bs-docs-example no-code">
-  <select class="selectpicker" data-live-search="true">
-    <option>Hot Dog, Fries and a Soda</option>
-    <option>Burger, Shake and a Smile</option>
-    <option>Sugar, Spice and all things nice</option>
-  </select>
-</div>
-
-<p id="title"></p>
-You can also use the `title` attribute as an alternative to display when the option is selected:
-
-<div class="bs-docs-example no-code">
-  <select class="selectpicker">
-    <option title="Combo 1">Hot Dog, Fries and a Soda</option>
-    <option title="Combo 2">Burger, Shake and a Smile</option>
-    <option title="Combo 3">Sugar, Spice and all things nice</option>
-  </select>
-</div>
-
-<p id="titleMultiples"></p>
-Using the `title` attribute on a `multiple select` will show the default prompt text when nothing is selected (note: this will not work on single `select` elements as they must have a selected value):
-
-<div class="bs-docs-example">
-  <select class="selectpicker" multiple title="Choose one of the following...">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-</div>
-
-```html
-<select class="selectpicker" multiple title="Choose one of the following...">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
-```
-
-<p id="titleMultiplesFormat"></p>
-Using the `data-selected-text-format` attribute on a `multiple select` you can specify how the selection is displayed.
-
-The supported values are:
-
-* `values` A comma delimted list of selected values. (default)</li>
-* `count` If one item is selected, then the value is shown, if more than one is selected then the number of selected items is displayed, eg <span class="label">2 of 6 selected</span></li>
-* `count > x` Where X is the number of items selected when the display format changes from `values` to `count`</li>
-
-<div class="bs-docs-example">
-  <select class="selectpicker" multiple data-selected-text-format="count">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-</div>
-
-```html
-<select class="selectpicker" multiple data-selected-text-format="count">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
-```
-
-<div class="bs-docs-example">
-  <select class="selectpicker" multiple data-selected-text-format="count > 3">
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-    <option>Onions</option>
-  </select>
-</div>
-
-```html
-<select class="selectpicker" multiple data-selected-text-format="count > 3">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-  <option>Onions</option>
-</select>
-```
-
-<p id="show-tick"></p>
-You can also show the tick icon on single `select` with the `show-tick` class:
+You can also show the checkmark icon on standard select boxes with the `show-tick` class:
 
 <div class="bs-docs-example">
   <select class="selectpicker show-tick">
@@ -294,8 +330,9 @@ You can also show the tick icon on single `select` with the `show-tick` class:
 </select>
 ```
 
-<p id="show-menu-arrow"></p>
-The bootstrap menu arrow can be added with the `show-menu-arrow` class:
+## Menu arrow
+
+The Bootstrap menu arrow can be added with the `show-menu-arrow` class:
 
 <div class="bs-docs-example">
   <select class="selectpicker show-menu-arrow">
@@ -313,8 +350,10 @@ The bootstrap menu arrow can be added with the `show-menu-arrow` class:
 </select>
 ```
 
+## Style individual options
+
 <p id="classes"></p>
-Classes added to the options are transferred to the select:
+Classes added to options are transferred to the select box:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -340,6 +379,8 @@ Classes added to the options are transferred to the select:
   text-transform: uppercase;
 }
 ```
+
+## Width
 
 <p id="grid"></p>
 Wrap selects in grid columns, or any custom parent element, to easily enforce desired widths.
@@ -495,78 +536,95 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
 </select>
 ```
 
-<p id="disabled-select"></p>
-Add the `disabled` attribute to the select to apply the `disabled` class.
+# Customize options
 
-<div class="bs-docs-example">
-  <select class="selectpicker" disabled>
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </select>
-</div>
+---
 
-```html
-<select class="selectpicker" disabled>
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
-```
+## Icons
 
-<p id="disabled-option"></p>
-Adding `disabled="disabled"` to an option transfers to the menu.
+Add an icon to an option or optgroup with the `data-icon` attribute:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
-    <option>Mustard</option>
-    <option disabled>Ketchup</option>
-    <option>Relish</option>
+    <option data-icon="glyphicon-glass">Mustard</option>
+    <option data-icon="glyphicon-heart">Ketchup</option>
+    <option data-icon="glyphicon-film">Relish</option>
+    <option data-icon="glyphicon-home">Mayonnaise</option>
+    <option data-icon="glyphicon-print">Barbecue Sauce</option>
   </select>
 </div>
 
 ```html
 <select class="selectpicker">
-  <option>Mustard</option>
-  <option disabled>Ketchup</option>
-  <option>Relish</option>
+  <option data-icon="glyphicon-heart">Ketchup</option>
 </select>
 ```
 
-<p id="disabled-option-group"></p>
-Adding `disabled="disabled"` to an option group cascades to the children.
+## Custom content
+
+Insert custom HTML into the option with the `data-content` attribute:
 
 <div class="bs-docs-example">
-  <select class="selectpicker test">
-    <optgroup label="Picnic" disabled>
-      <option>Mustard</option>
-      <option>Ketchup</option>
-      <option>Relish</option>
-    </optgroup>
-    <optgroup label="Camping">
-      <option>Tent</option>
-      <option>Flashlight</option>
-      <option>Toilet Paper</option>
-    </optgroup>
+  <select class="selectpicker">
+    <option data-content="<span class='label label-warning'>Mustard</span>">Mustard</option>
+    <option data-content="<span class='label label-danger label-important'>Ketchup</span>">Ketchup</option>
+    <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
+    <option data-content="<span class='label label-info'>Mayonnaise</span>">Mayonnaise</option>
   </select>
 </div>
 
 ```html
-<select class="selectpicker test">
-  <optgroup label="Picnic" disabled>
-    <option>Mustard</option>
-    <option>Ketchup</option>
-    <option>Relish</option>
-  </optgroup>
-  <optgroup label="Camping">
-    <option>Tent</option>
-    <option>Flashlight</option>
-    <option>Toilet Paper</option>
-  </optgroup>
+<select class="selectpicker">
+  <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
 </select>
 ```
 
-<div id="size"></div>
+## Subtext
+Add subtext to an option or optgroup with the `data-subtext` attribute:
+
+<div class="bs-docs-example">
+  <div class="form-group">
+    <select class="selectpicker">
+      <option data-subtext="French's">Mustard</option>
+      <option data-subtext="Heinz">Ketchup</option>
+      <option data-subtext="Sweet">Relish</option>
+      <option data-subtext="Miracle Whip">Mayonnaise</option>
+      <option data-divider="true"></option>
+      <option data-subtext="Honey">Barbecue Sauce</option>
+      <option data-subtext="Ranch">Salad Dressing</option>
+      <option data-subtext="Sweet & Spicy">Tabasco</option>
+      <option data-subtext="Chunky">Salsa</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <select class="selectpicker" data-show-subtext="true">
+      <option data-subtext="French's">Mustard</option>
+      <option data-subtext="Heinz">Ketchup</option>
+      <option data-subtext="Sweet">Relish</option>
+      <option data-subtext="Miracle Whip">Mayonnaise</option>
+      <option data-divider="true"></option>
+      <option data-subtext="Honey">Barbecue Sauce</option>
+      <option data-subtext="Ranch">Salad Dressing</option>
+      <option data-subtext="Sweet & Spicy">Tabasco</option>
+      <option data-subtext="Chunky">Salsa</option>
+    </select>
+    <span class="help-block">With `showSubtext` set to true.</span>
+  </div>
+</div>
+
+```html
+<select class="selectpicker" data-size="5">
+  <option data-subtext="Heinz">Ketchup</option>
+</select>
+```
+
+# Customize menu
+
+---
+
+## Menu size
+
 The `size` option is set to `'auto'` by default. When `size` is set to `'auto'`, the menu always opens up to show as many items as the window will allow without being cut off. Set `size` to `false` to always show all items. The size of the menu can also be specifed using the `data-size` attribute.
 
 <div class="bs-docs-example">
@@ -620,7 +678,8 @@ Specify a number for `data-size` to choose the maximum number of items to show i
 </select>
 ```
 
-<p id="data-divider"></p>
+## Divider
+
 Add `data-divider="true"` to an option to turn it into a divider.
 
 <div class="bs-docs-example">
@@ -643,84 +702,8 @@ Add `data-divider="true"` to an option to turn it into a divider.
 </select>
 ```
 
-<p id="data-subtext"></p>
-Add subtext to an option or optgroup with the `data-subtext` attribute:
+## Menu header
 
-<div class="bs-docs-example">
-  <div class="form-group">
-    <select class="selectpicker">
-      <option data-subtext="French's">Mustard</option>
-      <option data-subtext="Heinz">Ketchup</option>
-      <option data-subtext="Sweet">Relish</option>
-      <option data-subtext="Miracle Whip">Mayonnaise</option>
-      <option data-divider="true"></option>
-      <option data-subtext="Honey">Barbecue Sauce</option>
-      <option data-subtext="Ranch">Salad Dressing</option>
-      <option data-subtext="Sweet & Spicy">Tabasco</option>
-      <option data-subtext="Chunky">Salsa</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <select class="selectpicker" data-show-subtext="true">
-      <option data-subtext="French's">Mustard</option>
-      <option data-subtext="Heinz">Ketchup</option>
-      <option data-subtext="Sweet">Relish</option>
-      <option data-subtext="Miracle Whip">Mayonnaise</option>
-      <option data-divider="true"></option>
-      <option data-subtext="Honey">Barbecue Sauce</option>
-      <option data-subtext="Ranch">Salad Dressing</option>
-      <option data-subtext="Sweet & Spicy">Tabasco</option>
-      <option data-subtext="Chunky">Salsa</option>
-    </select>
-    <span class="help-block">With `showSubtext` set to true.</span>
-  </div>
-</div>
-
-```html
-<select class="selectpicker" data-size="5">
-  <option data-subtext="Heinz">Ketchup</option>
-</select>
-```
-
-<p id="data-icon"></p>
-Add an icon to an option or optgroup with the `data-icon` attribute:
-
-<div class="bs-docs-example">
-  <select class="selectpicker">
-    <option data-icon="glyphicon-glass">Mustard</option>
-    <option data-icon="glyphicon-heart">Ketchup</option>
-    <option data-icon="glyphicon-film">Relish</option>
-    <option data-icon="glyphicon-home">Mayonnaise</option>
-    <option data-icon="glyphicon-print">Barbecue Sauce</option>
-  </select>
-</div>
-
-```html
-<select class="selectpicker">
-  <option data-icon="glyphicon-heart">Ketchup</option>
-</select>
-```
-
-<p id="data-content"></p>
-Insert custom HTML into the option with the `data-content` attribute:
-
-<div class="bs-docs-example">
-  <select class="selectpicker">
-    <option data-content="<span class='label label-warning'>Mustard</span>">Mustard</option>
-    <option data-content="<span class='label label-danger label-important'>Ketchup</span>">Ketchup</option>
-    <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
-    <option data-content="<span class='label label-info'>Mayonnaise</span>">Mayonnaise</option>
-  </select>
-</div>
-
-```html
-<select class="selectpicker">
-  <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
-</select>
-```
-
-<p id="header"></p>
 Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-header="Select a condiment"`
 
 <div class="bs-docs-example">
@@ -745,7 +728,8 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 </select>
 ```
 
-<p id="container"></p>
+## Container
+
 Append the select to a specific element, e.g. `container: 'body'` or `data-container=".main-content"`
 
 <div class="bs-docs-example" style="overflow:hidden;">
@@ -786,8 +770,9 @@ Append the select to a specific element, e.g. `container: 'body'` or `data-conta
 </div>
 ```
 
-<div id="dropup"></div>
-`dropupAuto` is set to true by default, which automatically determines whether or not the select should be a dropup. If `dropupAuto` is set to false, manually make the select a dropup menu by adding the `.dropup` class to the select.
+## Dropup menu
+
+`dropupAuto` is set to true by default, which automatically determines whether or not the menu should display above or below the select box. If `dropupAuto` is set to false, manually make the select a dropup menu by adding the `.dropup` class to the select.
 
 <div class="bs-docs-example">
   <select class="selectpicker dropup">
@@ -800,5 +785,77 @@ Append the select to a specific element, e.g. `container: 'body'` or `data-conta
 ```html
 <select class="selectpicker dropup">
   ...
+</select>
+```
+
+# Disabled
+
+---
+
+## Disabled select box
+
+<div class="bs-docs-example">
+  <select class="selectpicker" disabled>
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker" disabled>
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
+
+## Disabled options
+
+<div class="bs-docs-example">
+  <select class="selectpicker">
+    <option>Mustard</option>
+    <option disabled>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker">
+  <option>Mustard</option>
+  <option disabled>Ketchup</option>
+  <option>Relish</option>
+</select>
+```
+
+## Disabled option groups
+
+<div class="bs-docs-example">
+  <select class="selectpicker test">
+    <optgroup label="Picnic" disabled>
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </optgroup>
+    <optgroup label="Camping">
+      <option>Tent</option>
+      <option>Flashlight</option>
+      <option>Toilet Paper</option>
+    </optgroup>
+  </select>
+</div>
+
+```html
+<select class="selectpicker test">
+  <optgroup label="Picnic" disabled>
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </optgroup>
+  <optgroup label="Camping">
+    <option>Tent</option>
+    <option>Flashlight</option>
+    <option>Toilet Paper</option>
+  </optgroup>
 </select>
 ```
