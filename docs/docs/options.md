@@ -72,6 +72,24 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearch</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>When set to <code>true</code>, adds a search box to the top of the selectpicker dropdown.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>maxOptions</td>
+    <td>integer | false</td>
+    <td><code>false</code></td>
+    <td>
+      <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
+      <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only 
+      applies to that <code>&lt;optgroup&gt;</code>.</p>
+    </td>
+  </tr>
+  <tr>
     <td>mobile</td>
     <td>boolean</td>
     <td><code>false</code></td>
@@ -88,6 +106,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>noneSelectedText</td>
+    <td>string</td>
+    <td><code>'Nothing selected'</code></td>
+    <td>
+      <p>The text that is displayed when a multiple select has no selected options.</p>
+    </td>
+  </tr>
+  <tr>
     <td>selectedTextFormat</td>
     <td>'values' | 'count' | 'count > x' (where x is an integer)</td>
     <td><code>null</code></td>
@@ -97,14 +123,12 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
-    <td>size</td>
-    <td>'auto' | integer | false</td>
-    <td><code>'auto'</code></td>
+    <td>selectOnTab</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
     <td>
-      <p>When set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow
-      without being cut off.</p>
-      <p>When set to an integer, the menu will show the given number of items, even if the dropdown is cut off.</p>
-      <p>When set to <code>false</code>, the menu will always show all items.</p>
+      <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the 
+      selectpicker dropdown.</p>
     </td>
   </tr>
   <tr>
@@ -133,6 +157,17 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>size</td>
+    <td>'auto' | integer | false</td>
+    <td><code>'auto'</code></td>
+    <td>
+      <p>When set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow
+      without being cut off.</p>
+      <p>When set to an integer, the menu will show the given number of items, even if the dropdown is cut off.</p>
+      <p>When set to <code>false</code>, the menu will always show all items.</p>
+    </td>
+  </tr>
+  <tr>
     <td>style</td>
     <td>string | null</td>
     <td><code>null</code></td>
@@ -157,33 +192,6 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
       widest option.</p>
       <p>When set to a css-width, the width of the selectpicker is forced inline to the given value.</p>
       <p>When set to <code>false</code>, all width information is removed.</p>
-    </td>
-  </tr>
-  <tr>
-    <td>maxOptions</td>
-    <td>integer | false</td>
-    <td><code>false</code></td>
-    <td>
-      <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
-      <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only 
-      applies to that <code>&lt;optgroup&gt;</code>.</p>
-    </td>
-  </tr>
-  <tr>
-    <td>liveSearch</td>
-    <td>boolean</td>
-    <td><code>false</code></td>
-    <td>
-      <p>When set to <code>true</code>, adds a search box to the top of the selectpicker dropdown.</p>
-    </td>
-  </tr>
-  <tr>
-    <td>selectOnTab</td>
-    <td>boolean</td>
-    <td><code>false</code></td>
-    <td>
-      <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the 
-      selectpicker dropdown.</p>
     </td>
   </tr>
   </tbody>
