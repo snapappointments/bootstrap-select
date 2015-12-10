@@ -80,6 +80,10 @@
 </select>
 ```
 
+# Live search
+
+---
+
 ## Live search
 
 You can add a search input by passing `data-live-search="true"` attribute:
@@ -92,7 +96,26 @@ You can add a search input by passing `data-live-search="true"` attribute:
   </select>
 </div>
 
-<div id="data-max-option"></div>
+## Key words
+
+Add key words to options to improve their searchability using `data-tokens`.
+
+<div class="bs-docs-example">
+  <select class="selectpicker" data-live-search="true">
+    <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+    <option data-tokens="mustard">Burger, Shake and a Smile</option>
+    <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker" data-live-search="true">
+  <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+  <option data-tokens="mustard">Burger, Shake and a Smile</option>
+  <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+</select>
+```
+
 # Limit the number of selections
 
 Limit the number of options that can be selected via the `data-max-options` attribute. It also works for option groups. Customize the message displayed when the limit is reached with `maxOptionsText`.
