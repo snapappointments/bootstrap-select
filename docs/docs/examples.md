@@ -202,9 +202,10 @@ Specify how the selection is displayed with the `data-selected-text-format` attr
 
 The supported values are:
 
-* `values`: A comma delimited list of selected values. (default)</li>
+* `values`: A comma delimited list of selected values (default)
 * `count`: If one item is selected, then the option value is shown. If more than one is selected then the number of selected items is displayed, e.g. `2 of 6 selected`
-* `count > x`: Where `x` is the number of items selected when the display format changes from `values` to `count`</li>
+* `count > x`: Where `x` is the number of items selected when the display format changes from `values` to `count`
+* `static`: Always show the select title (placeholder), regardless of selection
 
 <div class="bs-docs-example">
   <select class="selectpicker" multiple data-selected-text-format="count">

@@ -11,9 +11,9 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <thead>
   <tr>
     <th style="width: 15%;">Name</th>
-    <th style="width: 25%;">Type</th>
+    <th style="width: 32%;">Type</th>
     <th style="width: 10%;">Default</th>
-    <th style="width: 60%;">Description</th>
+    <th style="width: 43%;">Description</th>
   </tr>
   </thead>
   <tbody>
@@ -115,11 +115,10 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>selectedTextFormat</td>
-    <td>'values' | 'count' | 'count > x' (where x is an integer)</td>
-    <td><code>null</code></td>
+    <td><code>'values'</code> | <code>'static'</code> | <code>'count'</code> | <code>'count > x'</code> (where x is an integer)</td>
+    <td><code>'values'</code></td>
     <td>
-      <p>Specifies how the selection is displayed with a multiple select (see <a
-        href="http://silviomoreto.github.io/bootstrap-select/#titleMultiplesFormat">here</a></p>
+      <p>Specifies how the selection is displayed with a multiple select.</p>
     </td>
   </tr>
   <tr>
@@ -158,7 +157,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>size</td>
-    <td>'auto' | integer | false</td>
+    <td><code>'auto'</code> | integer | false</td>
     <td><code>'auto'</code></td>
     <td>
       <p>When set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow
@@ -185,7 +184,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>width</td>
-    <td>'auto' | 'fit' | css-width | false (where <code>css-width</code> is a CSS width with units)</td>
+    <td><code>'auto'</code> | <code>'fit'</code> | css-width | false (where <code>css-width</code> is a CSS width with units, e.g. <code>100px</code>)</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the 
