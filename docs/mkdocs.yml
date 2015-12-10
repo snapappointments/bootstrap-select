@@ -10,7 +10,6 @@ extra_javascript:
 - //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js
 pages:
 - Bootstrap-select: index.md
-- Usage: usage.md
 - Examples: examples.md
 - Options: options.md
 - Methods: methods.md

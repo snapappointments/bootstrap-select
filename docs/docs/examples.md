@@ -631,7 +631,7 @@ Add subtext to an option or optgroup with the `data-subtext` attribute:
       <option data-subtext="Sweet & Spicy">Tabasco</option>
       <option data-subtext="Chunky">Salsa</option>
     </select>
-    <span class="help-block">With `showSubtext` set to true.</span>
+    <span class="help-block">With <code>showSubtext</code> set to true.</span>
   </div>
 </div>
 

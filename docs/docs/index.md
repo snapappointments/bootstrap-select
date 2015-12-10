@@ -20,14 +20,23 @@ Install-Package bootstrap-select      # NuGet
 
 ## Getting Started
 
-Bootstrap-select requires bootstrap and jquery. Once you have added bootstrap-select to your project, you simply need 
-to add the `selectpicker` class to any `<select>` element you wish to theme.
+Bootstrap-select requires bootstrap and jquery. Create your `<select>` with the `.selectpicker` class. The data-api will automatically theme these elements.
 
 ```html
 <select class="selectpicker">
-    <option>One</option>
-    <option>Two</option>
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
 </select>
+```
+
+Options can be passed via data attributes or JavaScript.
+
+```js
+$('.selectpicker').selectpicker({
+  style: 'btn-info',
+  size: 4
+});
 ```
 
 ### CDN
