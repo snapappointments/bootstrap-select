@@ -18,8 +18,16 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </thead>
   <tbody>
   <tr>
+    <td>actionsBox</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>When set to <code>true</code>, adds two buttons to the top of the dropdown menu (<strong>Select All</strong> &amp; <strong>Deselect All</strong>).</p>
+    </td>
+  </tr>
+  <tr>
     <td>container</td>
-    <td><code>string | false</code></td>
+    <td>string | false</td>
     <td><code>false</code></td>
     <td>
         <p>When set to a string, appends the select to a specific element or selector, e.g., 
@@ -28,7 +36,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>countSelectedText</td>
-    <td><code>string | function</code></td>
+    <td>string | function</td>
     <td><code>function</code></td>
     <td>
       <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > 
@@ -39,7 +47,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>dropupAuto</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>true</code></td>
     <td>
       <p>checks to see which has more room, above or below. If the dropup has enough room to fully open normally, but
@@ -49,7 +57,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>header</td>
-    <td><code>string</code></td>
+    <td>string</td>
     <td><code>false</code></td>
     <td>
       <p>adds a header to the top of the menu; includes a close button by default</p>
@@ -57,7 +65,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>hideDisabled</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>false</code></td>
     <td>
       <p>removes disabled options and optgroups from the menu <code>data-hide-disabled: true</code></p>
@@ -65,7 +73,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>mobile</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>true</code>, enables the device's native menu for select menus.</p>
@@ -73,7 +81,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>multipleSeparator</td>
-    <td><code>string</code></td>
+    <td>string</td>
     <td><code>', '</code></td>
     <td>
       <p>Set the character displayed in the button that separates selected options.</p>
@@ -81,16 +89,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>selectedTextFormat</td>
-    <td><code>'values' | 'count' | 'count > #'</code> (where # is an integer)</td>
-    <td><code>null</code></td>
-    <td>
-      <p>Specifies how the selection is displayed with a multiple select (see <a
-        href="http://silviomoreto.github.io/bootstrap-select/#titleMultiplesFormat">here</a></p>
-    </td>
-  </tr>
-  <tr>
-    <td>selectedTextFormat</td>
-    <td><code>'values' | 'count' | 'count > #'</code> (where # is an integer)</td>
+    <td>'values' | 'count' | 'count > x' (where x is an integer)</td>
     <td><code>null</code></td>
     <td>
       <p>Specifies how the selection is displayed with a multiple select (see <a
@@ -99,7 +98,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>size</td>
-    <td><code>'auto' | integer | false</code></td>
+    <td>'auto' | integer | false</td>
     <td><code>'auto'</code></td>
     <td>
       <p>When set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow
@@ -110,7 +109,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>showSubtext</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>true</code>, display subtext associated with a selected option in the button.</p>
@@ -118,7 +117,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>showIcon</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>true</code></td>
     <td>
       <p>When set to <code>true</code>, display icon(s) associated with selected option(s) in the button.</p>
@@ -126,7 +125,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>showContent</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>true</code></td>
     <td>
       <p>When set to <code>true</code>, display custom HTML associated with selected option(s) in the button. When set 
@@ -135,7 +134,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>style</td>
-    <td><code>string | null</code></td>
+    <td>string | null</td>
     <td><code>null</code></td>
     <td>
       <p>When set to a string, add the value to the button's style.</p>
@@ -143,7 +142,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>title</td>
-    <td><code>string | null</code></td>
+    <td>string | null</td>
     <td><code>null</code></td>
     <td>
       <p>The default title for the selectpicker.</p>
@@ -151,7 +150,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>width</td>
-    <td><code>'auto' | 'fit' | css-width | false</code> (where <code>css-width</code> is a CSS width with units)</td>
+    <td>'auto' | 'fit' | css-width | false (where <code>css-width</code> is a CSS width with units)</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the 
@@ -162,7 +161,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>maxOptions</td>
-    <td><code>integer | false</code> (where # is an integer)</td>
+    <td>integer | false</td>
     <td><code>false</code></td>
     <td>
       <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
@@ -172,24 +171,15 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>liveSearch</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>true</code>, adds a search box to the top of the selectpicker dropdown.</p>
     </td>
   </tr>
   <tr>
-    <td>actionsBox</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-    <td>
-      <p>When set to <code>true</code>, adds two action boxes to the top of the selectpicker dropdown (select &amp; 
-      deselect all).</p>
-    </td>
-  </tr>
-  <tr>
     <td>selectOnTab</td>
-    <td><code>boolean</code></td>
+    <td>boolean</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the 

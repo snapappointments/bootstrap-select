@@ -62,7 +62,6 @@
 </select>
 ```
 
-<p id="multiselect"></p>
 ## Multiple select boxes
 
 <div class="bs-docs-example">
@@ -81,7 +80,6 @@
 </select>
 ```
 
-<div id="data-live-search"></div>
 ## Live search
 
 You can add a search input by passing `data-live-search="true"` attribute:
@@ -675,6 +673,26 @@ Specify a number for `data-size` to choose the maximum number of items to show i
 ```html
 <select class="selectpicker" data-size="5">
   ...
+</select>
+```
+
+## Select/deselect all options
+
+Adds two buttons to the top of the menu - **Select All** & **Deselect All** with `data-actions-box="true"`.
+
+<div class="bs-docs-example">
+  <select class="selectpicker" multiple data-actions-box="true">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </select>
+</div>
+
+```html
+<select class="selectpicker" multiple data-actions-box="true">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
 </select>
 ```
 
