@@ -1,24 +1,53 @@
-# bootstrap-select
+# Getting Started
 
 ---
 
-## Overview
+## Dependencies
 
-Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to normal select boxes.
+Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the minimum requirements can be downloaded [here](http://getbootstrap.com/customize/?id=7830063837006f6fc84f).
 
----
+## CDN
 
-## Install
+The folks at CDNJS host a copy of the library. Just use these links:
 
-```sh
-bower install bootstrap-select --save # bower
-npm install bootstrap-select --save   # npm
-Install-Package bootstrap-select      # NuGet
+```html
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/i18n/defaults-*.min.js"></script>
 ```
 
----
+## Install with Bower
 
-## Getting Started
+You can also install bootstrap-select using [Bower](http://bower.io):
+
+```elixir
+$ bower install bootstrap-select
+```
+
+## Install with npm
+
+You can also install bootstrap-select using [npm](https://www.npmjs.com/package/bootstrap-select):
+
+```elixir
+$ npm install bootstrap-select
+```
+
+## Install with NuGet
+
+You can also install bootstrap-select using [NuGet](https://www.nuget.org/packages/bootstrap-select):
+
+```elixir
+$ Install-Package bootstrap-select
+```
+
+# Usage
+
+---
 
 Bootstrap-select requires bootstrap and jquery. Create your `<select>` with the `.selectpicker` class. The data-api will automatically theme these elements.
 
@@ -37,20 +66,5 @@ $('.selectpicker').selectpicker({
   style: 'btn-info',
   size: 4
 });
-```
-
-### CDN
-
-The folks at CDNJS host a copy of the library. Just use these links:
-
-```html
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
-
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/i18n/defaults-*.min.js"></script>
 ```
 
