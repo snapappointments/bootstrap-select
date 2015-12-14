@@ -2,12 +2,23 @@ body {
     padding-top: 70px;
 }
 
+h1[id]:before, h2[id]:before, h3[id]:before, h4[id]:before, h5[id]:before, h6[id]:before {
+    content: "";
+    display: block;
+    margin-top: -75px;
+    height: 75px;
+}
+
 ul.nav li.main {
     font-weight: bold;
 }
 
 div.col-md-3 {
     padding-left: 0;
+}
+
+div.col-md-9 {
+    padding-bottom: 100px;
 }
 
 div.source-links {
@@ -43,6 +54,7 @@ div.source-links {
 .bs-sidebar .nav > li > a {
     display: block;
     padding: 5px 20px;
+    z-index: 1;
 }
 .bs-sidebar .nav > li > a:hover,
 .bs-sidebar .nav > li > a:focus {
