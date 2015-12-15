@@ -284,6 +284,7 @@
     doneButton: false,
     doneButtonText: 'Close',
     multipleSeparator: ', ',
+    closeMultipleOnSelect: false,
     styleBase: 'btn',
     style: 'btn-default',
     size: 'auto',
@@ -1074,8 +1075,9 @@
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex');
 
-        // Don't close on multi choice menu
-        if (that.multiple) {
+        // Only close on multi choice menu if option closeMultipleOnSelect set to true
+        // Default: false
+        if (that.multiple && !that.options.closeMultipleOnSelect) {
           e.stopPropagation();
         }
 
