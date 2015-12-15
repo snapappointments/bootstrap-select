@@ -106,6 +106,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>closeMultipleOnSelect</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>When set to <code>true</code>, enables closing of Dropdown for multiple select menus.</p>
+    </td>
+  </tr>
+  <tr>
     <td>noneSelectedText</td>
     <td>string</td>
     <td><code>'Nothing selected'</code></td>
