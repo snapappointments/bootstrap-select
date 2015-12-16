@@ -68,3 +68,16 @@ $('.selectpicker').selectpicker({
 });
 ```
 
+# Used by
+
+---
+
+<div class="row logo-block">
+	<div class="col-md-3 col-sm-4 col-xs-8">
+		<a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png"></a>
+	</div>
+</div>
+
+<div class="text-muted">Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.</div>
+
+
