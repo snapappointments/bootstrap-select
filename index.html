@@ -15,8 +15,8 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="./css/highlight.css" rel="stylesheet">
   <link href="./css/base.css" rel="stylesheet">
-  <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css" rel="stylesheet">
   <link href="./css/custom.css" rel="stylesheet">
+  <link href="./dist/css/bootstrap-select.min.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -100,13 +100,15 @@
   <div class="container text-center">
     <h1>bootstrap-select</h1>
     <p class="lead">Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to normal select boxes.</p>
-    <a class="btn btn-outline-inverse btn-lg" href="//github.com/silviomoreto/bootstrap-select/archive/v1.8.1.zip" role="button">
-      <i class="fa fa-download"></i> Download (v1.8.1)
+    <a class="btn btn-outline-inverse btn-lg" href="//github.com/silviomoreto/bootstrap-select/archive/v1.9.3.zip" role="button">
+      <i class="fa fa-download"></i> Download (v1.9.3)
     </a>
     <div class="carbonad">
-      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
+      <div class="carbonad-inner">
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
+      </div>
+      <div class="charity">Ad revenue is donated to <a href="http://www.projetocana.org/" target="_blank" rel="nofollow">Projecto Cana</a>.</div>
     </div>
-    <div class="charity">Ad revenue is donated to <a href="http://www.projetocana.org/" target="_blank" rel="nofollow">Projecto Cana</a>.</div>
   </div>
 </div>
 <div class="container">
@@ -116,16 +118,16 @@
 <hr />
 <h2 id="dependencies">Dependencies</h2>
 <p>Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the minimum requirements can be downloaded <a href="http://getbootstrap.com/customize/?id=7830063837006f6fc84f">here</a>.</p>
-<h2 id="cdn">CDN</h2>
-<p>The folks at CDNJS host a copy of the library. Just use these links:</p>
+<h2 id="cdnjs">CDNJS</h2>
+<p>The folks at CDNJS host a copy of the library. The CDN is updated after the release is made public, which means there is a delay between the publishing of a release and its availability on the CDN, so keep that in mind. Just use these links:</p>
 <pre><code class="html">&lt;!-- Latest compiled and minified CSS --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css&quot;&gt;
 
 &lt;!-- Latest compiled and minified JavaScript --&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js&quot;&gt;&lt;/script&gt;
 
 &lt;!-- (Optional) Latest compiled and minified JavaScript translation files --&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/i18n/defaults-*.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/i18n/defaults-*.min.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
 <h2 id="install-with-bower">Install with Bower</h2>
@@ -145,7 +147,7 @@
 
 <h1 id="usage">Usage</h1>
 <hr />
-<p>Bootstrap-select requires bootstrap and jquery. Create your <code>&lt;select&gt;</code> with the <code>.selectpicker</code> class. The data-api will automatically theme these elements.</p>
+<p>Create your <code>&lt;select&gt;</code> with the <code>.selectpicker</code> class. The data-api will automatically theme these elements.</p>
 <pre><code class="html">&lt;select class=&quot;selectpicker&quot;&gt;
   &lt;option&gt;Mustard&lt;/option&gt;
   &lt;option&gt;Ketchup&lt;/option&gt;
@@ -164,7 +166,7 @@
 <hr />
 <div class="row logo-block">
     <div class="col-md-3 col-sm-4 col-xs-8">
-        <a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png"></a>
+        <a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png" alt="SnapAppointments"></a>
     </div>
 </div>
 
@@ -183,7 +185,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="./js/highlight.pack.js"></script>
 <script src="./js/base.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
+<script src="./dist/js/bootstrap-select.min.js"></script>
 
 
 </body>

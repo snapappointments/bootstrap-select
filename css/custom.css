@@ -164,11 +164,11 @@ ul.nav li.main {
   border-radius: 0;
 }
 
-.carbonad {
+.carbonad-inner {
   width: auto!important;
   height: auto!important;
   padding: 20px!important;
-  margin: 30px -15px -31px!important;
+  margin: 30px -15px 0!important;
   overflow: hidden;
   font-size: 13px!important;
   line-height: 16px!important;
@@ -200,6 +200,7 @@ ul.nav li.main {
 .charity {
   opacity: 0.5;
   padding: 4px;
+  margin-bottom: -31px;
 }
 
 .charity a {
@@ -231,11 +232,15 @@ ul.nav li.main {
 }
 
 @media (min-width: 480px){
-  .carbonad {
+  .carbonad-inner {
     width: 330px!important;
     margin: 50px auto 0 !important;
     border-width: 1px!important;
     border-radius: 4px;
+  }
+
+  .charity {
+    margin-bottom: 0;
   }
 }
 
@@ -271,7 +276,7 @@ ul.nav li.main {
       width: 80%;
   }
 
-  .carbonad {
+  .carbonad-inner {
     top: 0;
     right: 15px;
     width: 330px!important;
