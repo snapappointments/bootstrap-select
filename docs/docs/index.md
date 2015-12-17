@@ -8,7 +8,7 @@ Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CS
 
 ## CDNJS
 
-The folks at CDNJS host a copy of the library. Just use these links:
+The folks at CDNJS host a copy of the library. The CDN is updated after the release is made public, which means there is a delay between the publishing of a release and its availability on the CDN, so keep that in mind. Just use these links:
 
 ```html
 <!-- Latest compiled and minified CSS -->
