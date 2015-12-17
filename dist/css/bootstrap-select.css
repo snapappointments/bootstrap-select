@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.7.5 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.9.3 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2015 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -12,6 +12,24 @@
 .bootstrap-select > .dropdown-toggle {
   width: 100%;
   padding-right: 25px;
+  z-index: 1;
+}
+.bootstrap-select > select {
+  position: absolute !important;
+  bottom: 0;
+  left: 50%;
+  width: 0.11px !important;
+  height: 100% !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  border: none;
+}
+.bootstrap-select > select.mobile-device {
+  top: 0;
+  left: 0;
+  display: block !important;
+  width: 100% !important;
+  z-index: 2;
 }
 .has-error .bootstrap-select .dropdown-toggle,
 .error .bootstrap-select .dropdown-toggle {
@@ -255,18 +273,5 @@
   margin-bottom: 0;
   width: 100%;
   float: none;
-}
-select.bs-select-hidden,
-select.selectpicker {
-  display: none !important;
-}
-select.mobile-device {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  display: block !important;
-  width: 100%;
-  height: 100% !important;
-  opacity: 0;
 }
 /*# sourceMappingURL=bootstrap-select.css.map */
