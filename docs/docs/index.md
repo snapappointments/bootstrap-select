@@ -74,7 +74,7 @@ $('.selectpicker').selectpicker({
 
 <div class="row logo-block">
 	<div class="col-md-3 col-sm-4 col-xs-8">
-		<a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png"></a>
+		<a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png" alt="SnapAppointments"></a>
 	</div>
 </div>
 
