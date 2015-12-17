@@ -6,19 +6,19 @@
 
 Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the minimum requirements can be downloaded [here](http://getbootstrap.com/customize/?id=7830063837006f6fc84f).
 
-## CDN
+## CDNJS
 
 The folks at CDNJS host a copy of the library. Just use these links:
 
 ```html
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/i18n/defaults-*.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/i18n/defaults-*.min.js"></script>
 ```
 
 ## Install with Bower
@@ -49,7 +49,7 @@ $ Install-Package bootstrap-select
 
 ---
 
-Bootstrap-select requires bootstrap and jquery. Create your `<select>` with the `.selectpicker` class. The data-api will automatically theme these elements.
+Create your `<select>` with the `.selectpicker` class. The data-api will automatically theme these elements.
 
 ```html
 <select class="selectpicker">
