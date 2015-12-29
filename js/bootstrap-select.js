@@ -546,7 +546,8 @@
 
         // Get the class and text for the option
         var optionClass = this.className || '',
-            inline = this.style.cssText,
+            //inline = this.style.cssText, //quotes are escaped (HTML style="display: block; width: 315px; height: 315px; background-image: url(" page_images="" big-vps[1].png");" <<<HTML instead of HTML style="background-image: url('/page_images/big-vps[1].png'); display: block; width: 315px; height: 315px;" <<<HTML)
+            inline = $(this).attr('style'),
             text = $this.data('content') ? $this.data('content') : $this.html(),
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
