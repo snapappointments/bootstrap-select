@@ -301,6 +301,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    searchNormalizer : normalizeToBase,
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
@@ -513,7 +514,7 @@
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
-            (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' : '') +
+            (that.options.liveSearchNormalize ? ' data-normalized-text="' + that.options.searchNormalizer(htmlEscape(text)) + '"' : '') +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             '>' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
@@ -1248,7 +1249,7 @@
         if (that.$searchbox.val()) {
           var $searchBase = that.$lis.not('.is-hidden').removeClass('hidden').children('a');
           if (that.options.liveSearchNormalize) {
-            $searchBase = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
+            $searchBase = $searchBase.not(':a' + that._searchStyle() + '("' + that.options.searchNormalizer(that.$searchbox.val()) + '")');
           } else {
             $searchBase = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
           }
@@ -1445,7 +1446,7 @@
           if ($items.filter('.active').length === 0) {
             $items = that.$menuInner.find('li');
             if (that.options.liveSearchNormalize) {
-              $items = $items.filter(':a' + that._searchStyle() + '(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
+              $items = $items.filter(':a' + that._searchStyle() + '(' + that.options.searchNormalizer(keyCodeMap[e.keyCode]) + ')');
             } else {
               $items = $items.filter(':' + that._searchStyle() + '(' + keyCodeMap[e.keyCode] + ')');
             }
