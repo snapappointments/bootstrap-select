@@ -223,8 +223,15 @@ ul.nav li.main {
 }
 
 .logo-block img {
-    height: auto;
-    width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 40px;
+}
+
+.logo-container {
+  float: left;
+  max-width: 25%;
+  margin: 0 15px;
 }
 
 .logo-block + div {
@@ -241,6 +248,10 @@ ul.nav li.main {
 
   .charity {
     margin-bottom: 0;
+  }
+
+  .logo-container {
+    max-width: 60%;
   }
 }
 
@@ -269,6 +280,10 @@ ul.nav li.main {
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
   }
+
+  .logo-container {
+    max-width: 33.3333%;
+  }
 }
 
 @media (min-width: 992px){
@@ -281,5 +296,9 @@ ul.nav li.main {
     right: 15px;
     width: 330px!important;
     padding: 15px!important;
+  }
+
+  .logo-container {
+    max-width: 25%;
   }
 }

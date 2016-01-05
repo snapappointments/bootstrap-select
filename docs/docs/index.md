@@ -73,8 +73,11 @@ $('.selectpicker').selectpicker({
 ---
 
 <div class="row logo-block">
-	<div class="col-md-3 col-sm-4 col-xs-8">
+	<div class="logo-container">
 		<a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png" alt="SnapAppointments"></a>
+	</div>
+	<div class="logo-container">
+		<a href="https://www.thermofisher.com" target="_blank"><img src="img/logos/thermofisher.png" alt="Thermo Fisher Scientific Inc."></a>
 	</div>
 </div>
 
