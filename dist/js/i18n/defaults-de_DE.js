@@ -27,6 +27,8 @@
     noneResultsText: 'Keine Ergebnisse für {0}',
     countSelectedText: '{0} von {1} ausgewählt',
     maxOptionsText: ['Limit erreicht ({n} {var} max.)', 'Gruppen-Limit erreicht ({n} {var} max.)', ['Eintrag', 'Einträge']],
+    selectAllText: 'Alle wählen',
+    deselectAllText: 'Keine wählen',
     multipleSeparator: ', '
   };
 })(jQuery);
