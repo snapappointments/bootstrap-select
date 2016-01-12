@@ -16,6 +16,8 @@
         (numGroup > 1) ? 'Limite du groupe atteinte ({n} éléments max)' : 'Limite du groupe atteinte ({n} élément max)'
       ];
     },
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Tout Sélectionner',
+    deselectAllText: 'Tout Dé-selectionner',
   };
 })(jQuery);
