@@ -1592,7 +1592,7 @@
     },
 
     destroy: function () {
-        this.$newElement.remove();
+        this.$newElement.before(this.$element).remove();
 
         if (this.$bsContainer) {
             this.$bsContainer.remove();
