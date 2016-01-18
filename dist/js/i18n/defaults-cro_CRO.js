@@ -21,27 +21,22 @@
   }
 }(this, function (jQuery) {
 
-/*!
- * Translated default messages for bootstrap-select.
- * Locale: AR (Arabic)
- * Author: Yasser Lotfy <y_l@alive.com>
- */
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'لم يتم إختيار شئ',
-    noneResultsText: 'لا توجد نتائج مطابقة لـ {0}',
+    noneSelectedText: 'Odaberite stavku',
+    noneResultsText: 'Nema rezultata pretrage {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} خيار تم إختياره" : "{0} خيارات تمت إختيارها";
+      return (numSelected == 1) ? "{0} stavka selektirana" : "{0} stavke selektirane";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        (numAll == 1) ? 'تخطى الحد المسموح ({n} خيار بحد أقصى)' : 'تخطى الحد المسموح ({n} خيارات بحد أقصى)',
-        (numGroup == 1) ? 'تخطى الحد المسموح للمجموعة ({n} خيار بحد أقصى)' : 'تخطى الحد المسموح للمجموعة ({n} خيارات بحد أقصى)'
+        (numAll == 1) ? 'Limit je postignut ({n} stvar maximalno)' : 'Limit je postignut ({n} stavke maksimalno)',
+        (numGroup == 1) ? 'Grupni limit je postignut ({n} stvar maksimalno)' : 'Grupni limit je postignut ({n} stavke maksimalno)'
       ];
     },
-    selectAllText: 'إختيار الجميع',
-    deselectAllText: 'إلغاء إختيار الجميع',
-    multipleSeparator: '، '
+    selectAllText: 'Selektiraj sve',
+    deselectAllText: 'Deselektiraj sve',
+    multipleSeparator: ', '
   };
 })(jQuery);
 
