@@ -4,7 +4,7 @@ Interface with bootstrap-select.
 
 ---
 
-## val()
+#### `.selectpicker('val')`
 
 You can set the selected value by calling the `val` method on the element.
 
@@ -25,7 +25,7 @@ $('.selectpicker').selectpicker('val', 'Mustard');
 
 ---
 
-## selectAll()
+#### `.selectpicker('selectAll')`
 
 This will select all items in a multi-select.
 
@@ -35,7 +35,7 @@ $('.selectpicker').selectpicker('selectAll');
 
 ---
 
-## deselectAll()
+#### `.selectpicker('deselectAll')`
 
 This will deselect all items in a multi-select.
 
@@ -45,7 +45,7 @@ $('.selectpicker').selectpicker('deselectAll');
 
 ---
 
-## render()
+#### `.selectpicker('render')`
 
 You can force a re-render of the bootstrap-select ui with the `render` method. This is useful if you programatically change any underlying values that affect the layout of the element.
 
@@ -55,7 +55,7 @@ $('.selectpicker').selectpicker('render');
 
 ---
 
-## mobile()
+#### `.selectpicker('mobile')`
 
 Enable mobile scrolling by calling `$('.selectpicker').selectpicker('mobile')`. This enables the device's native menu for select menus.
 
@@ -69,7 +69,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 
 ---
 
-## setStyle()
+#### `.selectpicker('setStyle')`
 
 Modify the class(es) associated with either the button itself or its container.
 
@@ -95,7 +95,7 @@ $('.selectpicker').selectpicker('setStyle', 'btn-large', 'remove');
 
 ---
 
-## refresh()
+#### `.selectpicker('refresh')`
 
 To programmatically update a select with JavaScript, first manipulate the select, then use the `refresh` method to 
 update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a 
@@ -192,7 +192,7 @@ $('.ex-enable').click(function () {
 
 ---
 
-## hide()
+#### `.selectpicker('hide')`
 
 To programmatically hide the bootstrap-select use the `hide` method.
 
@@ -202,7 +202,7 @@ $('.selectpicker').selectpicker('hide');
 
 ---
 
-## show()
+#### `.selectpicker('show')`
 
 To programmatically show the bootstrap-select use the `show` method.
 
@@ -212,7 +212,7 @@ $('.selectpicker').selectpicker('show');
 
 ---
 
-## destroy()
+#### `.selectpicker('destroy')`
 
 To programmatically destroy the bootstrap-select, use the `destroy` method.
 
