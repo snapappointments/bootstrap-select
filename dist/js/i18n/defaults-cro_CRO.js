@@ -23,19 +23,19 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Ei valintoja',
-    noneResultsText: 'Ei hakutuloksia {0}',
+    noneSelectedText: 'Odaberite stavku',
+    noneResultsText: 'Nema rezultata pretrage {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} valittu" : "{0} valitut";
+      return (numSelected == 1) ? "{0} stavka selektirana" : "{0} stavke selektirane";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        (numAll == 1) ? 'Valintojen maksimimäärä ({n} saavutettu)' : 'Valintojen maksimimäärä ({n} saavutettu)',
-        (numGroup == 1) ? 'Ryhmän maksimimäärä ({n} saavutettu)' : 'Ryhmän maksimimäärä ({n} saavutettu)'
+        (numAll == 1) ? 'Limit je postignut ({n} stvar maximalno)' : 'Limit je postignut ({n} stavke maksimalno)',
+        (numGroup == 1) ? 'Grupni limit je postignut ({n} stvar maksimalno)' : 'Grupni limit je postignut ({n} stavke maksimalno)'
       ];
     },
-    selectAllText: 'Valitse kaikki',
-    deselectAllText: 'Poista kaikki',
+    selectAllText: 'Selektiraj sve',
+    deselectAllText: 'Deselektiraj sve',
     multipleSeparator: ', '
   };
 })(jQuery);

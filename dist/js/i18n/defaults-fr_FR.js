@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.9.3 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.9.4 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2015 bootstrap-select
+ * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -34,7 +34,9 @@
         (numGroup > 1) ? 'Limite du groupe atteinte ({n} éléments max)' : 'Limite du groupe atteinte ({n} élément max)'
       ];
     },
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Tout Sélectionner',
+    deselectAllText: 'Tout Dé-selectionner',
   };
 })(jQuery);
 
