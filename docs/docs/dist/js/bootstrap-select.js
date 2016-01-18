@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.9.3 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.9.4 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2015 bootstrap-select
+ * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -287,7 +287,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.9.3';
+  Selectpicker.VERSION = '1.9.4';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -574,13 +574,14 @@
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
-            isDisabled = this.disabled || (this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled);
+            isOptgroup = this.parentNode.tagName === 'OPTGROUP',
+            isDisabled = this.disabled || (isOptgroup && this.parentNode.disabled);
 
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
 
-        if (that.options.hideDisabled && isDisabled) {
+        if (that.options.hideDisabled && isDisabled && !isOptgroup) {
           liIndex--;
           return;
         }
@@ -590,7 +591,7 @@
           text = icon + '<span class="text">' + text + subtext + '</span>';
         }
 
-        if (this.parentNode.tagName === 'OPTGROUP' && $this.data('divider') !== true) {
+        if (isOptgroup && $this.data('divider') !== true) {
           var optGroupClass = ' ' + this.parentNode.className || '';
 
           if ($this.index() === 0) { // Is it the first option of the optgroup?
@@ -610,6 +611,12 @@
             liIndex++;
             _li.push(generateLI(label, null, 'dropdown-header' + optGroupClass, optID));
           }
+
+          if (that.options.hideDisabled && isDisabled) {
+            liIndex--;
+            return;
+          }
+
           _li.push(generateLI(generateA(text, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
@@ -1615,7 +1622,7 @@
     },
 
     destroy: function () {
-        this.$newElement.remove();
+        this.$newElement.before(this.$element).remove();
 
         if (this.$bsContainer) {
             this.$bsContainer.remove();

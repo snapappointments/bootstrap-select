@@ -23,19 +23,19 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Inget valt',
-    noneResultsText: 'Inget sökresultat matchar {0}',
+    noneSelectedText: 'Odaberite stavku',
+    noneResultsText: 'Nema rezultata pretrage {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected === 1) ? "{0} alternativ valt" : "{0} alternativ valda";
+      return (numSelected == 1) ? "{0} stavka selektirana" : "{0} stavke selektirane";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        'Gräns uppnåd (max {n} alternativ)',
-        'Gräns uppnåd (max {n} gruppalternativ)'
+        (numAll == 1) ? 'Limit je postignut ({n} stvar maximalno)' : 'Limit je postignut ({n} stavke maksimalno)',
+        (numGroup == 1) ? 'Grupni limit je postignut ({n} stvar maksimalno)' : 'Grupni limit je postignut ({n} stavke maksimalno)'
       ];
     },
-    selectAllText: 'Markera alla',
-    deselectAllText: 'Avmarkera alla',
+    selectAllText: 'Selektiraj sve',
+    deselectAllText: 'Deselektiraj sve',
     multipleSeparator: ', '
   };
 })(jQuery);
