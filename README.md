@@ -71,3 +71,10 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 Copyright (C) 2013-2015 bootstrap-select
 
 Licensed under [the MIT license](LICENSE).
+
+## Used by
+
+* [SnapAppointments](https://snapappointments.com)
+* [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
+
+Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.
