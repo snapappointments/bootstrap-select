@@ -9,6 +9,10 @@ h1[id]:before, h2[id]:before, h3[id]:before, h4[id]:before, h5[id]:before, h6[id
     height: 75px;
 }
 
+h2 code, h3 code, h4 code {
+    background-color: inherit;
+}
+
 ul.nav li.main {
     font-weight: bold;
 }

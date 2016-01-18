@@ -96,12 +96,24 @@
 </div>
 
 
+<section class="jumbotron">
+  <div class="container">
+    <h1>Options</h1>
+  </div>
+</section>
 <div class="container">
-  <div class="col-md-3"><div class="bs-sidebar hidden-print affix" role="complementary">
+  <div class="col-md-3"><div class="bs-sidebar hidden-print affix-top" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active">
-	        <a href="#options">Options</a>
+	        <a href="#core-options">Core options</a>
+	        <ul class="nav">
+	        
+	        </ul>
+        </li>
+    
+        <li class="main ">
+	        <a href="#events">Events</a>
 	        <ul class="nav">
 	        
 	        </ul>
@@ -111,8 +123,7 @@
 </div></div>
   <div class="col-md-9" role="main">
 
-<h1 id="options">Options</h1>
-<p>Configure bootstrap-select.</p>
+<h1 id="core-options">Core options</h1>
 <hr />
 <p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in 
 <code>data-style=""</code> or <code>data-selected-text-format="count"</code>.</p>
@@ -303,7 +314,59 @@
     </td>
   </tr>
   </tbody>
-</table></div>
+</table>
+
+<h1 id="events">Events</h1>
+<hr />
+<p>Bootstrap-select exposes a few events for hooking into select functionality.</p>
+<p>hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a <code>relatedTarget</code> property, whose value is the toggling anchor element.</p>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Event Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>loaded.bs.select</td>
+      <td>This event fires after the select has been initialized.</td>
+    </tr>
+    <tr>
+      <td>changed.bs.select</td>
+      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
+    </tr>
+    <tr>
+      <td>show.bs.select</td>
+      <td>This event fires immediately when the show instance method is called.</td>
+    </tr>
+    <tr>
+      <td>shown.bs.select</td>
+      <td>This event is fired when the dropdown has been made visible to the user (will wait for CSS transitions, to complete).</td>
+    </tr>
+    <tr>
+      <td>hide.bs.select</td>
+      <td>This event is fired immediately when the hide instance method has been called.</td>
+    </tr>
+    <tr>
+      <td>hidden.bs.select</td>
+      <td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
+    </tr>
+    <tr>
+      <td>rendered.bs.select</td>
+      <td>This event fires after the render instance has been called.</td>
+    </tr>
+    <tr>
+      <td>refreshed.bs.select</td>
+      <td>This event fires after the refresh instance has been called.</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre><code class="js">$('#mySelect').on('hidden.bs.select', function (e) {
+  // do something...
+});
+</code></pre></div>
 </div>
 
 

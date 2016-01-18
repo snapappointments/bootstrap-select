@@ -96,33 +96,38 @@
 </div>
 
 
+<section class="jumbotron">
+  <div class="container">
+    <h1>Methods</h1>
+  </div>
+</section>
 <div class="container">
-  <div class="col-md-3"><div class="bs-sidebar hidden-print affix" role="complementary">
+  <div class="col-md-3"><div class="bs-sidebar hidden-print affix-top" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active">
 	        <a href="#methods">Methods</a>
 	        <ul class="nav">
 	        
-	            <li><a href="#val">val()</a></li>
+	            <li><a href="#selectpickerval">.selectpicker('val')</a></li>
 	        
-	            <li><a href="#selectall">selectAll()</a></li>
+	            <li><a href="#selectpickerselectall">.selectpicker('selectAll')</a></li>
 	        
-	            <li><a href="#deselectall">deselectAll()</a></li>
+	            <li><a href="#selectpickerdeselectall">.selectpicker('deselectAll')</a></li>
 	        
-	            <li><a href="#render">render()</a></li>
+	            <li><a href="#selectpickerrender">.selectpicker('render')</a></li>
 	        
-	            <li><a href="#mobile">mobile()</a></li>
+	            <li><a href="#selectpickermobile">.selectpicker('mobile')</a></li>
 	        
-	            <li><a href="#setstyle">setStyle()</a></li>
+	            <li><a href="#selectpickersetstyle">.selectpicker('setStyle')</a></li>
 	        
-	            <li><a href="#refresh">refresh()</a></li>
+	            <li><a href="#selectpickerrefresh">.selectpicker('refresh')</a></li>
 	        
-	            <li><a href="#hide">hide()</a></li>
+	            <li><a href="#selectpickerhide">.selectpicker('hide')</a></li>
 	        
-	            <li><a href="#show">show()</a></li>
+	            <li><a href="#selectpickershow">.selectpicker('show')</a></li>
 	        
-	            <li><a href="#destroy">destroy()</a></li>
+	            <li><a href="#selectpickerdestroy">.selectpicker('destroy')</a></li>
 	        
 	        </ul>
         </li>
@@ -134,7 +139,7 @@
 <h1 id="methods">Methods</h1>
 <p>Interface with bootstrap-select.</p>
 <hr />
-<h2 id="val">val()</h2>
+<h4 id="selectpickerval"><code>.selectpicker('val')</code></h4>
 <p>You can set the selected value by calling the <code>val</code> method on the element.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('val', 'Mustard');
 $('.selectpicker').selectpicker('val', ['Mustard','Relish']);
@@ -149,25 +154,25 @@ $('.selectpicker').selectpicker('val', 'Mustard');
 </code></pre>
 
 <hr />
-<h2 id="selectall">selectAll()</h2>
+<h4 id="selectpickerselectall"><code>.selectpicker('selectAll')</code></h4>
 <p>This will select all items in a multi-select.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('selectAll');
 </code></pre>
 
 <hr />
-<h2 id="deselectall">deselectAll()</h2>
+<h4 id="selectpickerdeselectall"><code>.selectpicker('deselectAll')</code></h4>
 <p>This will deselect all items in a multi-select.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('deselectAll');
 </code></pre>
 
 <hr />
-<h2 id="render">render()</h2>
+<h4 id="selectpickerrender"><code>.selectpicker('render')</code></h4>
 <p>You can force a re-render of the bootstrap-select ui with the <code>render</code> method. This is useful if you programatically change any underlying values that affect the layout of the element.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('render');
 </code></pre>
 
 <hr />
-<h2 id="mobile">mobile()</h2>
+<h4 id="selectpickermobile"><code>.selectpicker('mobile')</code></h4>
 <p>Enable mobile scrolling by calling <code>$('.selectpicker').selectpicker('mobile')</code>. This enables the device's native menu for select menus.</p>
 <p>The method for detecting the browser is left up to the user.</p>
 <pre><code class="js">if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
@@ -176,7 +181,7 @@ $('.selectpicker').selectpicker('val', 'Mustard');
 </code></pre>
 
 <hr />
-<h2 id="setstyle">setStyle()</h2>
+<h4 id="selectpickersetstyle"><code>.selectpicker('setStyle')</code></h4>
 <p>Modify the class(es) associated with either the button itself or its container.</p>
 <p>If changing the class on the container:</p>
 <pre><code class="js">$('.selectpicker').addClass('col-lg-12').selectpicker('setStyle');
@@ -194,7 +199,7 @@ $('.selectpicker').selectpicker('setStyle', 'btn-large', 'remove');
 </code></pre>
 
 <hr />
-<h2 id="refresh">refresh()</h2>
+<h4 id="selectpickerrefresh"><code>.selectpicker('refresh')</code></h4>
 <p>To programmatically update a select with JavaScript, first manipulate the select, then use the <code>refresh</code> method to 
 update the UI to match the new state. This is necessary when removing or adding options, or when disabling/enabling a 
 select via JavaScript.</p>
@@ -285,19 +290,19 @@ $('.ex-enable').click(function () {
 </script>
 
 <hr />
-<h2 id="hide">hide()</h2>
+<h4 id="selectpickerhide"><code>.selectpicker('hide')</code></h4>
 <p>To programmatically hide the bootstrap-select use the <code>hide</code> method.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('hide');
 </code></pre>
 
 <hr />
-<h2 id="show">show()</h2>
+<h4 id="selectpickershow"><code>.selectpicker('show')</code></h4>
 <p>To programmatically show the bootstrap-select use the <code>show</code> method.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('show');
 </code></pre>
 
 <hr />
-<h2 id="destroy">destroy()</h2>
+<h4 id="selectpickerdestroy"><code>.selectpicker('destroy')</code></h4>
 <p>To programmatically destroy the bootstrap-select, use the <code>destroy</code> method.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('destroy');
 </code></pre></div>
