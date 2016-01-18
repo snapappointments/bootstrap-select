@@ -51,6 +51,11 @@
 {% include "content.html" %}
 </div>
 {% else %}
+<section class="jumbotron">
+  <div class="container">
+    <h1>{{ page_title }}</h1>
+  </div>
+</section>
 <div class="container">
   <div class="col-md-3">{% include "toc.html" %}</div>
   <div class="col-md-9" role="main">{% include "content.html" %}</div>

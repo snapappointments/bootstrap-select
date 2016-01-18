@@ -1,6 +1,4 @@
-# Options
-
-Configure bootstrap-select.
+# Core options
 
 ---
 
@@ -195,3 +193,60 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   </tbody>
 </table>
+
+# Events
+
+---
+
+Bootstrap-select exposes a few events for hooking into select functionality.
+
+hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a `relatedTarget` property, whose value is the toggling anchor element.
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Event Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>loaded.bs.select</td>
+      <td>This event fires after the select has been initialized.</td>
+    </tr>
+    <tr>
+      <td>changed.bs.select</td>
+      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
+    </tr>
+    <tr>
+      <td>show.bs.select</td>
+      <td>This event fires immediately when the show instance method is called.</td>
+    </tr>
+    <tr>
+      <td>shown.bs.select</td>
+      <td>This event is fired when the dropdown has been made visible to the user (will wait for CSS transitions, to complete).</td>
+    </tr>
+    <tr>
+      <td>hide.bs.select</td>
+      <td>This event is fired immediately when the hide instance method has been called.</td>
+    </tr>
+    <tr>
+      <td>hidden.bs.select</td>
+      <td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
+    </tr>
+    <tr>
+      <td>rendered.bs.select</td>
+      <td>This event fires after the render instance has been called.</td>
+    </tr>
+    <tr>
+      <td>refreshed.bs.select</td>
+      <td>This event fires after the refresh instance has been called.</td>
+    </tr>
+  </tbody>
+</table>
+
+```js
+$('#mySelect').on('hidden.bs.select', function (e) {
+  // do something...
+});
+```
