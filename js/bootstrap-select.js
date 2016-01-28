@@ -380,7 +380,7 @@
     createDropdown: function () {
       // Options
       // If we are multiple or showTick option is set, then add the show-tick class
-      var multiple = (this.multiple || this.options.showTick) ? ' show-tick' : '',
+      var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
           inputGroup = this.$element.parent().hasClass('input-group') ? ' input-group-btn' : '',
           autofocus = this.autofocus ? ' autofocus' : '';
       // Elements
@@ -413,7 +413,7 @@
       '</div>'
           : '';
       var drop =
-          '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
+          '<div class="btn-group bootstrap-select' + showTick + inputGroup + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="bs-caret">' +
