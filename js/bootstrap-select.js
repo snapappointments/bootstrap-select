@@ -304,6 +304,7 @@
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
+    showTick: false,
     template: {
       caret: '<span class="caret"></span>'
     },
@@ -378,8 +379,8 @@
 
     createDropdown: function () {
       // Options
-      // If we are multiple, then add the show-tick class by default
-      var multiple = this.multiple ? ' show-tick' : '',
+      // If we are multiple or showTick option is set, then add the show-tick class
+      var multiple = (this.multiple || this.options.showTick) ? ' show-tick' : '',
           inputGroup = this.$element.parent().hasClass('input-group') ? ' input-group-btn' : '',
           autofocus = this.autofocus ? ' autofocus' : '';
       // Elements
