@@ -1060,20 +1060,21 @@
 
       this.$button.on('click', function () {
         that.setSize();
-        that.$element.on('shown.bs.select', function () {
-          if (!that.options.liveSearch && !that.multiple) {
-            that.$menuInner.find('.selected a').focus();
-          } else if (!that.multiple) {
-            var selectedIndex = that.liObj[that.$element[0].selectedIndex];
+      });
 
-            if (typeof selectedIndex !== 'number' || that.options.size === false) return;
+      this.$element.on('shown.bs.select', function () {
+        if (!that.options.liveSearch && !that.multiple) {
+          that.$menuInner.find('.selected a').focus();
+        } else if (!that.multiple) {
+          var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
-            // scroll to selected option
-            var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
-            offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
-            that.$menuInner[0].scrollTop = offset;
-          }
-        });
+          if (typeof selectedIndex !== 'number' || that.options.size === false) return;
+
+          // scroll to selected option
+          var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
+          offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
+          that.$menuInner[0].scrollTop = offset;
+        }
       });
 
       this.$menuInner.on('click', 'li a', function (e) {
