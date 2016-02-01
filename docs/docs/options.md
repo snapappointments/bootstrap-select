@@ -78,6 +78,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearchPlaceholder</td>
+    <td>string</td>
+    <td><code>null</code></td>
+    <td>
+      <p>When set to a string, a placeholder attribute equal to the string will be added to the liveSearch input.</p>
+    </td>
+  </tr>
+  <tr>
     <td>maxOptions</td>
     <td>integer | false</td>
     <td><code>false</code></td>
