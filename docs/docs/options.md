@@ -153,6 +153,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>showTick</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>Show checkmark on selected option (for items without <code>multiple</code> attribute).</p>
+    </td>
+  </tr>
+  <tr>
     <td>showContent</td>
     <td>boolean</td>
     <td><code>true</code></td>
