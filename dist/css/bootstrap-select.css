@@ -35,6 +35,9 @@
 .error .bootstrap-select .dropdown-toggle {
   border-color: #b94a48;
 }
+.has-success .bootstrap-select .dropdown-toggle {
+  border-color: #3c763d;
+}
 .bootstrap-select.fit-width {
   width: auto !important;
 }
