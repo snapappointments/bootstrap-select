@@ -375,13 +375,13 @@ The Bootstrap menu arrow can be added with the `show-menu-arrow` class:
 ## Style individual options
 
 <p id="classes"></p>
-Classes added to options are transferred to the select box:
+Classes and styles added to options are transferred to the select box:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
     <option>Mustard</option>
     <option class="special">Ketchup</option>
-    <option>Relish</option>
+    <option style="background: #5cb85c; color: #fff;">Relish</option>
   </select>
 </div>
 
@@ -389,7 +389,7 @@ Classes added to options are transferred to the select box:
 <select class="selectpicker">
   <option>Mustard</option>
   <option class="special">Ketchup</option>
-  <option>Relish</option>
+  <option style="background: #5cb85c; color: #fff;">Relish</option>
 </select>
 ```
 
