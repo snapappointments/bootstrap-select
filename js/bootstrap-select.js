@@ -1172,9 +1172,10 @@
 
           // Trigger select 'change'
           if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
-            that.$element.triggerNative('change');
             // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
-            that.$element.trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state]);
+            that.$element
+              .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
+              .triggerNative('change');
           }
         }
       });
@@ -1224,7 +1225,6 @@
         } else {
           that.deselectAll();
         }
-        that.$element.triggerNative('change');
       });
 
       this.$element.change(function () {
@@ -1347,6 +1347,10 @@
       $(selectedOptions).prop('selected', status);
 
       this.render(false);
+
+      this.$element
+        .trigger('changed.bs.select')
+        .triggerNative('change');
     },
 
     selectAll: function () {
