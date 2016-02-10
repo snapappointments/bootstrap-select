@@ -76,5 +76,6 @@ Licensed under [the MIT license](LICENSE).
 
 * [SnapAppointments](https://snapappointments.com)
 * [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
+* [membermeister](https://www.membermeister.com)
 
 Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.
