@@ -1304,7 +1304,9 @@
         }
 
         that.$lis.filter('.active').removeClass('active');
-        if (that.$searchbox.val()) that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
+        if (that.$searchbox.val() && !that.multiple) {
+          that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
+        }
         $(this).focus();
       });
     },
