@@ -1361,6 +1361,14 @@
       return this.changeAll(false);
     },
 
+    toggle: function (e) {
+      e = e || window.event;
+      
+      if (e) e.stopPropagation();
+
+      this.$button.trigger('click');
+    },
+
     keydown: function (e) {
       var $this = $(this),
           $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
