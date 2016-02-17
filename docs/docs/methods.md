@@ -192,9 +192,19 @@ $('.ex-enable').click(function () {
 
 ---
 
+#### `.selectpicker('toggle')`
+
+Programmatically toggles the bootstrap-select menu open/closed.
+
+```js
+$('.selectpicker').selectpicker('toggle');
+```
+
+---
+
 #### `.selectpicker('hide')`
 
-To programmatically hide the bootstrap-select use the `hide` method.
+To programmatically hide the bootstrap-select use the `hide` method (this only affects the visibility of the bootstrap-select itself).
 
 ```js
 $('.selectpicker').selectpicker('hide');
@@ -204,7 +214,7 @@ $('.selectpicker').selectpicker('hide');
 
 #### `.selectpicker('show')`
 
-To programmatically show the bootstrap-select use the `show` method.
+To programmatically show the bootstrap-select use the `show` method (this only affects the visibility of the bootstrap-select itself).
 
 ```js
 $('.selectpicker').selectpicker('show');
