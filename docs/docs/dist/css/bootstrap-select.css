@@ -1,10 +1,14 @@
 /*!
- * Bootstrap-select v1.9.4 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
+select.bs-select-hidden,
+select.selectpicker {
+  display: none !important;
+}
 .bootstrap-select {
   width: 220px \0;
   /*IE9 and below*/
@@ -18,7 +22,8 @@
   position: absolute !important;
   bottom: 0;
   left: 50%;
-  width: 0.11px !important;
+  display: block !important;
+  width: 0.5px !important;
   height: 100% !important;
   padding: 0 !important;
   opacity: 0 !important;

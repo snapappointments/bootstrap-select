@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.9.4 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -287,7 +287,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.9.4';
+  Selectpicker.VERSION = '1.10.0';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -327,6 +327,7 @@
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
+    showTick: false,
     template: {
       caret: '<span class="caret"></span>'
     },
@@ -344,6 +345,8 @@
       var that = this,
           id = this.$element.attr('id');
 
+      this.$element.addClass('bs-select-hidden');
+
       // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
       // allows us to do this.$lis.eq(that.liObj[index]) instead of this.$lis.filter('[data-original-index="' + index + '"]')
       this.liObj = {};
@@ -357,6 +360,8 @@
       this.$menu = this.$newElement.children('.dropdown-menu');
       this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
+
+      this.$element.removeClass('bs-select-hidden');
 
       if (this.options.dropdownAlignRight)
         this.$menu.addClass('dropdown-menu-right');
@@ -428,8 +433,8 @@
 
     createDropdown: function () {
       // Options
-      // If we are multiple, then add the show-tick class by default
-      var multiple = this.multiple ? ' show-tick' : '',
+      // If we are multiple or showTick option is set, then add the show-tick class
+      var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
           inputGroup = this.$element.parent().hasClass('input-group') ? ' input-group-btn' : '',
           autofocus = this.autofocus ? ' autofocus' : '';
       // Elements
@@ -462,7 +467,7 @@
       '</div>'
           : '';
       var drop =
-          '<div class="btn-group bootstrap-select' + multiple + inputGroup + '">' +
+          '<div class="btn-group bootstrap-select' + showTick + inputGroup + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + '>' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="bs-caret">' +
@@ -1082,20 +1087,21 @@
 
       this.$button.on('click', function () {
         that.setSize();
-        that.$element.on('shown.bs.select', function () {
-          if (!that.options.liveSearch && !that.multiple) {
-            that.$menuInner.find('.selected a').focus();
-          } else if (!that.multiple) {
-            var selectedIndex = that.liObj[that.$element[0].selectedIndex];
+      });
 
-            if (typeof selectedIndex !== 'number' || that.options.size === false) return;
+      this.$element.on('shown.bs.select', function () {
+        if (!that.options.liveSearch && !that.multiple) {
+          that.$menuInner.find('.selected a').focus();
+        } else if (!that.multiple) {
+          var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
-            // scroll to selected option
-            var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
-            offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
-            that.$menuInner[0].scrollTop = offset;
-          }
-        });
+          if (typeof selectedIndex !== 'number' || that.options.size === false) return;
+
+          // scroll to selected option
+          var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
+          offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
+          that.$menuInner[0].scrollTop = offset;
+        }
       });
 
       this.$menuInner.on('click', 'li a', function (e) {
@@ -1193,9 +1199,10 @@
 
           // Trigger select 'change'
           if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
-            that.$element.triggerNative('change');
             // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
-            that.$element.trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state]);
+            that.$element
+              .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
+              .triggerNative('change');
           }
         }
       });
@@ -1245,7 +1252,6 @@
         } else {
           that.deselectAll();
         }
-        that.$element.triggerNative('change');
       });
 
       this.$element.change(function () {
@@ -1368,6 +1374,10 @@
       $(selectedOptions).prop('selected', status);
 
       this.render(false);
+
+      this.$element
+        .trigger('changed.bs.select')
+        .triggerNative('change');
     },
 
     selectAll: function () {
@@ -1376,6 +1386,14 @@
 
     deselectAll: function () {
       return this.changeAll(false);
+    },
+
+    toggle: function (e) {
+      e = e || window.event;
+      
+      if (e) e.stopPropagation();
+
+      this.$button.trigger('click');
     },
 
     keydown: function (e) {
