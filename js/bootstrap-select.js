@@ -322,6 +322,8 @@
       var that = this,
           id = this.$element.attr('id');
 
+      this.$element.addClass('bs-select-hidden');
+
       // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
       // allows us to do this.$lis.eq(that.liObj[index]) instead of this.$lis.filter('[data-original-index="' + index + '"]')
       this.liObj = {};
@@ -335,6 +337,8 @@
       this.$menu = this.$newElement.children('.dropdown-menu');
       this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
+
+      this.$element.removeClass('bs-select-hidden');
 
       if (this.options.dropdownAlignRight)
         this.$menu.addClass('dropdown-menu-right');
