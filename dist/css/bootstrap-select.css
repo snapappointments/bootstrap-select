@@ -18,6 +18,12 @@ select.selectpicker {
   padding-right: 25px;
   z-index: 1;
 }
+.bootstrap-select > .dropdown-toggle.bs-placeholder,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+  color: #999;
+}
 .bootstrap-select > select {
   position: absolute !important;
   bottom: 0;
