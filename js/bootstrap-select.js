@@ -643,6 +643,8 @@
           that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled, $lis);
           that.setSelected(index, this.selected, $lis);
         });
+
+        this.togglePlaceholder();
       }
 
       this.tabIndex();
@@ -990,6 +992,8 @@
     },
 
     setSelected: function (index, selected, $lis) {
+      if (!$lis) this.togglePlaceholder(); // check if setSelected is being called by changing the value of the select
+
       if (!$lis) {
         $lis = this.findLis().eq(this.liObj[index]);
       }
@@ -1033,6 +1037,11 @@
       this.$button.click(function () {
         return !that.isDisabled();
       });
+    },
+
+    togglePlaceholder: function () {
+      var value = this.$element.val();
+      this.$button.toggleClass('bs-placeholder', value === null || value === '');
     },
 
     tabIndex: function () {
