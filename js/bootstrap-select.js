@@ -997,9 +997,10 @@
      * @param {JQuery} $lis - the 'li' element that is being modified
      */
     setSelected: function (index, selected, $lis) {
-      if (!$lis) this.togglePlaceholder(); // check if setSelected is being called by changing the value of the select
-
-      if (!$lis) $lis = this.findLis().eq(this.liObj[index]);
+      if (!$lis) {
+        this.togglePlaceholder(); // check if setSelected is being called by changing the value of the select
+        $lis = this.findLis().eq(this.liObj[index]);
+      }
 
       $lis.toggleClass('selected', selected);
     },
@@ -1010,7 +1011,9 @@
      * @param {JQuery} $lis - the 'li' element that is being modified
      */
     setDisabled: function (index, disabled, $lis) {
-      if (!$lis) $lis = this.findLis().eq(this.liObj[index]);
+      if (!$lis) {
+        $lis = this.findLis().eq(this.liObj[index]);
+      }
 
       if (disabled) {
         $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
