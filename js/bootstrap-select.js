@@ -991,20 +991,26 @@
       });
     },
 
+    /**
+     * @param {number} index - the index of the option that is being changed
+     * @param {boolean} selected - true if the option is being selected, false if being deselected
+     * @param {JQuery} $lis - the 'li' element that is being modified
+     */
     setSelected: function (index, selected, $lis) {
       if (!$lis) this.togglePlaceholder(); // check if setSelected is being called by changing the value of the select
 
-      if (!$lis) {
-        $lis = this.findLis().eq(this.liObj[index]);
-      }
+      if (!$lis) $lis = this.findLis().eq(this.liObj[index]);
 
       $lis.toggleClass('selected', selected);
     },
 
+    /**
+     * @param {number} index - the index of the option that is being disabled
+     * @param {boolean} disabled - true if the option is being disabled, false if being enabled
+     * @param {JQuery} $lis - the 'li' element that is being modified
+     */
     setDisabled: function (index, disabled, $lis) {
-      if (!$lis) {
-        $lis = this.findLis().eq(this.liObj[index]);
-      }
+      if (!$lis) $lis = this.findLis().eq(this.liObj[index]);
 
       if (disabled) {
         $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
