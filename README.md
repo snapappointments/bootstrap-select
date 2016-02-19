@@ -14,7 +14,18 @@ Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to sty
 
 ## Demo and Documentation
 
-See a Bootstrap 3 example [here](http://silviomoreto.github.io/bootstrap-select).
+You can view a live demo and some examples of how to use the various options [here](http://silviomoreto.github.io/bootstrap-select).
+
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at http://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
+
+
+### Running documentation locally
+
+1. If necessary, [install MkDocs](http://www.mkdocs.org/#installation).
+3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
+4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+
+Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
 
 ## Authors
 
