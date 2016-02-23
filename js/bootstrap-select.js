@@ -1375,6 +1375,8 @@
 
       this.render(false);
 
+      this.togglePlaceholder();
+
       this.$element
         .trigger('changed.bs.select')
         .triggerNative('change');
