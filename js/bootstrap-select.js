@@ -1103,7 +1103,8 @@
         var $this = $(this),
             clickedIndex = $this.parent().data('originalIndex'),
             prevValue = that.$element.val(),
-            prevIndex = that.$element.prop('selectedIndex');
+            prevIndex = that.$element.prop('selectedIndex'),
+            triggerChange = true;
 
         // Don't close on multi choice menu
         if (that.multiple) {
@@ -1166,11 +1167,13 @@
 
                   if (maxOptions && maxReached) {
                     $notify.append($('<div>' + maxTxt + '</div>'));
+                    triggerChange = false;
                     that.$element.trigger('maxReached.bs.select');
                   }
 
                   if (maxOptionsGrp && maxReachedGrp) {
                     $notify.append($('<div>' + maxTxtGrp + '</div>'));
+                    triggerChange = false;
                     that.$element.trigger('maxReachedGrp.bs.select');
                   }
 
@@ -1193,11 +1196,13 @@
           }
 
           // Trigger select 'change'
-          if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
-            // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
-            that.$element
-              .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
-              .triggerNative('change');
+          if (triggerChange) {
+            if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
+              // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
+              that.$element
+                .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
+                .triggerNative('change');
+            }
           }
         }
       });
