@@ -1107,7 +1107,7 @@
             triggerChange = true;
 
         // Don't close on multi choice menu
-        if (that.multiple) {
+        if (that.multiple && that.options.maxOptions !== 1) {
           e.stopPropagation();
         }
 
@@ -1189,7 +1189,7 @@
             }
           }
 
-          if (!that.multiple) {
+          if (!that.multiple || (that.multiple && that.options.maxOptions === 1)) {
             that.$button.focus();
           } else if (that.options.liveSearch) {
             that.$searchbox.focus();
