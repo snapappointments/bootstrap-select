@@ -1488,6 +1488,7 @@
           that.$button.trigger('click');
         }
         that.$searchbox.focus();
+        return;
       }
 
       if (that.options.liveSearch) {
