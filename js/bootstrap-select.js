@@ -724,6 +724,7 @@
       } else {
         this.$button.removeClass(this.options.style);
         this.$button.addClass(buttonClass);
+        this.options.style = buttonClass
       }
     },
 
