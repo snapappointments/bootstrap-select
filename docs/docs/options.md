@@ -125,6 +125,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>'values'</code></td>
     <td>
       <p>Specifies how the selection is displayed with a multiple select.</p>
+      <p><code>'values'</code> displays a list of the selected options (separated by <code>multipleSeparator</code>. <code>'static'</code> simply displays the select element's title. <code>'count'</code> displays the total number of selected options. <code>'count > x'</code> behaves like <code>'values'</code> until the number of selected options is greater than x; after that, it behaves like <code>'count'</code>.
     </td>
   </tr>
   <tr>
