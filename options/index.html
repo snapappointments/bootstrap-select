@@ -247,6 +247,7 @@
     <td><code>'values'</code></td>
     <td>
       <p>Specifies how the selection is displayed with a multiple select.</p>
+      <p><code>'values'</code> displays a list of the selected options (separated by <code>multipleSeparator</code>. <code>'static'</code> simply displays the select element's title. <code>'count'</code> displays the total number of selected options. <code>'count > x'</code> behaves like <code>'values'</code> until the number of selected options is greater than x; after that, it behaves like <code>'count'</code>.
     </td>
   </tr>
   <tr>
@@ -345,14 +346,6 @@
   </thead>
   <tbody>
     <tr>
-      <td>loaded.bs.select</td>
-      <td>This event fires after the select has been initialized.</td>
-    </tr>
-    <tr>
-      <td>changed.bs.select</td>
-      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
-    </tr>
-    <tr>
       <td>show.bs.select</td>
       <td>This event fires immediately when the show instance method is called.</td>
     </tr>
@@ -369,12 +362,20 @@
       <td>This event is fired when the dropdown has finished being hidden from the user (will wait for CSS transitions, to complete).</td>
     </tr>
     <tr>
+      <td>loaded.bs.select</td>
+      <td>This event fires after the select has been initialized.</td>
+    </tr>
+    <tr>
       <td>rendered.bs.select</td>
       <td>This event fires after the render instance has been called.</td>
     </tr>
     <tr>
       <td>refreshed.bs.select</td>
       <td>This event fires after the refresh instance has been called.</td>
+    </tr>
+    <tr>
+      <td>changed.bs.select</td>
+      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
     </tr>
   </tbody>
 </table>
