@@ -537,7 +537,12 @@
           titleOption.value = '';
           element.insertBefore(titleOption, element.firstChild);
           // Check if selected attribute is already set on an option. If not, select the titleOption option.
-          if ($(element.options[element.selectedIndex]).attr('selected') === undefined) titleOption.selected = true;
+          // attr gets the 'default' selected option (from markup), prop gets the 'current' selected option
+          // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs
+          var $opt = $(element.options[element.selectedIndex]);
+          if ($opt.attr('selected') === undefined && $opt.prop('selected') === false) {
+            titleOption.selected = true;
+          }
         }
       }
 
