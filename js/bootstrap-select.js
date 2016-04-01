@@ -567,6 +567,13 @@
           icon = '<span>' + icon + '</span>';
         }
 
+        // If the optgroup is disabled don't generate anything
+        // (not even the optgroup header and divider)
+        if (that.options.hideDisabled && isOptgroup && this.parentNode.disabled) {
+          liIndex--;
+          return;
+        }
+        
         if (that.options.hideDisabled && isDisabled && !isOptgroup) {
           liIndex--;
           return;
