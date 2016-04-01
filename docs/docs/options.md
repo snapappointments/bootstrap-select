@@ -70,6 +70,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>iconBase</td>
+    <td>string</td>
+    <td><code>'glyphicon'</code></td>
+    <td>
+      <p>Set the base to use a different icon font instead of Glyphicons. If changing iconBase, you might also want to change <code>tickIcon</code>, in case the new icon font uses a different naming scheme.</p>
+    </td>
+  </tr>
+  <tr>
     <td>liveSearch</td>
     <td>boolean</td>
     <td><code>false</code></td>
@@ -187,6 +195,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>null</code></td>
     <td>
       <p>When set to a string, add the value to the button's style.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>tickIcon</td>
+    <td>string</td>
+    <td><code>'glyphicon-ok'</code></td>
+    <td>
+      <p>Set which icon to use to display as the "tick" next to selected options.</p>
     </td>
   </tr>
   <tr>
