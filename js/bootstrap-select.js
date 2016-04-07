@@ -158,28 +158,28 @@
   // Case insensitive contains search
   $.expr[':'].icontains = function (obj, index, meta) {
     var $obj = $(obj);
-    var haystack = ($obj.data('tokens') || $obj.text()).toUpperCase();
+    var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
     return haystack.includes(meta[3].toUpperCase());
   };
 
   // Case insensitive begins search
   $.expr[':'].ibegins = function (obj, index, meta) {
     var $obj = $(obj);
-    var haystack = ($obj.data('tokens') || $obj.text()).toUpperCase();
+    var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
   };
 
   // Case and accent insensitive contains search
   $.expr[':'].aicontains = function (obj, index, meta) {
     var $obj = $(obj);
-    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toUpperCase();
+    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
     return haystack.includes(meta[3].toUpperCase());
   };
 
   // Case and accent insensitive begins search
   $.expr[':'].aibegins = function (obj, index, meta) {
     var $obj = $(obj);
-    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toUpperCase();
+    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
   };
 
