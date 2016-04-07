@@ -609,7 +609,34 @@
         } else if ($this.data('hidden') === true) {
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
-          if (this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP') {
+          var showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
+          
+          // if previous element is not an optgroup and hideDisabled is true
+          if (!showDivider && that.options.hideDisabled) {
+            // get previous elements
+            var $prev = $(this).prevAll();
+
+            for (var i = 0; i < $prev.length; i++) {
+              // find the first element in the previous elements that is an optgroup
+              if ($prev[i].tagName === 'OPTGROUP') {
+                var optGroupDistance = 0;
+  
+                // loop through the options in between the current option and the optgroup
+                // and check if they are hidden or disabled
+                for (var d = 0; d < i; d++) {
+                  var prevOption = $prev[d];
+                  if (prevOption.disabled || $(prevOption).data('hidden') === true) optGroupDistance++;
+                }
+  
+                // if all of the options between the current option and the optgroup are hidden or disabled, show the divider
+                if (optGroupDistance === i) showDivider = true;
+  
+                break;
+              }
+            }
+          }
+
+          if (showDivider) {
             liIndex++;
             _li.push(generateLI('', null, 'divider', optID + 'div'));
           }
