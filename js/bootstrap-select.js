@@ -567,7 +567,7 @@
           icon = '<span>' + icon + '</span>';
         }
 
-        if (that.options.hideDisabled && isDisabled && !isOptgroup) {
+        if (that.options.hideDisabled && (isDisabled && !isOptgroup || this.parentNode.disabled && isOptgroup)) {
           liIndex--;
           return;
         }
