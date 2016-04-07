@@ -104,6 +104,15 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>maxOptionsText</td>
+    <td>string | array | function</td>
+    <td><code>function</code></td>
+    <td>
+      <p>The text that is displayed when maxOptions is enabled and the maximum number of options for the given scenario have been selected.</p>
+      <p>If a function is used, it must return an array. array[0] is the text used when maxOptions is applied to the entire select element. array[1] is the text used when maxOptions is used on an optgroup. If a string is used, the same text is used for both the element and the optgroup.</p>
+    </td>
+  </tr>
+  <tr>
     <td>mobile</td>
     <td>boolean</td>
     <td><code>false</code></td>
