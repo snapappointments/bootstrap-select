@@ -1417,6 +1417,7 @@
     },
 
     changeAll: function (status) {
+      if (!this.multiple) return;
       if (typeof status === 'undefined') status = true;
 
       this.findLis();
