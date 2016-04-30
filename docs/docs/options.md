@@ -86,6 +86,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearchNormalize</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>Setting liveSearchNormalize to <code>true</code> allows for accent-insensitive searching.</p>
+    </td>
+  </tr>
+  <tr>
     <td>liveSearchPlaceholder</td>
     <td>string</td>
     <td><code>null</code></td>
