@@ -111,15 +111,15 @@
 
   if (!Object.keys) {
     Object.keys = function (
-      o, // object
-      k, // key
-      r  // result array
-      ){
+        o, // object
+        k, // key
+        r  // result array
+    ){
       // initialize object and result
       r=[];
       // iterate over object keys
       for (k in o)
-          // fill result array with non-prototypical keys
+        // fill result array with non-prototypical keys
         r.hasOwnProperty.call(o, k) && r.push(k);
       // return result
       return r;
@@ -331,8 +331,8 @@
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createView();
       this.$element
-        .after(this.$newElement)
-        .appendTo(this.$newElement);
+          .after(this.$newElement)
+          .appendTo(this.$newElement);
       this.$button = this.$newElement.children('button');
       this.$menu = this.$newElement.children('.dropdown-menu');
       this.$menuInner = this.$menu.children('.inner');
@@ -379,9 +379,9 @@
       if (that.$element[0].hasAttribute('required')) {
         this.$element.on('invalid', function () {
           that.$button
-            .addClass('bs-invalid')
-            .focus();
-          
+              .addClass('bs-invalid')
+              .focus();
+
           that.$element.on({
             'focus.bs.select': function () {
               that.$button.focus();
@@ -389,8 +389,8 @@
             },
             'shown.bs.select': function () {
               that.$element
-                .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
-                .off('shown.bs.select');
+                  .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
+                  .off('shown.bs.select');
             },
             'rendered.bs.select': function () {
               // if select is no longer invalid, remove the bs-invalid class
@@ -398,7 +398,7 @@
               that.$element.off('rendered.bs.select');
             }
           });
-          
+
         });
       }
 
@@ -499,6 +499,11 @@
        * @returns {string}
        */
       var generateLI = function (content, index, classes, optgroup) {
+        // If index is 0 return nothing and go back to program flow 
+        if (index === 0) {
+          return;
+        }
+
         return '<li' +
             ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
             ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
@@ -807,26 +812,26 @@
           actionsHeight = actions ? actions.offsetHeight : 0,
           doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
-          // fall back to jQuery if getComputedStyle is not supported
+      // fall back to jQuery if getComputedStyle is not supported
           menuStyle = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : false,
           $menu = menuStyle ? null : $(menu),
           menuPadding = {
             vert: parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
-                  parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
-                  parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
-                  parseInt(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
+            parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
+            parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
+            parseInt(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
             horiz: parseInt(menuStyle ? menuStyle.paddingLeft : $menu.css('paddingLeft')) +
-                  parseInt(menuStyle ? menuStyle.paddingRight : $menu.css('paddingRight')) +
-                  parseInt(menuStyle ? menuStyle.borderLeftWidth : $menu.css('borderLeftWidth')) +
-                  parseInt(menuStyle ? menuStyle.borderRightWidth : $menu.css('borderRightWidth'))
+            parseInt(menuStyle ? menuStyle.paddingRight : $menu.css('paddingRight')) +
+            parseInt(menuStyle ? menuStyle.borderLeftWidth : $menu.css('borderLeftWidth')) +
+            parseInt(menuStyle ? menuStyle.borderRightWidth : $menu.css('borderRightWidth'))
           },
           menuExtras =  {
             vert: menuPadding.vert +
-                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
-                        parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
+            parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
+            parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
             horiz: menuPadding.horiz +
-                        parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
-                        parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
+            parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
+            parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
           }
 
       document.body.removeChild(newElement);
@@ -888,11 +893,11 @@
           var minHeight,
               hasClass = function (className, include) {
                 return function (element) {
-                    if (include) {
-                        return (element.classList ? element.classList.contains(className) : $(element).hasClass(className));
-                    } else {
-                        return !(element.classList ? element.classList.contains(className) : $(element).hasClass(className));
-                    }
+                  if (include) {
+                    return (element.classList ? element.classList.contains(className) : $(element).hasClass(className));
+                  } else {
+                    return !(element.classList ? element.classList.contains(className) : $(element).hasClass(className));
+                  }
                 };
               },
               lis = that.$menuInner[0].getElementsByTagName('li'),
@@ -906,7 +911,7 @@
           if (that.options.container) {
             if (!$menu.data('height')) $menu.data('height', $menu.height());
             getHeight = $menu.data('height');
-            
+
             if (!$menu.data('width')) $menu.data('width', $menu.width());
             getWidth = $menu.data('width');
           } else {
@@ -1036,9 +1041,9 @@
         getPlacement(that.$newElement);
 
         that.$bsContainer
-          .appendTo(that.options.container)
-          .toggleClass('open', !$this.hasClass('open'))
-          .append(that.$menu);
+            .appendTo(that.options.container)
+            .toggleClass('open', !$this.hasClass('open'))
+            .append(that.$menu);
       });
 
       $(window).on('resize scroll', function () {
@@ -1114,12 +1119,12 @@
     },
 
     tabIndex: function () {
-      if (this.$element.data('tabindex') !== this.$element.attr('tabindex') && 
-        (this.$element.attr('tabindex') !== -98 && this.$element.attr('tabindex') !== '-98')) {
+      if (this.$element.data('tabindex') !== this.$element.attr('tabindex') &&
+          (this.$element.attr('tabindex') !== -98 && this.$element.attr('tabindex') !== '-98')) {
         this.$element.data('tabindex', this.$element.attr('tabindex'));
         this.$button.attr('tabindex', this.$element.data('tabindex'));
       }
-      
+
       this.$element.attr('tabindex', -98);
     },
 
@@ -1135,8 +1140,8 @@
 
       this.$button.on('keyup', function (e) {
         if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
-            e.preventDefault();
-            $document.data('spaceSelect', false);
+          e.preventDefault();
+          $document.data('spaceSelect', false);
         }
       });
 
@@ -1260,8 +1265,8 @@
             if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
               // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
               that.$element
-                .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
-                .triggerNative('change');
+                  .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
+                  .triggerNative('change');
             }
           }
         }
@@ -1367,9 +1372,9 @@
             var $this = $(this);
 
             if ($this.hasClass('divider') && (
-              $this.index() === $lisVisible.first().index() ||
-              $this.index() === $lisVisible.last().index() ||
-              $lisVisible.eq(index + 1).hasClass('divider'))) {
+                $this.index() === $lisVisible.first().index() ||
+                $this.index() === $lisVisible.last().index() ||
+                $lisVisible.eq(index + 1).hasClass('divider'))) {
               $this.addClass('hidden');
             }
           });
@@ -1426,13 +1431,13 @@
           $lisVisible = this.$lis.not('.divider, .dropdown-header, .disabled, .hidden'),
           lisVisLen = $lisVisible.length,
           selectedOptions = [];
-          
+
       if (status) {
         if ($lisVisible.filter('.selected').length === $lisVisible.length) return;
       } else {
         if ($lisVisible.filter('.selected').length === 0) return;
       }
-          
+
       $lisVisible.toggleClass('selected', status);
 
       for (var i = 0; i < lisVisLen; i++) {
@@ -1447,8 +1452,8 @@
       this.togglePlaceholder();
 
       this.$element
-        .trigger('changed.bs.select')
-        .triggerNative('change');
+          .trigger('changed.bs.select')
+          .triggerNative('change');
     },
 
     selectAll: function () {
@@ -1461,7 +1466,7 @@
 
     toggle: function (e) {
       e = e || window.event;
-      
+
       if (e) e.stopPropagation();
 
       this.$button.trigger('click');
@@ -1712,15 +1717,15 @@
     },
 
     destroy: function () {
-        this.$newElement.before(this.$element).remove();
+      this.$newElement.before(this.$element).remove();
 
-        if (this.$bsContainer) {
-            this.$bsContainer.remove();
-        } else {
-            this.$menu.remove();
-        }
+      if (this.$bsContainer) {
+        this.$bsContainer.remove();
+      } else {
+        this.$menu.remove();
+      }
 
-        this.$element
+      this.$element
           .off('.bs.select')
           .removeData('selectpicker')
           .removeClass('bs-select-hidden selectpicker');
