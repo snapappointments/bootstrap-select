@@ -381,7 +381,7 @@
           that.$button
             .addClass('bs-invalid')
             .focus();
-          
+
           that.$element.on({
             'focus.bs.select': function () {
               that.$button.focus();
@@ -398,7 +398,6 @@
               that.$element.off('rendered.bs.select');
             }
           });
-          
         });
       }
 
@@ -610,7 +609,7 @@
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
           var showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
-          
+
           // if previous element is not an optgroup and hideDisabled is true
           if (!showDivider && that.options.hideDisabled) {
             // get previous elements
@@ -620,17 +619,17 @@
               // find the first element in the previous elements that is an optgroup
               if ($prev[i].tagName === 'OPTGROUP') {
                 var optGroupDistance = 0;
-  
+
                 // loop through the options in between the current option and the optgroup
                 // and check if they are hidden or disabled
                 for (var d = 0; d < i; d++) {
                   var prevOption = $prev[d];
                   if (prevOption.disabled || $(prevOption).data('hidden') === true) optGroupDistance++;
                 }
-  
+
                 // if all of the options between the current option and the optgroup are hidden or disabled, show the divider
                 if (optGroupDistance === i) showDivider = true;
-  
+
                 break;
               }
             }
@@ -822,11 +821,11 @@
           },
           menuExtras =  {
             vert: menuPadding.vert +
-                        parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
-                        parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
+                  parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
+                  parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
             horiz: menuPadding.horiz +
-                        parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
-                        parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
+                  parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
+                  parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
           }
 
       document.body.removeChild(newElement);
@@ -906,7 +905,7 @@
           if (that.options.container) {
             if (!$menu.data('height')) $menu.data('height', $menu.height());
             getHeight = $menu.data('height');
-            
+
             if (!$menu.data('width')) $menu.data('width', $menu.width());
             getWidth = $menu.data('width');
           } else {
@@ -1119,7 +1118,7 @@
         this.$element.data('tabindex', this.$element.attr('tabindex'));
         this.$button.attr('tabindex', this.$element.data('tabindex'));
       }
-      
+
       this.$element.attr('tabindex', -98);
     },
 
@@ -1461,7 +1460,7 @@
 
     toggle: function (e) {
       e = e || window.event;
-      
+
       if (e) e.stopPropagation();
 
       this.$button.trigger('click');
@@ -1712,18 +1711,18 @@
     },
 
     destroy: function () {
-        this.$newElement.before(this.$element).remove();
+      this.$newElement.before(this.$element).remove();
 
-        if (this.$bsContainer) {
-            this.$bsContainer.remove();
-        } else {
-            this.$menu.remove();
-        }
+      if (this.$bsContainer) {
+        this.$bsContainer.remove();
+      } else {
+        this.$menu.remove();
+      }
 
-        this.$element
-          .off('.bs.select')
-          .removeData('selectpicker')
-          .removeClass('bs-select-hidden selectpicker');
+      this.$element
+        .off('.bs.select')
+        .removeData('selectpicker')
+        .removeClass('bs-select-hidden selectpicker');
     }
   };
 
