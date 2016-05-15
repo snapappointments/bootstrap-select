@@ -2,8 +2,8 @@
 
 #### Bug Fixes
 * [#1268]: performance bug in clickListener
-* #1273: html5 validation message disappears in Chrome 47+
-* #1295: hide select by default (so there is no flash of unstyled content)
+* [#1273]: html5 validation message disappears in Chrome 47+
+* [#1295]: hide select by default (so there is no flash of unstyled content)
 
 #### New Features
 * [#950]: add `.selectpicker('toggle')` method to allow menu to be open/closed programmatically
