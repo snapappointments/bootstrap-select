@@ -1394,8 +1394,7 @@
               $no_results.remove();
             }
             if (that.options.addResults) {
-              $no_results.html('<a><span class="text">'+that.options.addNewText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')+'</span></a>').show();
-              $no_results.addClass('active');
+              $no_results.html('<a><span class="text">'+that.options.addNewText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')+'</span></a>').addClass('active').show();
               $no_results.on('click', function() {
                 var val = htmlEscape(that.$searchbox.val());
                 $(that.$element).append($('<option>', {
