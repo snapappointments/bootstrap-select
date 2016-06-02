@@ -293,6 +293,7 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
+    addNewText: '<strong>Add new:</strong> {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
@@ -324,6 +325,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    addResults: false,
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
@@ -1414,7 +1416,21 @@
             if (!!$no_results.parent().length) {
               $no_results.remove();
             }
-            $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
+            if (that.options.addResults) {
+              $no_results.html('<a><span class="text">'+that.options.addNewText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')+'</span></a>').show();
+              $no_results.addClass('active');
+              $no_results.on('click', function() {
+                var val = htmlEscape(that.$searchbox.val());
+                $(that.$element).append($('<option>', {
+                  value: val,
+                  text: val,
+                  selected: 1
+                })).selectpicker('refresh').val(val);
+              });
+            }
+            else {
+              $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
+            }
             that.$menuInner.append($no_results);
           } else if (!!$no_results.parent().length) {
             $no_results.remove();

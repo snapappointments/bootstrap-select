@@ -96,6 +96,18 @@ You can add a search input by passing `data-live-search="true"` attribute:
   </select>
 </div>
 
+## Add live search string to select options
+
+You can add an option to insert your live search string as a new result by passing `data-add-results="true"` attribute:
+
+<div class="bs-docs-example no-code">
+  <select class="selectpicker" data-live-search="true" data-add-results="true">
+    <option>Hot Dog, Fries and a Soda</option>
+    <option>Burger, Shake and a Smile</option>
+    <option>Sugar, Spice and all things nice</option>
+  </select>
+</div>
+
 ## Key words
 
 Add key words to options to improve their searchability using `data-tokens`.
