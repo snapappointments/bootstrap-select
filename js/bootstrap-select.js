@@ -574,7 +574,7 @@
 
         if (!$this.data('content')) {
           // Prepend any icon and append any subtext to the main text.
-          text = icon + '<span class="text">' + text + subtext + '</span>';
+          text = (typeof $this.data('icon-position') !== 'undefined' && $this.data('icon-position') === 'right')? '<span class="text">' + text + subtext + '</span> ' + icon : icon + '<span class="text">' + text + subtext + '</span>';
         }
 
         if (isOptgroup && $this.data('divider') !== true) {
@@ -710,7 +710,7 @@
           } else if ($this.data('content') && that.options.showContent) {
             return $this.data('content');
           } else {
-            return icon + $this.html() + subtext;
+            return (typeof $this.data('icon-position') !== 'undefined' && $this.data('icon-position') === 'right')? $this.html() + subtext + ' ' + icon : icon + $this.html() + subtext;
           }
         }
       }).toArray();
