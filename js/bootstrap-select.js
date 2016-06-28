@@ -517,10 +517,9 @@
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (typeof inline !== 'undefined' ? ' style="' + inline + '"' : '') +
             (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape(text)) + '"' : '') +
-            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
-            '>' + text +
-            '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
-            '</a>';
+            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') + '>' + text +
+            (that.options.showTick ? '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon +
+            ' check-mark"></span>' : '') + '</a>';
       };
 
       if (this.options.title && !this.multiple) {
@@ -575,7 +574,7 @@
 
         if (!$this.data('content')) {
           // Prepend any icon and append any subtext to the main text.
-          text = icon + '<span class="text">' + text + subtext + '</span>';
+          text = (typeof $this.data('icon-position') !== 'undefined' && $this.data('icon-position') === 'right')? '<span class="text">' + text + subtext + '</span> ' + icon : icon + '<span class="text">' + text + subtext + '</span>';
         }
 
         if (isOptgroup && $this.data('divider') !== true) {
@@ -711,7 +710,7 @@
           } else if ($this.data('content') && that.options.showContent) {
             return $this.data('content');
           } else {
-            return icon + $this.html() + subtext;
+            return (typeof $this.data('icon-position') !== 'undefined' && $this.data('icon-position') === 'right')? $this.html() + subtext + ' ' + icon : icon + $this.html() + subtext;
           }
         }
       }).toArray();
