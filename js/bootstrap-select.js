@@ -126,6 +126,17 @@
     };
   }
 
+  // set data-selected on options that are programmatically selected
+  // prior to initialization of bootstrap-select
+  var _val = $.fn.val;
+  $.fn.val = function(value){
+    if (this.is('select') && value) {
+      this.find('option[value="' + value + '"]').data('selected', true);
+    }
+    
+    return _val.apply(this, arguments);
+  };
+
   $.fn.triggerNative = function (eventName) {
     var el = this[0],
         event;
@@ -231,6 +242,12 @@
   }
 
   var Selectpicker = function (element, options, e) {
+    // bootstrap-select has been initialized - revert val back to its original function
+    if (_val) {
+      $.fn.val = _val;
+      _val = null;
+    }
+
     if (e) {
       e.stopPropagation();
       e.preventDefault();
@@ -535,11 +552,11 @@
           titleOption.appendChild(document.createTextNode(this.options.title));
           titleOption.value = '';
           element.insertBefore(titleOption, element.firstChild);
-          // Check if selected attribute is already set on an option. If not, select the titleOption option.
-          // attr gets the 'default' selected option (from markup), prop gets the 'current' selected option
-          // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs
+          // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
+          // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
+          // if so, the option will have the data-selected attribute
           var $opt = $(element.options[element.selectedIndex]);
-          if ($opt.attr('selected') === undefined && $opt.prop('selected') === false) {
+          if ($opt.attr('selected') === undefined && $opt.data('selected') === undefined) {
             titleOption.selected = true;
           }
         }
