@@ -720,13 +720,15 @@
       //Convert all the values into a comma delimited string
       var title = !this.multiple ? selectedItems[0] : selectedItems.join(this.options.multipleSeparator);
 
+      // # of available options, replaceable by {1} in countSelectedText or noneSelectedText
+      var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length;
+
       //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
         var max = this.options.selectedTextFormat.split('>');
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
           notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
-          var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
-              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+          var tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
           title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
       }
@@ -741,7 +743,7 @@
 
       //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
       if (!title) {
-        title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
+        title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText.replace('{1}', totalCount.toString());
       }
 
       //strip all html-tags and trim the result
