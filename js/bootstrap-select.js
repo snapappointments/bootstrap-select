@@ -905,10 +905,18 @@
           selectOffsetRight,
           getPos = function() {
             var pos = that.$newElement.offset();
-            selectOffsetTop = pos.top - $window.scrollTop();
-            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight;
-            selectOffsetLeft = pos.left - $window.scrollLeft();
-            selectOffsetRight = $window.width() - selectOffsetLeft - selectWidth;
+                containerPos;
+
+            if (that.options.container) {
+              containerPos = $(that.options.container).offset();
+            } else {
+              containerPos = { top: 0, left: 0 };
+            }
+
+            selectOffsetTop = pos.top - containerPos.top - $window.scrollTop();
+            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight - containerPos.top;
+            selectOffsetLeft = pos.left - containerPos.left - $window.scrollLeft();
+            selectOffsetRight = $window.width() - selectOffsetLeft - selectWidth - containerPos.left;
           };
 
       getPos();
@@ -1043,15 +1051,18 @@
       this.$bsContainer = $('<div class="bs-container" />');
 
       var that = this,
+          $container = $(this.options.container),
           pos,
+          containerPos,
           actualHeight,
           getPlacement = function ($element) {
             that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
             pos = $element.offset();
+            containerPos = $container.offset();
             actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
             that.$bsContainer.css({
-              'top': pos.top + actualHeight,
-              'left': pos.left,
+              'top': pos.top - containerPos.top + actualHeight + $container.scrollTop(),
+              'left': pos.left - containerPos.left + $container.scrollLeft(),
               'width': $element[0].offsetWidth
             });
           };
