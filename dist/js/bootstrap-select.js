@@ -927,7 +927,7 @@
           selectOffsetLeft,
           selectOffsetRight,
           getPos = function() {
-            var pos = that.$newElement.offset();
+            var pos = that.$newElement.offset(),
                 containerPos;
 
             if (that.options.container) {
