@@ -928,10 +928,13 @@
           selectOffsetRight,
           getPos = function() {
             var pos = that.$newElement.offset(),
+                $container = $(that.options.container),
                 containerPos;
 
-            if (that.options.container) {
-              containerPos = $(that.options.container).offset();
+            if (that.options.container && !$container.is('body')) {
+              containerPos = $container.offset();
+              containerPos.top += parseInt($container.css('borderTopWidth'));
+              containerPos.left += parseInt($container.css('borderLeftWidth'));
             } else {
               containerPos = { top: 0, left: 0 };
             }
@@ -1081,11 +1084,20 @@
           getPlacement = function ($element) {
             that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
             pos = $element.offset();
-            containerPos = $container.offset();
+
+            if (!$container.is('body')) {
+              containerPos = $container.offset();
+              containerPos.top += parseInt($container.css('borderTopWidth')) + $container.scrollTop();
+              containerPos.left += parseInt($container.css('borderLeftWidth')) + $container.scrollLeft();
+            } else {
+              containerPos = { top: 0, left: 0 };
+            }
+
             actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
+
             that.$bsContainer.css({
-              'top': pos.top - containerPos.top + actualHeight + $container.scrollTop(),
-              'left': pos.left - containerPos.left + $container.scrollLeft(),
+              'top': pos.top - containerPos.top + actualHeight,
+              'left': pos.left - containerPos.left,
               'width': $element[0].offsetWidth
             });
           };
