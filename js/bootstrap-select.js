@@ -1066,8 +1066,8 @@
 
             if (!$container.is('body')) {
               containerPos = $container.offset();
-              containerPos.top += parseInt($container.css('borderTopWidth')) + $container.scrollTop();
-              containerPos.left += parseInt($container.css('borderLeftWidth')) + $container.scrollLeft();
+              containerPos.top += parseInt($container.css('borderTopWidth')) - $container.scrollTop();
+              containerPos.left += parseInt($container.css('borderLeftWidth')) - $container.scrollLeft();
             } else {
               containerPos = { top: 0, left: 0 };
             }
