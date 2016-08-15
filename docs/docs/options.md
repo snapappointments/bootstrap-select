@@ -44,6 +44,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>deselectAllText</td>
+    <td>string</td>
+    <td><code>'Deselect All'</code></td>
+    <td>
+      <p>The text on the button that deselects all options when <code>actionsBox</code> is enabled.</p>
+    </td>
+  </tr>
+  <tr>
     <td>dropupAuto</td>
     <td>boolean</td>
     <td><code>true</code></td>
@@ -150,6 +158,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>'Nothing selected'</code></td>
     <td>
       <p>The text that is displayed when a multiple select has no selected options.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>selectAllText</td>
+    <td>string</td>
+    <td><code>'Select All'</code></td>
+    <td>
+      <p>The text on the button that selects all options when <code>actionsBox</code> is enabled.</p>
     </td>
   </tr>
   <tr>
