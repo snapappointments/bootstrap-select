@@ -21,7 +21,8 @@ module.exports = function (grunt) {
 
     clean: {
       css: 'dist/css',
-      js: 'dist/js'
+      js: 'dist/js',
+      docs: 'docs/docs/dist'
     },
 
     jshint: {
@@ -132,6 +133,17 @@ module.exports = function (grunt) {
           '<%= uglify.main.dest %>',
           'dist/<%= jshint.i18n.src %>',
         ]
+      }
+    },
+
+    copy: {
+      docs: {
+        expand: true,
+        cwd: 'dist/',
+        src: [
+          '**/*'
+        ],
+        dest: 'docs/docs/dist/'
       }
     },
 
@@ -261,6 +273,9 @@ module.exports = function (grunt) {
 
   // JS distribution
   grunt.registerTask('build-js', ['clean:js', 'concat', 'umd', 'usebanner:js', 'uglify']);
+
+  // Copy dist to docs
+  grunt.registerTask('docs', ['clean:docs', 'copy:docs']);
 
   // Development watch
   grunt.registerTask('dev-watch', ['build-css', 'build-js', 'watch']);

@@ -1,20 +1,31 @@
 bootstrap-select
 ================
 
-[![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg?style=flat)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
+[![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
 [![Bower](https://img.shields.io/bower/v/bootstrap-select.svg)]()
 [![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
 [![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
 
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
 [![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
 
-A custom select / multiselect for Bootstrap using button dropdown, designed to behave like regular Bootstrap selects.
+Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
 ## Demo and Documentation
 
-See a Bootstrap 3 example [here](http://silviomoreto.github.io/bootstrap-select).
+You can view a live demo and some examples of how to use the various options [here](http://silviomoreto.github.io/bootstrap-select).
+
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at http://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
+
+
+### Running documentation locally
+
+1. If necessary, [install MkDocs](http://www.mkdocs.org/#installation).
+3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
+4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+
+Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
 
 ## Authors
 
@@ -54,9 +65,9 @@ Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for
 
 **N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
 
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css)
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js)
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/i18n/defaults-*.min.js (The translation files)
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css)
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js)
+* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js (The translation files)
 
 ## Bugs and feature requests
 
@@ -71,3 +82,12 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 Copyright (C) 2013-2015 bootstrap-select
 
 Licensed under [the MIT license](LICENSE).
+
+## Used by
+
+* [SnapAppointments](https://snapappointments.com)
+* [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
+* [membermeister](https://www.membermeister.com)
+* [Solve for All](https://solveforall.com)
+
+Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.
