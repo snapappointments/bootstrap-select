@@ -78,6 +78,12 @@ select.selectpicker {
 
   &.input-group-btn {
     z-index: auto;
+
+    &:not(:first-child):not(:last-child) {
+      > .btn {
+        border-radius: 0;
+      }
+    }
   }
 }
 
