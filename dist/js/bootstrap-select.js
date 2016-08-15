@@ -160,6 +160,7 @@
     return _val.apply(this, arguments);
   };
 
+  var changed_arguments = null;
   $.fn.triggerNative = function (eventName) {
     var el = this[0],
         event;
@@ -729,9 +730,9 @@
           that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled, $lis);
           that.setSelected(index, this.selected, $lis);
         });
-
-        this.togglePlaceholder();
       }
+
+      this.togglePlaceholder();
 
       this.tabIndex();
 
@@ -1337,8 +1338,8 @@
           if (triggerChange) {
             if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
               // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
+              changed_arguments = [clickedIndex, $option.prop('selected'), state];
               that.$element
-                .trigger('changed.bs.select', [clickedIndex, $option.prop('selected'), state])
                 .triggerNative('change');
             }
           }
@@ -1394,6 +1395,8 @@
 
       this.$element.change(function () {
         that.render(false);
+        that.$element.trigger('changed.bs.select', changed_arguments);
+        changed_arguments = null;
       });
     },
 
@@ -1525,7 +1528,6 @@
       this.togglePlaceholder();
 
       this.$element
-        .trigger('changed.bs.select')
         .triggerNative('change');
     },
 
