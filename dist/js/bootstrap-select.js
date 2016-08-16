@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.11.0 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -305,7 +305,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.10.0';
+  Selectpicker.VERSION = '1.11.0';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -1155,9 +1155,9 @@
       }
 
       if (disabled) {
-        $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
+        $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1).attr('aria-disabled', true);
       } else {
-        $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0);
+        $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0).attr('aria-disabled', false);
       }
     },
 
