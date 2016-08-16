@@ -1132,9 +1132,9 @@
       }
 
       if (disabled) {
-        $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
+        $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1).attr('aria-disabled', true);
       } else {
-        $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0);
+        $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0).attr('aria-disabled', false);
       }
     },
 
