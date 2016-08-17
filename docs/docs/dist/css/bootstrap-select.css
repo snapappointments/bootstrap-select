@@ -145,6 +145,22 @@ select.selectpicker {
 .bootstrap-select.btn-group .dropdown-menu li {
   position: relative;
 }
+.bootstrap-select.btn-group .dropdown-menu li.dropdown-header.selectAllHeaders {
+  height: 26px;
+  cursor: pointer;
+}
+.bootstrap-select.btn-group .dropdown-menu li.dropdown-header.selectAllHeaders span {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+}
+.bootstrap-select.btn-group .dropdown-menu li.dropdown-header.selectAllHeaders:hover {
+  background: #f5f5f5;
+}
 .bootstrap-select.btn-group .dropdown-menu li.active small {
   color: #fff;
 }

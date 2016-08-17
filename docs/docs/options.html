@@ -1,10 +1,7 @@
-# Core options
-
----
-
-Options can be passed via data attributes or JavaScript. For data attributes, append the option name to `data-`, as in 
-`data-style=""` or `data-selected-text-format="count"`.
-
+<h1 id="core-options">Core options</h1>
+<hr>
+<p>Options can be passed via data attributes or JavaScript. For data attributes, append the option name to <code>data-</code>, as in 
+<code>data-style=&quot;&quot;</code> or <code>data-selected-text-format=&quot;count&quot;</code>.</p>
 <table class="table table-bordered table-striped">
   <thead>
   <tr>
@@ -29,7 +26,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>false</code></td>
     <td>
         <p>When set to a string, appends the select to a specific element or selector, e.g., 
-        <code>container: 'body' | '.main-body'</code></p>
+        <code>container: &#39;body&#39; | &#39;.main-body&#39;</code></p>
     </td>
   </tr>
   <tr>
@@ -37,7 +34,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>string | function</td>
     <td><code>function</code></td>
     <td>
-      <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > 
+      <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count &gt; 
       #</code>. {0} is the selected amount. {1} is total available for selection.</p>
       <p>When set to a function, the first parameter is the number of selected options, and the second is the total number of 
       options. The function must return a string.</p>
@@ -46,7 +43,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>deselectAllText</td>
     <td>string</td>
-    <td><code>'Deselect All'</code></td>
+    <td><code>&#39;Deselect All&#39;</code></td>
     <td>
       <p>The text on the button that deselects all options when <code>actionsBox</code> is enabled.</p>
     </td>
@@ -80,7 +77,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>iconBase</td>
     <td>string</td>
-    <td><code>'glyphicon'</code></td>
+    <td><code>&#39;glyphicon&#39;</code></td>
     <td>
       <p>Set the base to use a different icon font instead of Glyphicons. If changing iconBase, you might also want to change <code>tickIcon</code>, in case the new icon font uses a different naming scheme.</p>
     </td>
@@ -112,9 +109,9 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>liveSearchStyle</td>
     <td>string</td>
-    <td><code>'contains'</code></td>
+    <td><code>&#39;contains&#39;</code></td>
     <td>
-      <p>When set to <code>'contains'</code>, searching will reveal options that contain the searched text. For example, searching for pl with return both Ap<b>pl</b>e, <b>Pl</b>um, and <b>Pl</b>antain. When set to <code>'startsWith'</code>, searching for pl will return only <b>Pl</b>um and <b>Pl</b>antain.</p>
+      <p>When set to <code>&#39;contains&#39;</code>, searching will reveal options that contain the searched text. For example, searching for pl with return both Ap<b>pl</b>e, <b>Pl</b>um, and <b>Pl</b>antain. When set to <code>&#39;startsWith&#39;</code>, searching for pl will return only <b>Pl</b>um and <b>Pl</b>antain.</p>
     </td>
   </tr>
   <tr>
@@ -141,13 +138,13 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>boolean</td>
     <td><code>false</code></td>
     <td>
-      <p>When set to <code>true</code>, enables the device's native menu for select menus.</p>
+      <p>When set to <code>true</code>, enables the device&#39;s native menu for select menus.</p>
     </td>
   </tr>
   <tr>
     <td>multipleSeparator</td>
     <td>string</td>
-    <td><code>', '</code></td>
+    <td><code>&#39;, &#39;</code></td>
     <td>
       <p>Set the character displayed in the button that separates selected options.</p>
     </td>
@@ -155,7 +152,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>noneSelectedText</td>
     <td>string</td>
-    <td><code>'Nothing selected'</code></td>
+    <td><code>&#39;Nothing selected&#39;</code></td>
     <td>
       <p>The text that is displayed when a multiple select has no selected options.</p>
     </td>
@@ -166,18 +163,18 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>true</code></td>
     <td>When set to <code>true</code>, adds the ability to select or deselect all 
     <code>&lt;option&gt;</code>s by clicking on the <code>&lt;optgroup&gt;</code> header (the bootstrap <code>.dropdown-header</code>).
-    
+
     <br/><br/>
-    
+
     If only a few are selected it will try to check the rest. If all are selected,
     it will uncheck everything. 
-    
+
     <br/><br/>
-    
+
     Requires <code>multiple</code> to be set inside the html.
-    
+
     <br/><br/>
-    
+
     If the <code>maxOptions</code> option is set, clicking on the header will
     select the maximum possible number of options starting with the first. 
     </td>
@@ -185,18 +182,18 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>selectAllText</td>
     <td>string</td>
-    <td><code>'Select All'</code></td>
+    <td><code>&#39;Select All&#39;</code></td>
     <td>
       <p>The text on the button that selects all options when <code>actionsBox</code> is enabled.</p>
     </td>
   </tr>
   <tr>
     <td>selectedTextFormat</td>
-    <td><code>'values'</code> | <code>'static'</code> | <code>'count'</code> | <code>'count > x'</code> (where x is an integer)</td>
-    <td><code>'values'</code></td>
+    <td><code>&#39;values&#39;</code> | <code>&#39;static&#39;</code> | <code>&#39;count&#39;</code> | <code>&#39;count &gt; x&#39;</code> (where x is an integer)</td>
+    <td><code>&#39;values&#39;</code></td>
     <td>
       <p>Specifies how the selection is displayed with a multiple select.</p>
-      <p><code>'values'</code> displays a list of the selected options (separated by <code>multipleSeparator</code>. <code>'static'</code> simply displays the select element's title. <code>'count'</code> displays the total number of selected options. <code>'count > x'</code> behaves like <code>'values'</code> until the number of selected options is greater than x; after that, it behaves like <code>'count'</code>.
+      <p><code>&#39;values&#39;</code> displays a list of the selected options (separated by <code>multipleSeparator</code>. <code>&#39;static&#39;</code> simply displays the select element&#39;s title. <code>&#39;count&#39;</code> displays the total number of selected options. <code>&#39;count &gt; x&#39;</code> behaves like <code>&#39;values&#39;</code> until the number of selected options is greater than x; after that, it behaves like <code>&#39;count&#39;</code>.
     </td>
   </tr>
   <tr>
@@ -243,10 +240,10 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>size</td>
-    <td><code>'auto'</code> | integer | false</td>
-    <td><code>'auto'</code></td>
+    <td><code>&#39;auto&#39;</code> | integer | false</td>
+    <td><code>&#39;auto&#39;</code></td>
     <td>
-      <p>When set to <code>'auto'</code>, the menu always opens up to show as many items as the window will allow
+      <p>When set to <code>&#39;auto&#39;</code>, the menu always opens up to show as many items as the window will allow
       without being cut off.</p>
       <p>When set to an integer, the menu will show the given number of items, even if the dropdown is cut off.</p>
       <p>When set to <code>false</code>, the menu will always show all items.</p>
@@ -257,15 +254,15 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>string | null</td>
     <td><code>null</code></td>
     <td>
-      <p>When set to a string, add the value to the button's style.</p>
+      <p>When set to a string, add the value to the button&#39;s style.</p>
     </td>
   </tr>
   <tr>
     <td>tickIcon</td>
     <td>string</td>
-    <td><code>'glyphicon-ok'</code></td>
+    <td><code>&#39;glyphicon-ok&#39;</code></td>
     <td>
-      <p>Set which icon to use to display as the "tick" next to selected options.</p>
+      <p>Set which icon to use to display as the &quot;tick&quot; next to selected options.</p>
     </td>
   </tr>
   <tr>
@@ -278,7 +275,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>width</td>
-    <td><code>'auto'</code> | <code>'fit'</code> | css-width | false (where <code>css-width</code> is a CSS width with units, e.g. <code>100px</code>)</td>
+    <td><code>&#39;auto&#39;</code> | <code>&#39;fit&#39;</code> | css-width | false (where <code>css-width</code> is a CSS width with units, e.g. <code>100px</code>)</td>
     <td><code>false</code></td>
     <td>
       <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the 
@@ -290,14 +287,10 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tbody>
 </table>
 
-# Events
-
----
-
-Bootstrap-select exposes a few events for hooking into select functionality.
-
-hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a `relatedTarget` property, whose value is the toggling anchor element.
-
+<h1 id="events">Events</h1>
+<hr>
+<p>Bootstrap-select exposes a few events for hooking into select functionality.</p>
+<p>hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a <code>relatedTarget</code> property, whose value is the toggling anchor element.</p>
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -336,13 +329,12 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
     </tr>
     <tr>
       <td>changed.bs.select</td>
-      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
+      <td>This event fires after the select&#39;s value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
     </tr>
   </tbody>
 </table>
 
-```js
-$('#mySelect').on('hidden.bs.select', function (e) {
+<pre><code class="lang-js">$(&#39;#mySelect&#39;).on(&#39;hidden.bs.select&#39;, function (e) {
   // do something...
 });
-```
+</code></pre>
