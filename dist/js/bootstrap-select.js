@@ -983,7 +983,7 @@
             function uncheckOptgroup($optgroupLis, $options) {
               $optgroupLis.each(function(index) {
                 var $this = $(this);
-                $options.eq($this.data('originalIndex')).prop('selected', false);
+                $options.eq($this.data('originalIndex')).prop('selected', false).change();
               });
               
               $optgroupLis.toggleClass('selected', false);
@@ -997,7 +997,7 @@
                   var $this = $(this);         
                 
                   if (!$this.hasClass('selected')) {
-                    $options.eq($this.data('originalIndex')).prop('selected', true);
+                    $options.eq($this.data('originalIndex')).prop('selected', true).change();
                     $this.toggleClass('selected', true);
                     selectedLength++;
                   }
