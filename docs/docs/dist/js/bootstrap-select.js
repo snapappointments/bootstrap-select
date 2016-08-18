@@ -322,6 +322,7 @@
     },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
+    selectAllHeaders: false,
     doneButton: false,
     doneButtonText: 'Close',
     multipleSeparator: ', ',
@@ -635,6 +636,7 @@
           }
 
           var optGroupClass = ' ' + $parent[0].className || '';
+          if (that.options.selectAllHeaders) optGroupClass += ' selectAllHeaders';
 
           if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
@@ -977,15 +979,73 @@
             if (!$menu.data('width')) $menu.data('width', $menu.width());
             getWidth = $menu.data('width');
           } else {
-            getHeight = $menu.height();
-            getWidth = $menu.width();
-          }
+            
+            function uncheckOptgroup($optgroupLis, $options) {
+              $optgroupLis.each(function(index) {
+                var $this = $(this);
+                $options.eq($this.data('originalIndex')).prop('selected', false).change();
+              });
+              
+              $optgroupLis.toggleClass('selected', false);
+            }
+            
+            function checkOptgroup($optgroupLis, $options, selectedLength, maxOptions) {
+              
+              //This loop will only effect the first options within the maxOptions
+              $optgroupLis.each(function(index) {
+                  if (selectedLength >= maxOptions) return false;
+                  var $this = $(this);         
+                
+                  if (!$this.hasClass('selected')) {
+                    $options.eq($this.data('originalIndex')).prop('selected', true).change();
+                    $this.toggleClass('selected', true);
+                    selectedLength++;
+                  }
+              });
+            }
+            
+            function selectOptgroupChildren($optgroupLis, $options) {
+              var maxOptions = $options.eq($optgroupLis.data('originalIndex')).parent().data('maxOptions');
+              var selectedLength = $optgroupLis.filter('.selected').length;
+              var maxCountHit = (maxOptions) && (selectedLength >= maxOptions);
+              var selectAll = (selectedLength !== $optgroupLis.length) && (!maxCountHit);
+              
+              //If we're turning something off, turn it completely off to avoid leftovers
+              if (!selectAll) {
+                uncheckOptgroup($optgroupLis, $options);
+                return; 
+              }
+              
+              checkOptgroup($optgroupLis, $options, selectedLength, maxOptions);
+            }
+            
+            if (that.options.selectAllHeaders && that.multiple) { 
+            
+              //Bind selecting all options under the group.
+              $menu.find('li.divider, li.dropdown-header')
+                .off('click') //Fixes double bound issue
+                .click(function (e) {
+                  e.preventDefault();
+                  e.stopPropagation();
 
-          if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
-          }
+                  if (that.multiple && $(e.currentTarget).hasClass('dropdown-header')) {
+                      var $options = that.$element.find('option'),
+                          $optgroup = $(e.currentTarget),
+                          optgroupID = $optgroup.data('optgroup'),
+                          $optgroupLis = that.$lis.filter('[data-optgroup="' + optgroupID + '"]').not('.divider, .dropdown-header, .disabled, .hidden');
 
-          if (that.$newElement.hasClass('dropup')) {
+                      selectOptgroupChildren($optgroupLis, $options);
+                      that.render(false);
+                  }
+
+                  if (that.options.liveSearch) {
+                    that.$searchbox.focus();
+                  } else {
+                    that.$button.focus();
+                  }
+                });
+            }
+              
             menuHeight = selectOffsetTop - menuExtras.vert;
           }
 

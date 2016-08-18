@@ -161,6 +161,28 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>selectAllHeaders</td>
+    <td>boolean</td>
+    <td><code>true</code></td>
+    <td>When set to <code>true</code>, adds the ability to select or deselect all 
+    <code>&lt;option&gt;</code>s by clicking on the <code>&lt;optgroup&gt;</code> header (the bootstrap <code>.dropdown-header</code>).
+    
+    <br/><br/>
+    
+    If only a few are selected it will try to check the rest. If all are selected,
+    it will uncheck everything. 
+    
+    <br/><br/>
+    
+    Requires <code>multiple</code> to be set inside the html.
+    
+    <br/><br/>
+    
+    If the <code>maxOptions</code> option is set, clicking on the header will
+    select the maximum possible number of options starting with the first. 
+    </td>
+  </tr>
+  <tr>
     <td>selectAllText</td>
     <td>string</td>
     <td><code>'Select All'</code></td>

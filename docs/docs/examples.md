@@ -64,11 +64,31 @@
 
 ## Multiple select boxes
 
+If you have a `multiple`attribute in your select box, you 
+can also add the ability to select all within a header with `data-select-all-headers="true"`.
+
+If you include a `data-max-options` attribute, clicking the header 
+will only select the maximum amount possible within the `data-max-options`
+constraint.
+
 <div class="bs-docs-example">
   <select class="selectpicker" multiple>
     <option>Mustard</option>
     <option>Ketchup</option>
     <option>Relish</option>
+  </select>
+  
+  <select class="selectpicker" multiple data-select-all-headers="true">
+    <optgroup label="Condiments">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </optgroup>
+    <optgroup label="Sodas" data-max-options="2">
+      <option>Cherry</option>
+      <option>Cola</option>
+      <option>Root Beer</option>
+    </optgroup>
   </select>
 </div>
 
@@ -77,6 +97,19 @@
   <option>Mustard</option>
   <option>Ketchup</option>
   <option>Relish</option>
+</select>
+
+<select class="selectpicker" multiple data-select-all-headers="true">
+  <optgroup label="Condiments">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </optgroup>
+  <optgroup label="Sodas" data-max-options="2">
+    <option>Cherry</option>
+    <option>Cola</option>
+    <option>Root Beer</option>
+  </optgroup>
 </select>
 ```
 
