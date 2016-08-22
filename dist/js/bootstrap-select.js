@@ -855,7 +855,11 @@
       if (doneButton) menu.appendChild(doneButton);
       newElement.appendChild(menu);
 
-      document.body.appendChild(newElement);
+      if (this.options.useElement) {
+         this.$newElement[0].appendChild(newElement);
+      } else {
+         document.body.appendChild(newElement);
+      }
 
       var liHeight = a.offsetHeight,
           headerHeight = header ? header.offsetHeight : 0,
@@ -885,7 +889,11 @@
                   parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
           }
 
-      document.body.removeChild(newElement);
+      if (this.options.useElement) {
+         this.$newElement[0].removeChild(newElement);
+      } else {
+         document.body.removeChild(newElement);
+      }
 
       this.sizeInfo = {
         liHeight: liHeight,
