@@ -142,7 +142,7 @@
     var el = this[0],
         event;
 
-    if (el.dispatchEvent) {
+    if (el.dispatchEvent) { // for modern browsers & IE9+
       if (typeof Event === 'function') {
         // For modern browsers
         event = new Event(eventName, {
@@ -155,13 +155,12 @@
       }
 
       el.dispatchEvent(event);
+    } else if (el.fireEvent) { // for IE8
+      event = document.createEventObject();
+      event.eventType = eventName;
+      el.fireEvent('on' + eventName, event);
     } else {
-      if (el.fireEvent) {
-        event = document.createEventObject();
-        event.eventType = eventName;
-        el.fireEvent('on' + eventName, event);
-      }
-
+      // fall back to jQuery.trigger
       this.trigger(eventName);
     }
   };
