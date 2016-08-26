@@ -126,15 +126,18 @@
     };
   }
 
-  // set data-selected on options that are programmatically selected
+  // set data-selected on select element if the value has been programmatically selected
   // prior to initialization of bootstrap-select
-  var _val = $.fn.val;
-  $.fn.val = function(value){
-    if (this.is('select') && value) {
-      this.find('option[value="' + value + '"]').data('selected', true);
-    }
-    
-    return _val.apply(this, arguments);
+  // * consider removing or replacing an alternative method *
+  var valHooks = {
+    useDefault: false,
+    _set: $.valHooks.select.set
+  };
+
+  $.valHooks.select.set = function(elem, value) {
+    if (value && !valHooks.useDefault) $(elem).data('selected', true);
+
+    return valHooks._set.apply(this, arguments);
   };
 
   var changed_arguments = null;
@@ -242,10 +245,10 @@
   }
 
   var Selectpicker = function (element, options, e) {
-    // bootstrap-select has been initialized - revert val back to its original function
-    if (_val) {
-      $.fn.val = _val;
-      _val = null;
+    // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
+    if (!valHooks.useDefault) {
+      $.valHooks.select.set = valHooks._set;
+      valHooks.useDefault = true;
     }
 
     if (e) {
@@ -556,9 +559,9 @@
           element.insertBefore(titleOption, element.firstChild);
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
-          // if so, the option will have the data-selected attribute
+          // if so, the select will have the data-selected attribute
           var $opt = $(element.options[element.selectedIndex]);
-          if ($opt.attr('selected') === undefined && $opt.data('selected') === undefined) {
+          if ($opt.attr('selected') === undefined && this.$element.data('selected') === undefined) {
             titleOption.selected = true;
           }
         }
