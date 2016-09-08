@@ -16,7 +16,7 @@
     </metadata>
     <files>
         <file src="dist\js\bootstrap-select*.*" target="content\Scripts" />
-        <file src="dist\js\i18n\*.*" target="content\Scripts" />
+        <file src="dist\js\i18n\*.*" target="content\Scripts\i18n" />
         <file src="dist\css\*.*" target="content\Content" />
     </files>
 </package>
