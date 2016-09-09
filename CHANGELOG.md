@@ -1,3 +1,16 @@
+### v1.11.1 (2016-09-09)
+
+#### Bug Fixes
+* [#1475]: fix Cannot read property 'apply' of null error
+* [#1484]: Change events fire twice on IE8
+* [#1489]: hide.bs.select and hidden.bs.select events not fired when "Esc" key pressed with live search enabled
+
+[#1475]: https://github.com/silviomoreto/bootstrap-select/issues/1475
+[#1484]: https://github.com/silviomoreto/bootstrap-select/issues/1484
+[#1489]: https://github.com/silviomoreto/bootstrap-select/issues/1489
+
+-------------------
+
 ### v1.11.0 (2016-08-16)
 
 #### Bug Fixes
