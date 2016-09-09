@@ -201,6 +201,36 @@ module.exports = function (grunt) {
       }
     },
 
+    version: {
+      js: {
+        options: {
+          prefix: 'Selectpicker.VERSION = \''
+        },
+        src: [
+          'js/<%= pkg.name %>.js'
+        ],
+      },
+      cdn: {
+        options: {
+          prefix: 'ajax/libs/<%= pkg.name %>/'
+        },
+        src: [
+          'README.md',
+          'docs/docs/index.md'
+        ],
+      },
+      default: {
+        options: {
+          prefix: '[\'"]?version[\'"]?:[ "\']*'
+        },
+        src: [
+          'composer.json',
+          'docs/mkdocs.yml',
+          'package.json'
+        ],
+      }
+    },
+
     autoprefixer: {
       options: {
         browsers: [
