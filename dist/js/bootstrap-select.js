@@ -1635,8 +1635,9 @@
       }
 
       if (that.options.liveSearch) {
-        if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && that.$menu.find('.active').length === 0) {
+        if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive) {
           e.preventDefault();
+          e.stopPropagation();
           that.$button.click().focus();
         }
         // $items contains li elements when liveSearch is enabled
