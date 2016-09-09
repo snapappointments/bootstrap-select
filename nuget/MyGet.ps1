@@ -13,5 +13,8 @@ if ($bsversionParts.Length -gt 1)
     $bsversion += '-' + $bsversionParts[1].replace('.', '').replace('-', '_')   # strip out invalid chars from the PreRelease part
 }
 
+# update sourceMappingURL in bootstrap-select.min.js
+(Get-Content $env:SourcesPath\dist\js\bootstrap-select.min.js).replace("sourceMappingURL=", "sourceMappingURL=Scripts/")
+
 # create packages
 & $nuget pack "$env:SourcesPath\nuget\bootstrap-select.nuspec" -Verbosity detailed -NonInteractive -NoPackageAnalysis -BasePath $env:SourcesPath -Version $bsversion
