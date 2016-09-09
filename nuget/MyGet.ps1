@@ -14,7 +14,7 @@ if ($bsversionParts.Length -gt 1)
 }
 
 # update sourceMappingURL in bootstrap-select.min.js
-(Get-Content $env:SourcesPath\dist\js\bootstrap-select.min.js).replace("sourceMappingURL=", "sourceMappingURL=Scripts/")
+(Get-Content $env:SourcesPath\dist\js\bootstrap-select.min.js).replace("sourceMappingURL=", "sourceMappingURL=Scripts/") | Set-Content $env:SourcesPath\dist\js\bootstrap-select.min.js
 
 # create packages
 & $nuget pack "$env:SourcesPath\nuget\bootstrap-select.nuspec" -Verbosity detailed -NonInteractive -NoPackageAnalysis -BasePath $env:SourcesPath -Version $bsversion
