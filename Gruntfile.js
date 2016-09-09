@@ -219,6 +219,14 @@ module.exports = function (grunt) {
           'docs/docs/index.md'
         ],
       },
+      nuget: {
+        options: {
+          prefix: '<version>'
+        },
+        src: [
+          'nuget/bootstrap-select.nuspec'
+        ],
+      },
       default: {
         options: {
           prefix: '[\'"]?version[\'"]?:[ "\']*'
