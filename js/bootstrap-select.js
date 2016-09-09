@@ -269,6 +269,19 @@
       this.options.title = this.$element.attr('title');
     }
 
+    // Format window padding
+    var winPad = this.options.windowPadding;
+    switch (typeof winPad) {
+      case "number":
+        this.options.windowPadding = [winPad, winPad, winPad, winPad];
+        break;
+      case "string":
+        this.options.windowPadding = winPad.split(" ").map(function(v){
+          return parseInt(v, 10);
+        });
+        break;
+    }
+
     //Expose public methods
     this.val = Selectpicker.prototype.val;
     this.render = Selectpicker.prototype.render;
@@ -331,7 +344,8 @@
     maxOptions: false,
     mobile: false,
     selectOnTab: false,
-    dropdownAlignRight: false
+    dropdownAlignRight: false,
+    windowPadding: 0
   };
 
   Selectpicker.prototype = {
@@ -921,10 +935,13 @@
               containerPos = { top: 0, left: 0 };
             }
 
+            var winPad = that.options.windowPadding;
             selectOffsetTop = pos.top - containerPos.top - $window.scrollTop();
-            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight - containerPos.top;
+            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight - containerPos.top - winPad[2];
             selectOffsetLeft = pos.left - containerPos.left - $window.scrollLeft();
-            selectOffsetRight = $window.width() - selectOffsetLeft - selectWidth - containerPos.left;
+            selectOffsetRight = $window.width() - selectOffsetLeft - selectWidth - containerPos.left - winPad[1];
+            selectOffsetTop -= winPad[0];
+            selectOffsetLeft -= winPad[3];
           };
 
       getPos();
