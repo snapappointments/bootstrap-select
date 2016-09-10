@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.11.0 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.11.2 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -149,15 +149,18 @@
     };
   }
 
-  // set data-selected on options that are programmatically selected
+  // set data-selected on select element if the value has been programmatically selected
   // prior to initialization of bootstrap-select
-  var _val = $.fn.val;
-  $.fn.val = function(value){
-    if (this.is('select') && value) {
-      this.find('option[value="' + value + '"]').data('selected', true);
-    }
-    
-    return _val.apply(this, arguments);
+  // * consider removing or replacing an alternative method *
+  var valHooks = {
+    useDefault: false,
+    _set: $.valHooks.select.set
+  };
+
+  $.valHooks.select.set = function(elem, value) {
+    if (value && !valHooks.useDefault) $(elem).data('selected', true);
+
+    return valHooks._set.apply(this, arguments);
   };
 
   var changed_arguments = null;
@@ -165,7 +168,7 @@
     var el = this[0],
         event;
 
-    if (el.dispatchEvent) {
+    if (el.dispatchEvent) { // for modern browsers & IE9+
       if (typeof Event === 'function') {
         // For modern browsers
         event = new Event(eventName, {
@@ -178,13 +181,12 @@
       }
 
       el.dispatchEvent(event);
+    } else if (el.fireEvent) { // for IE8
+      event = document.createEventObject();
+      event.eventType = eventName;
+      el.fireEvent('on' + eventName, event);
     } else {
-      if (el.fireEvent) {
-        event = document.createEventObject();
-        event.eventType = eventName;
-        el.fireEvent('on' + eventName, event);
-      }
-
+      // fall back to jQuery.trigger
       this.trigger(eventName);
     }
   };
@@ -266,10 +268,10 @@
   }
 
   var Selectpicker = function (element, options, e) {
-    // bootstrap-select has been initialized - revert val back to its original function
-    if (_val) {
-      $.fn.val = _val;
-      _val = null;
+    // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
+    if (!valHooks.useDefault) {
+      $.valHooks.select.set = valHooks._set;
+      valHooks.useDefault = true;
     }
 
     if (e) {
@@ -305,7 +307,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.11.0';
+  Selectpicker.VERSION = '1.11.2';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -580,9 +582,9 @@
           element.insertBefore(titleOption, element.firstChild);
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
-          // if so, the option will have the data-selected attribute
+          // if so, the select will have the data-selected attribute
           var $opt = $(element.options[element.selectedIndex]);
-          if ($opt.attr('selected') === undefined && $opt.data('selected') === undefined) {
+          if ($opt.attr('selected') === undefined && this.$element.data('selected') === undefined) {
             titleOption.selected = true;
           }
         }
@@ -1633,11 +1635,10 @@
       }
 
       if (that.options.liveSearch) {
-        if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && that.$menu.find('.active').length === 0) {
+        if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive) {
           e.preventDefault();
-          that.$menu.parent().removeClass('open');
-          if (that.options.container) that.$newElement.removeClass('open');
-          that.$button.focus();
+          e.stopPropagation();
+          that.$button.click().focus();
         }
         // $items contains li elements when liveSearch is enabled
         $items = $('[role="listbox"] li' + selector, $parent);
