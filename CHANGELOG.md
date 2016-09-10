@@ -1,3 +1,10 @@
+### v1.11.2 (2016-09-09)
+
+#### Bug Fixes
+* fix sourceMappingURL in bootstrap-select.min.js
+
+-------------------
+
 ### v1.11.1 (2016-09-09)
 
 #### Bug Fixes
