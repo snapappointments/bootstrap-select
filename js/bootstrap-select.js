@@ -1168,7 +1168,7 @@
 
     togglePlaceholder: function () {
       var value = this.$element.val();
-      this.$button.toggleClass('bs-placeholder', value === null || value === '');
+      this.$button.toggleClass('bs-placeholder', value === null || value === '' || (value.constructor === Array && value.length === 0));
     },
 
     tabIndex: function () {
