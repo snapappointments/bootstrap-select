@@ -388,11 +388,11 @@
 
       if (this.options.dropdownAlignRight === true) this.$menu.addClass('dropdown-menu-right');
 
-      if (typeof id !== 'undefined') {
+      if (id !== undefined) {
         this.$button.attr('data-id', id);
-        $('label[for="' + id + '"]').click(function (e) {
+        $('label[for="' + id + '"]').on('click', function (e) {
           e.preventDefault();
-          that.$button.focus();
+          that.$button.trigger('focus');
         });
       }
 
@@ -428,11 +428,11 @@
         this.$element.on('invalid', function () {
           that.$button
             .addClass('bs-invalid')
-            .focus();
+            .trigger('focus');
 
           that.$element.on({
             'focus.bs.select': function () {
-              that.$button.focus();
+              that.$button.trigger('focus');
               that.$element.off('focus.bs.select');
             },
             'shown.bs.select': function () {
@@ -547,9 +547,9 @@
        */
       var generateLI = function (content, index, classes, optgroup) {
         return '<li' +
-            ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
-            ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
-            ((typeof optgroup !== 'undefined' & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
+            ((classes !== undefined & '' !== classes) ? ' class="' + classes + '"' : '') +
+            ((index !== undefined & null !== index) ? ' data-original-index="' + index + '"' : '') +
+            ((optgroup !== undefined & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
             '>' + content + '</li>';
       };
 
@@ -562,10 +562,10 @@
        */
       var generateA = function (text, classes, inline, tokens) {
         return '<a tabindex="0"' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+            (classes !== undefined ? ' class="' + classes + '"' : '') +
             (inline ? ' style="' + inline + '"' : '') +
             (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape($(text).html())) + '"' : '') +
-            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
+            (tokens !== undefined || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             ' role="option">' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
             '</a>';
@@ -605,8 +605,8 @@
             inline = this.style.cssText,
             text = $this.data('content') ? $this.data('content') : $this.html(),
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
-            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
-            icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
+            subtext = $this.data('subtext') !== undefined ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
+            icon = $this.data('icon') !== undefined ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
             $parent = $this.parent(),
             isOptgroup = $parent[0].tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && $parent[0].disabled,
@@ -646,7 +646,7 @@
 
             // Get the opt group label
             var label = $parent[0].label,
-                labelSubtext = typeof $parent.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $parent.data('subtext') + '</small>' : '',
+                labelSubtext = $parent.data('subtext') !== undefined ? '<small class="text-muted">' + $parent.data('subtext') + '</small>' : '',
                 labelIcon = $parent.data('icon') ? '<span class="' + that.options.iconBase + ' ' + $parent.data('icon') + '"></span> ' : '';
 
             label = labelIcon + '<span class="text">' + htmlEscape(label) + labelSubtext + '</span>';
@@ -754,7 +754,7 @@
           } else {
             subtext = '';
           }
-          if (typeof $this.attr('title') !== 'undefined') {
+          if ($this.attr('title') !== undefined) {
             return $this.attr('title');
           } else if ($this.data('content') && that.options.showContent) {
             return $this.data('content');
@@ -779,7 +779,7 @@
         }
       }
 
-      if (this.options.title == undefined) {
+      if (this.options.title === undefined) {
         this.options.title = this.$element.attr('title');
       }
 
@@ -789,7 +789,7 @@
 
       //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
       if (!title) {
-        title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
+        title = this.options.title !== undefined ? this.options.title : this.options.noneSelectedText;
       }
 
       //strip all HTML tags and trim the result, then unescape any escaped tags
@@ -1190,21 +1190,23 @@
         }
       }
 
-      this.$button.click(function () {
+      this.$button.on('click', function () {
         return !that.isDisabled();
       });
     },
 
     togglePlaceholder: function () {
       var value = this.$element.val();
-      this.$button.toggleClass('bs-placeholder', value === null || value === '' || (value.constructor === Array && value.length === 0));
+      this.$button.toggleClass('bs-placeholder', value === null || value.length === 0);
     },
 
     tabIndex: function () {
-      if (this.$element.data('tabindex') !== this.$element.attr('tabindex') && 
-        (this.$element.attr('tabindex') !== -98 && this.$element.attr('tabindex') !== '-98')) {
-        this.$element.data('tabindex', this.$element.attr('tabindex'));
-        this.$button.attr('tabindex', this.$element.data('tabindex'));
+      var attr = this.$element.attr('tabindex');
+      var data = this.$element.data('tabindex');
+
+      if (data !== attr && Number(attr) !== -98) {
+        this.$element.data('tabindex', attr);
+        this.$button.attr('tabindex', data);
       }
 
       this.$element.attr('tabindex', -98);
@@ -1222,8 +1224,8 @@
 
       this.$button.on('keyup', function (e) {
         if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
-            e.preventDefault();
-            $document.data('spaceSelect', false);
+          e.preventDefault();
+          $document.data('spaceSelect', false);
         }
       });
 
@@ -1233,7 +1235,7 @@
 
       this.$element.on('shown.bs.select', function () {
         if (!that.options.liveSearch && !that.multiple) {
-          that.$menuInner.find('.selected a').focus();
+          that.$menuInner.find('.selected a').trigger('focus');
         } else if (!that.multiple) {
           var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
@@ -1260,7 +1262,7 @@
 
         e.preventDefault();
 
-        //Don't run if we have been disabled
+        // Don't run if we have been disabled
         if (!that.isDisabled() && !$this.parent().hasClass('disabled')) {
           var $options = that.$element.find('option'),
               $option = $options.eq(clickedIndex),
@@ -1296,9 +1298,15 @@
                   that.$menuInner.find('[data-optgroup="' + optgroupID + '"]').removeClass('selected');
                   that.setSelected(clickedIndex, true);
                 } else {
-                  var maxOptionsText = typeof that.options.maxOptionsText === 'string' ? [that.options.maxOptionsText, that.options.maxOptionsText] : that.options.maxOptionsText,
-                      maxOptionsArr = typeof maxOptionsText === 'function' ? maxOptionsText(maxOptions, maxOptionsGrp) : maxOptionsText,
-                      maxTxt = maxOptionsArr[0].replace('{n}', maxOptions),
+                  var maxOptionsText = that.options.maxOptionsText,
+                      maxOptionsArr = maxOptionsText;
+                  if (typeof maxOptionsText === 'string') {
+                    maxOptionsArr = [maxOptionsText, maxOptionsText];
+                  } else if (typeof maxOptionsText === 'function') {
+                    maxOptionsArr = maxOptionsText(maxOptions, maxOptionsGrp);
+                  }
+
+                  var maxTxt = maxOptionsArr[0].replace('{n}', maxOptions),
                       maxTxtGrp = maxOptionsArr[1].replace('{n}', maxOptionsGrp),
                       $notify = $('<div class="notify"></div>');
                   // If {var} is set in array, replace it
@@ -1337,9 +1345,9 @@
           }
 
           if (!that.multiple || (that.multiple && that.options.maxOptions === 1)) {
-            that.$button.focus();
+            that.$button.trigger('focus');
           } else if (that.options.liveSearch) {
-            that.$searchbox.focus();
+            that.$searchbox.trigger('focus');
           }
 
           // Trigger select 'change'
@@ -1359,9 +1367,9 @@
           e.preventDefault();
           e.stopPropagation();
           if (that.options.liveSearch && !$(e.target).hasClass('close')) {
-            that.$searchbox.focus();
+            that.$searchbox.trigger('focus');
           } else {
-            that.$button.focus();
+            that.$button.trigger('focus');
           }
         }
       });
@@ -1370,14 +1378,14 @@
         e.preventDefault();
         e.stopPropagation();
         if (that.options.liveSearch) {
-          that.$searchbox.focus();
+          that.$searchbox.trigger('focus');
         } else {
-          that.$button.focus();
+          that.$button.trigger('focus');
         }
       });
 
       this.$menu.on('click', '.popover-title .close', function () {
-        that.$button.click();
+        that.$button.trigger('click');
       });
 
       this.$searchbox.on('click', function (e) {
@@ -1386,9 +1394,9 @@
 
       this.$menu.on('click', '.actions-btn', function (e) {
         if (that.options.liveSearch) {
-          that.$searchbox.focus();
+          that.$searchbox.trigger('focus');
         } else {
-          that.$button.focus();
+          that.$button.trigger('focus');
         }
 
         e.preventDefault();
@@ -1401,7 +1409,7 @@
         }
       });
 
-      this.$element.change(function () {
+      this.$element.on('change', function () {
         that.render(false);
         that.$element.trigger('changed.bs.select', changed_arguments);
         changed_arguments = null;
@@ -1421,7 +1429,7 @@
         }
         if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
         setTimeout(function () {
-          that.$searchbox.focus();
+          that.$searchbox.trigger('focus');
         }, 10);
       });
 
@@ -1480,8 +1488,8 @@
         }
 
         that.$lis.filter('.active').removeClass('active');
-        if (that.$searchbox.val()) that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
-        $(this).focus();
+        if (that.$searchbox.val()) that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').trigger('focus');
+        this.focus();
       });
     },
 
@@ -1495,7 +1503,7 @@
     },
 
     val: function (value) {
-      if (typeof value !== 'undefined') {
+      if (value !== undefined) {
         this.$element.val(value);
         this.render();
 
@@ -1507,21 +1515,19 @@
 
     changeAll: function (status) {
       if (!this.multiple) return;
-      if (typeof status === 'undefined') status = true;
+      if (status === undefined) status = true;
 
       this.findLis();
 
       var $options = this.$element.find('option'),
           $lisVisible = this.$lis.not('.divider, .dropdown-header, .disabled, .hidden'),
+          $lisSelected = $lisVisible.filter('.selected'),
           lisVisLen = $lisVisible.length,
+          lisSelLen = $lisSelected.length,
           selectedOptions = [];
-          
-      if (status) {
-        if ($lisVisible.filter('.selected').length === $lisVisible.length) return;
-      } else {
-        if ($lisVisible.filter('.selected').length === 0) return;
-      }
-          
+
+      if (lisSelLen === (status ? lisVisLen : 0)) return;
+
       $lisVisible.toggleClass('selected', status);
 
       for (var i = 0; i < lisVisLen; i++) {
@@ -1636,7 +1642,7 @@
         } else {
           that.$button.trigger('click');
         }
-        that.$searchbox.focus();
+        that.$searchbox.trigger('focus');
         return;
       }
 
@@ -1644,7 +1650,7 @@
         if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive) {
           e.preventDefault();
           e.stopPropagation();
-          that.$button.click().focus();
+          that.$button.trigger('click').trigger('focus');
         }
         // $items contains li elements when liveSearch is enabled
         $items = $('[role="listbox"] li' + selector, $parent);
@@ -1702,12 +1708,12 @@
         $this.data('prevIndex', index);
 
         if (!that.options.liveSearch) {
-          $items.eq(index).children('a').focus();
+          $items.eq(index).children('a').trigger('focus');
         } else {
           e.preventDefault();
           if (!$this.hasClass('dropdown-toggle')) {
-            $items.removeClass('active').eq(index).addClass('active').children('a').focus();
-            $this.focus();
+            $items.removeClass('active').eq(index).addClass('active').children('a').trigger('focus');
+            this.focus();
           }
         }
 
@@ -1738,24 +1744,24 @@
           if (count > keyIndex.length) count = 1;
         }
 
-        $items.eq(keyIndex[count - 1]).children('a').focus();
+        $items.eq(keyIndex[count - 1]).children('a').trigger('focus');
       }
 
       // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
       if ((/(13|32)/.test(e.keyCode.toString(10)) || (/(^9$)/.test(e.keyCode.toString(10)) && that.options.selectOnTab)) && isActive) {
         if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
-          var elem = $(':focus');
-          elem.click();
+          var $elem = $(':focus');
+          $elem.trigger('click');
           // Bring back focus for multiselects
-          elem.focus();
+          $elem.trigger('focus');
           // Prevent screen from scrolling if the user hit the spacebar
           e.preventDefault();
           // Fixes spacebar selection of dropdown items in FF & IE
           $(document).data('spaceSelect', true);
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
-          that.$menuInner.find('.active a').click();
-          $this.focus();
+          that.$menuInner.find('.active a').trigger('click');
+          this.focus();
         }
         $(document).data('keycount', 0);
       }
@@ -1763,7 +1769,7 @@
       if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) {
         that.$menu.parent().removeClass('open');
         if (that.options.container) that.$newElement.removeClass('open');
-        that.$button.focus();
+        that.$button.trigger('focus');
       }
     },
 
@@ -1854,7 +1860,7 @@
       }
     });
 
-    if (typeof value !== 'undefined') {
+    if (value !== undefined) {
       //noinspection JSUnusedAssignment
       return value;
     } else {
