@@ -271,15 +271,8 @@
 
     // Format window padding
     var winPad = this.options.windowPadding;
-    switch (typeof winPad) {
-      case "number":
-        this.options.windowPadding = [winPad, winPad, winPad, winPad];
-        break;
-      case "string":
-        this.options.windowPadding = winPad.split(" ").map(function(v){
-          return parseInt(v, 10);
-        });
-        break;
+    if (typeof winPad === 'number') {
+      this.options.windowPadding = [winPad, winPad, winPad, winPad];
     }
 
     //Expose public methods
