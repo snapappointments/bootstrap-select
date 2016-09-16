@@ -244,6 +244,24 @@
     }) : string;
   }
 
+  function htmlUnescape(html) {
+    var unescapeMap = {
+      '&amp;' : '&',
+      '&lt;' : '<',
+      '&gt;' : '>',
+      '&quot;' : '"',
+      '&#x27;' : "'",
+      '&#x60;' :'`'
+    };
+      var source = '(?:' + Object.keys(unescapeMap).join('|') + ')',
+          testRegexp = new RegExp(source),
+          replaceRegexp = new RegExp(source, 'g'),
+          string = html == null ? '' : '' + html;
+      return testRegexp.test(string) ? string.replace(replaceRegexp, function (match) {
+        return unescapeMap[match];
+      }) : string;
+    }
+
   var Selectpicker = function (element, options, e) {
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
@@ -767,7 +785,7 @@
       }
 
       //strip all html-tags and trim the result
-      this.$button.attr('title', $.trim(title.replace(/<[^>]*>?/g, '')));
+      this.$button.attr('title', htmlUnescape(title));
       this.$button.children('.filter-option').html(title);
 
       this.$element.trigger('rendered.bs.select');
