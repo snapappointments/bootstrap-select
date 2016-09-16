@@ -226,23 +226,42 @@
   }
 
 
-  function htmlEscape(html) {
-    var escapeMap = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;',
-      '`': '&#x60;'
+  // List of HTML entities for escaping.
+  var escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '`': '&#x60;'
+  };
+  
+  var unescapeMap = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#x27;': "'",
+    '&#x60;': '`'
+  };
+
+  // Functions for escaping and unescaping strings to/from HTML interpolation.
+  var createEscaper = function(map) {
+    var escaper = function(match) {
+      return map[match];
     };
-    var source = '(?:' + Object.keys(escapeMap).join('|') + ')',
-        testRegexp = new RegExp(source),
-        replaceRegexp = new RegExp(source, 'g'),
-        string = html == null ? '' : '' + html;
-    return testRegexp.test(string) ? string.replace(replaceRegexp, function (match) {
-      return escapeMap[match];
-    }) : string;
-  }
+    // Regexes for identifying a key that needs to be escaped.
+    var source = '(?:' + Object.keys(map).join('|') + ')';
+    var testRegexp = RegExp(source);
+    var replaceRegexp = RegExp(source, 'g');
+    return function(string) {
+      string = string == null ? '' : '' + string;
+      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+    };
+  };
+
+  var htmlEscape = createEscaper(escapeMap);
+  var htmlUnescape = createEscaper(unescapeMap);
 
   var Selectpicker = function (element, options, e) {
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
