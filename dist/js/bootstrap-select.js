@@ -249,23 +249,42 @@
   }
 
 
-  function htmlEscape(html) {
-    var escapeMap = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#x27;',
-      '`': '&#x60;'
+  // List of HTML entities for escaping.
+  var escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '`': '&#x60;'
+  };
+  
+  var unescapeMap = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#x27;': "'",
+    '&#x60;': '`'
+  };
+
+  // Functions for escaping and unescaping strings to/from HTML interpolation.
+  var createEscaper = function(map) {
+    var escaper = function(match) {
+      return map[match];
     };
-    var source = '(?:' + Object.keys(escapeMap).join('|') + ')',
-        testRegexp = new RegExp(source),
-        replaceRegexp = new RegExp(source, 'g'),
-        string = html == null ? '' : '' + html;
-    return testRegexp.test(string) ? string.replace(replaceRegexp, function (match) {
-      return escapeMap[match];
-    }) : string;
-  }
+    // Regexes for identifying a key that needs to be escaped.
+    var source = '(?:' + Object.keys(map).join('|') + ')';
+    var testRegexp = RegExp(source);
+    var replaceRegexp = RegExp(source, 'g');
+    return function(string) {
+      string = string == null ? '' : '' + string;
+      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+    };
+  };
+
+  var htmlEscape = createEscaper(escapeMap);
+  var htmlUnescape = createEscaper(unescapeMap);
 
   var Selectpicker = function (element, options, e) {
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
@@ -646,7 +665,7 @@
                 labelSubtext = typeof $parent.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $parent.data('subtext') + '</small>' : '',
                 labelIcon = $parent.data('icon') ? '<span class="' + that.options.iconBase + ' ' + $parent.data('icon') + '"></span> ' : '';
 
-            label = labelIcon + '<span class="text">' + label + labelSubtext + '</span>';
+            label = labelIcon + '<span class="text">' + htmlEscape(label) + labelSubtext + '</span>';
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
@@ -789,8 +808,8 @@
         title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
       }
 
-      //strip all html-tags and trim the result
-      this.$button.attr('title', $.trim(title.replace(/<[^>]*>?/g, '')));
+      //strip all HTML tags and trim the result, then unescape any escaped tags
+      this.$button.attr('title', htmlUnescape($.trim(title.replace(/<[^>]*>?/g, ''))));
       this.$button.children('.filter-option').html(title);
 
       this.$element.trigger('rendered.bs.select');
