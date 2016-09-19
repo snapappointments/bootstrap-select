@@ -90,8 +90,7 @@ code as deemed necessary.
   to the issue on the tracker, as a team member may be working on the issue in
   a branch or fork.
 * Non-trivial changes should be discussed in an issue first
-* If your change affects the distributed files, re-generate them using the
-  [grunt procedure](#using-grunt)
+* When modifying files, please do not edit the generated or minified files in the dist/ directory. Please edit the original files.
 * If possible, add relevant tests to cover the change
 * Write a convincing description of your PR and why we should land it
 
