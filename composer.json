@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-select/bootstrap-select",
-  "description": "A custom <select> for Bootstrap using button dropdown as replacement",
+  "description": "Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
   "keywords": [
     "form",
     "bootstrap",
