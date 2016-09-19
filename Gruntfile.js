@@ -86,7 +86,9 @@ module.exports = function (grunt) {
 
     uglify: {
       options: {
-        preserveComments: 'some'
+        preserveComments: function(node, comment) {
+          return /^!|@preserve|@license|@cc_on/i.test(comment.value);
+        }
       },
       main: {
         src: '<%= concat.main.dest %>',
@@ -182,22 +184,6 @@ module.exports = function (grunt) {
       },
       css: {
         src: '<%= less.css.dest %>'
-      }
-    },
-
-    sed: {
-      versionNumber: {
-        path: [
-          'js/<%= pkg.name %>.js',
-          'composer.json',
-          'package.json'
-        ],
-        pattern: (function () {
-          var old = grunt.option('old');
-          return old ? RegExp.quote(old) : old;
-        })(),
-        replacement: grunt.option('new'),
-        recursive: true
       }
     },
 
@@ -302,9 +288,7 @@ module.exports = function (grunt) {
   });
 
   // Version numbering task.
-  // grunt change-version-number --old=A.B.C --new=X.Y.Z
-  // This can be overzealous, so its changes should always be manually reviewed!
-  grunt.registerTask('change-version-number', 'sed');
+  // to update version number, use grunt version::x.y.z
 
   // CSS distribution
   grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);
