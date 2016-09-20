@@ -7,10 +7,9 @@ $(document).ready(function() {
       form.append(input);
     });
     $(document).find('body').append(form);
-    //form[0].submit(function(e) {
-      //e.preventDefault();
-      console.log($(form).serialize());
-    //});
+    form[0].submit(function(e) {
+      e.preventDefault();
+    });
     form.remove();
   }
   
@@ -78,11 +77,7 @@ $(document).ready(function() {
     };
     
     return ctrl.open()
-  }
-  setTimeout(function() {
-    plnkrOpener();
-  }, 1000)
-  
+  }  
 
   $('#edit').click(function() {
     plnkrOpener()
