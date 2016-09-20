@@ -1,15 +1,18 @@
 $(document).ready(function() {
   function formPostData(url, fields) {
-    var form = $('<form style="display: none;" method="post" action="' + url + '" target="_blank"></form>');
+    var form = $('<form style="display: none;" method="post" action="' + url + '"></form>');
     $.each(fields, function(name, value) {
       var input = $('<input type="hidden" name="' + name + '">');
       input.attr('value', value);
       form.append(input);
     });
+
     $(document).find('body').append(form);
+
     form[0].submit(function(e) {
       e.preventDefault();
     });
+
     form.remove();
   }
   
@@ -77,9 +80,7 @@ $(document).ready(function() {
     };
     
     return ctrl.open()
-  }  
+  }
 
-  $('#edit').click(function() {
-    plnkrOpener()
-  })
+  plnkrOpener();
 });
