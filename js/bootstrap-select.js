@@ -1178,7 +1178,7 @@
 
       if (this.isDisabled()) {
         this.$newElement.addClass('disabled');
-        this.$button.addClass('disabled').attr('tabindex', -1);
+        this.$button.addClass('disabled').attr('tabindex', -1).attr('aria-disabled', true);
       } else {
         if (this.$button.hasClass('disabled')) {
           this.$newElement.removeClass('disabled');
