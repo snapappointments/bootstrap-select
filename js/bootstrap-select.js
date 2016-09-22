@@ -757,7 +757,7 @@
           if (typeof $this.attr('title') !== 'undefined') {
             return $this.attr('title');
           } else if ($this.data('content') && that.options.showContent) {
-            return $this.data('content');
+            return $this.data('content').toString();
           } else {
             return icon + $this.html() + subtext;
           }
