@@ -1201,11 +1201,11 @@
 
       if (this.isDisabled()) {
         this.$newElement.addClass('disabled');
-        this.$button.addClass('disabled').attr('tabindex', -1);
+        this.$button.addClass('disabled').attr('tabindex', -1).attr('aria-disabled', true);
       } else {
         if (this.$button.hasClass('disabled')) {
           this.$newElement.removeClass('disabled');
-          this.$button.removeClass('disabled');
+          this.$button.removeClass('disabled').attr('aria-disabled', false);
         }
 
         if (this.$button.attr('tabindex') == -1 && !this.$element.data('tabindex')) {
@@ -1453,58 +1453,51 @@
       });
 
       this.$searchbox.on('input propertychange', function () {
+        that.$lis.not('.is-hidden').removeClass('hidden');
+        that.$lis.filter('.active').removeClass('active');
+        $no_results.remove();
+
         if (that.$searchbox.val()) {
-          var $searchBase = that.$lis.not('.is-hidden').removeClass('hidden').children('a');
+          var $searchBase = that.$lis.not('.is-hidden, .divider, .dropdown-header'),
+              $hideItems;
           if (that.options.liveSearchNormalize) {
-            $searchBase = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
+            $hideItems = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
           } else {
-            $searchBase = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
+            $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
           }
-          $searchBase.parent().addClass('hidden');
 
-          that.$lis.filter('.dropdown-header').each(function () {
-            var $this = $(this),
-                optgroup = $this.data('optgroup');
-
-            if (that.$lis.filter('[data-optgroup=' + optgroup + ']').not($this).not('.hidden').length === 0) {
-              $this.addClass('hidden');
-              that.$lis.filter('[data-optgroup=' + optgroup + 'div]').addClass('hidden');
-            }
-          });
-
-          var $lisVisible = that.$lis.not('.hidden');
-
-          // hide divider if first or last visible, or if followed by another divider
-          $lisVisible.each(function (index) {
-            var $this = $(this);
-
-            if ($this.hasClass('divider') && (
-              $this.index() === $lisVisible.first().index() ||
-              $this.index() === $lisVisible.last().index() ||
-              $lisVisible.eq(index + 1).hasClass('divider'))) {
-              $this.addClass('hidden');
-            }
-          });
-
-          if (!that.$lis.not('.hidden, .no-results').length) {
-            if (!!$no_results.parent().length) {
-              $no_results.remove();
-            }
-            $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')).show();
+          if ($hideItems.length === $searchBase.length) {
+            $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"'));
             that.$menuInner.append($no_results);
-          } else if (!!$no_results.parent().length) {
-            $no_results.remove();
-          }
-        } else {
-          that.$lis.not('.is-hidden').removeClass('hidden');
-          if (!!$no_results.parent().length) {
-            $no_results.remove();
+            that.$lis.addClass('hidden');
+          } else {
+            $hideItems.addClass('hidden');
+
+            var $lisVisible = that.$lis.not('.hidden'),
+                $foundDiv;
+
+            // hide divider if first or last visible, or if followed by another divider
+            $lisVisible.each(function (index) {
+              var $this = $(this);
+
+              if ($this.hasClass('divider')) {
+                if ($foundDiv === undefined) {
+                  $this.addClass('hidden');
+                } else {
+                  if ($foundDiv) $foundDiv.addClass('hidden');
+                  $foundDiv = $this;
+                }
+              } else if ($this.hasClass('dropdown-header') && $lisVisible.eq(index + 1).data('optgroup') !== $this.data('optgroup')) {
+                $this.addClass('hidden');
+              } else {
+                $foundDiv = null;
+              }
+            });
+            if ($foundDiv) $foundDiv.addClass('hidden');
+
+            $searchBase.not('.hidden').first().addClass('active');
           }
         }
-
-        that.$lis.filter('.active').removeClass('active');
-        if (that.$searchbox.val()) that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
-        $(this).focus();
       });
     },
 
