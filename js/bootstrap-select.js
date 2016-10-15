@@ -580,7 +580,7 @@
           // Use native JS to prepend option (faster)
           var element = this.$element[0];
           titleOption.className = 'bs-title-option';
-          titleOption.appendChild(document.createTextNode(this.options.title));
+          titleOption.innerHTML=this.options.title;
           titleOption.value = '';
           element.insertBefore(titleOption, element.firstChild);
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
