@@ -241,9 +241,18 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>styleBase</td>
     <td>string</td>
-    <td><code>btn dropdown-toggle</code></td>
+    <td><code>btn</code></td>
     <td>
       <p>Base style for all buttons.</p>
+    </td>
+  </tr>
+  <tr>
+  <tr>
+    <td>styleDropdown</td>
+    <td>string</td>
+    <td><code>dropdown-toggle</code></td>
+    <td>
+      <p>Dropdown style for all buttons.</p>
     </td>
   </tr>
   <tr>
