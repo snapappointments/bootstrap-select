@@ -205,19 +205,27 @@
    */
   function normalizeToBase(text) {
     var rExps = [
-      {re: /[\xC0-\xC6]/g, ch: "A"},
-      {re: /[\xE0-\xE6]/g, ch: "a"},
-      {re: /[\xC8-\xCB]/g, ch: "E"},
-      {re: /[\xE8-\xEB]/g, ch: "e"},
+      {re: /[\xC0-\xC6\x104]/g, ch: "A"},
+      {re: /[\xE0-\xE6\x105]/g, ch: "a"},
+      {re: /[\xC8-\xCB\x118]/g, ch: "E"},
+      {re: /[\xE8-\xEB\x119]/g, ch: "e"},
       {re: /[\xCC-\xCF]/g, ch: "I"},
       {re: /[\xEC-\xEF]/g, ch: "i"},
       {re: /[\xD2-\xD6]/g, ch: "O"},
       {re: /[\xF2-\xF6]/g, ch: "o"},
       {re: /[\xD9-\xDC]/g, ch: "U"},
       {re: /[\xF9-\xFC]/g, ch: "u"},
-      {re: /[\xC7-\xE7]/g, ch: "c"},
-      {re: /[\xD1]/g, ch: "N"},
-      {re: /[\xF1]/g, ch: "n"}
+      {re: /[\xC7\x106]/g, ch: "C"},
+      {re: /[\xE7\x107]/g, ch: "c"},
+      {re: /[\xD1\x143]/g, ch: "N"},
+      {re: /[\xF1\x144]/g, ch: "n"},
+
+      {re: /[\x141]/g, ch: "L"}, // PL
+      {re: /[\x142]/g, ch: "l"}, // PL
+      {re: /[\x15A]/g, ch: "S"}, // PL
+      {re: /[\x15B]/g, ch: "s"}, // PL
+      {re: /[\x179\x17B]/g, ch: "Z"}, // PL
+      {re: /[\x17A\x17C]/g, ch: "z"} // PL
     ];
     $.each(rExps, function () {
       text = text.replace(this.re, this.ch);
