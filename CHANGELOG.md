@@ -1,3 +1,9 @@
+### v1.11.4 (2016-10-31)
+
+* fix bad else nesting with `unchanged.bs.select` event
+
+-------------------
+
 ### v1.11.3 (2016-10-31)
 
 * expose `unchanged.bs.select` event for when a selection is made but value is not changed (ie use selects the same previous value)

@@ -1372,9 +1372,9 @@
               changed_arguments = [clickedIndex, $option.prop('selected'), state];
               that.$element
                 .triggerNative('change');
+            } else {
+              that.$element.trigger('unchanged.bs.select');
             }
-          } else {
-            that.$element.trigger('unchanged.bs.select');
           }
         }
       });
