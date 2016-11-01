@@ -1,3 +1,9 @@
+### v1.11.3 (2016-10-31)
+
+* expose `unchanged.bs.select` event for when a selection is made but value is not changed (ie. if user selects the already selected value)
+
+-------------------
+
 ### v1.11.2 (2016-09-09)
 
 #### Bug Fixes

@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.11.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.11.3 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -17,7 +17,7 @@
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
