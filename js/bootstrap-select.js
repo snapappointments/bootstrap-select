@@ -1637,7 +1637,8 @@
         if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive) {
           e.preventDefault();
           e.stopPropagation();
-          that.$button.click().focus();
+          that.$menuInner.click();
+          that.$button.focus();
         }
         // $items contains li elements when liveSearch is enabled
         $items = $('[role="listbox"] li' + selector, $parent);
