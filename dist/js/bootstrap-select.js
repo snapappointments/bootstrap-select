@@ -1237,10 +1237,6 @@
       var that = this,
           $document = $(document);
 
-      this.$newElement.on('touchstart.dropdown', '.dropdown-menu', function (e) {
-        e.stopPropagation();
-      });
-
       $document.data('spaceSelect', false);
 
       this.$button.on('keyup', function (e) {
@@ -1435,7 +1431,7 @@
       var that = this,
           $no_results = $('<li class="no-results"></li>');
 
-      this.$button.on('click.dropdown.data-api touchstart.dropdown.data-api', function () {
+      this.$button.on('click.dropdown.data-api', function () {
         that.$menuInner.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
