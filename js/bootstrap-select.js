@@ -519,15 +519,9 @@
     },
 
     reloadLi: function () {
-      //Remove all children.
-      this.destroyLi();
-      //Re build
+      // rebuild
       var li = this.createLi();
       this.$menuInner[0].innerHTML = li;
-    },
-
-    destroyLi: function () {
-      this.$menu.find('li').remove();
     },
 
     createLi: function () {
