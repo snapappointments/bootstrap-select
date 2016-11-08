@@ -3,7 +3,7 @@
 
 require('../js/bootstrap-select');
 var React = require('react');
-var Input = require('react-bootstrap').Input;
+var Input = require('react-bootstrap').FormControl;
 var ReactDOM = require('react-dom');
 
 var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
@@ -54,7 +54,7 @@ var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
   },
   render: function () {
     return (
-      <Input {...this.props} type='select' />
+      <Input {...this.props} componentClass='select' />
     );
   }
 });
