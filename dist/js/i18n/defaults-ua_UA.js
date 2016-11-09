@@ -17,7 +17,7 @@
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
