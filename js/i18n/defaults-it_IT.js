@@ -14,6 +14,6 @@
     maxOptionsText: ['Limite raggiunto ({n} {var} max)', 'Limite del gruppo raggiunto ({n} {var} max)', ['elementi', 'elemento']],
     multipleSeparator: ', ',
     selectAllText: 'Seleziona Tutto',
-    deselectAllText: 'Deseleziona Tutto',
+    deselectAllText: 'Deseleziona Tutto'
   };
 })(jQuery);
