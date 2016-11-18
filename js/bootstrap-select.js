@@ -220,7 +220,7 @@
       {re: /[\xF1]/g, ch: "n"}
     ];
     $.each(rExps, function () {
-      text = text.replace(this.re, this.ch);
+      text = text ? text.replace(this.re, this.ch) : '';
     });
     return text;
   }
