@@ -1,3 +1,38 @@
+### v1.12.0 (2016-11-18)
+
+## Bug Fixes
+* [#1220]: unescape button title
+* [#1348]: escape HTML for optgroup label
+* [#1506]: Fix bs-placeholder usage for jQuery>=3.0
+* [#1509]: inline style Content Security Policy
+* [#1477]: using liveSearchNormalize and liveSearchStyle="startsWith" simultaneously breaks search
+* [#1489] fix selectOnTab with liveSearch enabled which was broken when [#1489] was fixed
+* [#1533]: remove touchstart event listener (issues with FastClick)
+* remove destroyLi function - improve refresh() performance
+* [#1531]: add Spanish (Spain) translations
+
+## New Features
+* [#1503]: Add windowPadding option (either a number or an array of numbers - [top, right, bottom, left])
+* [#1516]: Improve liveSearch performance (addresses [#1275])
+* [#1440]: allow HTML in placeholder title for non-multiple selects
+* [#1555]: Use default with SCSS variables
+
+[#1220]: https://github.com/silviomoreto/bootstrap-select/issues/1220
+[#1275]: https://github.com/silviomoreto/bootstrap-select/issues/1275
+[#1348]: https://github.com/silviomoreto/bootstrap-select/issues/1348
+[#1506]: https://github.com/silviomoreto/bootstrap-select/issues/1506
+[#1509]: https://github.com/silviomoreto/bootstrap-select/issues/1509
+[#1477]: https://github.com/silviomoreto/bootstrap-select/issues/1477
+[#1489]: https://github.com/silviomoreto/bootstrap-select/issues/1489
+[#1533]: https://github.com/silviomoreto/bootstrap-select/issues/1533
+[#1531]: https://github.com/silviomoreto/bootstrap-select/issues/1531
+[#1503]: https://github.com/silviomoreto/bootstrap-select/issues/1503
+[#1516]: https://github.com/silviomoreto/bootstrap-select/issues/1516
+[#1440]: https://github.com/silviomoreto/bootstrap-select/issues/1440
+[#1555]: https://github.com/silviomoreto/bootstrap-select/issues/1555
+
+-------------------
+
 ### v1.11.2 (2016-09-09)
 
 #### Bug Fixes
