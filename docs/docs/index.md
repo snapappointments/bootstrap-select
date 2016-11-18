@@ -88,6 +88,9 @@ $('.selectpicker').selectpicker({
 	<div class="logo-container">
 		<a href="http://www.123itworks.co.uk" target="_blank"><img src="img/logos/estimateit.png" alt="EstiMATEit"></a>
 	</div>
+	<div class="logo-container">
+		<a href="https://convertizer.com" target="_blank"><img src="img/logos/convertizer.png" alt="Convertizer"></a>
+	</div>
 </div>
 
 <div class="text-muted">Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.</div>
