@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.11.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.0 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2016 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -11,13 +11,13 @@
     define(["jquery"], function (a0) {
       return (factory(a0));
     });
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
@@ -332,7 +332,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.11.2';
+  Selectpicker.VERSION = '1.12.0';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
