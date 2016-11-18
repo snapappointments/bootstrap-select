@@ -10,6 +10,7 @@
 * [#1533]: remove touchstart event listener (issues with FastClick)
 * remove destroyLi function - improve refresh() performance
 * [#1531]: add Spanish (Spain) translations
+* [#1553]: don't use replace in normalizeToBase if text is undefined (throws error otherwise)
 
 ## New Features
 * [#1503]: Add windowPadding option (either a number or an array of numbers - [top, right, bottom, left])
@@ -29,6 +30,7 @@
 [#1503]: https://github.com/silviomoreto/bootstrap-select/issues/1503
 [#1516]: https://github.com/silviomoreto/bootstrap-select/issues/1516
 [#1440]: https://github.com/silviomoreto/bootstrap-select/issues/1440
+[#1553]: https://github.com/silviomoreto/bootstrap-select/issues/1553
 [#1555]: https://github.com/silviomoreto/bootstrap-select/issues/1555
 
 -------------------
