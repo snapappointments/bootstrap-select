@@ -263,16 +263,11 @@
   var htmlEscape = createEscaper(escapeMap);
   var htmlUnescape = createEscaper(unescapeMap);
 
-  var Selectpicker = function (element, options, e) {
+  var Selectpicker = function (element, options) {
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
       $.valHooks.select.set = valHooks._set;
       valHooks.useDefault = true;
-    }
-
-    if (e) {
-      e.stopPropagation();
-      e.preventDefault();
     }
 
     this.$element = $(element);
@@ -1800,13 +1795,13 @@
 
   // SELECTPICKER PLUGIN DEFINITION
   // ==============================
-  function Plugin(option, event) {
+  function Plugin(option) {
     // get the args of the outer function..
     var args = arguments;
     // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
     // to get lost/corrupted in android 2.3 and IE9 #715 #775
-    var _option = option,
-        _event = event;
+    var _option = option;
+
     [].shift.apply(args);
 
     var value;
@@ -1819,7 +1814,7 @@
         if (!data) {
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, $this.data(), options);
           config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), $this.data().template, options.template);
-          $this.data('selectpicker', (data = new Selectpicker(this, config, _event)));
+          $this.data('selectpicker', (data = new Selectpicker(this, config)));
         } else if (options) {
           for (var i in options) {
             if (options.hasOwnProperty(i)) {
