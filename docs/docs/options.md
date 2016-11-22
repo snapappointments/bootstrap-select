@@ -126,6 +126,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearchNumber</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>When set to <code>true</code>, the input type of the search field will be changed so that a numeric keypad is displayed on mobile devices instead of a full keyboard.</p>
+    </td>
+  </tr>
+  <tr>
     <td>maxOptions</td>
     <td>integer | false</td>
     <td><code>false</code></td>
