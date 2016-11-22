@@ -1,3 +1,13 @@
+### v1.12.1 (2016-11-22)
+
+## Bug Fixes
+* [#1167], [#1366]: using a method before initializing bootstrap-select throws an error
+
+[#1167]: https://github.com/silviomoreto/bootstrap-select/issues/1167
+[#1366]: https://github.com/silviomoreto/bootstrap-select/issues/1366
+
+-------------------
+
 ### v1.12.0 (2016-11-18)
 
 ## Bug Fixes
