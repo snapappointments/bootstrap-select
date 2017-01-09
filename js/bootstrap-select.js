@@ -1458,6 +1458,7 @@
             if ($foundDiv) $foundDiv.addClass('hidden');
 
             $searchBase.not('.hidden').first().addClass('active');
+            that.$menuInner.scrollTop(0);
           }
         }
       });
