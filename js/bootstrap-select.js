@@ -1539,11 +1539,6 @@
           $items,
           that = $parent.data('this'),
           index,
-          next,
-          first,
-          last,
-          prev,
-          nextPrev,
           prevIndex,
           isActive,
           selector = ':not(.disabled, .hidden, .dropdown-header, .divider)',
@@ -1598,11 +1593,7 @@
             105: '9'
           };
 
-      if (that.options.liveSearch) $parent = $this.parent().parent();
-
-      if (that.options.container) $parent = that.$menu;
-
-      $items = $('[role="listbox"] li', $parent);
+      $items = that.$lis;
 
       isActive = that.$newElement.hasClass('open');
 
@@ -1626,10 +1617,10 @@
           that.$button.focus();
         }
         // $items contains li elements when liveSearch is enabled
-        $items = $('[role="listbox"] li' + selector, $parent);
+        $items = $items.filter(selector);
         if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
           if ($items.filter('.active').length === 0) {
-            $items = that.$menuInner.find('li');
+            $items = that.$lis;
             if (that.options.liveSearchNormalize) {
               $items = $items.filter(':a' + that._searchStyle() + '(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
             } else {
@@ -1642,43 +1633,24 @@
       if (!$items.length) return;
 
       if (/(38|40)/.test(e.keyCode.toString(10))) {
-        index = $items.index($items.find('a').filter(':focus').parent());
-        first = $items.filter(selector).first().index();
-        last = $items.filter(selector).last().index();
-        next = $items.eq(index).nextAll(selector).eq(0).index();
-        prev = $items.eq(index).prevAll(selector).eq(0).index();
-        nextPrev = $items.eq(next).prevAll(selector).eq(0).index();
-
-        if (that.options.liveSearch) {
-          $items.each(function (i) {
-            if (!$(this).hasClass('disabled')) {
-              $(this).data('index', i);
-            }
-          });
+        if (!that.options.liveSearch) {
+          $items = $items.filter(selector);
+          index = $items.index($items.find('a').filter(':focus').parent());
+	    } else {
           index = $items.index($items.filter('.active'));
-          first = $items.first().data('index');
-          last = $items.last().data('index');
-          next = $items.eq(index).nextAll().eq(0).data('index');
-          prev = $items.eq(index).prevAll().eq(0).data('index');
-          nextPrev = $items.eq(next).prevAll().eq(0).data('index');
         }
 
-        prevIndex = $this.data('prevIndex');
+        prevIndex = that.$menuInner.data('prevIndex');
 
         if (e.keyCode == 38) {
-          if (that.options.liveSearch) index--;
-          if (index != nextPrev && index > prev) index = prev;
-          if (index < first) index = first;
-          if (index == prevIndex) index = last;
+          if ((that.options.liveSearch || index == prevIndex) && index != -1) index--;
+          if (index < 0) index += $items.length;
         } else if (e.keyCode == 40) {
-          if (that.options.liveSearch) index++;
-          if (index == -1) index = 0;
-          if (index != nextPrev && index < next) index = next;
-          if (index > last) index = last;
-          if (index == prevIndex) index = first;
+          if (that.options.liveSearch || index == prevIndex) index++;
+          index = index % $items.length;
         }
 
-        $this.data('prevIndex', index);
+        that.$menuInner.data('prevIndex', index);
 
         if (!that.options.liveSearch) {
           $items.eq(index).children('a').focus();
@@ -1695,10 +1667,10 @@
             count,
             prevKey;
 
-        $items.each(function () {
+        $items.each(function (i) {
           if (!$(this).hasClass('disabled')) {
             if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
-              keyIndex.push($(this).index());
+              keyIndex.push(i);
             }
           }
         });
