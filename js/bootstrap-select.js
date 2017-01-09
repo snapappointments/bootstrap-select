@@ -1593,7 +1593,6 @@
             105: '9'
           };
 
-      $items = that.$lis;
 
       isActive = that.$newElement.hasClass('open');
 
@@ -1616,25 +1615,13 @@
           that.$menuInner.click();
           that.$button.focus();
         }
-        // $items contains li elements when liveSearch is enabled
-        $items = $items.filter(selector);
-        if (!$this.val() && !/(38|40)/.test(e.keyCode.toString(10))) {
-          if ($items.filter('.active').length === 0) {
-            $items = that.$lis;
-            if (that.options.liveSearchNormalize) {
-              $items = $items.filter(':a' + that._searchStyle() + '(' + normalizeToBase(keyCodeMap[e.keyCode]) + ')');
-            } else {
-              $items = $items.filter(':' + that._searchStyle() + '(' + keyCodeMap[e.keyCode] + ')');
-            }
-          }
-        }
       }
 
-      if (!$items.length) return;
-
       if (/(38|40)/.test(e.keyCode.toString(10))) {
+        $items = that.$lis.filter(selector);
+        if (!$items.length) return;
+
         if (!that.options.liveSearch) {
-          $items = $items.filter(selector);
           index = $items.index($items.find('a').filter(':focus').parent());
 	    } else {
           index = $items.index($items.filter('.active'));
@@ -1667,11 +1654,10 @@
             count,
             prevKey;
 
+        $items = that.$lis.filter(selector);
         $items.each(function (i) {
-          if (!$(this).hasClass('disabled')) {
-            if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
-              keyIndex.push(i);
-            }
+          if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
+            keyIndex.push(i);
           }
         });
 
