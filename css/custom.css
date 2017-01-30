@@ -208,6 +208,7 @@ ul.nav li.main {
 }
 
 .charity {
+  opacity: 0.5;
   padding: 4px;
   margin-bottom: -31px;
 }
