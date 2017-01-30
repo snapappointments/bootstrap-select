@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.12.1 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.2 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2016 bootstrap-select
+ * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -327,7 +327,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.12.1';
+  Selectpicker.VERSION = '1.12.2';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -860,8 +860,7 @@
       menuInner.appendChild(divider);
       if (header) menu.appendChild(header);
       if (search) {
-        // create a span instead of input as creating an input element is slower
-        var input = document.createElement('span');
+        var input = document.createElement('input');
         search.className = 'bs-searchbox';
         input.className = 'form-control';
         search.appendChild(input);
@@ -1446,9 +1445,9 @@
           var $searchBase = that.$lis.not('.is-hidden, .divider, .dropdown-header'),
               $hideItems;
           if (that.options.liveSearchNormalize) {
-            $hideItems = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
+            $hideItems = $searchBase.find('a').not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
           } else {
-            $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
+            $hideItems = $searchBase.find('a').not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
           }
 
           if ($hideItems.length === $searchBase.length) {
@@ -1456,7 +1455,7 @@
             that.$menuInner.append($no_results);
             that.$lis.addClass('hidden');
           } else {
-            $hideItems.addClass('hidden');
+            $hideItems.parent().addClass('hidden');
 
             var $lisVisible = that.$lis.not('.hidden'),
                 $foundDiv;

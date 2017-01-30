@@ -1,3 +1,16 @@
+### v1.12.2 (2017-01-30)
+
+## Bug Fixes
+* [#1563]: key word searching broken in [#1516].
+* [#1570]: properly adjust size when inside form-group-sm or form-group-lg
+* [#1590]: menu height calculated improperly when using liveSearch and input has custom height
+
+[#1563]: https://github.com/silviomoreto/bootstrap-select/issues/1563
+[#1570]: https://github.com/silviomoreto/bootstrap-select/issues/1570
+[#1590]: https://github.com/silviomoreto/bootstrap-select/issues/1590
+
+-------------------
+
 ### v1.12.1 (2016-11-22)
 
 ## Bug Fixes
