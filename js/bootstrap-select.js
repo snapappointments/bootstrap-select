@@ -310,9 +310,9 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
-    countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
-    },
+    itemSelected: '{0} item selected',
+    itemsSelected: '{0} items selected',
+    itemsAllSelected: 'All selected',
     maxOptionsText: function (numAll, numGroup) {
       return [
         (numAll == 1) ? 'Limit reached ({n} item max)' : 'Limit reached ({n} items max)',
@@ -763,9 +763,14 @@
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
           notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
           var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
-              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+              tr8nText = (selectedItems.length == 1) ? this.options.itemSelected : this.options.itemsSelected;
           title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
+      }
+      
+      // If all options are selected, use the all selected text if specified. (By matt-jobson #1053)
+      if (this.options.itemsAllSelected !== undefined && selectedItems.length == this.$element.find('option').length) {
+          title = this.options.itemsAllSelected;
       }
 
       if (this.options.title == undefined) {
