@@ -582,7 +582,9 @@
         }
       }
 
-      this.$element.find('option').each(function (index) {
+      var $selectOptions = this.$element.find('option');
+
+      $selectOptions.each(function (index) {
         var $this = $(this);
 
         liIndex++;
@@ -599,13 +601,20 @@
             $parent = $this.parent(),
             isOptgroup = $parent[0].tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && $parent[0].disabled,
-            isDisabled = this.disabled || isOptgroupDisabled;
+            isDisabled = this.disabled || isOptgroupDisabled,
+            prevHiddenIndex;
 
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
         }
 
         if (that.options.hideDisabled && (isDisabled && !isOptgroup || isOptgroupDisabled)) {
+          // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
+          // used to determine whether or not a divider should be placed after an optgroup if there are
+          // hidden options between the optgroup and the first visible option
+          prevHiddenIndex = $this.data('prevHiddenIndex');
+          $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
+
           liIndex--;
           return;
         }
@@ -657,31 +666,26 @@
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
+          // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
+          // used to determine whether or not a divider should be placed after an optgroup if there are
+          // hidden options between the optgroup and the first visible option
+          prevHiddenIndex = $this.data('prevHiddenIndex');
+          $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
+
           _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
         } else {
           var showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
 
           // if previous element is not an optgroup and hideDisabled is true
           if (!showDivider && that.options.hideDisabled) {
-            // get previous elements
-            var $prev = $(this).prevAll();
+            prevHiddenIndex = $this.data('prevHiddenIndex');
 
-            for (var i = 0; i < $prev.length; i++) {
-              // find the first element in the previous elements that is an optgroup
-              if ($prev[i].tagName === 'OPTGROUP') {
-                var optGroupDistance = 0;
-
-                // loop through the options in between the current option and the optgroup
-                // and check if they are hidden or disabled
-                for (var d = 0; d < i; d++) {
-                  var prevOption = $prev[d];
-                  if (prevOption.disabled || $(prevOption).data('hidden') === true) optGroupDistance++;
-                }
-
-                // if all of the options between the current option and the optgroup are hidden or disabled, show the divider
-                if (optGroupDistance === i) showDivider = true;
-
-                break;
+            if (prevHiddenIndex !== undefined) {
+              // select the element **before** the first hidden element in the group
+              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              
+              if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
+                showDivider = true;
               }
             }
           }
