@@ -194,28 +194,28 @@
 
   // Case insensitive contains search
   $.expr.pseudos.icontains = function (obj, index, meta) {
-    var $obj = $(obj);
+    var $obj = $(obj).find('a');
     var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
     return haystack.includes(meta[3].toUpperCase());
   };
 
   // Case insensitive begins search
   $.expr.pseudos.ibegins = function (obj, index, meta) {
-    var $obj = $(obj);
+    var $obj = $(obj).find('a');
     var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
   };
 
   // Case and accent insensitive contains search
   $.expr.pseudos.aicontains = function (obj, index, meta) {
-    var $obj = $(obj);
+    var $obj = $(obj).find('a');
     var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
     return haystack.includes(meta[3].toUpperCase());
   };
 
   // Case and accent insensitive begins search
   $.expr.pseudos.aibegins = function (obj, index, meta) {
-    var $obj = $(obj);
+    var $obj = $(obj).find('a');
     var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
   };
@@ -741,11 +741,12 @@
      */
     render: function (updateLi) {
       var that = this,
-          notDisabled;
+          notDisabled,
+          $selectOptions = this.$element.find('option');
 
       //Update the LI to match the SELECT
       if (updateLi !== false) {
-        this.$element.find('option').each(function (index) {
+        $selectOptions.each(function (index) {
           var $lis = that.findLis().eq(that.liObj[index]);
 
           that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled, $lis);
@@ -757,7 +758,7 @@
 
       this.tabIndex();
 
-      var selectedItems = this.$element.find('option').map(function () {
+      var selectedItems = $selectOptions.map(function () {
         if (this.selected) {
           if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
 
@@ -789,7 +790,7 @@
         var max = this.options.selectedTextFormat.split('>');
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
           notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
-          var totalCount = this.$element.find('option').not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
+          var totalCount = $selectOptions.not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
           title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
@@ -1449,9 +1450,9 @@
           var $searchBase = that.$lis.not('.is-hidden, .divider, .dropdown-header'),
               $hideItems;
           if (that.options.liveSearchNormalize) {
-            $hideItems = $searchBase.find('a').not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
+            $hideItems = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
           } else {
-            $hideItems = $searchBase.find('a').not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
+            $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
           }
 
           if ($hideItems.length === $searchBase.length) {
@@ -1459,7 +1460,7 @@
             that.$menuInner.append($no_results);
             that.$lis.addClass('hidden');
           } else {
-            $hideItems.parent().addClass('hidden');
+            $hideItems.addClass('hidden');
 
             var $lisVisible = that.$lis.not('.hidden'),
                 $foundDiv;
@@ -1484,6 +1485,7 @@
             if ($foundDiv) $foundDiv.addClass('hidden');
 
             $searchBase.not('.hidden').first().addClass('active');
+            that.$menuInner.scrollTop(0);
           }
         }
       });
