@@ -263,6 +263,12 @@
   var htmlEscape = createEscaper(escapeMap);
   var htmlUnescape = createEscaper(unescapeMap);
 
+  function getOffset(element) {
+    var docRect = document.documentElement.getBoundingClientRect(),
+        elemRect = element[0].getBoundingClientRect();
+    return {top: elemRect.top - docRect.top, left: elemRect.left - docRect.left};
+  }
+
   var Selectpicker = function (element, options) {
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
@@ -928,12 +934,12 @@
           selectOffsetLeft,
           selectOffsetRight,
           getPos = function() {
-            var pos = that.$newElement.offset(),
+            var pos = getOffset(that.$newElement),
                 $container = $(that.options.container),
                 containerPos;
 
             if (that.options.container && !$container.is('body')) {
-              containerPos = $container.offset();
+              containerPos = getOffset($container);
               containerPos.top += parseInt($container.css('borderTopWidth'));
               containerPos.left += parseInt($container.css('borderLeftWidth'));
             } else {
@@ -1087,7 +1093,7 @@
           actualHeight,
           getPlacement = function ($element) {
             that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
-            pos = $element.offset();
+            pos = getOffset($element);
 
             if (!$container.is('body')) {
               containerPos = $container.offset();
