@@ -183,20 +183,6 @@
     return haystack.startsWith(meta[3].toUpperCase());
   };
 
-  // Case and accent insensitive contains search
-  $.expr.pseudos.aicontains = function (obj, index, meta) {
-    var $obj = $(obj).find('a');
-    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
-    return haystack.includes(meta[3].toUpperCase());
-  };
-
-  // Case and accent insensitive begins search
-  $.expr.pseudos.aibegins = function (obj, index, meta) {
-    var $obj = $(obj).find('a');
-    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
-    return haystack.startsWith(meta[3].toUpperCase());
-  };
-
   /**
    * Remove all diatrics from the given text.
    * @access private
@@ -550,11 +536,11 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline, tokens) {
+	    if (!tokens && that.options.liveSearchNormalize) tokens = normalizeToBase(htmlEscape($(text).html()));
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (inline ? ' style="' + inline + '"' : '') +
-            (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape($(text).html())) + '"' : '') +
-            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
+            (typeof tokens !== 'undefined' && tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             ' role="option">' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
             '</a>';
@@ -1425,12 +1411,10 @@
 
         if (that.$searchbox.val()) {
           var $searchBase = that.$lis.not('.is-hidden, .divider, .dropdown-header'),
+              searchVal = that.$searchbox.val(),
               $hideItems;
-          if (that.options.liveSearchNormalize) {
-            $hideItems = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
-          } else {
-            $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
-          }
+          if (that.options.liveSearchNormalize) searchVal = normalizeToBase(searchVal);
+          $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + searchVal + '")');
 
           if ($hideItems.length === $searchBase.length) {
             $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"'));
