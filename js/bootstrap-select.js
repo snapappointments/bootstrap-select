@@ -352,7 +352,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    windowPadding: 0
+    windowPadding: 0,
+    maxOptionLength: null
   };
 
   Selectpicker.prototype = {
@@ -550,10 +551,17 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline, tokens) {
-        return '<a tabindex="0"' +
+          var content = $(text).text();
+
+          if (that.options.maxOptionLength != null && content.length > that.options.maxOptionLength) {
+              text = $(text).text(content.substring(0, that.options.maxOptionLength) + " ...").get(0).outerHTML;
+          }
+
+          return '<a tabindex="0"' +
+              (content.length > that.options.maxOptionLength ? ' title="' + content + '" ' : '') +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (inline ? ' style="' + inline + '"' : '') +
-            (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape($(text).html())) + '"' : '') +
+            (that.options.liveSearchNormalize ? ' data-normalized-text="' + content + '"' : '') +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             ' role="option">' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
