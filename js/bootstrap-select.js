@@ -313,6 +313,7 @@
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
+    selectedText: null,
     maxOptionsText: function (numAll, numGroup) {
       return [
         (numAll == 1) ? 'Limit reached ({n} item max)' : 'Limit reached ({n} items max)',
@@ -779,6 +780,10 @@
 
       if (this.options.selectedTextFormat == 'static') {
         title = this.options.title;
+      }
+
+      if (typeof this.options.selectedText === 'function') {
+        title = this.options.selectedText(selectedItems);
       }
 
       //If we dont have a title, then use the default, or if nothing is set at all, use the not selected text
