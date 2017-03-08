@@ -403,7 +403,8 @@
       this.liObj = {};
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
-      this.$newElement = this.createView();
+      this.$newElement = this.createDropdown();
+      this.createLi();
       this.$element
         .after(this.$newElement)
         .appendTo(this.$newElement);
@@ -540,13 +541,89 @@
 
       return $(drop);
     },
+    
+    createView: function(searchLis, refresh) {
+      var that = this;
+      this._currentLis = (searchLis ? searchLis : this._lis);
+      var liObj = searchLis ? this.liObjSearch : this.liObj;
+      var liHeight = this.sizeInfo['liHeight'];
+      var position = 0;
+      var $lis;
+      var $active = [];
+      var $selected;
+      var $prevActive;
+      var activeIndex;
+      var prevActiveIndex;
+      
+      scroll(0, true);
+      
+      this.$menuInner.off('scroll.createView').on('scroll.createView', function(e) {
+        if (!that.noScroll) scroll(this.scrollTop);
+        that.noScroll = false;
+      });
+      
+      function scroll(scrollTop, init) {
+        position = Math.floor(scrollTop / liHeight);
+        that._currentLis = (refresh ? that._lis : that._currentLis);
+        var size = that._currentLis.length;
+        var rows = 2 + Math.ceil(that.sizeInfo.menuInnerHeight / liHeight);
+        var position0 = Math.max(0, Math.min(size - rows, position));
+        var position1 = position0 + rows;
+        
+        that.$menuInner.data('position0', position0);
 
-    createView: function () {
-      var $drop = this.createDropdown(),
-          li = this.createLi();
+        if (that.activeIndex !== undefined) {
+          $prevActive = $(that._currentLis[liObj[that.prevActiveIndex]]);
+          $active = $(that._currentLis[liObj[that.activeIndex]]);
+          $selected = $(that._currentLis[liObj[that.selectedIndex]]);
 
-      $drop.find('ul')[0].innerHTML = li;
-      return $drop;
+          if (init) {
+            if (that.activeIndex !== that.selectedIndex) {
+              that._currentLis[liObj[that.activeIndex]] = $active.removeClass('active')[0].outerHTML;
+            }
+            that.activeIndex = undefined;
+          }
+
+          that._currentLis[liObj[that.activeIndex]] = $active.addClass('active')[0].outerHTML;
+
+          if (that.activeIndex && that.activeIndex !== that.selectedIndex && $selected.length) {
+            that._currentLis[liObj[that.selectedIndex]] = $selected.removeClass('active')[0].outerHTML;
+          }
+        }
+        
+        if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && $prevActive) {
+          that._currentLis[liObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
+        }
+        
+        that.$menuInner[0].innerHTML = that._currentLis.slice(position0, position1).join('');
+        
+        $lis = that.$menuInner.find('li');
+        
+        that.prevActiveIndex = that.activeIndex;
+        
+        var activePosition = activeIndex - position0;
+        
+        var $spacers = $lis.filter('.spacer');
+        $spacers.filter('.spacer-before').removeClass('spacer spacer-before').css('marginTop', '');
+        $spacers.filter('.spacer-after').removeClass('spacer spacer-after').css('marginBottom', '');
+
+        $lis.eq(0).addClass('spacer spacer-before').css('marginTop', (position0 * liHeight) + 'px');
+        $lis.eq(rows - 1).addClass('spacer spacer-after').css('marginBottom', (size - position1) * liHeight + 'px');
+
+        if (!that.options.liveSearch) {
+          $lis.filter('.active').children('a').focus();
+        } else if (searchLis && init) {
+          $lis.eq(0).addClass('active');
+        }
+
+        that.doneScrolling = true;
+      }
+
+      $(window).off('resize.createView').on('resize.createView', function() {
+        scroll(that.$menuInner[0].scrollTop);
+
+        //if (searchLis) $lis.eq(0).addClass('active');
+      });
     },
 
     reloadLi: function () {
@@ -558,7 +635,9 @@
     createLi: function () {
       var that = this,
           _li = [],
+          _liText = [],
           optID = 0,
+          headerIndex = 0,
           titleOption = document.createElement('option'),
           liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure liObj is correct
 
@@ -631,8 +710,10 @@
         var optionClass = this.className || '',
             inline = htmlEscape(this.style.cssText),
             text = $this.data('content') ? $this.data('content') : $this.html(),
+            textHTML,
             tokens = $this.data('tokens') ? $this.data('tokens') : null,
-            subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
+            subtext = $this.data('subtext'),
+            subtextHTML = typeof subtext !== 'undefined' ? '<small class="text-muted">' + subtext + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
             $parent = $this.parent(),
             isOptgroup = $parent[0].tagName === 'OPTGROUP',
@@ -644,7 +725,7 @@
           icon = '<span>' + icon + '</span>';
         }
 
-        if (that.options.hideDisabled && (isDisabled && !isOptgroup || isOptgroupDisabled)) {
+        if ($this.data('hidden') === true || that.options.hideDisabled && (isDisabled && !isOptgroup || isOptgroupDisabled)) {
           // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
           // used to determine whether or not a divider should be placed after an optgroup if there are
           // hidden options between the optgroup and the first visible option
@@ -657,7 +738,7 @@
 
         if (!$this.data('content')) {
           // Prepend any icon and append any subtext to the main text.
-          text = icon + '<span class="text">' + text + subtext + '</span>';
+          textHTML = icon + '<span class="text">' + text + subtextHTML + '</span>';
         }
 
         if (isOptgroup && $this.data('divider') !== true) {
@@ -680,35 +761,57 @@
 
             // Get the opt group label
             var label = $parent[0].label,
-                labelSubtext = typeof $parent.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $parent.data('subtext') + '</small>' : '',
+                labelEscaped = htmlEscape(label),
+                labelSubtext = $parent.data('subtext'),
+                labelSubtextHTML = typeof labelSubtext !== 'undefined' ? '<small class="text-muted">' + labelSubtext + '</small>' : '',
                 labelIcon = $parent.data('icon') ? '<span class="' + that.options.iconBase + ' ' + $parent.data('icon') + '"></span> ' : '';
 
-            label = labelIcon + '<span class="text">' + htmlEscape(label) + labelSubtext + '</span>';
+            label = labelIcon + '<span class="text">' + labelEscaped + labelSubtextHTML + '</span>';
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
               _li.push(generateLI('', null, 'divider', optID + 'div'));
+              _liText.push({
+                type: 'divider',
+                optID: optID,
+                originalIndex: index
+              });
             }
             liIndex++;
             _li.push(generateLI(label, null, 'dropdown-header' + optGroupClass, optID));
+            _liText.push({
+              content: labelEscaped,
+              subtext: labelSubtext,
+              type: 'optgroup-label',
+              optID: optID,
+              originalIndex: index
+            });
+            
+            headerIndex = liIndex - 1;
           }
 
-          if (that.options.hideDisabled && isDisabled) {
+          if (that.options.hideDisabled && isDisabled || $this.data('hidden') === true) {
             liIndex--;
             return;
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
+          _li.push(generateLI(generateA(textHTML, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
+          _liText.push({
+            content: text,
+            subtext: subtext,
+            tokens: tokens,
+            type: 'option',
+            optID: optID,
+            headerIndex: headerIndex,
+            lastIndex: headerIndex + $parent[0].childElementCount,
+            originalIndex: index
+          });
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
-        } else if ($this.data('hidden') === true) {
-          // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
-          // used to determine whether or not a divider should be placed after an optgroup if there are
-          // hidden options between the optgroup and the first visible option
-          prevHiddenIndex = $this.data('prevHiddenIndex');
-          $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
-
-          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
+          _liText.push({
+            type: 'divider',
+            originalIndex: index
+          });
         } else {
           var showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
 
@@ -729,8 +832,20 @@
           if (showDivider) {
             liIndex++;
             _li.push(generateLI('', null, 'divider', optID + 'div'));
+            _liText.push({
+              type: 'divider',
+              optID: optID,
+              originalIndex: index
+            });
           }
-          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
+          _li.push(generateLI(generateA(textHTML, optionClass, inline, tokens), index));
+          _liText.push({
+            content: text,
+            subtext: subtext,
+            tokens: tokens,
+            type: 'option',
+            originalIndex: index
+          });
         }
 
         that.liObj[index] = liIndex;
@@ -740,12 +855,13 @@
       if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
         this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
       }
-
-      return _li.join('');
+      
+      this._lis = _li;
+      this._lisText = _liText;
     },
 
     findLis: function () {
-      if (this.$lis == null) this.$lis = this.$menu.find('li');
+      this.$lis = this.$menuInner.find('li');
       return this.$lis;
     },
 
@@ -756,16 +872,8 @@
       var that = this,
           notDisabled,
           $selectOptions = this.$element.find('option');
-
-      //Update the LI to match the SELECT
-      if (updateLi !== false) {
-        $selectOptions.each(function (index) {
-          var $lis = that.findLis().eq(that.liObj[index]);
-
-          that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled, $lis);
-          that.setSelected(index, this.selected, $lis);
-        });
-      }
+          
+      var $lis = that.findLis();
 
       this.togglePlaceholder();
 
@@ -932,9 +1040,21 @@
         menuExtras: menuExtras
       };
     },
+    
+    setOptionStatus: function($selectOptions) {
+      var that = this;
+      var $lis = this.findLis();
+      $selectOptions = $selectOptions ? $selectOptions : this.$element.find('option');
+
+      $selectOptions.each(function (index) {
+        //var $li = $lis.eq(that.liObj[index]);
+        that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled);
+        that.setSelected(index, this.selected);
+      });
+    },
 
     setSize: function () {
-      this.findLis();
+      
       this.liHeight();
 
       if (this.options.header) this.$menu.css('padding-top', 0);
@@ -988,7 +1108,7 @@
       getPos();
 
       if (this.options.size === 'auto') {
-        var getSize = function () {
+        function getSize () {
           var minHeight,
               hasClass = function (className, include) {
                 return function (element) {
@@ -1041,15 +1161,24 @@
             'overflow': 'hidden',
             'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
           });
+          
+          var menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
+          
           $menuInner.css({
-            'max-height': menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert + 'px',
+            'max-height': menuInnerHeight + 'px',
             'overflow-y': 'auto',
             'min-height': Math.max(minHeight - menuPadding.vert, 0) + 'px'
           });
-        };
+          
+          that.sizeInfo['menuInnerHeight'] = menuInnerHeight;
+        }
         getSize();
+
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
         $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
+        this.setOptionStatus();
+        that.createView(false, true);
+        this.findLis();
       } else if (this.options.size && this.options.size != 'auto' && this.$lis.not(notDisabled).length > this.options.size) {
         var optIndex = this.$lis.not('.divider').not(notDisabled).children().slice(0, this.options.size).last().parent().index(),
             divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
@@ -1173,12 +1302,19 @@
      * @param {JQuery} $lis - the 'li' element that is being modified
      */
     setSelected: function (index, selected, $lis) {
-      if (!$lis) {
-        this.togglePlaceholder(); // check if setSelected is being called by changing the value of the select
-        $lis = this.findLis().eq(this.liObj[index]);
-      }
+      var liIndex = this.liObj[index];
 
-      $lis.toggleClass('selected', selected).find('a').attr('aria-selected', selected);
+      $lis = $(this._lis[liIndex]);
+      
+      if (selected) this.selectedIndex = index;
+
+      $lis.toggleClass('selected', selected).toggleClass('active', selected && !this.multiple).find('a').attr('aria-selected', selected);
+
+      if ($lis.length) {
+        if (this._lis[liIndex] !== $lis[0].outerHTML) {
+          this._lis[liIndex] = $lis[0].outerHTML;
+        }
+      }
     },
 
     /**
@@ -1257,15 +1393,13 @@
       });
 
       this.$element.on('shown.bs.select', function () {
-        if (!that.options.liveSearch && !that.multiple) {
-          that.$menuInner.find('.selected a').focus();
-        } else if (!that.multiple) {
+        if (!that.multiple) {
           var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
           if (typeof selectedIndex !== 'number' || that.options.size === false) return;
 
           // scroll to selected option
-          var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
+          var offset = that.sizeInfo.liHeight * selectedIndex;
           offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
           that.$menuInner[0].scrollTop = offset;
         }
@@ -1297,11 +1431,9 @@
           if (!that.multiple) { // Deselect all others if not multi select box
             $options.prop('selected', false);
             $option.prop('selected', true);
-            that.$menuInner.find('.selected').removeClass('selected').find('a').attr('aria-selected', false);
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
-            that.setSelected(clickedIndex, !state);
             $this.blur();
 
             if (maxOptions !== false || maxOptionsGrp !== false) {
@@ -1428,6 +1560,7 @@
 
       this.$element.change(function () {
         that.render(false);
+        that.createView();
         that.$element.trigger('changed.bs.select', changed_arguments);
         changed_arguments = null;
       });
@@ -1441,7 +1574,8 @@
         that.$menuInner.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
-          that.$lis.not('.is-hidden').removeClass('hidden');
+          that.createView(false, true);
+          that.$menuInner.find('.active').removeClass('active');
           if (!!$no_results.parent().length) $no_results.remove();
         }
         if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
@@ -1455,51 +1589,60 @@
       });
 
       this.$searchbox.on('input propertychange', function () {
-        that.$lis.not('.is-hidden').removeClass('hidden');
-        that.$lis.filter('.active').removeClass('active');
-        $no_results.remove();
+        var searchValue = that.$searchbox.val();
+        
+        that.liObjSearch = {};
+        that.liSearchArr = [];
 
-        if (that.$searchbox.val()) {
-          var $searchBase = that.$lis.not('.is-hidden, .divider, .dropdown-header'),
-              $hideItems;
-          if (that.options.liveSearchNormalize) {
-            $hideItems = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
-          } else {
-            $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
+        if (searchValue) {
+          var i,
+              searchMatch = [],
+              q = searchValue.toUpperCase(),
+              cache = {},
+              cacheArr = [];
+
+          that._$lisSelected = that.$menuInner.find('.selected');
+
+          for (var i = 0; i < that._lisText.length; i++) {
+            var li = that._lisText[i];
+
+            if (!cache[i]) {
+              cache[i] = (li.content && li.content.toUpperCase().indexOf(q) >= 0) || (li.subtext && li.subtext.toUpperCase().indexOf(q) >= 0) || (li.tokens && li.tokens.toUpperCase().indexOf(q) >= 0);
+            }
+
+            if (cache[i] && li.headerIndex !== undefined && cacheArr.indexOf(li.headerIndex) === -1) {
+              cache[li.headerIndex - 1] = true;
+              cache[li.headerIndex] = true;
+
+              cacheArr.push(li.headerIndex - 1);
+              cacheArr.push(li.headerIndex);
+              
+              cache[li.lastIndex + 1] = true;
+            }
+
+            if (cache[i] && li.type !== 'optgroup-label') cacheArr.push(i);
           }
 
-          if ($hideItems.length === $searchBase.length) {
-            $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"'));
-            that.$menuInner.append($no_results);
-            that.$lis.addClass('hidden');
-          } else {
-            $hideItems.addClass('hidden');
-
-            var $lisVisible = that.$lis.not('.hidden'),
-                $foundDiv;
-
-            // hide divider if first or last visible, or if followed by another divider
-            $lisVisible.each(function (index) {
-              var $this = $(this);
-
-              if ($this.hasClass('divider')) {
-                if ($foundDiv === undefined) {
-                  $this.addClass('hidden');
-                } else {
-                  if ($foundDiv) $foundDiv.addClass('hidden');
-                  $foundDiv = $this;
-                }
-              } else if ($this.hasClass('dropdown-header') && $lisVisible.eq(index + 1).data('optgroup') !== $this.data('optgroup')) {
-                $this.addClass('hidden');
-              } else {
-                $foundDiv = null;
-              }
-            });
-            if ($foundDiv) $foundDiv.addClass('hidden');
-
-            $searchBase.not('.hidden').first().addClass('active');
-            that.$menuInner.scrollTop(0);
+          for (var i = 0, cacheLen = cacheArr.length; i < cacheLen; i++) {
+            var index = cacheArr[i],
+                prevIndex = cacheArr[i - 1],
+                li = that._lisText[index],
+                liPrev = that._lisText[prevIndex];
+                
+            if ( li.type !== 'divider' || ( li.type === 'divider' && liPrev && liPrev.type !== 'divider' && cacheLen - 1 !== i ) ) {
+              searchMatch.push(that._lis[index]);
+              that.liSearchArr.push(li.originalIndex);
+              that.liObjSearch[li.originalIndex] = searchMatch.length - 1;
+            }
           }
+
+          that.activeIndex = undefined;
+          that.noScroll = true;
+          that.$menuInner.scrollTop(0);
+          that.createView(searchMatch);
+        } else {
+          that.$menuInner.scrollTop(0);
+          that.createView(false, true);
         }
       });
     },
@@ -1582,6 +1725,9 @@
           index,
           prevIndex,
           isActive,
+          $liActive,
+          rowRemainder = 2,
+          position0,
           selector = ':not(.disabled, .hidden, .dropdown-header, .divider)',
           keyCodeMap = {
             32: ' ',
@@ -1634,7 +1780,6 @@
             105: '9'
           };
 
-
       isActive = that.$newElement.hasClass('open');
 
       if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode >= 65 && e.keyCode <= 90)) {
@@ -1657,39 +1802,76 @@
           that.$button.focus();
         }
       }
+      
+      var downOnTab = e.keyCode == 9 && !$this.hasClass('dropdown-toggle') && that.options.selectOnTab;
 
-      if (/(38|40)/.test(e.keyCode.toString(10))) {
-        $items = that.$lis.filter(selector);
-        if (!$items.length) return;
-
-        if (!that.options.liveSearch) {
-          index = $items.index($items.find('a').filter(':focus').parent());
-	    } else {
-          index = $items.index($items.filter('.active'));
+      if (/(38|40)/.test(e.keyCode.toString(10)) || downOnTab) { // if up or down
+        // sometimes the scroll event is not fired, manually trigger it's if not
+        if (!that.doneScrolling && that.$menuInner[0].scrollHeight > that.$menuInner[0].offsetHeight) {
+          that.$menuInner.trigger('scroll.createView');
         }
+        
+        $items = that.findLis().filter(selector);
+        if (!$items.length) return;
+        
+        index = $items.index($items.filter('.active'));
 
         prevIndex = that.$menuInner.data('prevIndex');
 
-        if (e.keyCode == 38) {
-          if ((that.options.liveSearch || index == prevIndex) && index != -1) index--;
+        if (e.keyCode == 38) { // up
+          if (index !== -1) index--;
           if (index < 0) index += $items.length;
-        } else if (e.keyCode == 40) {
-          if (that.options.liveSearch || index == prevIndex) index++;
+        } else if (e.keyCode == 40 || downOnTab) { // down
+          index++;
           index = index % $items.length;
         }
 
         that.$menuInner.data('prevIndex', index);
+        position0 = that.$menuInner.data('position0');
 
-        if (!that.options.liveSearch) {
-          $items.eq(index).children('a').focus();
-        } else {
-          e.preventDefault();
-          if (!$this.hasClass('dropdown-toggle')) {
-            $items.removeClass('active').eq(index).addClass('active').children('a').focus();
-            $this.focus();
+        e.preventDefault();
+        $liActive = $items.removeClass('active').eq(index).addClass('active');
+
+        if (e.keyCode == 40 || downOnTab) { // down
+          // check to see how many options are hidden at the bottom of the menu (1 or 2 depending on scroll position)
+          if ($items.eq($items.length - 2).offset().top < that.$menuInner.offset().top + that.$menuInner[0].offsetHeight) {
+            rowRemainder = 1;
+          }
+          
+          if (index >= $items.length - rowRemainder) {
+            that.doneScrolling = false;
+
+            that.$menuInner[0].scrollTop = that.$menuInner[0].scrollTop + that.sizeInfo.liHeight;
+
+            $liActive = $(that._currentLis[index + position0]);
+          } else if (position0 !== 0 && index === 0) {
+            that.doneScrolling = false;
+
+            that.$menuInner.scrollTop(0);
+
+            $liActive = $(that._currentLis[0]);
+          }
+        } else if (e.keyCode == 38) { // up
+          if (position0 !== 0 && (index === $items.length - 1 || index < 2 && that._currentLis.length - position0 === $items.length)) {
+            that.doneScrolling = false;
+
+            that.$menuInner[0].scrollTop = that.$menuInner[0].scrollTop - that.sizeInfo.liHeight;
+
+            if (index === $items.length - 1) index = -1;
+
+            $liActive = $(that._currentLis[position0 + index]);
+          } else if (index === $items.length - 1) {
+            that.doneScrolling = false;
+
+            that.$menuInner[0].scrollTop = that.$menuInner[0].scrollHeight;
+
+            $liActive = $(that._currentLis[that._currentLis.length - 1]);
           }
         }
 
+        that.activeIndex = $liActive.data('originalIndex');
+        $liActive.children('a').focus();
+        if (that.options.liveSearch) $this.focus();
       } else if (!$this.is('input')) {
         var keyIndex = [],
             count,
@@ -1853,6 +2035,7 @@
 
   $(document)
       .data('keycount', 0)
+      .off('keydown.bs.dropdown.data-api')
       .on('keydown.bs.select', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input', Selectpicker.prototype.keydown)
       .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input', function (e) {
         e.stopPropagation();

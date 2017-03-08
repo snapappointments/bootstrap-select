@@ -30,6 +30,18 @@
 <div class="container">
   <form class="form-horizontal" role="form">
     <div class="form-group">
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled)</label>
+
+      <div class="col-lg-10">
+        <select class="selectpicker" id="number" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true"></select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
       <label for="basic" class="col-lg-2 control-label">"Basic" (liveSearch disabled)</label>
 
       <div class="col-lg-10">
@@ -297,8 +309,20 @@
 </div>
 
 <script>
+function createOptions(number) {
+  var options = [];
+
+  for (var i = 0; i < number; i++) {
+    var option = '<option value="' + i + '">Option ' + i + '</option>';
+    options.push(option);
+  }
+  
+  $('#number')[0].innerHTML = options.join('');
+}
   $(document).ready(function () {
     var mySelect = $('#first-disabled2');
+
+    createOptions(4000);
 
     $('#special').on('click', function () {
       mySelect.find('option:selected').prop('disabled', true);
