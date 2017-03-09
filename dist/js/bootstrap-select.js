@@ -556,6 +556,8 @@
         var rows = 2 + Math.ceil(that.sizeInfo.menuInnerHeight / liHeight);
         var position0 = Math.max(0, Math.min(size - rows, position));
         var position1 = position0 + rows;
+
+        that.position0 = position0;
         
         that.$menuInner.data('position0', position0);
 
@@ -582,11 +584,11 @@
           that._currentLis[liObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
         }
 
-        that.visibleLis = that._currentLis.slice(position0, position1).join('');
+        that.visibleLis = that._currentLis.slice(position0, position1);
 
         that.setOptionStatus();
         
-        that.$menuInner[0].innerHTML = that.visibleLis;
+        that.$menuInner[0].innerHTML = that.visibleLis.join('');
         
         $lis = that.$menuInner.find('li');
         
@@ -1278,7 +1280,7 @@
       var that = this,
           $selectOptions = this.$element.find('option');
 
-      $(that.visibleLis).each(function() {
+      $(that.visibleLis.join('')).each(function() {
         var index = $(this).data('originalIndex'),
             option = $selectOptions.eq(index)[0];
 
@@ -1302,6 +1304,7 @@
       if ($lis.length) {
         if (this._lis[liIndex] !== $lis[0].outerHTML) {
           this._lis[liIndex] = $lis[0].outerHTML;
+          this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
         }
       }
     },
@@ -1309,17 +1312,23 @@
     /**
      * @param {number} index - the index of the option that is being disabled
      * @param {boolean} disabled - true if the option is being disabled, false if being enabled
-     * @param {JQuery} $lis - the 'li' element that is being modified
      */
-    setDisabled: function (index, disabled, $lis) {
-      if (!$lis) {
-        $lis = this.findLis().eq(this.liObj[index]);
-      }
+    setDisabled: function (index, disabled) {
+      var liIndex = this.liObj[index],
+          $lis = $(this._lis[liIndex]);
 
       if (disabled) {
+        this.disabledIndex = index;
         $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1).attr('aria-disabled', true);
       } else {
         $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0).attr('aria-disabled', false);
+      }
+
+      if ($lis.length) {
+        if (this._lis[liIndex] !== $lis[0].outerHTML) {
+          this._lis[liIndex] = $lis[0].outerHTML;
+          this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
+        }
       }
     },
 
