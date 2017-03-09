@@ -32,8 +32,14 @@
     <div class="form-group">
       <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled)</label>
 
-      <div class="col-lg-10">
-        <select class="selectpicker" id="number" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true"></select>
+      <div class="col-lg-5">
+        <label>Standard</label>
+        <select class="selectpicker form-control" id="number" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
+      </div>
+
+      <div class="col-lg-5">
+        <label>Multiple</label>
+        <select class="selectpicker form-control" id="number-multiple" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" multiple></select>
       </div>
     </div>
   </form>
@@ -310,14 +316,17 @@
 
 <script>
 function createOptions(number) {
-  var options = [];
+  var options = [], _options;
 
   for (var i = 0; i < number; i++) {
     var option = '<option value="' + i + '">Option ' + i + '</option>';
     options.push(option);
   }
+
+  _options = options.join('');
   
-  $('#number')[0].innerHTML = options.join('');
+  $('#number')[0].innerHTML = _options;
+  $('#number-multiple')[0].innerHTML = _options;
 }
   $(document).ready(function () {
     var mySelect = $('#first-disabled2');
