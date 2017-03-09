@@ -558,8 +558,12 @@
         if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && $prevActive) {
           that._currentLis[liObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
         }
+
+        that.visibleLis = that._currentLis.slice(position0, position1).join('');
+
+        that.setOptionStatus();
         
-        that.$menuInner[0].innerHTML = that._currentLis.slice(position0, position1).join('');
+        that.$menuInner[0].innerHTML = that.visibleLis;
         
         $lis = that.$menuInner.find('li');
         
@@ -1004,18 +1008,6 @@
         menuExtras: menuExtras
       };
     },
-    
-    setOptionStatus: function($selectOptions) {
-      var that = this;
-      var $lis = this.findLis();
-      $selectOptions = $selectOptions ? $selectOptions : this.$element.find('option');
-
-      $selectOptions.each(function (index) {
-        //var $li = $lis.eq(that.liObj[index]);
-        that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled);
-        that.setSelected(index, this.selected);
-      });
-    },
 
     setSize: function () {
       
@@ -1140,7 +1132,6 @@
 
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
         $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
-        this.setOptionStatus();
         that.createView(false, true);
         this.findLis();
       } else if (this.options.size && this.options.size != 'auto' && this.$lis.not(notDisabled).length > this.options.size) {
@@ -1260,15 +1251,26 @@
       });
     },
 
+    setOptionStatus: function() {
+      var that = this,
+          $selectOptions = this.$element.find('option');
+
+      $(that.visibleLis).each(function() {
+        var index = $(this).data('originalIndex'),
+            option = $selectOptions.eq(index)[0];
+
+        that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
+        that.setSelected(index, option.selected);
+      });
+    },
+
     /**
      * @param {number} index - the index of the option that is being changed
      * @param {boolean} selected - true if the option is being selected, false if being deselected
-     * @param {JQuery} $lis - the 'li' element that is being modified
      */
-    setSelected: function (index, selected, $lis) {
-      var liIndex = this.liObj[index];
-
-      $lis = $(this._lis[liIndex]);
+    setSelected: function (index, selected) {
+      var liIndex = this.liObj[index],
+          $lis = $(this._lis[liIndex]);
       
       if (selected) this.selectedIndex = index;
 
@@ -1398,6 +1400,7 @@
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
+            that.setSelected(clickedIndex, !state);
             $this.blur();
 
             if (maxOptions !== false || maxOptionsGrp !== false) {
