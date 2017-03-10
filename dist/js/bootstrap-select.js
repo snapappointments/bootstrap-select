@@ -1312,12 +1312,15 @@
       
       if (selected) this.selectedIndex = index;
 
-      $lis.toggleClass('selected', selected).toggleClass('active', selected && !this.multiple).find('a').attr('aria-selected', selected);
+      $lis.toggleClass('selected', selected).find('a').attr('aria-selected', selected);
 
-      if ($lis.length) {
+      if ($lis.length) {      
+        this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
+
+        $lis.toggleClass('active', selected && !this.multiple);
+
         if (this._lis[liIndex] !== $lis[0].outerHTML) {
           this._lis[liIndex] = $lis[0].outerHTML;
-          this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
         }
       }
     },
@@ -1338,9 +1341,10 @@
       }
 
       if ($lis.length) {
+        this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
+
         if (this._lis[liIndex] !== $lis[0].outerHTML) {
           this._lis[liIndex] = $lis[0].outerHTML;
-          this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
         }
       }
     },
