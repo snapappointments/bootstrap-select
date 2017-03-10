@@ -286,6 +286,7 @@
     this.$menu = null;
     this.$lis = null;
     this.options = options;
+    this.viewObj = {};
 
     // If we have no title yet, try to pull it from the html title attribute (jQuery doesnt' pick it up as it's not a
     // data-attribute)
@@ -521,7 +522,7 @@
     
     createView: function(searchLis, refresh) {
       var that = this;
-      this._currentLis = (searchLis ? searchLis : this._lis);
+      this.viewObj._currentLis = (searchLis ? searchLis : this._lis);
       var liObj = searchLis ? this.liObjSearch : this.liObj;
       var liHeight = this.sizeInfo['liHeight'];
       var position = 0;
@@ -541,56 +542,52 @@
       
       function scroll(scrollTop, init) {
         position = Math.floor(scrollTop / liHeight);
-        that._currentLis = (refresh ? that._lis : that._currentLis);
-        var size = that._currentLis.length;
+        that.viewObj._currentLis = (refresh ? that._lis : that.viewObj._currentLis);
+        var size = that.viewObj._currentLis.length;
         var rows = 2 + Math.ceil(that.sizeInfo.menuInnerHeight / liHeight);
-        var position0 = Math.max(0, Math.min(size - rows, position));
-        var position1 = position0 + rows;
-
-        that.position0 = position0;
-        
-        that.$menuInner.data('position0', position0);
+        that.viewObj.position0 = Math.max(0, Math.min(size - rows, position));
+        var position1 = that.viewObj.position0 + rows;
 
         if (that.activeIndex !== undefined) {
-          $prevActive = $(that._currentLis[liObj[that.prevActiveIndex]]);
-          $active = $(that._currentLis[liObj[that.activeIndex]]);
-          $selected = $(that._currentLis[liObj[that.selectedIndex]]);
+          $prevActive = $(that.viewObj._currentLis[liObj[that.prevActiveIndex]]);
+          $active = $(that.viewObj._currentLis[liObj[that.activeIndex]]);
+          $selected = $(that.viewObj._currentLis[liObj[that.selectedIndex]]);
 
           if (init) {
             if (that.activeIndex !== that.selectedIndex) {
-              that._currentLis[liObj[that.activeIndex]] = $active.removeClass('active')[0].outerHTML;
+              that.viewObj._currentLis[liObj[that.activeIndex]] = $active.removeClass('active')[0].outerHTML;
             }
             that.activeIndex = undefined;
           }
 
-          that._currentLis[liObj[that.activeIndex]] = $active.addClass('active')[0].outerHTML;
+          that.viewObj._currentLis[liObj[that.activeIndex]] = $active.addClass('active')[0].outerHTML;
 
           if (that.activeIndex && that.activeIndex !== that.selectedIndex && $selected.length) {
-            that._currentLis[liObj[that.selectedIndex]] = $selected.removeClass('active')[0].outerHTML;
+            that.viewObj._currentLis[liObj[that.selectedIndex]] = $selected.removeClass('active')[0].outerHTML;
           }
         }
         
         if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && $prevActive) {
-          that._currentLis[liObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
+          that.viewObj._currentLis[liObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
         }
 
-        that.visibleLis = that._currentLis.slice(position0, position1);
+        that.viewObj.visibleLis = that.viewObj._currentLis.slice(that.viewObj.position0, position1);
 
         that.setOptionStatus();
         
-        that.$menuInner[0].innerHTML = that.visibleLis.join('');
+        that.$menuInner[0].innerHTML = that.viewObj.visibleLis.join('');
         
         $lis = that.$menuInner.find('li');
         
         that.prevActiveIndex = that.activeIndex;
         
-        var activePosition = activeIndex - position0;
+        var activePosition = activeIndex - that.viewObj.position0;
         
         var $spacers = $lis.filter('.spacer');
         $spacers.filter('.spacer-before').removeClass('spacer spacer-before').css('marginTop', '');
         $spacers.filter('.spacer-after').removeClass('spacer spacer-after').css('marginBottom', '');
 
-        $lis.eq(0).addClass('spacer spacer-before').css('marginTop', (position0 * liHeight) + 'px');
+        $lis.eq(0).addClass('spacer spacer-before').css('marginTop', (that.viewObj.position0 * liHeight) + 'px');
         $lis.eq(rows - 1).addClass('spacer spacer-after').css('marginBottom', (size - position1) * liHeight + 'px');
 
         if (!that.options.liveSearch) {
@@ -1270,7 +1267,7 @@
       var that = this,
           $selectOptions = this.$element.find('option');
 
-      $(that.visibleLis.join('')).each(function() {
+      $(that.viewObj.visibleLis.join('')).each(function() {
         var index = $(this).data('originalIndex'),
             option = $selectOptions.eq(index)[0];
 
@@ -1292,7 +1289,7 @@
       $lis.toggleClass('selected', selected).find('a').attr('aria-selected', selected);
 
       if ($lis.length) {      
-        this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
+        this.viewObj.visibleLis[liIndex - this.viewObj.position0] = $lis[0].outerHTML;
 
         $lis.toggleClass('active', selected && !this.multiple);
 
@@ -1318,7 +1315,7 @@
       }
 
       if ($lis.length) {
-        this.visibleLis[liIndex - this.position0] = $lis[0].outerHTML;
+        this.viewObj.visibleLis[liIndex - this.viewObj.position0] = $lis[0].outerHTML;
 
         if (this._lis[liIndex] !== $lis[0].outerHTML) {
           this._lis[liIndex] = $lis[0].outerHTML;
@@ -1720,7 +1717,6 @@
           isActive,
           $liActive,
           rowRemainder = 2,
-          position0,
           selector = ':not(.disabled, .hidden, .dropdown-header, .divider)',
           keyCodeMap = {
             32: ' ',
@@ -1820,7 +1816,6 @@
         }
 
         that.$menuInner.data('prevIndex', index);
-        position0 = that.$menuInner.data('position0');
 
         e.preventDefault();
         $liActive = $items.removeClass('active').eq(index).addClass('active');
@@ -1836,29 +1831,29 @@
 
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollTop + that.sizeInfo.liHeight;
 
-            $liActive = $(that._currentLis[index + position0]);
-          } else if (position0 !== 0 && index === 0) {
+            $liActive = $(that.viewObj._currentLis[index + that.viewObj.position0]);
+          } else if (that.viewObj.position0 !== 0 && index === 0) {
             that.doneScrolling = false;
 
             that.$menuInner.scrollTop(0);
 
-            $liActive = $(that._currentLis[0]);
+            $liActive = $(that.viewObj._currentLis[0]);
           }
         } else if (e.keyCode == 38) { // up
-          if (position0 !== 0 && (index === $items.length - 1 || index < 2 && that._currentLis.length - position0 === $items.length)) {
+          if (that.viewObj.position0 !== 0 && (index === $items.length - 1 || index < 2 && that.viewObj._currentLis.length - that.viewObj.position0 === $items.length)) {
             that.doneScrolling = false;
 
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollTop - that.sizeInfo.liHeight;
 
             if (index === $items.length - 1) index = -1;
 
-            $liActive = $(that._currentLis[position0 + index]);
+            $liActive = $(that.viewObj._currentLis[that.viewObj.position0 + index]);
           } else if (index === $items.length - 1) {
             that.doneScrolling = false;
 
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollHeight;
 
-            $liActive = $(that._currentLis[that._currentLis.length - 1]);
+            $liActive = $(that.viewObj._currentLis[that.viewObj._currentLis.length - 1]);
           }
         }
 
