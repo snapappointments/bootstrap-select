@@ -541,6 +541,12 @@
       });
       
       function scroll(scrollTop, init) {
+        // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
+        if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth) {
+          that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
+          that.$menu.css('min-width', that.sizeInfo.menuWidth);
+        }
+
         position = Math.floor(scrollTop / liHeight);
         that.viewObj._currentLis = (refresh ? that._lis : that.viewObj._currentLis);
         var size = that.viewObj._currentLis.length;
@@ -615,6 +621,8 @@
     createLi: function () {
       var that = this,
           _li = [],
+          _liWidest = [],
+          widestOptionLength = 0,
           _liText = [],
           optID = 0,
           headerIndex = 0,
@@ -829,6 +837,32 @@
         }
 
         that.liObj[index] = liIndex;
+
+        // get the most recent option info added to _liText
+        var _liTextLast = _liText[_liText.length - 1];
+
+        var combinedLength = 0;
+
+        // count the number of characters in the option - not perfect, but should work in most cases
+        if (_liTextLast.content) combinedLength += _liTextLast.content.length;
+        if (_liTextLast.subtext) combinedLength += _liTextLast.subtext.length;
+        // if there is an icon, ensure this option's width is checked
+        if (icon) combinedLength += 1;
+
+        if (combinedLength > widestOptionLength) {
+          widestOptionLength = combinedLength;
+
+          // add the top 50 widest options to the _liWidest array.
+          // these options are added to the menu in the liHeight function to properly calculate the widest option.
+          // 50 is an arbitrary number chosen to increase the chances of actually including the widest option
+          // adding all options would obviously always result in the correct width, but the performance hit for a select
+          //  with thousands of options is too great to ignore
+          _liWidest.push(_li[_li.length - 1]);
+
+          if (_liWidest.length > 50) {
+            _liWidest.shift();
+          }
+        }
       });
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
@@ -838,6 +872,7 @@
       
       this._lis = _li;
       this._lisText = _liText;
+      this._liWidest = _liWidest;
     },
 
     findLis: function () {
@@ -955,6 +990,7 @@
 
       text.className = 'text';
       newElement.className = this.$menu[0].parentNode.className + ' open';
+      newElement.style.width = this.$newElement[0].offsetWidth + 'px';
       menu.className = 'dropdown-menu open';
       menuInner.className = 'dropdown-menu inner';
       divider.className = 'divider';
@@ -962,6 +998,8 @@
       text.appendChild(document.createTextNode('Inner text'));
       a.appendChild(text);
       li.appendChild(a);
+      
+      menuInner.innerHTML = this._liWidest.join('');
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
       if (header) menu.appendChild(header);
@@ -987,6 +1025,7 @@
           dividerHeight = $(divider).outerHeight(true),
           // fall back to jQuery if getComputedStyle is not supported
           menuStyle = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : false,
+          menuWidth = menu.offsetWidth,
           $menu = menuStyle ? null : $(menu),
           menuPadding = {
             vert: parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
@@ -1005,7 +1044,12 @@
             horiz: menuPadding.horiz +
                   parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
                   parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
-          }
+          },
+          scrollBarWidth;
+
+      menuInner.style.overflowY = 'scroll';
+
+      scrollBarWidth = menu.offsetWidth - menuWidth;
 
       document.body.removeChild(newElement);
 
@@ -1017,7 +1061,9 @@
         doneButtonHeight: doneButtonHeight,
         dividerHeight: dividerHeight,
         menuPadding: menuPadding,
-        menuExtras: menuExtras
+        menuExtras: menuExtras,
+        menuWidth: menuWidth,
+        scrollBarWidth: scrollBarWidth
       };
     },
 
@@ -1382,6 +1428,12 @@
       });
 
       this.$element.on('shown.bs.select', function () {
+        // set menu width
+        if (that.$menuInner[0].scrollHeight > that.$menuInner[0].clientHeight) {
+          that.sizeInfo.hasScrollBar = true;
+          that.$menu.css('min-width', that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth);
+        }
+
         if (!that.multiple) {
           var selectedIndex = that.liObj[that.$element[0].selectedIndex];
 
@@ -1796,7 +1848,7 @@
 
       if (/(38|40)/.test(e.keyCode.toString(10)) || downOnTab) { // if up or down
         // sometimes the scroll event is not fired, manually trigger it's if not
-        if (!that.doneScrolling && that.$menuInner[0].scrollHeight > that.$menuInner[0].offsetHeight) {
+        if (!that.doneScrolling && that.$menuInner[0].scrollHeight > that.$menuInner[0].clientHeight) {
           that.$menuInner.trigger('scroll.createView');
         }
         
