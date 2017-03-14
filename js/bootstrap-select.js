@@ -1302,16 +1302,20 @@
 
     setOptionStatus: function() {
       var that = this,
-          $selectOptions = this.$element.find('option');
+          $selectOptions = this.$element.find('option'),
+          visibleLen = that.viewObj.visibleLis.length;
 
-      if (that.viewObj.visibleLis) {
-        $(that.viewObj.visibleLis.join('')).each(function() {
-          var index = $(this).data('originalIndex'),
+      if (visibleLen) {
+        for (var i = 0; i < visibleLen; i++) {
+          var li = that.viewObj.visibleLis[i],
+              index = $(li).data('originalIndex'),
               option = $selectOptions.eq(index)[0];
 
-          that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
-          that.setSelected(index, option.selected);
-        });
+          if (li) {
+            that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
+            that.setSelected(index, option.selected);
+          }
+        }
       }
     },
 
