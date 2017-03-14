@@ -612,12 +612,6 @@
       });
     },
 
-    reloadLi: function () {
-      // rebuild
-      var li = this.createLi();
-      this.$menuInner[0].innerHTML = li;
-    },
-
     createLi: function () {
       var that = this,
           _li = [],
@@ -880,10 +874,7 @@
       return this.$lis;
     },
 
-    /**
-     * @param [updateLi] defaults to true
-     */
-    render: function (updateLi) {
+    render: function () {
       var that = this,
           notDisabled,
           $selectOptions = this.$element.find('option');
@@ -1313,13 +1304,15 @@
       var that = this,
           $selectOptions = this.$element.find('option');
 
-      $(that.viewObj.visibleLis.join('')).each(function() {
-        var index = $(this).data('originalIndex'),
-            option = $selectOptions.eq(index)[0];
+      if (that.viewObj.visibleLis) {
+        $(that.viewObj.visibleLis.join('')).each(function() {
+          var index = $(this).data('originalIndex'),
+              option = $selectOptions.eq(index)[0];
 
-        that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
-        that.setSelected(index, option.selected);
-      });
+          that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
+          that.setSelected(index, option.selected);
+        });
+      }
     },
 
     /**
@@ -1473,9 +1466,11 @@
             $options.prop('selected', false);
             $option.prop('selected', true);
             that.setSelected(clickedIndex, true);
+            that.$menuInner.trigger('scroll.createView');
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
             that.setSelected(clickedIndex, !state);
+            that.$menuInner.trigger('scroll.createView');
             $this.blur();
 
             if (maxOptions !== false || maxOptionsGrp !== false) {
@@ -1601,8 +1596,7 @@
       });
 
       this.$element.change(function () {
-        that.render(false);
-        that.createView();
+        that.render();
         that.$element.trigger('changed.bs.select', changed_arguments);
         changed_arguments = null;
       });
@@ -1735,7 +1729,7 @@
 
       $(selectedOptions).prop('selected', status);
 
-      this.render(false);
+      this.render();
 
       this.togglePlaceholder();
 
@@ -1974,7 +1968,8 @@
     refresh: function () {
       this.$lis = null;
       this.liObj = {};
-      this.reloadLi();
+      this.createLi();
+      this.setOptionStatus();
       this.render();
       this.checkDisabled();
       this.liHeight(true);
