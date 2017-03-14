@@ -709,7 +709,7 @@
     },
 
     findLis: function () {
-      if (this.$lis == null) this.$lis = this.$menu.find('li');
+      if (this.$lis == null) this.$lis = this.$menu.find('ul.dropdown-menu > li');
       return this.$lis;
     },
 
