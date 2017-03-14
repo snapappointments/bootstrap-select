@@ -658,7 +658,7 @@
         return '<li' +
             ((typeof classes !== 'undefined' && '' !== classes) ? ' class="' + classes + '"' : '') +
             ((typeof index !== 'undefined' && null !== index) ? ' data-original-index="' + index + '"' : '') +
-            ((typeof optgroup !== 'undefined' && null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
+            ((typeof optgroup !== 'undefined' && null !== optgroup) ? ' data-optgroup="' + optgroup + '"' : '') +
             '>' + content + '</li>';
       };
 
@@ -1334,7 +1334,7 @@
               index = $(li).data('originalIndex'),
               option = $selectOptions.eq(index)[0];
 
-          if (li) {
+          if (option) {
             that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
             that.setSelected(index, option.selected);
           }
