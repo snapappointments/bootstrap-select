@@ -575,12 +575,12 @@
 
           that.viewObj._currentLis[that.viewObj.currentliObj[that.activeIndex]] = $active.addClass('active')[0].outerHTML;
 
-          if (that.activeIndex && that.activeIndex !== that.selectedIndex && $selected.length) {
+          if (that.activeIndex && that.activeIndex !== that.selectedIndex && $selected && $selected.length) {
             that.viewObj._currentLis[that.viewObj.currentliObj[that.selectedIndex]] = $selected.removeClass('active')[0].outerHTML;
           }
         }
 
-        if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && $prevActive) {
+        if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && $prevActive && $prevActive.length) {
           that.viewObj._currentLis[that.viewObj.currentliObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
         }
 
@@ -606,7 +606,7 @@
         if (!that.options.liveSearch) {
           $lis.filter('.active').children('a').focus();
         } else if (searchLis && init) {
-          $lis.eq(0).addClass('active');
+          $lis.removeClass('active').eq(0).addClass('active');
         }
 
         that.doneScrolling = true;
@@ -1311,6 +1311,8 @@
       var that = this,
           $selectOptions = this.$element.find('option');
 
+      that.noScroll = false;
+
       if (that.viewObj.visibleLis && that.viewObj.visibleLis.length) {
         for (var i = 0; i < that.viewObj.visibleLis.length; i++) {
           var li = that.viewObj.visibleLis[i],
@@ -1331,17 +1333,19 @@
      */
     setSelected: function (index, selected) {
       var liIndex = this.liObj[index],
-          $lis = $(this._lis[liIndex]);
+          $lis = $(this._lis[liIndex]),
+          visibleLiIndex;
       
       if (selected) this.selectedIndex = index;
 
       $lis.toggleClass('selected', selected).find('a').attr('aria-selected', selected);
 
       if ($lis.length) {
-        // set this if not searching (should be automatically updated when searching, so don't need to do it again - would also cause duplicates to show in results)
-        if (this.viewObj.currentliObj === this.liObj) {
-          this.viewObj.visibleLis[liIndex - this.viewObj.position0] = $lis[0].outerHTML;
-        }
+        visibleLiIndex = this.viewObj.currentliObj[index] - this.viewObj.position0;
+
+        if ($(this.viewObj.visibleLis[visibleLiIndex]).hasClass('active')) $lis.addClass('active');
+
+        this.viewObj.visibleLis[visibleLiIndex] = $lis[0].outerHTML;
 
         $lis.toggleClass('active', selected && !this.multiple);
 
@@ -1357,20 +1361,19 @@
      */
     setDisabled: function (index, disabled) {
       var liIndex = this.liObj[index],
-          $lis = $(this._lis[liIndex]);
+          $lis = $(this._lis[liIndex]),
+          visibleLiIndex;
 
       if (disabled) {
-        this.disabledIndex = index;
         $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1).attr('aria-disabled', true);
       } else {
         $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0).attr('aria-disabled', false);
       }
 
       if ($lis.length) {
-        // set this if not searching (should be automatically updated when searching, so don't need to do it again - would also cause duplicates to show in results)
-        if (this.viewObj.currentliObj === this.liObj) {
-          this.viewObj.visibleLis[liIndex - this.viewObj.position0] = $lis[0].outerHTML;
-        }
+        visibleLiIndex = this.viewObj.currentliObj[index] - this.viewObj.position0;
+
+        this.viewObj.visibleLis[visibleLiIndex] = $lis[0].outerHTML;
 
         if (this._lis[liIndex] !== $lis[0].outerHTML) {
           this._lis[liIndex] = $lis[0].outerHTML;
@@ -1777,7 +1780,7 @@
           isActive,
           $liActive,
           rowRemainder = 2,
-          selector = ':not(.disabled, .hidden, .dropdown-header, .divider)',
+          selector = ':not(.disabled, .dropdown-header, .divider)',
           keyCodeMap = {
             32: ' ',
             48: '0',
@@ -1878,7 +1881,8 @@
         that.$menuInner.data('prevIndex', index);
 
         e.preventDefault();
-        $liActive = $items.removeClass('active').eq(index).addClass('active');
+        that.findLis().removeClass('active');
+        $liActive = $items.eq(index).addClass('active');
 
         if (e.keyCode == 40 || downOnTab) { // down
           // check to see how many options are hidden at the bottom of the menu (1 or 2 depending on scroll position)
