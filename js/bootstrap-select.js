@@ -1862,10 +1862,10 @@
         if (!that.doneScrolling && that.$menuInner[0].scrollHeight > that.$menuInner[0].clientHeight) {
           that.$menuInner.trigger('scroll.createView');
         }
-        
-        $items = that.findLis().filter(selector);
+
+        $items = that.findLis();
         if (!$items.length) return;
-        
+
         index = $items.index($items.filter('.active'));
 
         prevIndex = that.$menuInner.data('prevIndex');
@@ -1876,13 +1876,20 @@
         } else if (e.keyCode == 40 || downOnTab) { // down
           index++;
           index = index % $items.length;
+
+          if (!$items.eq(index).filter(selector).length) {
+            index = $items.index($items.eq(index).nextAll(selector).eq(0));
+
+            if (index === -1) {
+              index = that.liObj[that.$element.find('option').index(that.$element.find('option').slice($items.eq(prevIndex).data('originalIndex') + 1).filter(':not(:disabled)').eq(0))];
+            }
+          }
         }
 
         that.$menuInner.data('prevIndex', index);
 
         e.preventDefault();
-        that.findLis().removeClass('active');
-        $liActive = $items.eq(index).addClass('active');
+        $liActive = $items.removeClass('active').eq(index).addClass('active');
 
         if (e.keyCode == 40 || downOnTab) { // down
           // check to see how many options are hidden at the bottom of the menu (1 or 2 depending on scroll position)
