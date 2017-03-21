@@ -1,7 +1,7 @@
 /*
- * Translated default messages for bootstrap-select.
- * Locale: EN (English)
- * Region: US (United States)
+ * Dịch các văn bản mặc định cho bootstrap-select.
+ * Locale: VI (Vietnamese)
+ * Region: VN (Việt Nam)
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
