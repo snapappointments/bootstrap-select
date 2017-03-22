@@ -695,7 +695,8 @@
             isOptgroup = $parent[0].tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && $parent[0].disabled,
             isDisabled = this.disabled || isOptgroupDisabled,
-            prevHiddenIndex;
+            prevHiddenIndex,
+            showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
 
         if (icon !== '' && isDisabled) {
           icon = '<span>' + icon + '</span>';
@@ -709,6 +710,29 @@
           $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
 
           liIndex--;
+
+          // if previous element is not an optgroup
+          if (!showDivider) {
+            if (prevHiddenIndex !== undefined) {
+              // select the element **before** the first hidden element in the group
+              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              
+              if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
+                showDivider = true;
+              }
+            }
+          }
+
+          if (showDivider && _liText[_liText.length - 1].type !== 'divider') {
+            liIndex++;
+            _li.push(generateLI('', null, 'divider', optID + 'div'));
+            _liText.push({
+              type: 'divider',
+              optID: optID,
+              originalIndex: index
+            });
+          }
+
           return;
         }
 
@@ -789,8 +813,6 @@
             originalIndex: index
           });
         } else {
-          var showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
-
           // if previous element is not an optgroup and hideDisabled is true
           if (!showDivider && that.options.hideDisabled) {
             prevHiddenIndex = $this.data('prevHiddenIndex');
@@ -805,7 +827,7 @@
             }
           }
 
-          if (showDivider) {
+          if (showDivider && _liText[_liText.length - 1].type !== 'divider') {
             liIndex++;
             _li.push(generateLI('', null, 'divider', optID + 'div'));
             _liText.push({
