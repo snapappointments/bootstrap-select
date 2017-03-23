@@ -646,7 +646,13 @@
         if (!that.options.liveSearch) {
           $lis.filter('.active').children('a').focus();
         } else if (searchLis && init) {
-          $lis.removeClass('active').eq(0).addClass('active');
+          var index = 0;
+
+          if (!that.canHighlight[index]) {
+            index = 1 + that.canHighlight.slice(1).indexOf(true);
+          }
+
+          $lis.removeClass('active').eq(index).addClass('active');
         }
 
         that.doneScrolling = true;
@@ -1738,10 +1744,12 @@
             }
 
             if (cache[i] && li.headerIndex !== undefined && cacheArr.indexOf(li.headerIndex) === -1) {
-              cache[li.headerIndex - 1] = true;
-              cache[li.headerIndex] = true;
+              if (li.headerIndex > 0) {
+                cache[li.headerIndex - 1] = true;
+                cacheArr.push(li.headerIndex - 1);
+              }
 
-              cacheArr.push(li.headerIndex - 1);
+              cache[li.headerIndex] = true;
               cacheArr.push(li.headerIndex);
               
               cache[li.lastIndex + 1] = true;
