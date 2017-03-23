@@ -197,6 +197,10 @@
     return haystack.startsWith(meta[3].toUpperCase());
   };
 
+  function toInteger(value) {
+    return parseInt(value, 10) || 0;
+  }
+
   /**
    * Remove all diatrics from the given text.
    * @access private
@@ -518,6 +522,7 @@
       var that = this;
       this.viewObj._currentLis = (searchLis ? searchLis : this._lis);
       this.viewObj.currentliObj = searchLis ? this.liObjSearch : this.liObj;
+      this.viewObj._currentlisText = searchLis ? this._searchLisText : this._lisText;
       var liHeight = this.sizeInfo['liHeight'];
       var position = 0;
       var $lis;
@@ -527,13 +532,36 @@
       var activeIndex;
       var prevActiveIndex;
 
+      that.canHighlight = [];
+
+      for (var i = 0; i < that.viewObj._currentlisText.length; i++) {
+        var li = that.viewObj._currentlisText[i],
+            canHighlight = true;
+
+        if (li.type === 'divider') {
+          canHighlight = false;
+          li.height = that.sizeInfo.dividerHeight;
+        } else if (li.type === 'optgroup-label') {
+          canHighlight = false;
+          li.height = that.sizeInfo.dropdownHeaderHeight;
+        } else {
+          li.height = that.sizeInfo.liHeight;
+        }
+
+        if (li.disabled) canHighlight = false;
+
+        that.canHighlight.push(canHighlight);
+
+        li.position = (i === 0 ? 0 : that.viewObj._currentlisText[i - 1].position) + li.height;
+      }
+
       scroll(0, true);
 
       this.$menuInner.off('scroll.createView').on('scroll.createView', function(e) {
         if (!that.noScroll) scroll(this.scrollTop);
         that.noScroll = false;
       });
-      
+
       function scroll(scrollTop, init) {
         // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
         if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth) {
@@ -583,12 +611,14 @@
 
         var activePosition = activeIndex - that.viewObj.position0;
 
-        var $spacers = $lis.filter('.spacer');
-        $spacers.filter('.spacer-before').removeClass('spacer spacer-before').css('marginTop', '');
-        $spacers.filter('.spacer-after').removeClass('spacer spacer-after').css('marginBottom', '');
+        var $liFirst = $lis.eq(0),
+            $liLast = $lis.eq(rows - 1);
 
-        $lis.eq(0).addClass('spacer spacer-before').css('marginTop', (that.viewObj.position0 * liHeight) + 'px');
-        $lis.eq(rows - 1).addClass('spacer spacer-after').css('marginBottom', (size - position1) * liHeight + 'px');
+        var marginTop = toInteger($liFirst.css('marginTop')) + (that.viewObj.position0 === 0 ? 0 : that.viewObj._currentlisText[that.viewObj.position0 - 1].position);
+        var marginBottom = toInteger($liLast.css('marginBottom')) + (position1 > size - 1 ? 0 : that.viewObj._currentlisText[size - 1].position - that.viewObj._currentlisText[position1 - 1].position);
+
+        $liFirst.css('marginTop', marginTop + 'px');
+        $liLast.css('marginBottom', marginBottom + 'px');
 
         if (!that.options.liveSearch) {
           $lis.filter('.active').children('a').focus();
@@ -851,6 +881,8 @@
         // get the most recent option info added to _liText
         var _liTextLast = _liText[_liText.length - 1];
 
+        _liTextLast.disabled = isDisabled;
+
         var combinedLength = 0;
 
         // count the number of characters in the option - not perfect, but should work in most cases
@@ -987,6 +1019,7 @@
           menu = document.createElement('div'),
           menuInner = document.createElement('ul'),
           divider = document.createElement('li'),
+          dropdownHeader = document.createElement('li'),
           li = document.createElement('li'),
           a = document.createElement('a'),
           text = document.createElement('span'),
@@ -1001,14 +1034,17 @@
       menu.className = 'dropdown-menu open';
       menuInner.className = 'dropdown-menu inner';
       divider.className = 'divider';
+      dropdownHeader.className = 'dropdown-header';
 
       text.appendChild(document.createTextNode('Inner text'));
       a.appendChild(text);
       li.appendChild(a);
+      dropdownHeader.appendChild(text.cloneNode(true));
       
       menuInner.innerHTML = this._liWidest.join('');
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
+      menuInner.appendChild(dropdownHeader);
       if (header) menu.appendChild(header);
       if (search) {
         var input = document.createElement('input');
@@ -1025,32 +1061,33 @@
       document.body.appendChild(newElement);
 
       var liHeight = a.offsetHeight,
+          dropdownHeaderHeight = dropdownHeader ? dropdownHeader.offsetHeight : 0,
           headerHeight = header ? header.offsetHeight : 0,
           searchHeight = search ? search.offsetHeight : 0,
           actionsHeight = actions ? actions.offsetHeight : 0,
           doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
           // fall back to jQuery if getComputedStyle is not supported
-          menuStyle = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : false,
+          menuStyle = window.getComputedStyle ? window.getComputedStyle(menu) : false,
           menuWidth = menu.offsetWidth,
           $menu = menuStyle ? null : $(menu),
           menuPadding = {
-            vert: parseInt(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
-                  parseInt(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
-                  parseInt(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
-                  parseInt(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
-            horiz: parseInt(menuStyle ? menuStyle.paddingLeft : $menu.css('paddingLeft')) +
-                  parseInt(menuStyle ? menuStyle.paddingRight : $menu.css('paddingRight')) +
-                  parseInt(menuStyle ? menuStyle.borderLeftWidth : $menu.css('borderLeftWidth')) +
-                  parseInt(menuStyle ? menuStyle.borderRightWidth : $menu.css('borderRightWidth'))
+            vert: toInteger(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
+                  toInteger(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
+                  toInteger(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
+                  toInteger(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
+            horiz: toInteger(menuStyle ? menuStyle.paddingLeft : $menu.css('paddingLeft')) +
+                  toInteger(menuStyle ? menuStyle.paddingRight : $menu.css('paddingRight')) +
+                  toInteger(menuStyle ? menuStyle.borderLeftWidth : $menu.css('borderLeftWidth')) +
+                  toInteger(menuStyle ? menuStyle.borderRightWidth : $menu.css('borderRightWidth'))
           },
           menuExtras =  {
             vert: menuPadding.vert +
-                  parseInt(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
-                  parseInt(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
+                  toInteger(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
+                  toInteger(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
             horiz: menuPadding.horiz +
-                  parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
-                  parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
+                  toInteger(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
+                  toInteger(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
           },
           scrollBarWidth;
 
@@ -1062,6 +1099,7 @@
 
       this.sizeInfo = {
         liHeight: liHeight,
+        dropdownHeaderHeight: dropdownHeaderHeight,
         headerHeight: headerHeight,
         searchHeight: searchHeight,
         actionsHeight: actionsHeight,
@@ -1382,6 +1420,8 @@
       if ($lis.length) {
         visibleLiIndex = this.viewObj.currentliObj[index] - this.viewObj.position0;
 
+        if ($(this.viewObj.visibleLis[visibleLiIndex]).hasClass('active')) $lis.addClass('active');
+
         this.viewObj.visibleLis[visibleLiIndex] = $lis[0].outerHTML;
 
         if (this._lis[liIndex] !== $lis[0].outerHTML) {
@@ -1656,6 +1696,7 @@
         var searchValue = that.$searchbox.val();
         
         that.liObjSearch = {};
+        that._searchLisText = [];
 
         if (searchValue) {
           var i,
@@ -1693,6 +1734,7 @@
                 liPrev = that._lisText[prevIndex];
                 
             if ( li.type !== 'divider' || ( li.type === 'divider' && liPrev && liPrev.type !== 'divider' && cacheLen - 1 !== i ) ) {
+              that._searchLisText.push(li);
               searchMatch.push(that._lis[index]);
               that.liObjSearch[li.originalIndex] = searchMatch.length - 1;
             }
@@ -1785,7 +1827,6 @@
           $items,
           that = $parent.data('this'),
           index,
-          prevIndex,
           isActive,
           $liActive,
           rowRemainder = 2,
@@ -1877,28 +1918,26 @@
 
         index = $items.index($items.filter('.active'));
 
-        prevIndex = that.$menuInner.data('prevIndex');
-
         if (e.keyCode == 38) { // up
           if (index !== -1) index--;
-          if (index < 0) index += $items.length;
+          if (index + that.viewObj.position0 < 0) index += $items.length;
+
+          if (!that.canHighlight[index + that.viewObj.position0]) {
+            index = that.canHighlight.slice(0, index + that.viewObj.position0).lastIndexOf(true) - that.viewObj.position0;
+          }
         } else if (e.keyCode == 40 || downOnTab) { // down
           index++;
-          index = index % $items.length;
+          if (index + that.viewObj.position0 >= that.canHighlight.length) index = 0;
 
-          if (!$items.eq(index).filter(selector).length) {
-            index = $items.index($items.eq(index).nextAll(selector).eq(0));
-
-            if (index === -1) {
-              index = that.liObj[that.$element.find('option').index(that.$element.find('option').slice($items.eq(prevIndex).data('originalIndex') + 1).filter(':not(:disabled)').eq(0))];
-            }
+          if (!that.canHighlight[index + that.viewObj.position0]) {
+            index = index + 1 + that.canHighlight.slice(index + that.viewObj.position0 + 1).indexOf(true);
           }
         }
 
-        that.$menuInner.data('prevIndex', index);
-
         e.preventDefault();
         $liActive = $items.removeClass('active').eq(index).addClass('active');
+
+        var activeLi, offset;
 
         if (e.keyCode == 40 || downOnTab) { // down
           // check to see how many options are hidden at the bottom of the menu (1 or 2 depending on scroll position)
@@ -1909,7 +1948,10 @@
           if (index >= $items.length - rowRemainder) {
             that.doneScrolling = false;
 
-            that.$menuInner[0].scrollTop = that.$menuInner[0].scrollTop + that.sizeInfo.liHeight;
+            activeLi = that.viewObj._currentlisText[index + that.viewObj.position0];
+            offset = activeLi.position - that.sizeInfo.menuInnerHeight;
+
+            that.$menuInner[0].scrollTop = offset;
 
             $liActive = $(that.viewObj._currentLis[index + that.viewObj.position0]);
           } else if (that.viewObj.position0 !== 0 && index === 0) {
@@ -1920,10 +1962,13 @@
             $liActive = $(that.viewObj._currentLis[0]);
           }
         } else if (e.keyCode == 38) { // up
-          if (that.viewObj.position0 !== 0 && (index === $items.length - 1 || index < 2 && that.viewObj._currentLis.length - that.viewObj.position0 === $items.length)) {
+          if (that.viewObj.position0 !== 0 && (index === $items.length - 1 || index < 2 && that.viewObj._currentLis.length - that.viewObj.position0 >= $items.length)) {
             that.doneScrolling = false;
 
-            that.$menuInner[0].scrollTop = that.$menuInner[0].scrollTop - that.sizeInfo.liHeight;
+            activeLi = that.viewObj._currentlisText[index + that.viewObj.position0];
+            offset = activeLi.position - activeLi.height;
+
+            that.$menuInner[0].scrollTop = offset;
 
             if (index === $items.length - 1) index = -1;
 
