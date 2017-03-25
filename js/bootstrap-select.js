@@ -394,7 +394,7 @@
       this.checkDisabled();
       this.clickListener();
       if (this.options.liveSearch) this.liveSearchListener();
-      this.render();
+      this.render(false);
       this.setStyle();
       this.setWidth();
       if (this.options.container) this.selectPosition();
@@ -549,12 +549,15 @@
        * @param [tokens]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline, tokens) {
-        return '<a tabindex="0"' +
+      var generateA = function (text, classes, inline, tokens, selected, disabled) {
+        return '<a tabindex="' + -disabled + '"' +
+            (disabled ? ' href="#"' : '') +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (inline ? ' style="' + inline + '"' : '') +
             (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape($(text).html())) + '"' : '') +
-            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
+            (typeof tokens !== 'undefined' && tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
+            ' aria-selected="' + selected + '"' +
+            ' aria-disabled="' + disabled + '"' +
             ' role="option">' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
             '</a>';
@@ -594,14 +597,15 @@
         // Get the class and text for the option
         var optionClass = this.className || '',
             inline = htmlEscape(this.style.cssText),
-            text = $this.data('content') ? $this.data('content') : $this.html(),
-            tokens = $this.data('tokens') ? $this.data('tokens') : null,
+            text = $this.data('content') || this.innerHTML,
+            tokens = $this.data('tokens') || null,
             subtext = typeof $this.data('subtext') !== 'undefined' ? '<small class="text-muted">' + $this.data('subtext') + '</small>' : '',
             icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
             $parent = $this.parent(),
             isOptgroup = $parent[0].tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && $parent[0].disabled,
             isDisabled = this.disabled || isOptgroupDisabled,
+            liClass = (this.selected ? 'selected' : '')+(isDisabled ? ' disabled' : ''),
             prevHiddenIndex;
 
         if (icon !== '' && isDisabled) {
@@ -639,7 +643,7 @@
 
           var optGroupClass = ' ' + $parent[0].className || '';
 
-          if ($this.index() === 0) { // Is it the first option of the optgroup?
+          if (!this.previousElementSibling) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
@@ -662,7 +666,7 @@
             return;
           }
 
-          _li.push(generateLI(generateA(text, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
+          _li.push(generateLI(generateA(text, 'opt ' + optionClass + optGroupClass, inline, tokens, this.selected, isDisabled), index, liClass, optID));
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
@@ -672,7 +676,7 @@
           prevHiddenIndex = $this.data('prevHiddenIndex');
           $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
 
-          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index, 'hidden is-hidden'));
+          _li.push(generateLI(generateA(text, optionClass, inline, tokens, this.selected, isDisabled), index, liClass+' hidden is-hidden'));
         } else {
           var showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
 
@@ -682,7 +686,7 @@
 
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
-              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              var prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
               
               if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
                 showDivider = true;
@@ -694,15 +698,15 @@
             liIndex++;
             _li.push(generateLI('', null, 'divider', optID + 'div'));
           }
-          _li.push(generateLI(generateA(text, optionClass, inline, tokens), index));
+          _li.push(generateLI(generateA(text, optionClass, inline, tokens, this.selected, isDisabled), index, liClass));
         }
 
         that.liObj[index] = liIndex;
       });
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
-      if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
-        this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
+      if (!this.multiple && $selectOptions.filter(':selected').length === 0 && !this.options.title) {
+        $selectOptions.eq(0).prop('selected', true).attr('selected', 'selected');
       }
 
       return _li.join('');
@@ -1717,7 +1721,7 @@
       this.$lis = null;
       this.liObj = {};
       this.reloadLi();
-      this.render();
+      this.render(false);
       this.checkDisabled();
       this.liHeight(true);
       this.setStyle();
