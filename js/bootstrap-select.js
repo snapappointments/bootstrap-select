@@ -385,10 +385,6 @@
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
-        $('label[for="' + id + '"]').click(function (e) {
-          e.preventDefault();
-          that.$button.focus();
-        });
       }
 
       this.checkDisabled();
@@ -1398,6 +1394,10 @@
         that.render(false);
         that.$element.trigger('changed.bs.select', changed_arguments);
         changed_arguments = null;
+      });
+
+      this.$element.focus(function () {
+        that.$button.focus();
       });
     },
 
