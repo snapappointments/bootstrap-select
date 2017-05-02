@@ -403,6 +403,17 @@
 
       this.checkDisabled();
       this.clickListener();
+
+      // we lazy loaded this select picker, so we need to make sure
+      // that we finish the rendering the first time someone actually activates
+      // the menu
+      if (this.options.lazyLoadLiElements === true) {
+        this.$button.one('click.dropdown.data-api', function (e) {
+          // render the menu
+          that.refresh();
+        });
+      }
+
       if (this.options.liveSearch) this.liveSearchListener();
       this.render();
       this.setStyle();
@@ -457,17 +468,6 @@
       setTimeout(function () {
         that.$element.trigger('loaded.bs.select');
       });
-
-      if (this.options.lazyLoadLiElements === true) {
-           // we lazy loaded this select picker, so we need to make sure that we finish the rendering the first time someone actually activates the menu
-           this.$newElement.on('show.bs.dropdown', function (e) {
-               // render the menu
-               that.refresh();
-
-               // we've rendered the menu, lazy load has been performed, no need to keep listening for this event
-               that.$newElement.off('show.bs.dropdown');
-           });
-      }
 
       this.options.initInProcess = false;
     },
@@ -1252,6 +1252,8 @@
         }
       });
 
+      //TODO: this should not happen before the list is initialised in case
+      //lazy loading option is used.
       this.$button.on('click', function () {
         that.setSize();
       });
