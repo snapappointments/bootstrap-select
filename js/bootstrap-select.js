@@ -410,7 +410,14 @@
       if (this.options.lazyLoadLiElements === true) {
         this.$button.one('click.dropdown.data-api', function (e) {
           // render the menu
-          that.refresh();
+          that.$lis = null;
+          that.liObj = {};
+          that.reloadLi();
+          that.render();
+          that.checkDisabled();
+          that.liHeight(true);
+          that.setStyle();
+          that.setWidth();
         });
       }
 
