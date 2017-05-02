@@ -363,6 +363,16 @@
       var that = this,
           id = this.$element.attr('id');
 
+      // remember that we are doing the init
+      this.options.initInProcess = true;
+      if (this.options.width === 'auto' && this.options.lazyLoadLiElements === true) {
+          // creates a bit of a problem for us. we would need to render the LIs to figure out their width
+          // that is what lazyLoading is all about avoiding.  these options are incompatible
+          // tell somebody and opt out of lazy load
+          console.log('Selectpicker option lazyLoadLiElements=true is incompatible with option width="auto".  Option \'lazyLoadLiElements\' has been reset to false, however this may cause serious performance degradation.');
+          this.options.lazyLoadLiElements = false;
+      }
+
       this.$element.addClass('bs-select-hidden');
 
       // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
@@ -447,6 +457,19 @@
       setTimeout(function () {
         that.$element.trigger('loaded.bs.select');
       });
+
+      if (this.options.lazyLoadLiElements === true) {
+           // we lazy loaded this select picker, so we need to make sure that we finish the rendering the first time someone actually activates the menu
+           this.$newElement.on('show.bs.dropdown', function (e) {
+               // render the menu
+               that.refresh();
+
+               // we've rendered the menu, lazy load has been performed, no need to keep listening for this event
+               that.$newElement.off('show.bs.dropdown');
+           });
+      }
+
+      this.options.initInProcess = false;
     },
 
     createDropdown: function () {
@@ -582,6 +605,8 @@
         }
       }
 
+      if (!this.options.initInProcess || this.options.lazyLoadLiElements !== true) { // skip LI creation when lazy loading
+
       var $selectOptions = this.$element.find('option');
 
       $selectOptions.each(function (index) {
@@ -700,6 +725,8 @@
         that.liObj[index] = liIndex;
       });
 
+      } // end if for skipping li creation when lazy loading
+
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
       if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
         this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
@@ -722,7 +749,7 @@
           $selectOptions = this.$element.find('option');
 
       //Update the LI to match the SELECT
-      if (updateLi !== false) {
+      if (updateLi !== false && (!this.options.initInProcess || this.options.lazyLoadLiElements !== true)) { // skip this if we are lazy loading
         $selectOptions.each(function (index) {
           var $lis = that.findLis().eq(that.liObj[index]);
 
@@ -735,28 +762,35 @@
 
       this.tabIndex();
 
-      var selectedItems = $selectOptions.map(function () {
-        if (this.selected) {
-          if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
+      var createOptionText = function(opt){
+          if (that.options.hideDisabled && (opt.disabled || opt.parentNode.tagName === 'OPTGROUP' && opt.parentNode.disabled)) return;
 
-          var $this = $(this),
+          var $this = $(opt),
               icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '',
               subtext;
 
           if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
-            subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
+              subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
           } else {
-            subtext = '';
+              subtext = '';
           }
           if (typeof $this.attr('title') !== 'undefined') {
-            return $this.attr('title');
+              return $this.attr('title');
           } else if ($this.data('content') && that.options.showContent) {
-            return $this.data('content').toString();
+              return $this.data('content').toString();
           } else {
-            return icon + $this.html() + subtext;
+              return icon + $this.html() + subtext;
           }
+      };
+
+      var selectedItems = (this.multiple || this.options.singleSelectPerfTweak !== true ? $selectOptions.map(function () {
+        if (this.selected) {
+            return createOptionText(this);
         }
-      }).toArray();
+      }).toArray() :
+        // only single select - do not need to iterate every single option
+        [ createOptionText(this.$element[0][this.$element[0].selectedIndex]) ]
+      );
 
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
@@ -790,7 +824,9 @@
       this.$button.attr('title', htmlUnescape($.trim(title.replace(/<[^>]*>?/g, ''))));
       this.$button.children('.filter-option').html(title);
 
-      this.$element.trigger('rendered.bs.select');
+      if (!this.options.initInProcess || this.options.lazyLoadLiElements !== true) { // this is very expensive on IE and we haven;t really rendered the select if we are lazy loading, so hold off on this event
+         this.$element.trigger('rendered.bs.select');
+      };
     },
 
     /**
