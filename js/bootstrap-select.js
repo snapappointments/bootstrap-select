@@ -1760,7 +1760,14 @@
   // ==============================
   function Plugin(option) {
     // get the args of the outer function..
-    var args = arguments;
+    //var args = arguments;
+	//Fix bug:
+	//			.selectpicker("val", "xxx") not work in ie9 #775
+	var args = [];
+    for (var i = 0, length = arguments.length; i < length; i++) {
+        args.push(arguments[i]);
+    }
+	
     // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
     // to get lost/corrupted in android 2.3 and IE9 #715 #775
     var _option = option;
