@@ -12,7 +12,7 @@
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        'Limiit on {n}' max',
+        'Limiit on {n} max',
         'Globaalne limiit on {n} max'
       ];
     },
