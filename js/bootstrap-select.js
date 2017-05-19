@@ -1230,7 +1230,7 @@
 
           // scroll to selected option
           var offset = that.$lis.eq(selectedIndex)[0].offsetTop - that.$menuInner[0].offsetTop;
-          offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
+          offset = offset - that.$menuInner[0].offsetHeight/2 + that.liHeight/2;
           that.$menuInner[0].scrollTop = offset;
         }
       });
