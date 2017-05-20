@@ -334,7 +334,7 @@
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
+      return (numSelected == 1) ? "{0} campaign selected" : "{0} campaigns selected";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
