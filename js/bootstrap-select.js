@@ -1036,7 +1036,7 @@
           'min-height': ''
         });
         $menuInner.css({
-          'max-height': menuHeight - menuPadding.vert + 'px',
+          'max-height': menuHeight - searchHeight - menuPadding.vert + 'px',
           'overflow-y': 'auto',
           'min-height': ''
         });
