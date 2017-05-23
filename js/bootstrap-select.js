@@ -311,7 +311,12 @@
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
+      if(numSelected == numTotal){
+        return 'All items selected';
+      }
+      else{
+          return (numSelected == 1) ? '{0} item selected' : '{0} items selected';
+      }
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
