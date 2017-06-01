@@ -554,6 +554,8 @@
       var $prevActive;
       var activeIndex;
       var prevActiveIndex;
+      var spacerTop = document.createElement('li'),
+          spacerBottom = document.createElement('li');
 
       that.canHighlight = [];
 
@@ -580,8 +582,8 @@
 
       scroll(0, true);
 
-      this.$menuInner.off('scroll.createView').on('scroll.createView', function(e) {
-        if (!that.noScroll) scroll(this.scrollTop);
+      this.$menuInner.off('scroll.createView').on('scroll.createView', function(e, updateValue) {
+        if (!that.noScroll) scroll(this.scrollTop, updateValue);
         that.noScroll = false;
       });
 
@@ -592,12 +594,39 @@
           that.$menu.css('min-width', that.sizeInfo.menuWidth);
         }
 
-        position = Math.floor(scrollTop / liHeight);
         that.viewObj._currentLis = (refresh ? that._lis : that.viewObj._currentLis);
+
         var size = that.viewObj._currentLis.length;
-        var rows = 2 + Math.ceil(that.sizeInfo.menuInnerHeight / liHeight);
-        that.viewObj.position0 = Math.max(0, Math.min(size - rows, position));
-        var position1 = that.viewObj.position0 + rows;
+        var chunks = [];
+        var chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / liHeight * 1.5); // number of options in a chunk
+        var chunkCount = Math.round(size / chunkSize); // number of chunks
+        var currentChunk = undefined;
+
+        for (var i = 0; i < chunkCount; i++) {
+          var end_of_chunk = (i + 1) * chunkSize;
+
+          if (i === chunkCount - 1) {
+            end_of_chunk = size;
+          }
+
+          chunks[i] = [
+            (i) * chunkSize + (!i ? 0 : 1),
+            end_of_chunk
+          ];
+
+          if (currentChunk === undefined && scrollTop <= that.viewObj._currentlisText[end_of_chunk - 1].position - that.sizeInfo.menuInnerHeight) {
+            currentChunk = i;
+          }
+        }
+
+        var prevPositions = [that.viewObj.position0, that.viewObj.position1];
+
+        var firstChunk = Math.max(0, currentChunk - 1);
+        var lastChunk = Math.min(chunkCount - 1, firstChunk + 2);
+
+        // always display 3 chunks
+        that.viewObj.position0 = Math.max(0, chunks[firstChunk][0]);
+        that.viewObj.position1 = Math.min(size, chunks[lastChunk][1]);
 
         if (that.activeIndex !== undefined) {
           $prevActive = $(that.viewObj._currentLis[that.viewObj.currentliObj[that.prevActiveIndex]]);
@@ -622,30 +651,30 @@
           that.viewObj._currentLis[that.viewObj.currentliObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
         }
 
-        that.viewObj.visibleLis = that.viewObj._currentLis.slice(that.viewObj.position0, position1);
+        if (init || prevPositions[0] !== that.viewObj.position0 || prevPositions[1] !== that.viewObj.position1) {
+          that.viewObj.visibleLis = that.viewObj._currentLis.slice(that.viewObj.position0, that.viewObj.position1);
 
-        that.setOptionStatus();
+          that.setOptionStatus();
 
-        that.$menuInner[0].innerHTML = that.viewObj.visibleLis.join('');
+          // set spacers
+          var marginTop = (that.viewObj.position0 === 0 ? 0 : that.viewObj._currentlisText[that.viewObj.position0 - 1].position);
+          var marginBottom = (that.viewObj.position1 > size - 1 ? 0 : that.viewObj._currentlisText[size - 1].position - that.viewObj._currentlisText[that.viewObj.position1 - 1].position);
 
-        $lis = that.$menuInner.find('li');
+          spacerTop.style.marginTop = marginTop + 'px';
+          spacerBottom.style.marginBottom = marginBottom + 'px';
+
+          that.$menuInner[0].innerHTML = [spacerTop.outerHTML].concat(that.viewObj.visibleLis, [spacerBottom.outerHTML]).join('');
+
+          //that.$menuInner.scrollTop(scrollTop);
+        }        
 
         that.prevActiveIndex = that.activeIndex;
 
-        var activePosition = activeIndex - that.viewObj.position0;
-
-        var $liFirst = $lis.eq(0),
-            $liLast = $lis.eq(rows - 1);
-
-        var marginTop = toInteger($liFirst.css('marginTop')) + (that.viewObj.position0 === 0 ? 0 : that.viewObj._currentlisText[that.viewObj.position0 - 1].position);
-        var marginBottom = toInteger($liLast.css('marginBottom')) + (position1 > size - 1 ? 0 : that.viewObj._currentlisText[size - 1].position - that.viewObj._currentlisText[position1 - 1].position);
-
-        $liFirst.css('marginTop', marginTop + 'px');
-        $liLast.css('marginBottom', marginBottom + 'px');
-
         if (!that.options.liveSearch) {
+          $lis = that.$menuInner.find('li');
           $lis.filter('.active').children('a').focus();
         } else if (searchLis && init) {
+          $lis = that.$menuInner.find('li');
           var index = 0;
 
           if (!that.canHighlight[index]) {
@@ -947,7 +976,7 @@
     },
 
     findLis: function () {
-      this.$lis = this.$menuInner.find('li');
+      this.$lis = this.$menuInner.find('li').slice(1, -1);
       return this.$lis;
     },
 
@@ -1563,11 +1592,11 @@
             $options.prop('selected', false);
             $option.prop('selected', true);
             that.setSelected(clickedIndex, true);
-            that.$menuInner.trigger('scroll.createView');
+            that.$menuInner.trigger('scroll.createView', true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
             that.setSelected(clickedIndex, !state);
-            that.$menuInner.trigger('scroll.createView');
+            that.$menuInner.trigger('scroll.createView', true);
             $this.blur();
 
             if (maxOptions !== false || maxOptionsGrp !== false) {
@@ -1935,7 +1964,7 @@
           that.$button.focus();
         }
       }
-      
+
       var downOnTab = e.keyCode == 9 && !$this.hasClass('dropdown-toggle') && !that.options.selectOnTab;
 
       if (/(38|40)/.test(e.keyCode.toString(10)) || downOnTab) { // if up or down
@@ -1945,6 +1974,7 @@
         }
 
         $items = that.findLis();
+
         if (!$items.length) return;
 
         index = $items.index($items.filter('.active'));
