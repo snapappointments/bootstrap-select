@@ -576,7 +576,7 @@
         var size = that.viewObj._currentLis.length;
         var chunks = [];
         var chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / liHeight * 1.5); // number of options in a chunk
-        var chunkCount = Math.round(size / chunkSize); // number of chunks
+        var chunkCount = Math.round(size / chunkSize) || 1; // number of chunks
         var currentChunk = undefined;
 
         for (var i = 0; i < chunkCount; i++) {
@@ -591,10 +591,14 @@
             end_of_chunk
           ];
 
+          if (!size) break;
+
           if (currentChunk === undefined && scrollTop <= that.viewObj._currentlisText[end_of_chunk - 1].position - that.sizeInfo.menuInnerHeight) {
             currentChunk = i;
           }
         }
+
+        if (currentChunk === undefined) currentChunk = 0;
 
         var prevPositions = [that.viewObj.position0, that.viewObj.position1];
 
