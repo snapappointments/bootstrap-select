@@ -94,5 +94,6 @@ Licensed under [the MIT license](LICENSE).
 * [Solve for All](https://solveforall.com)
 * [EstiMATEit](http://www.123itworks.co.uk)
 * [Convertizer](https://convertizer.com)
+* [Sejda PDF](https://www.sejda.com)
 
 Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.
