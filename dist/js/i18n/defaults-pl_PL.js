@@ -27,8 +27,8 @@
     noneResultsText: 'Brak wyników wyszukiwania {0}',
     countSelectedText: 'Zaznaczono {0} z {1}',
     maxOptionsText: ['Osiągnięto limit ({n} {var} max)', 'Limit grupy osiągnięty ({n} {var} max)', ['elementy', 'element']],
-    selectAll: 'Zaznacz wszystkie',
-    deselectAll: 'Odznacz wszystkie',
+    selectAllText: 'Zaznacz wszystkie',
+    deselectAllText: 'Odznacz wszystkie',
     multipleSeparator: ', '
   };
 })(jQuery);
