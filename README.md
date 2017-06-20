@@ -1,4 +1,4 @@
-bootstrap-select
+bootstrap-select-ajax
 ================
 
 [![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
@@ -10,6 +10,8 @@ bootstrap-select
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
 [![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
+
+Notice: This package is forked from [silviomoreto/bootstrap-select](https://github.com/silviomoreto/bootstrap-select). I just modify a little code for ajax. 
 
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
@@ -63,36 +65,3 @@ $('select').selectpicker();
 ```
 
 Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for further information.
-
-## CDN
-
-**N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
-
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css)
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js)
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js (The translation files)
-
-## Bugs and feature requests
-
-Anyone and everyone is welcome to contribute. **Please take a moment to
-review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're using the latest version of bootstrap-select before submitting an issue.
-
-* [Bug reports](CONTRIBUTING.md#bug-reports)
-* [Feature requests](CONTRIBUTING.md#feature-requests)
-
-## Copyright and license
-
-Copyright (C) 2013-2015 bootstrap-select
-
-Licensed under [the MIT license](LICENSE).
-
-## Used by
-
-* [SnapAppointments](https://snapappointments.com)
-* [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
-* [membermeister](https://www.membermeister.com)
-* [Solve for All](https://solveforall.com)
-* [EstiMATEit](http://www.123itworks.co.uk)
-* [Convertizer](https://convertizer.com)
-
-Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.

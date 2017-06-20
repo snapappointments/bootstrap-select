@@ -1,10 +1,10 @@
 {
-  "name": "bootstrap-select",
-  "title": "bootstrap-select",
-  "main": "dist/js/bootstrap-select.js",
-  "description": "Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
+  "name": "bootstrap-select-ajax",
+  "title": "bootstrap-select-ajax",
+  "main": "dist/js/bootstrap-select-ajax.js",
+  "description": "bootstrap-select-ajax is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
   "version": "1.12.2",
-  "homepage": "http://silviomoreto.github.io/bootstrap-select",
+  "homepage": "https://github.com/yy7054wyq5/bootstrap-select",
   "author": {
     "name": "Silvio Moreto",
     "url": "https://github.com/silviomoreto"
@@ -33,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/silviomoreto/bootstrap-select.git"
+    "url": "git://github.com/silviomoreto/bootstrap-select-ajax.git"
   },
   "license": "MIT",
   "dependencies": {
