@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.12.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.22 (https://github.com/yy7054wyq5/bootstrap-select)
  *
  * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -27,8 +27,8 @@
     noneResultsText: 'Brak wyników wyszukiwania {0}',
     countSelectedText: 'Zaznaczono {0} z {1}',
     maxOptionsText: ['Osiągnięto limit ({n} {var} max)', 'Limit grupy osiągnięty ({n} {var} max)', ['elementy', 'element']],
-    selectAllText: 'Zaznacz wszystkie',
-    deselectAllText: 'Odznacz wszystkie',
+    selectAll: 'Zaznacz wszystkie',
+    deselectAll: 'Odznacz wszystkie',
     multipleSeparator: ', '
   };
 })(jQuery);
