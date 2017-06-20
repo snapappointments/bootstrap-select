@@ -1417,7 +1417,8 @@
       this.$searchbox.on('click.dropdown.data-api focus.dropdown.data-api touchend.dropdown.data-api', function (e) {
         e.stopPropagation();
       });
-
+      
+      // change for ajax
       this.$searchbox.on('input propertychange', function () {
         that.$lis.not('.is-hidden').removeClass('hidden');
         that.$lis.filter('.active').removeClass('active');
