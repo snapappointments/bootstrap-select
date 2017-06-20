@@ -11,7 +11,7 @@ bootstrap-select-ajax
 [![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
 [![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
 
-Notice: This package is forked from [silviomoreto/bootstrap-select](https://github.com/silviomoreto/bootstrap-select). I just modify a little code for ajax. 
+Notice: This package is forked from [silviomoreto/bootstrap-select](https://github.com/silviomoreto/bootstrap-select). I just modify a little code for ajax(at line 1426 in js/boostrap-select-ajax.js).And i add a stamp in js file. 
 
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
@@ -31,14 +31,6 @@ Bootstrap-select's documentation, included in this repo in the root directory, i
 4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
 
 Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
-
-## Authors
-
-[Silvio Moreto](https://github.com/silviomoreto),
-[Ana Carolina](https://github.com/anacarolinats),
-[caseyjhol](https://github.com/caseyjhol),
-[Matt Bryson](https://github.com/mattbryson), and
-[t0xicCode](https://github.com/t0xicCode).
 
 ## Usage
 
@@ -65,3 +57,83 @@ $('select').selectpicker();
 ```
 
 Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for further information.
+
+
+## ajax 
+```html
+<select class="ajax-search" ajax-url="your ajax api" ajax-params="{#pnType#: #onePart#, #fromSys#: #scmship#}" ajax-option-name="name" ajax-option-value="value"></select>
+<!--ajax-url: string
+ajax-params: like json,but use '#' instead '"'
+ajax-option-name: Appoint your option name, the key of your response data
+ajax-option-value: Appoint your option value, the key of your response data-->
+
+<!--example:-->
+<!--the data: [{"name": "xiaoming", "age": 28},{"name": "xiaohong", "age": 28}]-->
+<!--<select class="ajax-search" ajax-url="your ajax api" ajax-params="{#pnType#: #onePart#, #fromSys#: #scmship#}" ajax-option-name="name" ajax-option-value="age"></select>-->
+
+```
+
+```javascript
+  /*
+  * ajax 
+  */
+  (function () {
+    var $ajaxSelect = $('select.ajax-search')
+    $ajaxSelect.selectpicker({
+      liveSearch: true,
+      size: 10,
+      container: 'body',
+      liveSearchPlaceholder: '输入搜索',
+      noneSelectedText: '输入搜索',
+    });
+    var api = $ajaxSelect.attr('ajax-url');
+    var params = JSON.parse($ajaxSelect.attr('ajax-params').replace(/#/g, '"'));
+    params.token = '12acc7ab069009f1b8a4be84ef3f0a20';
+    params.lang = 'zh';
+    var optionName = $ajaxSelect.attr('ajax-option-name');
+    var optionValue = $ajaxSelect.attr('ajax-option-value');
+
+    // 清除并刷新selectpicker的结构
+    function _refreshSelectPicker($obj, str) {
+      if (str) {
+        $obj.html(str).selectpicker('refresh');
+        return;
+      }
+      $obj.html(' ').selectpicker('refresh');
+    }
+
+    // 生成options
+    function _creatOptions(data) {
+      var options = '';
+      for (var index = 0; index < data.length; index++) {
+        options += '<option value=\"' + data[index][optionValue] + '\">' + data[index][optionName] + '</option>';
+      }
+      return options;
+    }
+
+    // 绑定搜索
+    $(document)
+      .on('keyup', '.bootstrap-select.open.ajax-search .bs-searchbox>input', function (e) {
+        if (event.key === 'Control') {
+          return;
+        }
+        if ($(this).val()) {
+          var index = layer.load(1);
+          // 异步操作
+          $.get(api, params)
+            .done(function (res) {
+              if (!res.status) {
+                _refreshSelectPicker($ajaxSelect, _creatOptions(res.data));
+              } else {
+                _refreshSelectPicker($ajaxSelect);
+              }
+            })
+            .always(function () {
+              layer.close(index);
+            });
+        } else {
+          _refreshSelectPicker($ajaxSelect);
+        }
+      });
+  })();
+```

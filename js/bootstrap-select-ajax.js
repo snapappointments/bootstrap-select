@@ -360,6 +360,7 @@
     constructor: Selectpicker,
 
     init: function () {
+      var stamp = Date.now();
       var that = this,
         id = this.$element.attr('id');
 
@@ -370,7 +371,7 @@
       this.liObj = {};
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
-      this.$newElement = this.createView();
+      this.$newElement = this.createView(stamp);
       this.$element
         .after(this.$newElement)
         .appendTo(this.$newElement);
@@ -397,7 +398,7 @@
       this.render();
       this.setStyle();
       this.setWidth();
-      if (this.options.container) this.selectPosition();
+      if (this.options.container) this.selectPosition(stamp);
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
       if (this.options.mobile) this.mobile();
@@ -449,8 +450,8 @@
       });
     },
 
-    createDropdown: function () {
-      var stamp = Date.now();
+    createDropdown: function (stamp) {
+  
       // Options
       // If we are multiple or showTick option is set, then add the show-tick class
       var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
@@ -486,7 +487,7 @@
         '</div>'
         : '';
       var drop =
-        '<div class="btn-group bootstrap-select' + showTick + inputGroup + '" data-stamp="' + stamp + '">' +
+        '<div class="btn-group bootstrap-select' + showTick + inputGroup + '" selectpicker-stamp="' + stamp + '">' +
         '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button">' +
         '<span class="filter-option pull-left"></span>&nbsp;' +
         '<span class="bs-caret">' +
@@ -506,8 +507,8 @@
       return $(drop);
     },
 
-    createView: function () {
-      var $drop = this.createDropdown(),
+    createView: function (stamp) {
+      var $drop = this.createDropdown(stamp),
         li = this.createLi();
 
       $drop.find('ul')[0].innerHTML = li;
@@ -1078,8 +1079,8 @@
       }
     },
 
-    selectPosition: function () {
-      this.$bsContainer = $('<div class="bs-container" />');
+    selectPosition: function (stamp) {
+      this.$bsContainer = $('<div class="bs-container" selectpicker-stamp="' + stamp + '" />');
 
       var that = this,
         $container = $(this.options.container),
@@ -1421,7 +1422,9 @@
 
       this.$searchbox.on('input propertychange', function () {
         // change for ajax
-        if (that.$lis.length === 0) {
+        // use ajax must remove li
+        // so that.$lis is null
+        if (!that.$lis) {
           return;
         }
         that.$lis.not('.is-hidden').removeClass('hidden');
