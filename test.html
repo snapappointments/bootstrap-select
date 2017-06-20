@@ -16,7 +16,8 @@
 
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="dist/js/bootstrap-select.js"></script>
+  <!--<script src="dist/js/bootstrap-select.js"></script>-->
+  <script src="js/bootstrap-select.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -28,6 +29,17 @@
 </nav>
 
 <div class="container">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="basic" class="col-lg-2 control-label">"ajax-search"</label>
+
+      <div class="col-lg-10">
+        <select class="ajax-search show-tick form-control">
+        </select>
+      </div>
+    </div>
+  </form>
+
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <label for="basic" class="col-lg-2 control-label">"Basic" (liveSearch disabled)</label>
