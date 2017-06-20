@@ -2,7 +2,7 @@
   "name": "bootstrap-select-ajax",
   "title": "bootstrap-select-ajax",
   "main": "dist/js/bootstrap-select-ajax.js",
-  "description": "bootstrap-select-ajax is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
+  "description": "bootstrap-select-ajax is forked from silviomoreto/bootstrap-select",
   "version": "1.12.22",
   "homepage": "https://github.com/yy7054wyq5/bootstrap-select",
   "author": {
