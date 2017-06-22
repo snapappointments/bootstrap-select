@@ -325,7 +325,7 @@
     doneButtonText: 'Close',
     multipleSeparator: ', ',
     styleBase: 'btn',
-    style: 'btn-default',
+    style: 'btn-default  btn-secondary', // bootstrap4: btn-default replaced by btn-secondary
     size: 'auto',
     title: null,
     selectedTextFormat: 'values',
@@ -466,10 +466,10 @@
       var actionsbox = this.multiple && this.options.actionsBox ?
       '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-group-sm btn-block">' +
-      '<button type="button" class="actions-btn bs-select-all btn btn-default">' +
+      '<button type="button" class="actions-btn bs-select-all btn btn-default btn-secondary">' +
       this.options.selectAllText +
       '</button>' +
-      '<button type="button" class="actions-btn bs-deselect-all btn btn-default">' +
+      '<button type="button" class="actions-btn bs-deselect-all btn btn-default btn-secondary">' +
       this.options.deselectAllText +
       '</button>' +
       '</div>' +
@@ -478,7 +478,7 @@
       var donebutton = this.multiple && this.options.doneButton ?
       '<div class="bs-donebutton">' +
       '<div class="btn-group btn-block">' +
-      '<button type="button" class="btn btn-sm btn-default">' +
+      '<button type="button" class="btn btn-sm btn-default btn-secondary">' +
       this.options.doneButtonText +
       '</button>' +
       '</div>' +
@@ -550,8 +550,10 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline, tokens) {
+        // support bootstrap v4: http://v4-alpha.getbootstrap.com/components/dropdowns/#single-button-dropdowns
+        classes = "dropdown-item " + (classes || "");
         return '<a tabindex="0"' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
+            ' class="' + classes + '"' +
             (inline ? ' style="' + inline + '"' : '') +
             (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape($(text).html())) + '"' : '') +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
