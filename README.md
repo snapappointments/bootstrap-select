@@ -61,7 +61,7 @@ Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for
 
 ## ajax 
 ```html
-<select class="ajax-search" ajax-url="your ajax api" ajax-params="{#pnType#: #onePart#, #fromSys#: #scmship#}" ajax-option-name="name" ajax-option-value="value"></select>
+<select class="ajax-search" ajax-url="xxx" ajax-params="{#wmsType#: #all#}" ajax-option-name="wmsName" ajax-option-value="id" ajax-search-key="searchkey"></select>
 <!--ajax-url: string
 ajax-params: like json,but use '#' instead '"'
 ajax-option-name: Appoint your option name, the key of your response data
@@ -75,38 +75,42 @@ ajax-option-value: Appoint your option value, the key of your response data-->
 
 ```javascript
   /*
-  * ajax 
+  * 异步搜索下拉框
   */
   (function () {
-    var $ajaxSelect = $('select.ajax-search')
-    $ajaxSelect.selectpicker({
+    if (!$('select.ajax-search').hasClass('ajax-search')) {
+      return;
+    }
+
+    $('select.ajax-search').selectpicker({
       liveSearch: true,
       size: 10,
       container: 'body',
       liveSearchPlaceholder: '输入搜索',
       noneSelectedText: '输入搜索',
     });
-    var api = $ajaxSelect.attr('ajax-url');
-    var params = JSON.parse($ajaxSelect.attr('ajax-params').replace(/#/g, '"'));
-    params.token = '12acc7ab069009f1b8a4be84ef3f0a20';
-    params.lang = 'zh';
-    var optionName = $ajaxSelect.attr('ajax-option-name');
-    var optionValue = $ajaxSelect.attr('ajax-option-value');
 
     // 清除并刷新selectpicker的结构
     function _refreshSelectPicker($obj, str) {
       if (str) {
         $obj.html(str).selectpicker('refresh');
+        if (location.href === 'http://scmstatic.loongjoy.com/v1/index.html') {
+
+        }
         return;
       }
       $obj.html(' ').selectpicker('refresh');
     }
 
     // 生成options
-    function _creatOptions(data) {
+    function _creatOptions(data, optionName, optionValue) {
       var options = '';
       for (var index = 0; index < data.length; index++) {
-        options += '<option value=\"' + data[index][optionValue] + '\">' + data[index][optionName] + '</option>';
+        var name = data[index][optionName];
+        if (name.indexOf('{') > -1 && name.indexOf('}') > -1) {
+          name = JSON.parse(name)[getLang()];
+        }
+        options += '<option value="' + data[index][optionValue] + '">' + name + '</option>';
       }
       return options;
     }
@@ -114,6 +118,15 @@ ajax-option-value: Appoint your option value, the key of your response data-->
     // 绑定搜索
     $(document)
       .on('keyup', '.bootstrap-select.open.ajax-search .bs-searchbox>input', function (e) {
+        var stamp = $(this).parents('.bootstrap-select.ajax-search.open').attr('selectpicker-stamp');
+        var $select = $('[selectpicker-stamp="' + stamp + '"]').find('select');
+        var api = $select.attr('ajax-url');
+        var params = JSON.parse($select.attr('ajax-params').replace(/#/g, '"'));
+        var optionName = $select.attr('ajax-option-name');
+        var optionValue = $select.attr('ajax-option-value');
+        params.token = $select.attr('ajax-token');
+        params.lang = getLang();
+        params[$select.attr('ajax-search-key')] = $('.bootstrap-select.ajax-search.open').find('input').val();
         if (event.key === 'Control') {
           return;
         }
@@ -123,16 +136,29 @@ ajax-option-value: Appoint your option value, the key of your response data-->
           $.get(api, params)
             .done(function (res) {
               if (!res.status) {
-                _refreshSelectPicker($ajaxSelect, _creatOptions(res.data));
+                _refreshSelectPicker($select, _creatOptions(res.data, optionName, optionValue));
               } else {
-                _refreshSelectPicker($ajaxSelect);
+                // demo页将展示模拟数据
+                if (isDemoPage()) {
+                  var mockData = [];
+                  for (var index = 0; index < 3; index++) {
+                    var mockObj = {};
+                    mockObj[optionName] = '测试选项' + index;
+                    mockObj[optionValue] = index;
+                    mockData.push(mockObj);
+                  }
+                  alert('展示的是token无效的假数据，不影响正常使用');
+                  _refreshSelectPicker($select, _creatOptions(mockData, optionName, optionValue));
+                }else{
+                  _refreshSelectPicker($select);
+                }
               }
             })
             .always(function () {
               layer.close(index);
             });
         } else {
-          _refreshSelectPicker($ajaxSelect);
+          _refreshSelectPicker($select);
         }
       });
   })();
