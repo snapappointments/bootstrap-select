@@ -383,6 +383,7 @@
       // store originalIndex (key) and newIndex (value) in this.liObj for fast accessibility
       // allows us to do this.$lis.eq(that.liObj[index]) instead of this.$lis.filter('[data-original-index="' + index + '"]')
       this.liObj = {};
+      this.optionObj = {};
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
       this.$newElement = this.createDropdown();
@@ -522,8 +523,10 @@
           header +
           searchbox +
           actionsbox +
-          '<ul class="dropdown-menu inner" role="listbox" aria-expanded="false">' +
-          '</ul>' +
+          '<div class="inner open" role="listbox" aria-expanded="false">' +
+              '<ul class="dropdown-menu inner">' +
+              '</ul>' +
+          '</div>' +
           donebutton +
           '</div>' +
           '</div>';
@@ -535,17 +538,16 @@
       var that = this;
       this.viewObj._currentLis = (searchLis ? searchLis : this._lis);
       this.viewObj.currentliObj = searchLis ? this.liObjSearch : this.liObj;
+      this.viewObj.current_optionObj = searchLis ? this.optionObjSearch : this.optionObj;
       this.viewObj._currentlisText = searchLis ? this._searchLisText : this._lisText;
       var liHeight = this.sizeInfo['liHeight'];
       var position = 0;
       var $lis;
-      var $active = [];
-      var $selected;
-      var $prevActive;
+      var active = [];
+      var selected;
+      var prevActive;
       var activeIndex;
       var prevActiveIndex;
-      var spacerTop = document.createElement('li'),
-          spacerBottom = document.createElement('li');
 
       that.canHighlight = [];
 
@@ -615,34 +617,34 @@
 
         var prevPositions = [that.viewObj.position0, that.viewObj.position1];
 
+        // always display 3 chunks
         var firstChunk = Math.max(0, currentChunk - 1);
         var lastChunk = Math.min(chunkCount - 1, firstChunk + 2);
 
-        // always display 3 chunks
-        that.viewObj.position0 = Math.max(0, chunks[firstChunk][0]);
-        that.viewObj.position1 = Math.min(size, chunks[lastChunk][1]);
+        that.viewObj.position0 = Math.max(0, chunks[firstChunk][0]) || 0;
+        that.viewObj.position1 = Math.min(size, chunks[lastChunk][1]) || 0;
 
         if (that.activeIndex !== undefined) {
-          $prevActive = $(that.viewObj._currentLis[that.viewObj.currentliObj[that.prevActiveIndex]]);
-          $active = $(that.viewObj._currentLis[that.viewObj.currentliObj[that.activeIndex]]);
-          $selected = $(that.viewObj._currentLis[that.viewObj.currentliObj[that.selectedIndex]]);
+          prevActive = that.viewObj._currentLis[that.viewObj.currentliObj[that.prevActiveIndex]];
+          active = that.viewObj._currentLis[that.viewObj.currentliObj[that.activeIndex]];
+          selected = that.viewObj._currentLis[that.viewObj.currentliObj[that.selectedIndex]];
 
           if (init) {
             if (that.activeIndex !== that.selectedIndex) {
-              that.viewObj._currentLis[that.viewObj.currentliObj[that.activeIndex]] = $active.removeClass('active')[0].outerHTML;
+              if (active.classList.contains('active')) active.classList.remove('active');
             }
             that.activeIndex = undefined;
           }
 
-          that.viewObj._currentLis[that.viewObj.currentliObj[that.activeIndex]] = $active.addClass('active')[0].outerHTML;
+          active.classList.add('active');
 
-          if (that.activeIndex && that.activeIndex !== that.selectedIndex && $selected && $selected.length) {
-            that.viewObj._currentLis[that.viewObj.currentliObj[that.selectedIndex]] = $selected.removeClass('active')[0].outerHTML;
+          if (that.activeIndex && that.activeIndex !== that.selectedIndex && selected && selected.length) {
+            if (selected.classList.contains('active')) selected.classList.remove('active');
           }
         }
 
-        if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && $prevActive && $prevActive.length) {
-          that.viewObj._currentLis[that.viewObj.currentliObj[that.prevActiveIndex]] = $prevActive.removeClass('active')[0].outerHTML;
+        if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && prevActive && prevActive.length) {
+          if (prevActive.classList.contains('active')) prevActive.classList.remove('active');
         }
 
         if (init || prevPositions[0] !== that.viewObj.position0 || prevPositions[1] !== that.viewObj.position1) {
@@ -650,16 +652,22 @@
 
           that.setOptionStatus();
 
-          // set spacers
-          var marginTop = (that.viewObj.position0 === 0 ? 0 : that.viewObj._currentlisText[that.viewObj.position0 - 1].position);
-          var marginBottom = (that.viewObj.position1 > size - 1 ? 0 : that.viewObj._currentlisText[size - 1].position - that.viewObj._currentlisText[that.viewObj.position1 - 1].position);
+          var menuInner = that.$menuInner[0],
+              menuFragment = document.createDocumentFragment(),
+              emptyMenu = menuInner.firstChild.cloneNode(false),
+              marginTop = (that.viewObj.position0 === 0 ? 0 : that.viewObj._currentlisText[that.viewObj.position0 - 1].position),
+              marginBottom = (that.viewObj.position1 > size - 1 ? 0 : that.viewObj._currentlisText[size - 1].position - that.viewObj._currentlisText[that.viewObj.position1 - 1].position);
 
-          spacerTop.style.marginTop = marginTop + 'px';
-          spacerBottom.style.marginBottom = marginBottom + 'px';
+          // replace the existing UL with an empty one - this is faster than $.empty()
+          menuInner.replaceChild(emptyMenu, menuInner.firstChild);
 
-          that.$menuInner[0].innerHTML = [spacerTop.outerHTML].concat(that.viewObj.visibleLis, [spacerBottom.outerHTML]).join('');
+          for (var i = 0, visibleLisLen = that.viewObj.visibleLis.length; i < visibleLisLen; i++) {
+            menuFragment.appendChild(that.viewObj.visibleLis[i]);
+          }
 
-          //that.$menuInner.scrollTop(scrollTop);
+          menuInner.firstChild.style.marginTop = marginTop + 'px';
+          menuInner.firstChild.style.marginBottom = marginBottom + 'px';
+          menuInner.firstChild.appendChild(menuFragment);
         }        
 
         that.prevActiveIndex = that.activeIndex;
@@ -708,11 +716,16 @@
        * @returns {string}
        */
       var generateLI = function (content, index, classes, optgroup) {
-        return '<li' +
-            ((typeof classes !== 'undefined' && '' !== classes) ? ' class="' + classes + '"' : '') +
-            ((typeof index !== 'undefined' && null !== index) ? ' data-original-index="' + index + '"' : '') +
-            ((typeof optgroup !== 'undefined' && null !== optgroup) ? ' data-optgroup="' + optgroup + '"' : '') +
-            '>' + content + '</li>';
+        var div = document.createElement('div'),
+            li = '<li' +
+                ((typeof classes !== 'undefined' && '' !== classes) ? ' class="' + classes + '"' : '') +
+                ((typeof index !== 'undefined' && null !== index) ? ' data-original-index="' + index + '"' : '') +
+                ((typeof optgroup !== 'undefined' && null !== optgroup) ? ' data-optgroup="' + optgroup + '"' : '') +
+                '>' + content + '</li>';
+
+        div.innerHTML = li;
+
+        return div.firstChild;
       };
 
       /**
@@ -929,6 +942,7 @@
         }
 
         that.liObj[index] = liIndex;
+        that.optionObj[liIndex] = index;
 
         // get the most recent option info added to _liText
         var _liTextLast = _liText[_liText.length - 1];
@@ -946,16 +960,10 @@
         if (combinedLength > widestOptionLength) {
           widestOptionLength = combinedLength;
 
-          // add the top 50 widest options to the _liWidest array.
-          // these options are added to the menu in the liHeight function to properly calculate the widest option.
-          // 50 is an arbitrary number chosen to increase the chances of actually including the widest option
-          // adding all options would obviously always result in the correct width, but the performance hit for a select
-          //  with thousands of options is too great to ignore
-          _liWidest.push(_li[_li.length - 1]);
-
-          if (_liWidest.length > 50) {
-            _liWidest.shift();
-          }
+          // guess which option is the widest
+          // use this when calculating menu width
+          // not perfect, but it's fast, and the width will be updating accordingly when scrolling
+          _liWidest = _li[_li.length - 1];
         }
       });
 
@@ -970,7 +978,7 @@
     },
 
     findLis: function () {
-      this.$lis = this.$menuInner.find('li').slice(1, -1);
+      this.$lis = this.$menuInner.find('li');
       return this.$lis;
     },
 
@@ -1092,8 +1100,8 @@
       a.appendChild(text);
       li.appendChild(a);
       dropdownHeader.appendChild(text.cloneNode(true));
-      
-      menuInner.innerHTML = this._liWidest.join('');
+
+      menuInner.appendChild(this._liWidest);
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
       menuInner.appendChild(dropdownHeader);
@@ -1219,7 +1227,7 @@
       getPos();
 
       if (this.options.size === 'auto') {
-        function getSize () {
+        var getSize = function () {
           var minHeight,
               hasClass = function (className, include) {
                 return function (element) {
@@ -1414,13 +1422,26 @@
 
       if (that.viewObj.visibleLis && that.viewObj.visibleLis.length) {
         for (var i = 0; i < that.viewObj.visibleLis.length; i++) {
-          var li = that.viewObj.visibleLis[i],
-              index = $(li).data('originalIndex'),
+          var index = that.viewObj.current_optionObj[i + that.viewObj.position0], // faster than $(li).data('originalIndex')
               option = $selectOptions.eq(index)[0];
 
           if (option) {
-            that.setDisabled(index, option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled);
-            that.setSelected(index, option.selected);
+            var liIndex = this.liObj[index],
+                li = this._lis[liIndex];
+
+            that.setDisabled(
+              index,
+              option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled,
+              liIndex,
+              li
+            );
+
+            that.setSelected(
+              index,
+              option.selected,
+              liIndex,
+              li
+            );
           }
         }
       }
@@ -1430,55 +1451,45 @@
      * @param {number} index - the index of the option that is being changed
      * @param {boolean} selected - true if the option is being selected, false if being deselected
      */
-    setSelected: function (index, selected) {
-      var liIndex = this.liObj[index],
-          $lis = $(this._lis[liIndex]),
-          visibleLiIndex;
-      
+    setSelected: function (index, selected, liIndex, li) {
+      var visibleLiIndex;
+
+      if (!liIndex) liIndex = this.liObj[index];
+      if (!li) li = this._lis[liIndex];
+
       if (selected) this.selectedIndex = index;
 
-      $lis.toggleClass('selected', selected).find('a').attr('aria-selected', selected);
-
-      if ($lis.length) {
-        visibleLiIndex = this.viewObj.currentliObj[index] - this.viewObj.position0;
-
-        if ($(this.viewObj.visibleLis[visibleLiIndex]).hasClass('active')) $lis.addClass('active');
-
-        this.viewObj.visibleLis[visibleLiIndex] = $lis[0].outerHTML;
-
-        $lis.toggleClass('active', selected && !this.multiple);
-
-        if (this._lis[liIndex] !== $lis[0].outerHTML) {
-          this._lis[liIndex] = $lis[0].outerHTML;
-        }
+      // toggle doesn't work in IE11, use if else instead
+      if (selected) {
+        li.classList.add('selected');
+      } else if (li.classList.contains('selected')) {
+        li.classList.remove('selected');
       }
+
+      li.firstChild.setAttribute('aria-selected', selected);
     },
 
     /**
      * @param {number} index - the index of the option that is being disabled
      * @param {boolean} disabled - true if the option is being disabled, false if being enabled
      */
-    setDisabled: function (index, disabled) {
-      var liIndex = this.liObj[index],
-          $lis = $(this._lis[liIndex]),
-          visibleLiIndex;
+    setDisabled: function (index, disabled, liIndex, li) {
+      var visibleLiIndex;
 
+      if (!liIndex) liIndex = this.liObj[index];
+      if (!li) li = this._lis[liIndex];
+
+      li.firstChild.setAttribute('aria-disabled', disabled);
+
+      // toggle doesn't work in IE11, use if else instead
       if (disabled) {
-        $lis.addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1).attr('aria-disabled', true);
+        li.classList.add('disabled');
+        li.firstChild.setAttribute('href', '#');
+        li.firstChild.setAttribute('tabindex', -1);
       } else {
-        $lis.removeClass('disabled').children('a').removeAttr('href').attr('tabindex', 0).attr('aria-disabled', false);
-      }
-
-      if ($lis.length) {
-        visibleLiIndex = this.viewObj.currentliObj[index] - this.viewObj.position0;
-
-        if ($(this.viewObj.visibleLis[visibleLiIndex]).hasClass('active')) $lis.addClass('active');
-
-        this.viewObj.visibleLis[visibleLiIndex] = $lis[0].outerHTML;
-
-        if (this._lis[liIndex] !== $lis[0].outerHTML) {
-          this._lis[liIndex] = $lis[0].outerHTML;
-        }
+        if (li.classList.contains('disabled')) li.classList.remove('disabled');
+        li.firstChild.removeAttribute('href');
+        li.firstChild.setAttribute('tabindex', 0);
       }
     },
 
@@ -1586,11 +1597,9 @@
             $options.prop('selected', false);
             $option.prop('selected', true);
             that.setSelected(clickedIndex, true);
-            that.$menuInner.trigger('scroll.createView', true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
             that.setSelected(clickedIndex, !state);
-            that.$menuInner.trigger('scroll.createView', true);
             $this.blur();
 
             if (maxOptions !== false || maxOptionsGrp !== false) {
@@ -1748,6 +1757,7 @@
         var searchValue = that.$searchbox.val();
         
         that.liObjSearch = {};
+        that.optionObjSearch = {};
         that._searchLisText = [];
 
         if (searchValue) {
@@ -1791,6 +1801,7 @@
               that._searchLisText.push(li);
               searchMatch.push(that._lis[index]);
               that.liObjSearch[li.originalIndex] = searchMatch.length - 1;
+              that.optionObjSearch[searchMatch.length - 1] = li.originalIndex;
             }
           }
 
@@ -2102,14 +2113,13 @@
     refresh: function () {
       this.$lis = null;
       this.liObj = {};
+      this.optionObj = {};
       this.createLi();
-      this.setOptionStatus();
       this.render();
       this.checkDisabled();
       this.liHeight(true);
       this.setStyle();
       this.setWidth();
-      if (this.$lis) this.$searchbox.trigger('propertychange');
 
       this.$element.trigger('refreshed.bs.select');
     },
