@@ -1743,7 +1743,7 @@
 
     liveSearchListener: function () {
       var that = this,
-          $no_results = $('<li class="no-results"></li>');
+          no_results = document.createElement('li');
 
       this.$button.on('click.dropdown.data-api', function () {
         that.$menuInner.find('.active').removeClass('active');
@@ -1751,7 +1751,6 @@
           that.$searchbox.val('');
           that.createView(false, true);
           that.$menuInner.find('.active').removeClass('active');
-          if (!!$no_results.parent().length) $no_results.remove();
         }
         if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
         setTimeout(function () {
@@ -1819,6 +1818,12 @@
           that.noScroll = true;
           that.$menuInner.scrollTop(0);
           that.createView(searchMatch);
+
+          if (!searchMatch.length) {
+            no_results.className = 'no-results';
+            no_results.innerHTML = that.options.noneResultsText.replace('{0}', '"' + htmlEscape(searchValue) + '"');
+            that.$menuInner[0].firstChild.appendChild(no_results);
+          }
         } else {
           that.$menuInner.scrollTop(0);
           that.createView(false, true);
