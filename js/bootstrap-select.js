@@ -717,16 +717,15 @@
        * @returns {HTMLElement}
        */
       var generateLI = function (content, index, classes, optgroup) {
-        var div = document.createElement('div'),
-            li = '<li' +
-                ((typeof classes !== 'undefined' && '' !== classes) ? ' class="' + classes + '"' : '') +
-                ((typeof index !== 'undefined' && null !== index) ? ' data-original-index="' + index + '"' : '') +
-                ((typeof optgroup !== 'undefined' && null !== optgroup) ? ' data-optgroup="' + optgroup + '"' : '') +
-                '>' + content + '</li>';
+        var li = document.createElement('li');
 
-        div.innerHTML = li;
+        li.innerHTML = content;
 
-        return div.firstChild;
+        if (typeof classes !== 'undefined' && '' !== classes) li.className = classes;
+        if (typeof index !== 'undefined' && null !== index) li.setAttribute('data-original-index', index);
+        if (typeof optgroup !== 'undefined' && null !== optgroup) li.setAttribute('data-optgroup', optgroup);
+
+        return li;
       };
 
       /**
