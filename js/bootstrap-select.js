@@ -1457,11 +1457,11 @@
       if (!liIndex) liIndex = this.liObj[index];
       if (!li) li = this._lis[liIndex];
 
-      if (selected) this.selectedIndex = index;
-
-      // toggle doesn't work in IE11, use if else instead
+      // classList.toggle doesn't work in IE11, use if else instead
       if (selected) {
+        this.selectedIndex = index;
         li.classList.add('selected');
+        if (!this.multiple) li.classList.add('active');
       } else if (li.classList.contains('selected')) {
         li.classList.remove('selected');
       }
