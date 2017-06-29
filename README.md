@@ -104,9 +104,6 @@ ajax-option-value: Appoint your option value, the key of your response data-->
       var options = '';
       for (var index = 0; index < data.length; index++) {
         var name = data[index][optionName];
-        if (name.indexOf('{') > -1 && name.indexOf('}') > -1) {
-          name = JSON.parse(name)[getLang()];
-        }
         options += '<option value="' + data[index][optionValue] + '">' + name + '</option>';
       }
       return options;
@@ -125,7 +122,6 @@ ajax-option-value: Appoint your option value, the key of your response data-->
         var optionName = $select.attr('ajax-option-name');
         var optionValue = $select.attr('ajax-option-value');
         params.token = $select.attr('ajax-token');
-        params.lang = getLang();
         params[$select.attr('ajax-search-key')] = $('.bootstrap-select.ajax-search.open').find('input').val();
         if (event.key === 'Control') {
           return;
