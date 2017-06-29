@@ -433,7 +433,11 @@
       } else {
         this.$element.on('hide.bs.select', function () {
           // empty menu on close
-          that.$menuInner[0].innerHTML = '';
+          var menuInner = that.$menuInner[0],
+              emptyMenu = menuInner.firstChild.cloneNode(false);
+
+          // replace the existing UL with an empty one - this is faster than $.empty() or innerHTML = ''
+          menuInner.replaceChild(emptyMenu, menuInner.firstChild);
         });
       }
       this.$menu.data('this', this);
