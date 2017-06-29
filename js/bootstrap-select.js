@@ -701,7 +701,7 @@
        * @param [index]
        * @param [classes]
        * @param [optgroup]
-       * @returns {string}
+       * @returns {HTMLElement}
        */
       var generateLI = function (content, index, classes, optgroup) {
         var div = document.createElement('div'),
@@ -720,14 +720,12 @@
        * @param text
        * @param [classes]
        * @param [inline]
-       * @param [tokens]
        * @returns {string}
        */
-      var generateA = function (text, classes, inline, tokens) {
+      var generateA = function (text, classes, inline) {
         return '<a tabindex="0"' +
             (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
             (inline ? ' style="' + inline + '"' : '') +
-            (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             ' role="option">' + text +
             '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
             '</a>';
@@ -877,7 +875,7 @@
             return;
           }
 
-          _li.push(generateLI(generateA(textHTML, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
+          _li.push(generateLI(generateA(textHTML, 'opt ' + optionClass + optGroupClass, inline), index, '', optID));
           _liText.push({
             content: text,
             subtext: subtext,
@@ -918,7 +916,7 @@
               originalIndex: index
             });
           }
-          _li.push(generateLI(generateA(textHTML, optionClass, inline, tokens), index));
+          _li.push(generateLI(generateA(textHTML, optionClass, inline), index));
           _liText.push({
             content: text,
             subtext: subtext,
