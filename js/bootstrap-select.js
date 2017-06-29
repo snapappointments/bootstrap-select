@@ -699,7 +699,7 @@
     createLi: function () {
       var that = this,
           _li = [],
-          _liWidest = [],
+          _liWidest,
           widestOptionLength = 0,
           _liText = [],
           optID = 0,
@@ -1101,7 +1101,7 @@
       li.appendChild(a);
       dropdownHeader.appendChild(text.cloneNode(true));
 
-      menuInner.appendChild(this._liWidest);
+      if (this._liWidest) menuInner.appendChild(this._liWidest);
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
       menuInner.appendChild(dropdownHeader);
