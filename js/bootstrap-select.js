@@ -990,7 +990,9 @@
 
       this.tabIndex();
 
-      var selectedItems = $selectOptions.map(function () {
+      // limit title to 100 options
+      // anything more is too slow
+      var selectedItems = $selectOptions.slice(0, 100).map(function () {
         if (this.selected) {
           if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
 
@@ -1016,6 +1018,8 @@
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
       var title = !this.multiple ? selectedItems[0] : selectedItems.join(this.options.multipleSeparator);
+      // add ellipsis
+      if ($selectOptions.length > 100 && selectedItems.length === 100) title += '...';
 
       //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
@@ -1517,8 +1521,9 @@
     },
 
     togglePlaceholder: function () {
-      var value = this.$element.val();
-      this.$button.toggleClass('bs-placeholder', value === null || value === '' || (value.constructor === Array && value.length === 0));
+      // much faster than calling $.val()
+      var nothingSelected = this.$element[0].selectedIndex === -1;
+      this.$button.toggleClass('bs-placeholder', nothingSelected);
     },
 
     tabIndex: function () {
@@ -1839,29 +1844,16 @@
       if (!this.multiple) return;
       if (typeof status === 'undefined') status = true;
 
-      this.findLis();
+      var $selectOptions = this.$element.find('option');
 
-      var $options = this.$element.find('option'),
-          $lisVisible = this.$lis.not('.divider, .dropdown-header, .disabled, .hidden'),
-          lisVisLen = $lisVisible.length,
-          selectedOptions = [];
-          
-      if (status) {
-        if ($lisVisible.filter('.selected').length === $lisVisible.length) return;
-      } else {
-        if ($lisVisible.filter('.selected').length === 0) return;
-      }
-          
-      $lisVisible.toggleClass('selected', status);
+      for (var i = 0; i < this.viewObj._currentLis.length; i++) {
+        var index = this.viewObj.current_optionObj[i], // faster than $(li).data('originalIndex')
+            option = $selectOptions.eq(index)[0];
 
-      for (var i = 0; i < lisVisLen; i++) {
-        var origIndex = $lisVisible[i].getAttribute('data-original-index');
-        selectedOptions[selectedOptions.length] = $options.eq(origIndex)[0];
+        if (option) option.selected = status;
       }
 
-      $(selectedOptions).prop('selected', status);
-
-      this.render();
+      this.setOptionStatus();
 
       this.togglePlaceholder();
 
