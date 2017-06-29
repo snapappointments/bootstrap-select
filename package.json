@@ -16,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "bootstrap-select": "^1.12.2",
     "jquery": ">=1.8"
   },
   "devDependencies": {
