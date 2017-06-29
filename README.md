@@ -90,7 +90,7 @@ ajax-option-value: Appoint your option value, the key of your response data-->
       noneSelectedText: '输入搜索',
     });
 
-    // 清除并刷新selectpicker的结构
+    // clear select options
     function _refreshSelectPicker($obj, str) {
       if (str) {
         $obj.html(str).selectpicker('refresh');
@@ -99,7 +99,7 @@ ajax-option-value: Appoint your option value, the key of your response data-->
       $obj.html(' ').selectpicker('refresh');
     }
 
-    // 生成options
+    // creat select options
     function _creatOptions(data, optionName, optionValue) {
       var options = '';
       for (var index = 0; index < data.length; index++) {
@@ -112,7 +112,7 @@ ajax-option-value: Appoint your option value, the key of your response data-->
       return options;
     }
 
-    // 绑定搜索
+    // bind keyup event
     $(document)
       .on('keyup', '.bootstrap-select.open.ajax-search .bs-searchbox>input', function (e) {
         var stamp = $(this).parents('.bootstrap-select.ajax-search.open').attr('selectpicker-stamp');
@@ -131,8 +131,8 @@ ajax-option-value: Appoint your option value, the key of your response data-->
           return;
         }
         if ($(this).val()) {
-          var index = layer.load(1);
-          // 异步操作
+          // open loading code
+          // ajax
           $.get(api, params)
             .done(function (res) {
               if (!res.status) { // response success
@@ -146,14 +146,15 @@ ajax-option-value: Appoint your option value, the key of your response data-->
                   mockObj[optionValue] = index;
                   mockData.push(mockObj);
                 }
-                // mock data
                 alert('this is a mock data,remove it in prod');
                 _refreshSelectPicker($select, _creatOptions(mockData, optionName, optionValue));
-                // _refreshSelectPicker($select);
+                // mock data
+                
+                // _refreshSelectPicker($select); // in prod this line remove comments
               }
             })
             .always(function () {
-              layer.close(index);
+              // close loading code
             });
         } else {
           _refreshSelectPicker($select);
