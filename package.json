@@ -3,7 +3,7 @@
   "title": "bootstrap-select-ajax",
   "main": "dist/js/bootstrap-select-ajax.js",
   "description": "bootstrap-select-ajax is forked from silviomoreto/bootstrap-select",
-  "version": "1.12.23",
+  "version": "1.12.24",
   "homepage": "https://github.com/yy7054wyq5/bootstrap-select",
   "author": {
     "name": "Wu Yang",

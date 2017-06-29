@@ -94,9 +94,6 @@ ajax-option-value: Appoint your option value, the key of your response data-->
     function _refreshSelectPicker($obj, str) {
       if (str) {
         $obj.html(str).selectpicker('refresh');
-        if (location.href === 'http://scmstatic.loongjoy.com/v1/index.html') {
-
-        }
         return;
       }
       $obj.html(' ').selectpicker('refresh');
@@ -121,7 +118,10 @@ ajax-option-value: Appoint your option value, the key of your response data-->
         var stamp = $(this).parents('.bootstrap-select.ajax-search.open').attr('selectpicker-stamp');
         var $select = $('[selectpicker-stamp="' + stamp + '"]').find('select');
         var api = $select.attr('ajax-url');
-        var params = JSON.parse($select.attr('ajax-params').replace(/#/g, '"'));
+        var params = {};
+        if ($select.attr('ajax-params')) {
+          params = JSON.parse($select.attr('ajax-params').replace(/#/g, '"'));
+        }
         var optionName = $select.attr('ajax-option-name');
         var optionValue = $select.attr('ajax-option-value');
         params.token = $select.attr('ajax-token');
@@ -135,23 +135,21 @@ ajax-option-value: Appoint your option value, the key of your response data-->
           // 异步操作
           $.get(api, params)
             .done(function (res) {
-              if (!res.status) {
+              if (!res.status) { // response success
                 _refreshSelectPicker($select, _creatOptions(res.data, optionName, optionValue));
-              } else {
-                // demo页将展示模拟数据
-                if (isDemoPage()) {
-                  var mockData = [];
-                  for (var index = 0; index < 3; index++) {
-                    var mockObj = {};
-                    mockObj[optionName] = '测试选项' + index;
-                    mockObj[optionValue] = index;
-                    mockData.push(mockObj);
-                  }
-                  alert('展示的是token无效的假数据，不影响正常使用');
-                  _refreshSelectPicker($select, _creatOptions(mockData, optionName, optionValue));
-                }else{
-                  _refreshSelectPicker($select);
+              } else { // response fail
+                // mock data
+                var mockData = [];
+                for (var index = 0; index < 3; index++) {
+                  var mockObj = {};
+                  mockObj[optionName] = 'test' + index;
+                  mockObj[optionValue] = index;
+                  mockData.push(mockObj);
                 }
+                // mock data
+                alert('this is a mock data,remove it in prod');
+                _refreshSelectPicker($select, _creatOptions(mockData, optionName, optionValue));
+                // _refreshSelectPicker($select);
               }
             })
             .always(function () {
