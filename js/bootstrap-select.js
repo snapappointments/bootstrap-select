@@ -1283,6 +1283,7 @@
           $menu = this.$menu,
           $menuInner = this.$menuInner,
           $window = $(window),
+          currentLis = this.viewObj._currentLis || this._lis,
           selectHeight = this.$newElement[0].offsetHeight,
           selectWidth = this.$newElement[0].offsetWidth,
           liHeight = this.sizeInfo['liHeight'],
@@ -1294,6 +1295,7 @@
           menuPadding = this.sizeInfo['menuPadding'],
           menuExtras = this.sizeInfo['menuExtras'],
           notDisabled = this.options.hideDisabled ? '.disabled' : '',
+          menuInnerHeight,
           menuHeight,
           menuWidth,
           getHeight,
@@ -1381,7 +1383,7 @@
             'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
           });
           
-          var menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
+          menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
           
           $menuInner.css({
             'max-height': menuInnerHeight + 'px',
@@ -1395,9 +1397,7 @@
 
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
         $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
-        that.createView(false, true);
-        this.findLis();
-      } else if (this.options.size && this.options.size != 'auto' && this.$lis.not(notDisabled).length > this.options.size) {
+      } else if (this.options.size && this.options.size != 'auto' && currentLis.length > this.options.size) {
         var optIndex = this.$lis.not('.divider').not(notDisabled).children().slice(0, this.options.size).last().parent().index(),
             divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding.vert;
@@ -1418,12 +1418,20 @@
           'overflow': 'hidden',
           'min-height': ''
         });
+
+        menuInnerHeight = menuHeight - menuPadding.vert;
+
         $menuInner.css({
-          'max-height': menuHeight - menuPadding.vert + 'px',
+          'max-height': menuInnerHeight + 'px',
           'overflow-y': 'auto',
           'min-height': ''
         });
+
+        that.sizeInfo['menuInnerHeight'] = menuInnerHeight;
       }
+
+      that.createView(false, true);
+      this.findLis();
     },
 
     setWidth: function () {
