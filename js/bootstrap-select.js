@@ -983,7 +983,7 @@
 
       // limit title to 100 options
       // anything more is too slow
-      var selectedItems = $selectOptions.slice(0, 100).map(function () {
+      var selectedItems = $selectOptions.map(function () {
         if (this.selected) {
           if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
 
@@ -1004,7 +1004,7 @@
             return icon + $this.html() + subtext;
           }
         }
-      }).toArray();
+      }).toArray().slice(0, 100);
 
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
