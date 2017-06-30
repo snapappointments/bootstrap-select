@@ -712,6 +712,25 @@
           titleOption = document.createElement('option'),
           liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure liObj is correct
 
+      var elementTemplates = {
+          span: document.createElement('span'),
+          subtext: document.createElement('small'),
+          a: document.createElement('a'),
+          li: document.createElement('li'),
+          whitespace: document.createTextNode("\u00A0")
+        },
+        checkMark = elementTemplates.span.cloneNode(false),
+        fragment = document.createDocumentFragment();
+
+      checkMark.className = that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
+      elementTemplates.a.appendChild(checkMark);
+      elementTemplates.a.setAttribute('role', 'option');
+
+      elementTemplates.subtext.className = 'text-muted';
+
+      elementTemplates.text = elementTemplates.span.cloneNode(false);
+      elementTemplates.text.className = 'text';
+
       // Helper functions
       /**
        * @param content
@@ -721,13 +740,18 @@
        * @returns {HTMLElement}
        */
       var generateLI = function (content, index, classes, optgroup) {
-        var li = document.createElement('li');
+        var li = elementTemplates.li.cloneNode(false);
 
-        li.innerHTML = content;
+        if (content) {
+          if (content.nodeType === 1 || content.nodeType === 11) {
+            li.appendChild(content);
+          } else {
+            li.innerHTML = content;
+          }
+        }
 
         if (typeof classes !== 'undefined' && '' !== classes) li.className = classes;
-        if (typeof index !== 'undefined' && null !== index) li.setAttribute('data-original-index', index);
-        if (typeof optgroup !== 'undefined' && null !== optgroup) li.setAttribute('data-optgroup', optgroup);
+        if (typeof optgroup !== 'undefined' && null !== optgroup) li.classList.add('optgroup-' + optgroup);
 
         return li;
       };
@@ -739,13 +763,81 @@
        * @returns {string}
        */
       var generateA = function (text, classes, inline) {
-        return '<a tabindex="0"' +
-            (typeof classes !== 'undefined' ? ' class="' + classes + '"' : '') +
-            (inline ? ' style="' + inline + '"' : '') +
-            ' role="option">' + text +
-            '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
-            '</a>';
+        var a = elementTemplates.a.cloneNode(true);
+
+        if (text) {
+          if (text.nodeType === 11) {
+            a.appendChild(text);
+          } else {
+            a.insertAdjacentHTML('beforeend', text);
+          }
+        }
+
+        if (typeof classes !== 'undefined' & '' !== classes) a.className = classes;
+        if (inline) a.setAttribute('style', inline);
+
+        return a;
       };
+
+      var generateText = function(options) {
+        var textElement = elementTemplates.text.cloneNode(false),
+            optionSubtextElement,
+            optionIconElement;
+
+        if (options.optionContent) {
+          textElement.innerHTML = options.optionContent;
+        } else {
+          textElement.textContent = options.text;
+
+          if (options.optionIcon) {
+            var whitespace = elementTemplates.whitespace.cloneNode(false);
+
+            optionIconElement = elementTemplates.span.cloneNode(false);
+            optionIconElement.className = that.options.iconBase + ' ' + options.optionIcon;
+
+            fragment.appendChild(optionIconElement);
+            fragment.appendChild(whitespace);
+          }
+
+          if (options.optionSubtext) {
+            optionSubtextElement = elementTemplates.subtext.cloneNode(false);
+            optionSubtextElement.textContent = options.optionSubtext;
+            textElement.appendChild(optionSubtextElement);
+          }
+        }
+
+        fragment.appendChild(textElement);
+
+        return fragment;
+      };
+
+      var generateLabel = function(options) {
+        var labelTextElement = elementTemplates.text.cloneNode(false),
+            labelSubtextElement,
+            labelIconElement;
+
+        labelTextElement.textContent = options.labelEscaped;
+
+        if (options.labelIcon) {
+          var whitespace = elementTemplates.whitespace.cloneNode(false);
+
+          labelIconElement = elementTemplates.span.cloneNode(false);
+          labelIconElement.className = that.options.iconBase + ' ' + options.labelIcon;
+
+          fragment.appendChild(labelIconElement);
+          fragment.appendChild(whitespace);
+        }
+
+        if (options.labelSubtext) {
+          labelSubtextElement = elementTemplates.subtext.cloneNode(false);
+          labelSubtextElement.textContent = options.labelSubtext;
+          labelTextElement.appendChild(labelSubtextElement);
+        }
+
+        fragment.appendChild(labelTextElement);
+
+        return fragment;
+      }
 
       if (this.options.title && !this.multiple) {
         // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
@@ -778,31 +870,32 @@
 
         if ($this.hasClass('bs-title-option')) return;
 
+        var thisData = $this.data();
+
         // Get the class and text for the option
         var optionClass = this.className || '',
             inline = htmlEscape(this.style.cssText),
-            text = $this.data('content') ? $this.data('content') : $this.html(),
-            textHTML,
-            tokens = $this.data('tokens') ? $this.data('tokens') : null,
-            subtext = $this.data('subtext'),
-            subtextHTML = typeof subtext !== 'undefined' ? '<small class="text-muted">' + subtext + '</small>' : '',
-            icon = typeof $this.data('icon') !== 'undefined' ? '<span class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></span> ' : '',
+            optionContent = thisData.content,
+            text = $this.html(),
+            tokens = thisData.tokens ? thisData.tokens : null,
+            subtext = thisData.subtext,
+            icon = thisData.icon,
             $parent = $this.parent(),
-            isOptgroup = $parent[0].tagName === 'OPTGROUP',
-            isOptgroupDisabled = isOptgroup && $parent[0].disabled,
+            parent = $parent[0],
+            isOptgroup = parent.tagName === 'OPTGROUP',
+            isOptgroupDisabled = isOptgroup && parent.disabled,
             isDisabled = this.disabled || isOptgroupDisabled,
             prevHiddenIndex,
-            showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP';
+            showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP',
+            textElement;
 
-        if (icon !== '' && isDisabled) {
-          icon = '<span>' + icon + '</span>';
-        }
+        var parentData = $parent.data();
 
-        if ($this.data('hidden') === true || that.options.hideDisabled && (isDisabled && !isOptgroup || isOptgroupDisabled)) {
+        if (thisData.hidden === true || that.options.hideDisabled && (isDisabled && !isOptgroup || isOptgroupDisabled)) {
           // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
           // used to determine whether or not a divider should be placed after an optgroup if there are
           // hidden options between the optgroup and the first visible option
-          prevHiddenIndex = $this.data('prevHiddenIndex');
+          prevHiddenIndex = thisData.prevHiddenIndex;
           $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
 
           liIndex--;
@@ -821,7 +914,7 @@
 
           if (showDivider && _liText[_liText.length - 1].type !== 'divider') {
             liIndex++;
-            _li.push(generateLI('', null, 'divider', optID + 'div'));
+            _li.push(generateLI(false, null, 'divider', optID + 'div'));
             _liText.push({
               type: 'divider',
               optID: optID,
@@ -832,14 +925,9 @@
           return;
         }
 
-        if (!$this.data('content')) {
-          // Prepend any icon and append any subtext to the main text.
-          textHTML = icon + '<span class="text">' + text + subtextHTML + '</span>';
-        }
-
-        if (isOptgroup && $this.data('divider') !== true) {
+        if (isOptgroup && thisData.divider !== true) {
           if (that.options.hideDisabled && isDisabled) {
-            if ($parent.data('allOptionsDisabled') === undefined) {
+            if (parentData.allOptionsDisabled === undefined) {
               var $options = $parent.children();
               $parent.data('allOptionsDisabled', $options.filter(':disabled').length === $options.length);
             }
@@ -850,23 +938,20 @@
             }
           }
 
-          var optGroupClass = ' ' + $parent[0].className || '';
+          var optGroupClass = ' ' + parent.className || '';
 
           if ($this.index() === 0) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
-            var label = $parent[0].label,
+            var label = parent.label,
                 labelEscaped = htmlEscape(label),
-                labelSubtext = $parent.data('subtext'),
-                labelSubtextHTML = typeof labelSubtext !== 'undefined' ? '<small class="text-muted">' + labelSubtext + '</small>' : '',
-                labelIcon = $parent.data('icon') ? '<span class="' + that.options.iconBase + ' ' + $parent.data('icon') + '"></span> ' : '';
-
-            label = labelIcon + '<span class="text">' + labelEscaped + labelSubtextHTML + '</span>';
+                labelSubtext = parentData.subtext,
+                labelIcon = parentData.icon;
 
             if (index !== 0 && _li.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
-              _li.push(generateLI('', null, 'divider', optID + 'div'));
+              _li.push(generateLI(false, null, 'divider', optID + 'div'));
               _liText.push({
                 type: 'divider',
                 optID: optID,
@@ -874,7 +959,14 @@
               });
             }
             liIndex++;
-            _li.push(generateLI(label, null, 'dropdown-header' + optGroupClass, optID));
+
+            var labelElement = generateLabel({
+                  labelEscaped: labelEscaped,
+                  labelSubtext: labelSubtext,
+                  labelIcon: labelIcon
+                });
+
+            _li.push(generateLI(labelElement, null, 'dropdown-header' + optGroupClass, optID));
             _liText.push({
               content: labelEscaped,
               subtext: labelSubtext,
@@ -886,12 +978,19 @@
             headerIndex = liIndex - 1;
           }
 
-          if (that.options.hideDisabled && isDisabled || $this.data('hidden') === true) {
+          if (that.options.hideDisabled && isDisabled || thisData.hidden === true) {
             liIndex--;
             return;
           }
 
-          _li.push(generateLI(generateA(textHTML, 'opt ' + optionClass + optGroupClass, inline), index, '', optID));
+          textElement = generateText({
+            text: text,
+            optionContent: optionContent,
+            optionSubtext: subtext,
+            optionIcon: icon
+          });
+
+          _li.push(generateLI(generateA(textElement, 'opt ' + optionClass + optGroupClass, inline), index, '', optID));
           _liText.push({
             content: text,
             subtext: subtext,
@@ -899,11 +998,11 @@
             type: 'option',
             optID: optID,
             headerIndex: headerIndex,
-            lastIndex: headerIndex + $parent[0].childElementCount,
+            lastIndex: headerIndex + parent.childElementCount,
             originalIndex: index
           });
-        } else if ($this.data('divider') === true) {
-          _li.push(generateLI('', index, 'divider'));
+        } else if (thisData.divider === true) {
+          _li.push(generateLI(false, index, 'divider'));
           _liText.push({
             type: 'divider',
             originalIndex: index
@@ -911,7 +1010,7 @@
         } else {
           // if previous element is not an optgroup and hideDisabled is true
           if (!showDivider && that.options.hideDisabled) {
-            prevHiddenIndex = $this.data('prevHiddenIndex');
+            prevHiddenIndex = thisData.prevHiddenIndex;
 
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
@@ -925,14 +1024,22 @@
 
           if (showDivider && _liText[_liText.length - 1].type !== 'divider') {
             liIndex++;
-            _li.push(generateLI('', null, 'divider', optID + 'div'));
+            _li.push(generateLI(false, null, 'divider', optID + 'div'));
             _liText.push({
               type: 'divider',
               optID: optID,
               originalIndex: index
             });
           }
-          _li.push(generateLI(generateA(textHTML, optionClass, inline), index));
+
+          textElement = generateText({
+            text: text,
+            optionContent: optionContent,
+            optionSubtext: subtext,
+            optionIcon: icon
+          });
+
+          _li.push(generateLI(generateA(textElement, optionClass, inline), index));
           _liText.push({
             content: text,
             subtext: subtext,
@@ -1001,18 +1108,19 @@
           if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
 
           var $this = $(this),
-              icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '',
+              thisData = $this.data(),
+              icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
               subtext;
 
-          if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
-            subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
+          if (that.options.showSubtext && thisData.subtext && !that.multiple) {
+            subtext = ' <small class="text-muted">' + thisData.subtext + '</small>';
           } else {
             subtext = '';
           }
           if (typeof $this.attr('title') !== 'undefined') {
             return $this.attr('title');
-          } else if ($this.data('content') && that.options.showContent) {
-            return $this.data('content').toString();
+          } else if (thisData.content && that.options.showContent) {
+            return thisData.content.toString();
           } else {
             return icon + $this.html() + subtext;
           }
@@ -1526,7 +1634,12 @@
 
     togglePlaceholder: function () {
       // much faster than calling $.val()
-      var nothingSelected = this.$element[0].selectedIndex === -1;
+      var element = this.$element[0],
+          selectedIndex = element.selectedIndex,
+          nothingSelected = selectedIndex === -1;
+
+      if (!nothingSelected && !element.options[selectedIndex].value) nothingSelected = true;
+
       this.$button.toggleClass('bs-placeholder', nothingSelected);
     },
 
@@ -1538,6 +1651,12 @@
       }
 
       this.$element.attr('tabindex', -98);
+    },
+
+    getOptionInfo: function(element) {
+      var index = this.viewObj.visibleLis.indexOf(element);
+
+      return this.viewObj._currentlisText[index + this.viewObj.position0];
     },
 
     clickListener: function () {
@@ -1578,7 +1697,7 @@
 
       this.$menuInner.on('click', 'li a', function (e) {
         var $this = $(this),
-            clickedIndex = $this.parent().data('originalIndex'),
+            clickedIndex = that.getOptionInfo($this.parent()[0]).originalIndex,
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex'),
             triggerChange = true;
@@ -1621,8 +1740,8 @@
                 } else if (maxOptionsGrp && maxOptionsGrp == 1) {
                   $optgroup.find('option:selected').prop('selected', false);
                   $option.prop('selected', true);
-                  var optgroupID = $this.parent().data('optgroup');
-                  that.$menuInner.find('[data-optgroup="' + optgroupID + '"]').removeClass('selected');
+                  var optgroupID = that.getOptionInfo($this.parent()[0]).optID;
+                  that.$menuInner.find('.optgroup-' + optgroupID).removeClass('selected');
                   that.setSelected(clickedIndex, true);
                 } else {
                   var maxOptionsText = typeof that.options.maxOptionsText === 'string' ? [that.options.maxOptionsText, that.options.maxOptionsText] : that.options.maxOptionsText,
@@ -2043,7 +2162,7 @@
           }
         }
 
-        that.activeIndex = $liActive.data('originalIndex');
+        that.activeIndex = that.getOptionInfo($liActive[0]).originalIndex;
         $liActive.children('a').focus();
         if (that.options.liveSearch) $this.focus();
       } else if (!$this.is('input')) {
