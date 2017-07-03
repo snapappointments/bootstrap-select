@@ -1257,19 +1257,19 @@
 
       document.body.removeChild(newElement);
 
-      this.sizeInfo = {
-        liHeight: liHeight,
-        dropdownHeaderHeight: dropdownHeaderHeight,
-        headerHeight: headerHeight,
-        searchHeight: searchHeight,
-        actionsHeight: actionsHeight,
-        doneButtonHeight: doneButtonHeight,
-        dividerHeight: dividerHeight,
-        menuPadding: menuPadding,
-        menuExtras: menuExtras,
-        menuWidth: menuWidth,
-        scrollBarWidth: scrollBarWidth
-      };
+      if (!this.sizeInfo) this.sizeInfo = {};
+
+      this.sizeInfo.liHeight = liHeight;
+      this.sizeInfo.dropdownHeaderHeight = dropdownHeaderHeight;
+      this.sizeInfo.headerHeight = headerHeight;
+      this.sizeInfo.searchHeight = searchHeight;
+      this.sizeInfo.actionsHeight = actionsHeight;
+      this.sizeInfo.doneButtonHeight = doneButtonHeight;
+      this.sizeInfo.dividerHeight = dividerHeight;
+      this.sizeInfo.menuPadding = menuPadding;
+      this.sizeInfo.menuExtras = menuExtras;
+      this.sizeInfo.menuWidth = menuWidth;
+      this.sizeInfo.scrollBarWidth = scrollBarWidth;
     },
 
     setSize: function () {
