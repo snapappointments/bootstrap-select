@@ -1201,7 +1201,7 @@
       li.appendChild(a);
       dropdownHeader.appendChild(text.cloneNode(true));
 
-      if (this._liWidest) menuInner.appendChild(this._liWidest);
+      if (this._liWidest) menuInner.appendChild(this._liWidest.cloneNode(true));
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
       menuInner.appendChild(dropdownHeader);
