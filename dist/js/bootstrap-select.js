@@ -1319,6 +1319,8 @@
           $menu = this.$menu,
           $menuInner = this.$menuInner,
           $window = $(window),
+          currentLis = this.viewObj._currentLis || this._lis,
+          currentlisText = this.viewObj._currentlisText || this._lisText,
           selectHeight = this.$newElement[0].offsetHeight,
           selectWidth = this.$newElement[0].offsetWidth,
           liHeight = this.sizeInfo['liHeight'],
@@ -1329,7 +1331,7 @@
           divHeight = this.sizeInfo['dividerHeight'],
           menuPadding = this.sizeInfo['menuPadding'],
           menuExtras = this.sizeInfo['menuExtras'],
-          notDisabled = this.options.hideDisabled ? '.disabled' : '',
+          menuInnerHeight,
           menuHeight,
           menuWidth,
           getHeight,
@@ -1417,7 +1419,7 @@
             'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
           });
           
-          var menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
+          menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
           
           $menuInner.css({
             'max-height': menuInnerHeight + 'px',
@@ -1431,11 +1433,13 @@
 
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
         $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
-        that.createView(false, true);
-        this.findLis();
-      } else if (this.options.size && this.options.size != 'auto' && this.$lis.not(notDisabled).length > this.options.size) {
-        var optIndex = this.$lis.not('.divider').not(notDisabled).children().slice(0, this.options.size).last().parent().index(),
-            divLength = this.$lis.slice(0, optIndex + 1).filter('.divider').length;
+      } else if (this.options.size && this.options.size != 'auto' && currentLis.length > this.options.size) {
+        var divLength = 0;
+
+        for (var i = 0; i < this.options.size; i++) {
+          if (currentlisText[i].type === 'divider') divLength++;
+        }
+
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding.vert;
 
         if (that.options.container) {
@@ -1454,12 +1458,23 @@
           'overflow': 'hidden',
           'min-height': ''
         });
+
+        menuInnerHeight = menuHeight - menuPadding.vert;
+
         $menuInner.css({
-          'max-height': menuHeight - menuPadding.vert + 'px',
+          'max-height': menuInnerHeight + 'px',
           'overflow-y': 'auto',
           'min-height': ''
         });
+
+        that.sizeInfo['menuInnerHeight'] = menuInnerHeight;
+
+        this.$searchbox.off('input.getSize propertychange.getSize');
+        $window.off('resize.getSize scroll.getSize');
       }
+
+      that.createView(false, true);
+      this.findLis();
     },
 
     setWidth: function () {
@@ -1602,7 +1617,7 @@
         li.classList.remove('selected');
       }
 
-      li.firstChild.setAttribute('aria-selected', selected);
+      if (li.firstChild) li.firstChild.setAttribute('aria-selected', selected);
     },
 
     /**
@@ -1615,17 +1630,21 @@
       if (!liIndex) liIndex = this.liObj[index];
       if (!li) li = this._lis[liIndex];
 
-      li.firstChild.setAttribute('aria-disabled', disabled);
+      if (li.firstChild) li.firstChild.setAttribute('aria-disabled', disabled);
 
       // toggle doesn't work in IE11, use if else instead
       if (disabled) {
         li.classList.add('disabled');
-        li.firstChild.setAttribute('href', '#');
-        li.firstChild.setAttribute('tabindex', -1);
+        if (li.firstChild) {
+          li.firstChild.setAttribute('href', '#');
+          li.firstChild.setAttribute('tabindex', -1);
+        }
       } else {
         if (li.classList.contains('disabled')) li.classList.remove('disabled');
-        li.firstChild.removeAttribute('href');
-        li.firstChild.setAttribute('tabindex', 0);
+        if (li.firstChild) {
+          li.firstChild.removeAttribute('href');
+          li.firstChild.setAttribute('tabindex', 0);
+        }
       }
     },
 
@@ -2248,10 +2267,15 @@
     },
 
     refresh: function () {
+      // update options if data attributes have been changed
+      var config = $.extend({}, this.options, this.$element.data());
+      this.options = config;
+
       this.$lis = null;
       this.liObj = {};
       this.optionObj = {};
       this.createLi();
+      if (this.$menuInner.attr('aria-expanded')) this.setSize();
       this.render();
       this.checkDisabled();
       this.liHeight(true);
