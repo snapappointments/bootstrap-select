@@ -2252,7 +2252,7 @@
       this.liObj = {};
       this.optionObj = {};
       this.createLi();
-      if (this.$newElement.hasClass('open')) this.setSize();
+      if (this.$menuInner.attr('aria-expanded')) this.setSize();
       this.render();
       this.checkDisabled();
       this.liHeight(true);
