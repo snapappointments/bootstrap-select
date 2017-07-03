@@ -673,7 +673,7 @@
           menuInner.firstChild.style.marginTop = marginTop + 'px';
           menuInner.firstChild.style.marginBottom = marginBottom + 'px';
           menuInner.firstChild.appendChild(menuFragment);
-        }        
+        }
 
         that.prevActiveIndex = that.activeIndex;
 
@@ -1285,9 +1285,8 @@
       this.sizeInfo.scrollBarWidth = scrollBarWidth;
     },
 
-    setSize: function () {
-      
-      this.liHeight();
+    setSize: function (refresh) {
+      this.liHeight(refresh);
 
       if (this.options.header) this.$menu.css('padding-top', 0);
       if (this.options.size === false) return;
@@ -2252,10 +2251,13 @@
       this.liObj = {};
       this.optionObj = {};
       this.createLi();
-      if (this.$menuInner.attr('aria-expanded')) this.setSize();
+      if (this.$menuInner.attr('aria-expanded')) {
+        this.setSize(true);
+      } else {
+        this.liHeight(true);
+      }
       this.render();
       this.checkDisabled();
-      this.liHeight(true);
       this.setStyle();
       this.setWidth();
 
