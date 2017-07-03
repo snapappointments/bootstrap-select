@@ -696,7 +696,7 @@
           menuInner.firstChild.style.marginTop = marginTop + 'px';
           menuInner.firstChild.style.marginBottom = marginBottom + 'px';
           menuInner.firstChild.appendChild(menuFragment);
-        }        
+        }
 
         that.prevActiveIndex = that.activeIndex;
 
@@ -1237,7 +1237,7 @@
       li.appendChild(a);
       dropdownHeader.appendChild(text.cloneNode(true));
 
-      if (this._liWidest) menuInner.appendChild(this._liWidest);
+      if (this._liWidest) menuInner.appendChild(this._liWidest.cloneNode(true));
       menuInner.appendChild(li);
       menuInner.appendChild(divider);
       menuInner.appendChild(dropdownHeader);
@@ -1293,24 +1293,23 @@
 
       document.body.removeChild(newElement);
 
-      this.sizeInfo = {
-        liHeight: liHeight,
-        dropdownHeaderHeight: dropdownHeaderHeight,
-        headerHeight: headerHeight,
-        searchHeight: searchHeight,
-        actionsHeight: actionsHeight,
-        doneButtonHeight: doneButtonHeight,
-        dividerHeight: dividerHeight,
-        menuPadding: menuPadding,
-        menuExtras: menuExtras,
-        menuWidth: menuWidth,
-        scrollBarWidth: scrollBarWidth
-      };
+      if (!this.sizeInfo) this.sizeInfo = {};
+
+      this.sizeInfo.liHeight = liHeight;
+      this.sizeInfo.dropdownHeaderHeight = dropdownHeaderHeight;
+      this.sizeInfo.headerHeight = headerHeight;
+      this.sizeInfo.searchHeight = searchHeight;
+      this.sizeInfo.actionsHeight = actionsHeight;
+      this.sizeInfo.doneButtonHeight = doneButtonHeight;
+      this.sizeInfo.dividerHeight = dividerHeight;
+      this.sizeInfo.menuPadding = menuPadding;
+      this.sizeInfo.menuExtras = menuExtras;
+      this.sizeInfo.menuWidth = menuWidth;
+      this.sizeInfo.scrollBarWidth = scrollBarWidth;
     },
 
-    setSize: function () {
-      
-      this.liHeight();
+    setSize: function (refresh) {
+      this.liHeight(refresh);
 
       if (this.options.header) this.$menu.css('padding-top', 0);
       if (this.options.size === false) return;
@@ -2275,10 +2274,13 @@
       this.liObj = {};
       this.optionObj = {};
       this.createLi();
-      if (this.$menuInner.attr('aria-expanded')) this.setSize();
+      if (this.$menuInner.attr('aria-expanded')) {
+        this.setSize(true);
+      } else {
+        this.liHeight(true);
+      }
       this.render();
       this.checkDisabled();
-      this.liHeight(true);
       this.setStyle();
       this.setWidth();
 
