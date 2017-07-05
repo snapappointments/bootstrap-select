@@ -1685,9 +1685,9 @@
     },
 
     getOptionInfo: function(element) {
-      var index = this.viewObj.visibleLis.indexOf(element);
+      var index = this.viewObj._currentLis.indexOf(element);
 
-      return this.viewObj._currentlisText[index + this.viewObj.position0];
+      return this.viewObj._currentlisText[index];
     },
 
     clickListener: function () {
