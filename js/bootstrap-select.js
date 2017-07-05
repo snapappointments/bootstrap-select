@@ -705,6 +705,7 @@
       var that = this,
           _li = [],
           _liWidest,
+          availableOptionsCount = 0,
           widestOptionLength = 0,
           _liText = [],
           optID = 0,
@@ -1001,6 +1002,8 @@
             lastIndex: headerIndex + parent.childElementCount,
             originalIndex: index
           });
+
+          availableOptionsCount++;
         } else if (thisData.divider === true) {
           _li.push(generateLI(false, index, 'divider'));
           _liText.push({
@@ -1047,6 +1050,8 @@
             type: 'option',
             originalIndex: index
           });
+
+          availableOptionsCount++;
         }
 
         that.liObj[index] = liIndex;
@@ -1083,6 +1088,7 @@
       this._lis = _li;
       this._lisText = _liText;
       this._liWidest = _liWidest;
+      this.viewObj.availableOptionsCount = availableOptionsCount; // faster way to get # of available options without filter
     },
 
     findLis: function () {
@@ -1092,54 +1098,61 @@
 
     render: function () {
       var that = this,
-          notDisabled,
-          $selectOptions = this.$element.find('option');
-          
-      var $lis = that.findLis();
+          $selectOptions = this.$element.find('option'),
+          $lis = that.findLis(),
+          selectedItems = [],
+          selectedItemsInTitle = [];
 
       this.togglePlaceholder();
 
       this.tabIndex();
 
-      // limit title to 100 options
-      // anything more is too slow
-      var selectedItems = $selectOptions.map(function () {
+      $selectOptions.each(function (index) {
         if (this.selected) {
-          if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
+          selectedItems.push(this);
 
-          var $this = $(this),
-              thisData = $this.data(),
-              icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
-              subtext;
+          if (selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') {
+            if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
 
-          if (that.options.showSubtext && thisData.subtext && !that.multiple) {
-            subtext = ' <small class="text-muted">' + thisData.subtext + '</small>';
-          } else {
-            subtext = '';
-          }
-          if (typeof $this.attr('title') !== 'undefined') {
-            return $this.attr('title');
-          } else if (thisData.content && that.options.showContent) {
-            return thisData.content.toString();
-          } else {
-            return icon + $this.html() + subtext;
+            var $this = $(this),
+                thisData = $this.data(),
+                icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
+                subtext,
+                titleItem;
+
+            if (that.options.showSubtext && thisData.subtext && !that.multiple) {
+              subtext = ' <small class="text-muted">' + thisData.subtext + '</small>';
+            } else {
+              subtext = '';
+            }
+            if (typeof $this.attr('title') !== 'undefined') {
+              titleItem = $this.attr('title');
+            } else if (thisData.content && that.options.showContent) {
+              titleItem = thisData.content.toString();
+            } else {
+              titleItem = icon + $this.html() + subtext;
+            }
+
+            selectedItemsInTitle.push(titleItem);
           }
         }
-      }).toArray().slice(0, 100);
+      });
 
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
-      var title = !this.multiple ? selectedItems[0] : selectedItems.join(this.options.multipleSeparator);
+      var title = !this.multiple ? selectedItemsInTitle[0] : selectedItemsInTitle.join(this.options.multipleSeparator);
+
       // add ellipsis
-      if ($selectOptions.length > 100 && selectedItems.length === 100) title += '...';
+      if (selectedItems.length > 100) title += '...';
 
       //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
         var max = this.options.selectedTextFormat.split('>');
-        if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
-          notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
-          var totalCount = $selectOptions.not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
+
+        if ((max.length > 1 && selectedItems.length > max[1]) || (max.length === 1 && selectedItems.length >= 2)) {
+          var totalCount = this.viewObj.availableOptionsCount,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+
           title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
       }
