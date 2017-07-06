@@ -1,7 +1,7 @@
 /*
  * Translated default messages for bootstrap-select.
- * Locale: JP (Japanese; 日本語)
- * Region: JP (Asia)
+ * Locale: JA (Japanese; 日本語)
+ * Region: JP (Japan)
  * Author: Richard Snijders (Flaxis)
  */
 (function ($) {
