@@ -1684,12 +1684,6 @@
       this.$element.attr('tabindex', -98);
     },
 
-    getOptionInfo: function(element) {
-      var index = this.viewObj._currentLis.indexOf(element);
-
-      return this.viewObj._currentlisText[index];
-    },
-
     clickListener: function () {
       var that = this,
           $document = $(document);
@@ -1728,7 +1722,7 @@
 
       this.$menuInner.on('click', 'li a', function (e) {
         var $this = $(this),
-            clickedIndex = that.getOptionInfo($this.parent()[0]).originalIndex,
+            clickedIndex = that.viewObj.current_optionObj[$this.parent().index() + that.viewObj.position0],
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex'),
             triggerChange = true;
@@ -1771,7 +1765,7 @@
                 } else if (maxOptionsGrp && maxOptionsGrp == 1) {
                   $optgroup.find('option:selected').prop('selected', false);
                   $option.prop('selected', true);
-                  var optgroupID = that.getOptionInfo($this.parent()[0]).optID;
+                  var optgroupID = that.viewObj._currentlisText[$this.parent().index() + that.viewObj.position0].optID;
                   that.$menuInner.find('.optgroup-' + optgroupID).removeClass('selected');
                   that.setSelected(clickedIndex, true);
                 } else {
@@ -2148,7 +2142,7 @@
         e.preventDefault();
         $liActive = $items.removeClass('active').eq(index).addClass('active');
 
-        var activeLi, offset;
+        var activeLi, offset, liActiveIndex = index;
 
         if (e.keyCode == 40 || downOnTab) { // down
           // check to see how many options are hidden at the bottom of the menu (1 or 2 depending on scroll position)
@@ -2164,13 +2158,13 @@
 
             that.$menuInner[0].scrollTop = offset;
 
-            $liActive = $(that.viewObj._currentLis[index + that.viewObj.position0]);
+            liActiveIndex = index + that.viewObj.position0;
           } else if (that.viewObj.position0 !== 0 && index === 0) {
             that.doneScrolling = false;
 
             that.$menuInner.scrollTop(0);
 
-            $liActive = $(that.viewObj._currentLis[0]);
+            liActiveIndex = 0;
           }
         } else if (e.keyCode == 38) { // up
           if (that.viewObj.position0 !== 0 && (index === $items.length - 1 || index < 2 && that.viewObj._currentLis.length - that.viewObj.position0 >= $items.length)) {
@@ -2183,17 +2177,19 @@
 
             if (index === $items.length - 1) index = -1;
 
-            $liActive = $(that.viewObj._currentLis[that.viewObj.position0 + index]);
+            liActiveIndex = that.viewObj.position0 + index;
           } else if (index === $items.length - 1) {
             that.doneScrolling = false;
 
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollHeight;
 
-            $liActive = $(that.viewObj._currentLis[that.viewObj._currentLis.length - 1]);
+            liActiveIndex = that.viewObj._currentLis.length - 1;
           }
         }
 
-        that.activeIndex = that.getOptionInfo($liActive[0]).originalIndex;
+        if (liActiveIndex !== index) $liActive = $(that.viewObj._currentLis[liActiveIndex]);
+        that.activeIndex = that.viewObj.current_optionObj[liActiveIndex];
+
         $liActive.children('a').focus();
         if (that.options.liveSearch) $this.focus();
       } else if (!$this.is('input')) {
