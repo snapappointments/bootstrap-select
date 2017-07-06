@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.12.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.3 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -327,7 +327,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.12.2';
+  Selectpicker.VERSION = '1.12.3';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -559,9 +559,9 @@
        */
       var generateLI = function (content, index, classes, optgroup) {
         return '<li' +
-            ((typeof classes !== 'undefined' & '' !== classes) ? ' class="' + classes + '"' : '') +
-            ((typeof index !== 'undefined' & null !== index) ? ' data-original-index="' + index + '"' : '') +
-            ((typeof optgroup !== 'undefined' & null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
+            ((typeof classes !== 'undefined' && '' !== classes) ? ' class="' + classes + '"' : '') +
+            ((typeof index !== 'undefined' && null !== index) ? ' data-original-index="' + index + '"' : '') +
+            ((typeof optgroup !== 'undefined' && null !== optgroup) ? 'data-optgroup="' + optgroup + '"' : '') +
             '>' + content + '</li>';
       };
 
