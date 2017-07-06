@@ -23,19 +23,19 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Intet valgt',
-    noneResultsText: 'Ingen resultater fundet {0}',
+    noneSelectedText: 'Chưa chọn',
+    noneResultsText: 'Không có kết quả cho {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} valgt" : "{0} valgt";
+      return "{0} mục đã chọn";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        (numAll == 1) ? 'Begrænsning nået (max {n} valgt)' : 'Begrænsning nået (max {n} valgte)',
-        (numGroup == 1) ? 'Gruppe-begrænsning nået (max {n} valgt)' : 'Gruppe-begrænsning nået (max {n} valgte)'
+        'Không thể chọn (giới hạn {n} mục)',
+        'Không thể chọn (giới hạn {n} mục)'
       ];
     },
-    selectAllText: 'Markér alle',
-    deselectAllText: 'Afmarkér alle',
+    selectAllText: 'Chọn tất cả',
+    deselectAllText: 'Bỏ chọn',
     multipleSeparator: ', '
   };
 })(jQuery);

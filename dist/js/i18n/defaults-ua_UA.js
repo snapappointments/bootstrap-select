@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.12.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.3 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -27,7 +27,9 @@
     noneResultsText: 'Збігів не знайдено {0}',
     countSelectedText: 'Вибрано {0} із {1}',
     maxOptionsText: ['Досягнута межа ({n} {var} максимум)', 'Досягнута межа в групі ({n} {var} максимум)', ['items', 'item']],
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Вибрати все',
+    deselectAllText: 'Скасувати вибір усі'
   };
 })(jQuery);
 

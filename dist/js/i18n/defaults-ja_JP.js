@@ -23,19 +23,12 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Intet valgt',
-    noneResultsText: 'Ingen resultater fundet {0}',
-    countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} valgt" : "{0} valgt";
-    },
-    maxOptionsText: function (numAll, numGroup) {
-      return [
-        (numAll == 1) ? 'Begrænsning nået (max {n} valgt)' : 'Begrænsning nået (max {n} valgte)',
-        (numGroup == 1) ? 'Gruppe-begrænsning nået (max {n} valgt)' : 'Gruppe-begrænsning nået (max {n} valgte)'
-      ];
-    },
-    selectAllText: 'Markér alle',
-    deselectAllText: 'Afmarkér alle',
+    noneSelectedText: '何もが選択した',
+    noneResultsText: '\'{0}\'が結果を返さない',
+    countSelectedText: '{0}/{1}が選択した',
+    maxOptionsText: ['限界は達した({n}{var}最大)', '限界をグループは達した({n}{var}最大)', ['アイテム', 'アイテム']],
+    selectAllText: '全部を選択する',
+    deselectAllText: '何も選択しない',
     multipleSeparator: ', '
   };
 })(jQuery);
