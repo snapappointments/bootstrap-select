@@ -438,6 +438,7 @@
 
           // replace the existing UL with an empty one - this is faster than $.empty() or innerHTML = ''
           menuInner.replaceChild(emptyMenu, menuInner.firstChild);
+          menuInner.scrollTop = 0;
         });
       }
       this.$menu.data('this', this);
