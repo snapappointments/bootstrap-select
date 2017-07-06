@@ -11,7 +11,7 @@
     countSelectedText: 'Selecionado {0} de {1}',
     maxOptionsText: ['Limite excedido (máx. {n} {var})', 'Limite do grupo excedido (máx. {n} {var})', ['itens', 'item']],
     multipleSeparator: ', ',
-    selectAllText: 'Selecionar Tudo',
+    selectAllText: 'Selecionar Todos',
     deselectAllText: 'Desmarcar Todos'
   };
 })(jQuery);
