@@ -1,4 +1,4 @@
-bootstrap-select
+bootstrap-select-ajax
 ================
 
 [![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
@@ -10,6 +10,8 @@ bootstrap-select
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
 [![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
+
+Notice: This package is forked from [silviomoreto/bootstrap-select](https://github.com/silviomoreto/bootstrap-select). I just modify a little code for ajax(at line 1426 in js/boostrap-select-ajax.js).And i add a stamp in js file. 
 
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
@@ -29,14 +31,6 @@ Bootstrap-select's documentation, included in this repo in the root directory, i
 4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
 
 Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
-
-## Authors
-
-[Silvio Moreto](https://github.com/silviomoreto),
-[Ana Carolina](https://github.com/anacarolinats),
-[caseyjhol](https://github.com/caseyjhol),
-[Matt Bryson](https://github.com/mattbryson), and
-[t0xicCode](https://github.com/t0xicCode).
 
 ## Usage
 
@@ -64,35 +58,103 @@ $('select').selectpicker();
 
 Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for further information.
 
-## CDN
 
-**N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
+## ajax 
+```html
+<select class="ajax-search" ajax-url="xxx" ajax-params="{#wmsType#: #all#}" ajax-option-name="wmsName" ajax-option-value="id" ajax-search-key="searchkey"></select>
+<!--ajax-url: string
+ajax-params: like json,but use '#' instead '"'
+ajax-option-name: Appoint your option name, the key of your response data
+ajax-option-value: Appoint your option value, the key of your response data-->
 
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css)
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js)
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js (The translation files)
+<!--example:-->
+<!--the data: [{"name": "xiaoming", "age": 28},{"name": "xiaohong", "age": 28}]-->
+<!--<select class="ajax-search" ajax-url="your ajax api" ajax-params="{#pnType#: #onePart#, #fromSys#: #scmship#}" ajax-option-name="name" ajax-option-value="age"></select>-->
 
-## Bugs and feature requests
+```
 
-Anyone and everyone is welcome to contribute. **Please take a moment to
-review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're using the latest version of bootstrap-select before submitting an issue.
+```javascript
+  /*
+  * 异步搜索下拉框
+  */
+  (function () {
+    if (!$('select.ajax-search').hasClass('ajax-search')) {
+      return;
+    }
 
-* [Bug reports](CONTRIBUTING.md#bug-reports)
-* [Feature requests](CONTRIBUTING.md#feature-requests)
+    $('select.ajax-search').selectpicker({
+      liveSearch: true,
+      size: 10,
+      container: 'body',
+      liveSearchPlaceholder: '输入搜索',
+      noneSelectedText: '输入搜索',
+    });
 
-## Copyright and license
+    // clear select options
+    function _refreshSelectPicker($obj, str) {
+      if (str) {
+        $obj.html(str).selectpicker('refresh');
+        return;
+      }
+      $obj.html(' ').selectpicker('refresh');
+    }
 
-Copyright (C) 2013-2015 bootstrap-select
+    // creat select options
+    function _creatOptions(data, optionName, optionValue) {
+      var options = '';
+      for (var index = 0; index < data.length; index++) {
+        var name = data[index][optionName];
+        options += '<option value="' + data[index][optionValue] + '">' + name + '</option>';
+      }
+      return options;
+    }
 
-Licensed under [the MIT license](LICENSE).
-
-## Used by
-
-* [SnapAppointments](https://snapappointments.com)
-* [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
-* [membermeister](https://www.membermeister.com)
-* [Solve for All](https://solveforall.com)
-* [EstiMATEit](http://www.123itworks.co.uk)
-* [Convertizer](https://convertizer.com)
-
-Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.
+    // bind keyup event
+    $(document)
+      .on('keyup', '.bootstrap-select.open.ajax-search .bs-searchbox>input', function (e) {
+        var stamp = $(this).parents('.bootstrap-select.ajax-search.open').attr('selectpicker-stamp');
+        var $select = $('[selectpicker-stamp="' + stamp + '"]').find('select');
+        var api = $select.attr('ajax-url');
+        var params = {};
+        if ($select.attr('ajax-params')) {
+          params = JSON.parse($select.attr('ajax-params').replace(/#/g, '"'));
+        }
+        var optionName = $select.attr('ajax-option-name');
+        var optionValue = $select.attr('ajax-option-value');
+        params.token = $select.attr('ajax-token');
+        params[$select.attr('ajax-search-key')] = $('.bootstrap-select.ajax-search.open').find('input').val();
+        if (event.key === 'Control') {
+          return;
+        }
+        if ($(this).val()) {
+          // open loading code
+          // ajax
+          $.get(api, params)
+            .done(function (res) {
+              if (!res.status) { // response success
+                _refreshSelectPicker($select, _creatOptions(res.data, optionName, optionValue));
+              } else { // response fail
+                // mock data
+                var mockData = [];
+                for (var index = 0; index < 3; index++) {
+                  var mockObj = {};
+                  mockObj[optionName] = 'test' + index;
+                  mockObj[optionValue] = index;
+                  mockData.push(mockObj);
+                }
+                alert('this is a mock data,remove it in prod');
+                _refreshSelectPicker($select, _creatOptions(mockData, optionName, optionValue));
+                // mock data
+                
+                // _refreshSelectPicker($select); // in prod this line remove comments
+              }
+            })
+            .always(function () {
+              // close loading code
+            });
+        } else {
+          _refreshSelectPicker($select);
+        }
+      });
+  })();
+```

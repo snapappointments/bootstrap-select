@@ -1,42 +1,22 @@
 {
-  "name": "bootstrap-select",
-  "title": "bootstrap-select",
-  "main": "dist/js/bootstrap-select.js",
-  "description": "Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
-  "version": "1.12.2",
-  "homepage": "http://silviomoreto.github.io/bootstrap-select",
+  "name": "bootstrap-select-ajax",
+  "title": "bootstrap-select-ajax",
+  "main": "dist/js/bootstrap-select-ajax.js",
+  "description": "bootstrap-select-ajax is forked from silviomoreto/bootstrap-select",
+  "version": "1.12.25",
+  "homepage": "https://github.com/yy7054wyq5/bootstrap-select",
   "author": {
-    "name": "Silvio Moreto",
-    "url": "https://github.com/silviomoreto"
+    "name": "Wu Yang",
+    "url": "https://github.com/yy7054wyq5"
   },
-  "contributors": [
-    {
-      "name": "Silvio Moreto",
-      "url": "https://github.com/silviomoreto"
-    },
-    {
-      "name": "Ana Carolina",
-      "url": "https://github.com/anacarolinats"
-    },
-    {
-      "name": "caseyjhol",
-      "url": "https://github.com/caseyjhol"
-    },
-    {
-      "name": "Matt Bryson",
-      "url": "https://github.com/mattbryson"
-    },
-    {
-      "name": "t0xicCode",
-      "url": "https://github.com/t0xicCode"
-    }
-  ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/silviomoreto/bootstrap-select.git"
+    "url": "git://github.com/yy7054wyq5/bootstrap-select.git"
   },
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-select": "^1.12.2",
     "jquery": ">=1.8"
   },
   "devDependencies": {
