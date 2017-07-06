@@ -140,6 +140,7 @@ select.selectpicker {
           box-sizing: border-box;
 }
 .bootstrap-select.btn-group .dropdown-menu.inner {
+  display: block;
   position: static;
   float: none;
   border: 0;
