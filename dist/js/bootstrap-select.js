@@ -714,8 +714,6 @@
 
           $lis.removeClass('active').eq(index).addClass('active');
         }
-
-        that.doneScrolling = true;
       }
 
       $(window).off('resize.createView').on('resize.createView', function() {
@@ -2057,8 +2055,7 @@
           that = $parent.data('this'),
           index,
           isActive,
-          $liActive,
-          rowRemainder = 2,
+          liActive,
           selector = ':not(.disabled, .dropdown-header, .divider)',
           keyCodeMap = {
             32: ' ',
@@ -2137,11 +2134,6 @@
       var downOnTab = e.keyCode == 9 && !$this.hasClass('dropdown-toggle') && !that.options.selectOnTab;
 
       if (/(38|40)/.test(e.keyCode.toString(10)) || downOnTab) { // if up or down
-        // sometimes the scroll event is not fired, manually trigger it's if not
-        if (!that.doneScrolling && that.$menuInner[0].scrollHeight > that.$menuInner[0].clientHeight) {
-          that.$menuInner.trigger('scroll.createView');
-        }
-
         $items = that.findLis();
 
         if (!$items.length) return;
@@ -2165,57 +2157,47 @@
         }
 
         e.preventDefault();
-        $liActive = $items.removeClass('active').eq(index).addClass('active');
+        $items.removeClass('active');
 
-        var activeLi, offset, liActiveIndex = index;
+        var activeLi,
+            offset,
+            liActiveIndex = that.viewObj.position0 + index,
+            updateScroll = false;
 
-        if (e.keyCode == 40 || downOnTab) { // down
-          // check to see how many options are hidden at the bottom of the menu (1 or 2 depending on scroll position)
-          if ($items.eq($items.length - 2).offset().top < that.$menuInner.offset().top + that.$menuInner[0].offsetHeight) {
-            rowRemainder = 1;
-          }
-          
-          if (index >= $items.length - rowRemainder) {
-            that.doneScrolling = false;
-
-            activeLi = that.viewObj._currentlisText[index + that.viewObj.position0];
-            offset = activeLi.position - that.sizeInfo.menuInnerHeight;
-
-            that.$menuInner[0].scrollTop = offset;
-
-            liActiveIndex = index + that.viewObj.position0;
-          } else if (that.viewObj.position0 !== 0 && index === 0) {
-            that.doneScrolling = false;
-
-            that.$menuInner.scrollTop(0);
-
-            liActiveIndex = 0;
-          }
-        } else if (e.keyCode == 38) { // up
-          if (that.viewObj.position0 !== 0 && (index === $items.length - 1 || index < 2 && that.viewObj._currentLis.length - that.viewObj.position0 >= $items.length)) {
-            that.doneScrolling = false;
-
-            activeLi = that.viewObj._currentlisText[index + that.viewObj.position0];
-            offset = activeLi.position - activeLi.height;
-
-            that.$menuInner[0].scrollTop = offset;
-
-            if (index === $items.length - 1) index = -1;
-
-            liActiveIndex = that.viewObj.position0 + index;
-          } else if (index === $items.length - 1) {
-            that.doneScrolling = false;
-
+        if (e.keyCode == 38) { // up
+          // scroll to bottom and highlight last option
+          if (that.viewObj.position0 === 0 && index === $items.length - 1) {
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollHeight;
 
             liActiveIndex = that.viewObj._currentLis.length - 1;
+          } else {
+            activeLi = that.viewObj._currentlisText[liActiveIndex];
+            offset = activeLi.position - activeLi.height;
+
+            updateScroll = offset < that.$menuInner[0].scrollTop;
+          }
+        } else if (e.keyCode == 40 || downOnTab) { // down
+          // scroll to top and highlight first option
+          if (that.viewObj.position0 !== 0 && index === 0) {
+            that.$menuInner[0].scrollTop = 0;
+
+            liActiveIndex = 0;
+          } else {
+            activeLi = that.viewObj._currentlisText[liActiveIndex];
+            offset = activeLi.position - that.sizeInfo.menuInnerHeight;
+
+            updateScroll = offset > that.$menuInner[0].scrollTop;
           }
         }
 
-        if (liActiveIndex !== index) $liActive = $(that.viewObj._currentLis[liActiveIndex]);
+        liActive = that.viewObj._currentLis[liActiveIndex];
+        liActive.classList.add('active');
         that.activeIndex = that.viewObj.current_optionObj[liActiveIndex];
 
-        $liActive.children('a').focus();
+        liActive.firstChild.focus();
+
+        if (updateScroll) that.$menuInner[0].scrollTop = offset;
+
         if (that.options.liveSearch) $this.focus();
       } else if (!$this.is('input')) {
         var keyIndex = [],
