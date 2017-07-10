@@ -86,6 +86,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+      <td>htmlTag</td>
+      <td>string</td>
+      <td><code>span</code></td>
+      <td>
+        <p>allows htmlTag used to be configured. usually <code>span</code> or <code>i</code></p>
+      </td>
+    </tr>
+  <tr>
     <td>iconBase</td>
     <td>string</td>
     <td><code>'glyphicon'</code></td>
