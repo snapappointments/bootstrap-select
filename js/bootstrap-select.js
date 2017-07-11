@@ -344,6 +344,7 @@
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
+    htmlTag: "span",
     showTick: false,
     template: {
       caret: '<span class="caret"></span>'
@@ -556,7 +557,8 @@
             (that.options.liveSearchNormalize ? ' data-normalized-text="' + normalizeToBase(htmlEscape($(text).html())) + '"' : '') +
             (typeof tokens !== 'undefined' || tokens !== null ? ' data-tokens="' + tokens + '"' : '') +
             ' role="option">' + text +
-            '<span class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark"></span>' +
+            '<' + that.options.htmlTag + ' class="' + that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark">' +
+            '</' + that.options.htmlTag + '>' +
             '</a>';
       };
 
