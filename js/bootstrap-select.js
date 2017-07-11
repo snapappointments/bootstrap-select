@@ -2123,6 +2123,7 @@
 
           if (!that.canHighlight[index + that.viewObj.position0]) {
             index = that.canHighlight.slice(0, index + that.viewObj.position0).lastIndexOf(true) - that.viewObj.position0;
+            if (index === -1) index = $items.length - 1;
           }
         } else if (e.keyCode == 40 || downOnTab) { // down
           index++;
