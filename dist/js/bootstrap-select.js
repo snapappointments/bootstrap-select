@@ -444,9 +444,7 @@
 
       if (that.$element[0].hasAttribute('required')) {
         this.$element.on('invalid', function () {
-          that.$button
-            .addClass('bs-invalid')
-            .focus();
+          that.$button.addClass('bs-invalid');
 
           that.$element.on({
             'focus.bs.select': function () {
