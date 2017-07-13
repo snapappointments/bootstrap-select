@@ -1,10 +1,10 @@
 ### v1.12.3 (2017-07-06)
 
 ## Bug Fixes
-- #1529: add selectAllText and deselectAllText to translation files (used Google Translate)
-- #1604: Keydown improvements
-- #1630: htmlEscape inline style
-- #1631: Livesearch performance
+- [#1529]: add selectAllText and deselectAllText to translation files (used Google Translate)
+- [#1604]: Keydown improvements
+- [#1630]: htmlEscape inline style
+- [#1631]: Livesearch performance
 
 ## New Features
 - Add/update various translations
