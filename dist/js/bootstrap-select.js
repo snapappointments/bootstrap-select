@@ -462,6 +462,11 @@
               that.$element.off('rendered.bs.select');
             }
           });
+
+          that.$button.on('blur.bs.select', function() {
+            that.$element.focus().blur();
+            that.$button.off('blur.bs.select');
+          });
         });
       }
 
