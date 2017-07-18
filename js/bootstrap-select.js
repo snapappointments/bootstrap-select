@@ -1980,8 +1980,9 @@
 
     val: function (value) {
       if (typeof value !== 'undefined') {
-        this.$element.val(value);
-        this.render();
+        this.$element
+          .val(value)
+          .triggerNative('change');
 
         return this.$element;
       } else {
