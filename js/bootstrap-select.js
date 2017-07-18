@@ -1406,15 +1406,15 @@
             'overflow': 'hidden',
             'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
           });
-          
+
           menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
-          
+
           $menuInner.css({
             'max-height': menuInnerHeight + 'px',
             'overflow-y': 'auto',
             'min-height': Math.max(minHeight - menuPadding.vert, 0) + 'px'
           });
-          
+
           that.sizeInfo['menuInnerHeight'] = menuInnerHeight;
         }
         getSize();
@@ -1441,6 +1441,7 @@
           //noinspection JSUnusedAssignment
           this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
         }
+
         $menu.css({
           'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px',
           'overflow': 'hidden',
