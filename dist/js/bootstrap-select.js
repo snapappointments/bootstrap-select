@@ -899,7 +899,7 @@
         var optionClass = this.className || '',
             inline = htmlEscape(this.style.cssText),
             optionContent = thisData.content,
-            text = $this.html(),
+            text = this.textContent,
             tokens = thisData.tokens ? thisData.tokens : null,
             subtext = thisData.subtext,
             icon = thisData.icon,
