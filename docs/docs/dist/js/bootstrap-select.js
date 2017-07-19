@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.12.3 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -164,12 +164,22 @@
   };
 
   var changed_arguments = null;
+
+  var EventIsSupported = (function() {
+    try {
+      new Event('change');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
+
   $.fn.triggerNative = function (eventName) {
     var el = this[0],
         event;
 
     if (el.dispatchEvent) { // for modern browsers & IE9+
-      if (typeof Event === 'function') {
+      if (EventIsSupported) {
         // For modern browsers
         event = new Event(eventName, {
           bubbles: true
@@ -327,7 +337,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.12.3';
+  Selectpicker.VERSION = '1.12.4';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -444,9 +454,7 @@
 
       if (that.$element[0].hasAttribute('required')) {
         this.$element.on('invalid', function () {
-          that.$button
-            .addClass('bs-invalid')
-            .focus();
+          that.$button.addClass('bs-invalid');
 
           that.$element.on({
             'focus.bs.select': function () {
@@ -463,6 +471,11 @@
               if (this.validity.valid) that.$button.removeClass('bs-invalid');
               that.$element.off('rendered.bs.select');
             }
+          });
+
+          that.$button.on('blur.bs.select', function() {
+            that.$element.focus().blur();
+            that.$button.off('blur.bs.select');
           });
         });
       }
