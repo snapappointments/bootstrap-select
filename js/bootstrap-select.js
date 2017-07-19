@@ -586,9 +586,9 @@
 
         var prevPositions = [that.selectpicker.view.position0, that.selectpicker.view.position1];
 
-        // always display 3 chunks
+        // always display previous, current, and next chunks
         var firstChunk = Math.max(0, currentChunk - 1);
-        var lastChunk = Math.min(chunkCount - 1, firstChunk + 2);
+        var lastChunk = Math.min(chunkCount - 1, currentChunk + 1);
 
         that.selectpicker.view.position0 = Math.max(0, chunks[firstChunk][0]) || 0;
         that.selectpicker.view.position1 = Math.min(size, chunks[lastChunk][1]) || 0;
