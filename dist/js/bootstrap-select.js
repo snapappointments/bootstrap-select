@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.13.0-alpha (http://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -308,7 +308,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.12.4';
+  Selectpicker.VERSION = '1.13.0-alpha';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
