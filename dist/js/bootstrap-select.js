@@ -524,13 +524,10 @@
       return $(drop);
     },
     
-    createView: function(searchLis, refresh) {
+    createView: function(isSearching) {
       var that = this;
 
-      this.selectpicker.current.elements = (searchLis ? searchLis : this.selectpicker.main.elements);
-      this.selectpicker.current.data = searchLis ? this.selectpicker.search.data : this.selectpicker.main.data;
-      this.selectpicker.current.map.newIndex = searchLis ? this.selectpicker.search.map.newIndex : this.selectpicker.main.map.newIndex;
-      this.selectpicker.current.map.originalIndex = searchLis ? this.selectpicker.search.map.originalIndex : this.selectpicker.main.map.originalIndex;
+      this.selectpicker.current = isSearching ? this.selectpicker.search : this.selectpicker.main;
 
       var liHeight = this.sizeInfo['liHeight'];
       var position = 0;
@@ -577,8 +574,6 @@
           that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
           that.$menu.css('min-width', that.sizeInfo.menuWidth);
         }
-
-        that.selectpicker.current.elements = (refresh ? that.selectpicker.main.elements : that.selectpicker.current.elements);
 
         var size = that.selectpicker.current.elements.length;
         var chunks = [];
@@ -667,7 +662,7 @@
         if (!that.options.liveSearch) {
           $lis = that.$menuInner.find('li');
           $lis.filter('.active').children('a').focus();
-        } else if (searchLis && init) {
+        } else if (isSearching && init) {
           $lis = that.$menuInner.find('li');
           var index = 0;
 
@@ -681,8 +676,6 @@
 
       $(window).off('resize.createView').on('resize.createView', function() {
         scroll(that.$menuInner[0].scrollTop);
-
-        //if (searchLis) $lis.eq(0).addClass('active');
       });
     },
 
@@ -1076,6 +1069,9 @@
 
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
+
+      this.selectpicker.current = this.selectpicker.main;
+
       this.selectpicker.view.widestOption = widestOption;
       this.selectpicker.view.availableOptionsCount = availableOptionsCount; // faster way to get # of available options without filter
     },
@@ -1300,8 +1296,6 @@
           $menu = this.$menu,
           $menuInner = this.$menuInner,
           $window = $(window),
-          currentElements = this.selectpicker.current.elements || this.selectpicker.main.elements,
-          currentData = this.selectpicker.current.data || this.selectpicker.main.data,
           selectHeight = this.$newElement[0].offsetHeight,
           selectWidth = this.$newElement[0].offsetWidth,
           liHeight = this.sizeInfo['liHeight'],
@@ -1414,11 +1408,11 @@
 
         this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
         $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
-      } else if (this.options.size && this.options.size != 'auto' && currentElements.length > this.options.size) {
+      } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
         var divLength = 0;
 
         for (var i = 0; i < this.options.size; i++) {
-          if (currentData[i].type === 'divider') divLength++;
+          if (this.selectpicker.current.data[i].type === 'divider') divLength++;
         }
 
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding.vert;
@@ -1455,7 +1449,7 @@
         $window.off('resize.getSize scroll.getSize');
       }
 
-      that.createView(false, true);
+      that.createView(false);
       this.findLis();
     },
 
@@ -1585,8 +1579,6 @@
      * @param {boolean} selected - true if the option is being selected, false if being deselected
      */
     setSelected: function (index, selected, liIndex, li) {
-      var visibleLiIndex;
-
       if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
       if (!li) li = this.selectpicker.main.elements[liIndex];
 
@@ -1608,8 +1600,6 @@
      * @param {boolean} disabled - true if the option is being disabled, false if being enabled
      */
     setDisabled: function (index, disabled, liIndex, li) {
-      var visibleLiIndex;
-
       if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
       if (!li) li = this.selectpicker.main.elements[liIndex];
 
@@ -1883,7 +1873,7 @@
         that.$menuInner.find('.active').removeClass('active');
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
-          that.createView(false, true);
+          that.createView(false);
           that.$menuInner.find('.active').removeClass('active');
         }
         if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
@@ -1901,6 +1891,7 @@
         
         that.selectpicker.search.map.newIndex = {};
         that.selectpicker.search.map.originalIndex = {};
+        that.selectpicker.search.elements = [];
         that.selectpicker.search.data = [];
 
         if (searchValue) {
@@ -1953,7 +1944,8 @@
           that.activeIndex = undefined;
           that.noScroll = true;
           that.$menuInner.scrollTop(0);
-          that.createView(searchMatch);
+          that.selectpicker.search.elements = searchMatch;
+          that.createView(true);
 
           if (!searchMatch.length) {
             no_results.className = 'no-results';
@@ -1962,7 +1954,7 @@
           }
         } else {
           that.$menuInner.scrollTop(0);
-          that.createView(false, true);
+          that.createView(false);
         }
       });
     },
