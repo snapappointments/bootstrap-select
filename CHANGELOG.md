@@ -1,8 +1,8 @@
 ### v1.12.4 (2017-07-19)
 
 ## Bug Fixes
-- #1286: Event creation throws illegal constructor error on stock Android Browser < 5.0
-- #1764: Bootstrap-select steals focus on form.checkValidity
+- [#1286]: Event creation throws illegal constructor error on stock Android Browser < 5.0
+- [#1764]: Bootstrap-select steals focus on form.checkValidity
 
 [#1286]: https://github.com/silviomoreto/bootstrap-select/issues/1286
 [#1764]: https://github.com/silviomoreto/bootstrap-select/issues/1764
