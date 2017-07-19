@@ -1563,10 +1563,14 @@
       if (selected) {
         this.selectedIndex = index;
         li.classList.add('selected');
-        if (!this.multiple) li.classList.add('active');
       } else if (li.classList.contains('selected')) {
         li.classList.remove('selected');
-        if (li.classList.contains('active')) li.classList.remove('active');
+      }
+
+      if ((this.activeIndex !== undefined ? this.activeIndex === index : selected) && !this.multiple) {
+        li.classList.add('active');
+      } else if (li.classList.contains('active')) {
+        li.classList.remove('active');
       }
 
       if (li.firstChild) li.firstChild.setAttribute('aria-selected', selected);
