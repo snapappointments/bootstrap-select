@@ -709,8 +709,9 @@
           _liText = [],
           optID = 0,
           headerIndex = 0,
-          titleOption = document.createElement('option'),
           liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure liObj is correct
+
+      if (!this.viewObj.titleOption) this.viewObj.titleOption = document.createElement('option');
 
       var elementTemplates = {
           span: document.createElement('span'),
@@ -844,21 +845,24 @@
         // since liObj is recalculated on every refresh, liIndex needs to be decreased even if the titleOption is already appended
         liIndex--;
 
-        if (!this.$element.find('.bs-title-option').length) {
+        var element = this.$element[0];
+
+        if (!this.viewObj.titleOption.parentNode) {
           // Use native JS to prepend option (faster)
-          var element = this.$element[0];
-          titleOption.className = 'bs-title-option';
-          titleOption.innerHTML = this.options.title;
-          titleOption.value = '';
-          element.insertBefore(titleOption, element.firstChild);
+          this.viewObj.titleOption.className = 'bs-title-option';
+          this.viewObj.titleOption.innerHTML = this.options.title;
+          this.viewObj.titleOption.value = '';
+
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
           // if so, the select will have the data-selected attribute
           var $opt = $(element.options[element.selectedIndex]);
           if ($opt.attr('selected') === undefined && this.$element.data('selected') === undefined) {
-            titleOption.selected = true;
+            this.viewObj.titleOption.selected = true;
           }
         }
+
+        element.insertBefore(this.viewObj.titleOption, element.firstChild);
       }
 
       var $selectOptions = this.$element.find('option');
