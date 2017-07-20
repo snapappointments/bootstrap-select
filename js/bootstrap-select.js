@@ -1733,6 +1733,7 @@
       this.render();
       this.checkDisabled();
       this.liHeight(true);
+      this.setSize();
       this.setStyle();
       this.setWidth();
       if (this.$lis) this.$searchbox.trigger('propertychange');
