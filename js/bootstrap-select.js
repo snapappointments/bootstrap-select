@@ -83,7 +83,7 @@
     _set: $.valHooks.select.set
   };
 
-  $.valHooks.select.set = function(elem, value) {
+  $.valHooks.select.set = function (elem, value) {
     if (value && !valHooks.useDefault) $(elem).data('selected', true);
 
     return valHooks._set.apply(this, arguments);
@@ -210,15 +210,15 @@
   };
 
   // Functions for escaping and unescaping strings to/from HTML interpolation.
-  var createEscaper = function(map) {
-    var escaper = function(match) {
+  var createEscaper = function (map) {
+    var escaper = function (match) {
       return map[match];
     };
     // Regexes for identifying a key that needs to be escaped.
     var source = '(?:' + Object.keys(map).join('|') + ')';
     var testRegexp = RegExp(source);
     var replaceRegexp = RegExp(source, 'g');
-    return function(string) {
+    return function (string) {
       string = string == null ? '' : '' + string;
       return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
     };
@@ -493,7 +493,7 @@
       return $(drop);
     },
     
-    createView: function(isSearching) {
+    createView: function (isSearching) {
       var that = this;
 
       this.selectpicker.current = isSearching ? this.selectpicker.search : this.selectpicker.main;
@@ -532,7 +532,7 @@
 
       scroll(0, true);
 
-      this.$menuInner.off('scroll.createView').on('scroll.createView', function(e, updateValue) {
+      this.$menuInner.off('scroll.createView').on('scroll.createView', function (e, updateValue) {
         if (!that.noScroll) scroll(this.scrollTop, updateValue);
         that.noScroll = false;
       });
@@ -728,7 +728,7 @@
         return a;
       };
 
-      var generateText = function(options) {
+      var generateText = function (options) {
         var textElement = elementTemplates.text.cloneNode(false),
             optionSubtextElement,
             optionIconElement;
@@ -760,7 +760,7 @@
         return fragment;
       };
 
-      var generateLabel = function(options) {
+      var generateLabel = function (options) {
         var labelTextElement = elementTemplates.text.cloneNode(false),
             labelSubtextElement,
             labelIconElement;
