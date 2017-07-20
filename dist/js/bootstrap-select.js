@@ -1983,14 +1983,22 @@
       if (!this.multiple) return;
       if (typeof status === 'undefined') status = true;
 
-      var $selectOptions = this.$element.find('option');
+      var $selectOptions = this.$element.find('option'),
+          previousSelected = 0,
+          currentSelected = 0;
 
       for (var i = 0; i < this.selectpicker.current.elements.length; i++) {
         var index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
             option = $selectOptions.eq(index)[0];
 
-        if (option) option.selected = status;
+        if (option) {
+          if (option.selected) previousSelected++;
+          option.selected = status;
+          if (option.selected) currentSelected++;
+        }
       }
+
+      if (previousSelected === currentSelected) return;
 
       this.setOptionStatus();
 
