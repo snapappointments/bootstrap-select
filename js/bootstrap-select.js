@@ -837,7 +837,7 @@
             inline = htmlEscape(this.style.cssText),
             optionContent = thisData.content,
             text = this.textContent,
-            tokens = thisData.tokens ? thisData.tokens : null,
+            tokens = thisData.tokens,
             subtext = thisData.subtext,
             icon = thisData.icon,
             $parent = $this.parent(),
@@ -864,7 +864,7 @@
           if (!showDivider) {
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
-              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              var prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
               
               if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
                 showDivider = true;
@@ -900,7 +900,7 @@
 
           var optGroupClass = ' ' + parent.className || '';
 
-          if ($this.index() === 0) { // Is it the first option of the optgroup?
+          if (!this.previousElementSibling) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
@@ -976,7 +976,7 @@
 
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
-              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              var prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
               
               if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
                 showDivider = true;
@@ -1040,8 +1040,8 @@
       });
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
-      if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
-        this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
+      if (!this.multiple && $selectOptions.filter(':selected').length === 0 && !this.options.title) {
+        $selectOptions.eq(0).prop('selected', true).attr('selected', 'selected');
       }
 
       this.selectpicker.main.elements = mainElements;
@@ -1527,7 +1527,7 @@
       if (that.selectpicker.view.visibleElements && that.selectpicker.view.visibleElements.length) {
         for (var i = 0; i < that.selectpicker.view.visibleElements.length; i++) {
           var index = that.selectpicker.current.map.originalIndex[i + that.selectpicker.view.position0], // faster than $(li).data('originalIndex')
-              option = $selectOptions.eq(index)[0];
+              option = $selectOptions[index];
 
           if (option) {
             var liIndex = this.selectpicker.main.map.newIndex[index],
@@ -1966,7 +1966,7 @@
 
       for (var i = 0; i < this.selectpicker.current.elements.length; i++) {
         var index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
-            option = $selectOptions.eq(index)[0];
+            option = $selectOptions[index];
 
         if (option) {
           if (option.selected) previousSelected++;
