@@ -1046,14 +1046,13 @@
     },
 
     findLis: function () {
-      this.$lis = this.$menuInner.find('li');
+      this.$lis = this.$menuInner.find('.inner > li');
       return this.$lis;
     },
 
     render: function () {
       var that = this,
           $selectOptions = this.$element.find('option'),
-          $lis = that.findLis(),
           selectedItems = [],
           selectedItemsInTitle = [];
 
