@@ -509,7 +509,7 @@
           header +
           searchbox +
           actionsbox +
-          '<ul class="dropdown-menu inner" role="listbox" aria-expanded="false">' +
+          '<ul class="dropdown-menu inner open" role="listbox" aria-expanded="false">' +
           '</ul>' +
           donebutton +
           '</div>' +
@@ -668,14 +668,17 @@
             }
             liIndex++;
             _li.push(generateLI(label, null, 'dropdown-header' + optGroupClass, optID));
+            _li.push('<ul class="dropdown-menu inner optgroup" data-optgroup="' + optID + '">');
           }
 
           if (that.options.hideDisabled && isDisabled) {
             liIndex--;
+            if (!this.nextElementSibling) _li.push('</ul>'); // Is it the last option of the optgroup?
             return;
           }
 
           _li.push(generateLI(generateA(text, 'opt ' + optionClass + optGroupClass, inline, tokens), index, '', optID));
+          if (!this.nextElementSibling) _li.push('</ul>'); // Is it the last option of the optgroup?
         } else if ($this.data('divider') === true) {
           _li.push(generateLI('', index, 'divider'));
         } else if ($this.data('hidden') === true) {
