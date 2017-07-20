@@ -91,7 +91,7 @@
 
   var changed_arguments = null;
 
-  var EventIsSupported = (function() {
+  var EventIsSupported = (function () {
     try {
       new Event('change');
       return true;
@@ -423,7 +423,7 @@
             }
           });
 
-          that.$button.on('blur.bs.select', function() {
+          that.$button.on('blur.bs.select', function () {
             that.$element.focus().blur();
             that.$button.off('blur.bs.select');
           });
@@ -643,7 +643,7 @@
         }
       }
 
-      $(window).off('resize.createView').on('resize.createView', function() {
+      $(window).off('resize.createView').on('resize.createView', function () {
         scroll(that.$menuInner[0].scrollTop);
       });
     },
@@ -1284,7 +1284,7 @@
           selectOffsetBot,
           selectOffsetLeft,
           selectOffsetRight,
-          getPos = function() {
+          getPos = function () {
             var pos = that.$newElement.offset(),
                 $container = $(that.options.container),
                 containerPos;
@@ -1510,7 +1510,7 @@
       });
     },
 
-    setOptionStatus: function() {
+    setOptionStatus: function () {
       var that = this,
           $selectOptions = this.$element.find('option');
 
