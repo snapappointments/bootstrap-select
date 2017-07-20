@@ -1582,13 +1582,11 @@
       if (disabled) {
         li.classList.add('disabled');
         if (li.firstChild) {
-          li.firstChild.setAttribute('href', '#');
           li.firstChild.setAttribute('tabindex', -1);
         }
       } else {
         if (li.classList.contains('disabled')) li.classList.remove('disabled');
         if (li.firstChild) {
-          li.firstChild.removeAttribute('href');
           li.firstChild.setAttribute('tabindex', 0);
         }
       }
