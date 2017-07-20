@@ -364,10 +364,6 @@
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
-        $('label[for="' + id + '"]').click(function (e) {
-          e.preventDefault();
-          that.$button.focus();
-        });
       }
 
       this.checkDisabled();
@@ -415,10 +411,6 @@
           that.$button.addClass('bs-invalid');
 
           that.$element.on({
-            'focus.bs.select': function () {
-              that.$button.focus();
-              that.$element.off('focus.bs.select');
-            },
             'shown.bs.select': function () {
               that.$element
                 .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
@@ -1839,10 +1831,15 @@
         }
       });
 
-      this.$element.change(function () {
-        that.render();
-        that.$element.trigger('changed.bs.select', changed_arguments);
-        changed_arguments = null;
+      this.$element.on({
+        'change': function () {
+          that.render();
+          that.$element.trigger('changed.bs.select', changed_arguments);
+          changed_arguments = null;
+        },
+        'focus': function () {
+          that.$button.focus();
+        }
       });
     },
 
