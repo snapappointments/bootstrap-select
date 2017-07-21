@@ -106,7 +106,7 @@
     _set: $.valHooks.select.set
   };
 
-  $.valHooks.select.set = function(elem, value) {
+  $.valHooks.select.set = function (elem, value) {
     if (value && !valHooks.useDefault) $(elem).data('selected', true);
 
     return valHooks._set.apply(this, arguments);
@@ -114,7 +114,7 @@
 
   var changed_arguments = null;
 
-  var EventIsSupported = (function() {
+  var EventIsSupported = (function () {
     try {
       new Event('change');
       return true;
@@ -233,15 +233,15 @@
   };
 
   // Functions for escaping and unescaping strings to/from HTML interpolation.
-  var createEscaper = function(map) {
-    var escaper = function(match) {
+  var createEscaper = function (map) {
+    var escaper = function (match) {
       return map[match];
     };
     // Regexes for identifying a key that needs to be escaped.
     var source = '(?:' + Object.keys(map).join('|') + ')';
     var testRegexp = RegExp(source);
     var replaceRegexp = RegExp(source, 'g');
-    return function(string) {
+    return function (string) {
       string = string == null ? '' : '' + string;
       return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
     };
@@ -387,10 +387,6 @@
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
-        $('label[for="' + id + '"]').click(function (e) {
-          e.preventDefault();
-          that.$button.focus();
-        });
       }
 
       this.checkDisabled();
@@ -438,10 +434,6 @@
           that.$button.addClass('bs-invalid');
 
           that.$element.on({
-            'focus.bs.select': function () {
-              that.$button.focus();
-              that.$element.off('focus.bs.select');
-            },
             'shown.bs.select': function () {
               that.$element
                 .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
@@ -454,7 +446,7 @@
             }
           });
 
-          that.$button.on('blur.bs.select', function() {
+          that.$button.on('blur.bs.select', function () {
             that.$element.focus().blur();
             that.$button.off('blur.bs.select');
           });
@@ -524,7 +516,7 @@
       return $(drop);
     },
     
-    createView: function(isSearching) {
+    createView: function (isSearching) {
       var that = this;
 
       this.selectpicker.current = isSearching ? this.selectpicker.search : this.selectpicker.main;
@@ -563,7 +555,7 @@
 
       scroll(0, true);
 
-      this.$menuInner.off('scroll.createView').on('scroll.createView', function(e, updateValue) {
+      this.$menuInner.off('scroll.createView').on('scroll.createView', function (e, updateValue) {
         if (!that.noScroll) scroll(this.scrollTop, updateValue);
         that.noScroll = false;
       });
@@ -674,7 +666,7 @@
         }
       }
 
-      $(window).off('resize.createView').on('resize.createView', function() {
+      $(window).off('resize.createView').on('resize.createView', function () {
         scroll(that.$menuInner[0].scrollTop);
       });
     },
@@ -759,7 +751,7 @@
         return a;
       };
 
-      var generateText = function(options) {
+      var generateText = function (options) {
         var textElement = elementTemplates.text.cloneNode(false),
             optionSubtextElement,
             optionIconElement;
@@ -791,7 +783,7 @@
         return fragment;
       };
 
-      var generateLabel = function(options) {
+      var generateLabel = function (options) {
         var labelTextElement = elementTemplates.text.cloneNode(false),
             labelSubtextElement,
             labelIconElement;
@@ -860,7 +852,7 @@
             inline = htmlEscape(this.style.cssText),
             optionContent = thisData.content,
             text = this.textContent,
-            tokens = thisData.tokens ? thisData.tokens : null,
+            tokens = thisData.tokens,
             subtext = thisData.subtext,
             icon = thisData.icon,
             $parent = $this.parent(),
@@ -887,7 +879,7 @@
           if (!showDivider) {
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
-              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              var prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
               
               if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
                 showDivider = true;
@@ -923,7 +915,7 @@
 
           var optGroupClass = ' ' + parent.className || '';
 
-          if ($this.index() === 0) { // Is it the first option of the optgroup?
+          if (!this.previousElementSibling) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
@@ -999,7 +991,7 @@
 
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
-              var prevHidden = $selectOptions.eq(prevHiddenIndex)[0].previousElementSibling;
+              var prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
               
               if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
                 showDivider = true;
@@ -1063,8 +1055,8 @@
       });
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
-      if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
-        this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
+      if (!this.multiple && $selectOptions.filter(':selected').length === 0 && !this.options.title) {
+        $selectOptions.eq(0).prop('selected', true).attr('selected', 'selected');
       }
 
       this.selectpicker.main.elements = mainElements;
@@ -1077,14 +1069,13 @@
     },
 
     findLis: function () {
-      this.$lis = this.$menuInner.find('li');
+      this.$lis = this.$menuInner.find('.inner > li');
       return this.$lis;
     },
 
     render: function () {
       var that = this,
           $selectOptions = this.$element.find('option'),
-          $lis = that.findLis(),
           selectedItems = [],
           selectedItemsInTitle = [];
 
@@ -1315,7 +1306,7 @@
           selectOffsetBot,
           selectOffsetLeft,
           selectOffsetRight,
-          getPos = function() {
+          getPos = function () {
             var pos = that.$newElement.offset(),
                 $container = $(that.options.container),
                 containerPos;
@@ -1541,7 +1532,7 @@
       });
     },
 
-    setOptionStatus: function() {
+    setOptionStatus: function () {
       var that = this,
           $selectOptions = this.$element.find('option');
 
@@ -1550,7 +1541,7 @@
       if (that.selectpicker.view.visibleElements && that.selectpicker.view.visibleElements.length) {
         for (var i = 0; i < that.selectpicker.view.visibleElements.length; i++) {
           var index = that.selectpicker.current.map.originalIndex[i + that.selectpicker.view.position0], // faster than $(li).data('originalIndex')
-              option = $selectOptions.eq(index)[0];
+              option = $selectOptions[index];
 
           if (option) {
             var liIndex = this.selectpicker.main.map.newIndex[index],
@@ -1613,13 +1604,11 @@
       if (disabled) {
         li.classList.add('disabled');
         if (li.firstChild) {
-          li.firstChild.setAttribute('href', '#');
           li.firstChild.setAttribute('tabindex', -1);
         }
       } else {
         if (li.classList.contains('disabled')) li.classList.remove('disabled');
         if (li.firstChild) {
-          li.firstChild.removeAttribute('href');
           li.firstChild.setAttribute('tabindex', 0);
         }
       }
@@ -1862,10 +1851,15 @@
         }
       });
 
-      this.$element.change(function () {
-        that.render();
-        that.$element.trigger('changed.bs.select', changed_arguments);
-        changed_arguments = null;
+      this.$element.on({
+        'change': function () {
+          that.render();
+          that.$element.trigger('changed.bs.select', changed_arguments);
+          changed_arguments = null;
+        },
+        'focus': function () {
+          that.$button.focus();
+        }
       });
     },
 
@@ -1989,7 +1983,7 @@
 
       for (var i = 0; i < this.selectpicker.current.elements.length; i++) {
         var index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
-            option = $selectOptions.eq(index)[0];
+            option = $selectOptions[index];
 
         if (option) {
           if (option.selected) previousSelected++;
