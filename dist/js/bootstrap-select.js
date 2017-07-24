@@ -515,6 +515,31 @@
 
       return $(drop);
     },
+
+    setPositionData: function () {
+      this.canHighlight = [];
+
+      for (var i = 0; i < this.selectpicker.current.data.length; i++) {
+        var li = this.selectpicker.current.data[i],
+            canHighlight = true;
+
+        if (li.type === 'divider') {
+          canHighlight = false;
+          li.height = this.sizeInfo.dividerHeight;
+        } else if (li.type === 'optgroup-label') {
+          canHighlight = false;
+          li.height = this.sizeInfo.dropdownHeaderHeight;
+        } else {
+          li.height = this.sizeInfo.liHeight;
+        }
+
+        if (li.disabled) canHighlight = false;
+
+        this.canHighlight.push(canHighlight);
+
+        li.position = (i === 0 ? 0 : this.selectpicker.current.data[i - 1].position) + li.height;
+      }
+    },
     
     createView: function (isSearching) {
       var that = this;
@@ -530,28 +555,7 @@
       var activeIndex;
       var prevActiveIndex;
 
-      that.canHighlight = [];
-
-      for (var i = 0; i < that.selectpicker.current.data.length; i++) {
-        var li = that.selectpicker.current.data[i],
-            canHighlight = true;
-
-        if (li.type === 'divider') {
-          canHighlight = false;
-          li.height = that.sizeInfo.dividerHeight;
-        } else if (li.type === 'optgroup-label') {
-          canHighlight = false;
-          li.height = that.sizeInfo.dropdownHeaderHeight;
-        } else {
-          li.height = that.sizeInfo.liHeight;
-        }
-
-        if (li.disabled) canHighlight = false;
-
-        that.canHighlight.push(canHighlight);
-
-        li.position = (i === 0 ? 0 : that.selectpicker.current.data[i - 1].position) + li.height;
-      }
+      this.setPositionData();
 
       scroll(0, true);
 
@@ -1277,6 +1281,31 @@
       this.sizeInfo.scrollBarWidth = scrollBarWidth;
     },
 
+    getSelectPosition: function () {
+      var that = this,
+          $window = $(window),
+          pos = that.$newElement.offset(),
+          $container = $(that.options.container),
+          containerPos;
+
+      if (that.options.container && !$container.is('body')) {
+        containerPos = $container.offset();
+        containerPos.top += parseInt($container.css('borderTopWidth'));
+        containerPos.left += parseInt($container.css('borderLeftWidth'));
+      } else {
+        containerPos = { top: 0, left: 0 };
+      }
+
+      var winPad = that.options.windowPadding;
+
+      this.sizeInfo.selectOffsetTop = pos.top - containerPos.top - $window.scrollTop();
+      this.sizeInfo.selectOffsetBot = $window.height() - this.sizeInfo.selectOffsetTop - this.sizeInfo['selectHeight'] - containerPos.top - winPad[2];
+      this.sizeInfo.selectOffsetLeft = pos.left - containerPos.left - $window.scrollLeft();
+      this.sizeInfo.selectOffsetRight = $window.width() - this.sizeInfo.selectOffsetLeft - this.sizeInfo['selectWidth'] - containerPos.left - winPad[1];
+      this.sizeInfo.selectOffsetTop -= winPad[0];
+      this.sizeInfo.selectOffsetLeft -= winPad[3];
+    },
+
     setSize: function (refresh) {
       this.liHeight(refresh);
 
@@ -1301,34 +1330,9 @@
           menuHeight,
           menuWidth,
           getHeight,
-          getWidth,
-          selectOffsetTop,
-          selectOffsetBot,
-          selectOffsetLeft,
-          selectOffsetRight,
-          getPos = function () {
-            var pos = that.$newElement.offset(),
-                $container = $(that.options.container),
-                containerPos;
+          getWidth;
 
-            if (that.options.container && !$container.is('body')) {
-              containerPos = $container.offset();
-              containerPos.top += parseInt($container.css('borderTopWidth'));
-              containerPos.left += parseInt($container.css('borderLeftWidth'));
-            } else {
-              containerPos = { top: 0, left: 0 };
-            }
-
-            var winPad = that.options.windowPadding;
-            selectOffsetTop = pos.top - containerPos.top - $window.scrollTop();
-            selectOffsetBot = $window.height() - selectOffsetTop - selectHeight - containerPos.top - winPad[2];
-            selectOffsetLeft = pos.left - containerPos.left - $window.scrollLeft();
-            selectOffsetRight = $window.width() - selectOffsetLeft - selectWidth - containerPos.left - winPad[1];
-            selectOffsetTop -= winPad[0];
-            selectOffsetLeft -= winPad[3];
-          };
-
-      getPos();
+      this.getSelectPosition();
 
       if (this.options.size === 'auto') {
         var getSize = function () {
@@ -1346,9 +1350,9 @@
               lisVisible = Array.prototype.filter ? Array.prototype.filter.call(lis, hasClass('hidden', false)) : that.$lis.not('.hidden'),
               optGroup = Array.prototype.filter ? Array.prototype.filter.call(lisVisible, hasClass('dropdown-header', true)) : lisVisible.filter('.dropdown-header');
 
-          getPos();
-          menuHeight = selectOffsetBot - menuExtras.vert;
-          menuWidth = selectOffsetRight - menuExtras.horiz;
+          that.getSelectPosition();
+          menuHeight = that.sizeInfo.selectOffsetBot - menuExtras.vert;
+          menuWidth = that.sizeInfo.selectOffsetRight - menuExtras.horiz;
 
           if (that.options.container) {
             if (!$menu.data('height')) $menu.data('height', $menu.height());
@@ -1362,15 +1366,15 @@
           }
 
           if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
+            that.$newElement.toggleClass('dropup', that.sizeInfo.selectOffsetTop > that.sizeInfo.selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
           }
 
           if (that.$newElement.hasClass('dropup')) {
-            menuHeight = selectOffsetTop - menuExtras.vert;
+            menuHeight = that.sizeInfo.selectOffsetTop - menuExtras.vert;
           }
 
           if (that.options.dropdownAlignRight === 'auto') {
-            $menu.toggleClass('dropdown-menu-right', selectOffsetLeft > selectOffsetRight && (menuWidth - menuExtras.horiz) < (getWidth - selectWidth));
+            $menu.toggleClass('dropdown-menu-right', that.sizeInfo.selectOffsetLeft > that.sizeInfo.selectOffsetRight && (menuWidth - menuExtras.horiz) < (getWidth - selectWidth));
           }
 
           if ((lisVisible.length + optGroup.length) > 3) {
@@ -1417,7 +1421,7 @@
 
         if (that.options.dropupAuto) {
           //noinspection JSUnusedAssignment
-          this.$newElement.toggleClass('dropup', selectOffsetTop > selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
+          this.$newElement.toggleClass('dropup', that.sizeInfo.selectOffsetTop > that.sizeInfo.selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
         }
 
         $menu.css({
