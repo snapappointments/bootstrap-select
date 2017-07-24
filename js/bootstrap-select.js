@@ -492,6 +492,31 @@
 
       return $(drop);
     },
+
+    setPositionData: function () {
+      this.canHighlight = [];
+
+      for (var i = 0; i < this.selectpicker.current.data.length; i++) {
+        var li = this.selectpicker.current.data[i],
+            canHighlight = true;
+
+        if (li.type === 'divider') {
+          canHighlight = false;
+          li.height = this.sizeInfo.dividerHeight;
+        } else if (li.type === 'optgroup-label') {
+          canHighlight = false;
+          li.height = this.sizeInfo.dropdownHeaderHeight;
+        } else {
+          li.height = this.sizeInfo.liHeight;
+        }
+
+        if (li.disabled) canHighlight = false;
+
+        this.canHighlight.push(canHighlight);
+
+        li.position = (i === 0 ? 0 : this.selectpicker.current.data[i - 1].position) + li.height;
+      }
+    },
     
     createView: function (isSearching) {
       var that = this;
@@ -507,28 +532,7 @@
       var activeIndex;
       var prevActiveIndex;
 
-      that.canHighlight = [];
-
-      for (var i = 0; i < that.selectpicker.current.data.length; i++) {
-        var li = that.selectpicker.current.data[i],
-            canHighlight = true;
-
-        if (li.type === 'divider') {
-          canHighlight = false;
-          li.height = that.sizeInfo.dividerHeight;
-        } else if (li.type === 'optgroup-label') {
-          canHighlight = false;
-          li.height = that.sizeInfo.dropdownHeaderHeight;
-        } else {
-          li.height = that.sizeInfo.liHeight;
-        }
-
-        if (li.disabled) canHighlight = false;
-
-        that.canHighlight.push(canHighlight);
-
-        li.position = (i === 0 ? 0 : that.selectpicker.current.data[i - 1].position) + li.height;
-      }
+      this.setPositionData();
 
       scroll(0, true);
 
