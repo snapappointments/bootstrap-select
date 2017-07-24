@@ -261,12 +261,11 @@
     this.$newElement = null;
     this.$button = null;
     this.$menu = null;
-    this.$lis = null;
     this.options = options;
     this.selectpicker = {
       main: {
         // store originalIndex (key) and newIndex (value) in this.selectpicker.main.map.newIndex for fast accessibility
-        // allows us to do this.main.elements[this.selectpicker.main.map.newIndex[index]] instead of this.$lis.filter('[data-original-index="' + index + '"]')
+        // allows us to do this.main.elements[this.selectpicker.main.map.newIndex[index]] to select an element based on the originalIndex
         map: {
           newIndex: {},
           originalIndex: {}
@@ -540,14 +539,12 @@
         li.position = (i === 0 ? 0 : this.selectpicker.current.data[i - 1].position) + li.height;
       }
     },
-    
+
     createView: function (isSearching) {
       var that = this;
 
       this.selectpicker.current = isSearching ? this.selectpicker.search : this.selectpicker.main;
 
-      var liHeight = this.sizeInfo['liHeight'];
-      var position = 0;
       var $lis;
       var active = [];
       var selected;
@@ -566,14 +563,14 @@
 
       function scroll(scrollTop, init) {
         // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
-        if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth) {
+        if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.totalMenuWidth) {
           that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
           that.$menu.css('min-width', that.sizeInfo.menuWidth);
         }
 
         var size = that.selectpicker.current.elements.length;
         var chunks = [];
-        var chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / liHeight * 1.5); // number of options in a chunk
+        var chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / that.sizeInfo.liHeight * 1.5); // number of options in a chunk
         var chunkCount = Math.round(size / chunkSize) || 1; // number of chunks
         var currentChunk = undefined;
 
@@ -1073,8 +1070,7 @@
     },
 
     findLis: function () {
-      this.$lis = this.$menuInner.find('.inner > li');
-      return this.$lis;
+      return this.$menuInner.find('.inner > li');
     },
 
     render: function () {
@@ -1181,9 +1177,12 @@
     liHeight: function (refresh) {
       if (!refresh && (this.options.size === false || this.sizeInfo)) return;
 
+      if (!this.sizeInfo) this.sizeInfo = {};
+
       var newElement = document.createElement('div'),
           menu = document.createElement('div'),
-          menuInner = document.createElement('ul'),
+          menuInner = document.createElement('div'),
+          menuInnerInner = document.createElement('ul'),
           divider = document.createElement('li'),
           dropdownHeader = document.createElement('li'),
           li = document.createElement('li'),
@@ -1194,11 +1193,14 @@
           actions = this.options.actionsBox && this.multiple && this.$menu.find('.bs-actionsbox').length > 0 ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
 
+      this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
+
       text.className = 'text';
       newElement.className = this.$menu[0].parentNode.className + ' open';
-      newElement.style.width = this.$newElement[0].offsetWidth + 'px';
+      newElement.style.width = this.sizeInfo.selectWidth + 'px';
       menu.className = 'dropdown-menu open';
-      menuInner.className = 'dropdown-menu inner';
+      menuInner.className = 'inner open';
+      menuInnerInner.className = 'dropdown-menu inner';
       divider.className = 'divider';
       dropdownHeader.className = 'dropdown-header';
 
@@ -1208,12 +1210,12 @@
       dropdownHeader.appendChild(text.cloneNode(true));
 
       if (this.selectpicker.view.widestOption) {
-        menuInner.appendChild(this.selectpicker.view.widestOption.cloneNode(true));
+        menuInnerInner.appendChild(this.selectpicker.view.widestOption.cloneNode(true));
       }
 
-      menuInner.appendChild(li);
-      menuInner.appendChild(divider);
-      menuInner.appendChild(dropdownHeader);
+      menuInnerInner.appendChild(li);
+      menuInnerInner.appendChild(divider);
+      menuInnerInner.appendChild(dropdownHeader);
       if (header) menu.appendChild(header);
       if (search) {
         var input = document.createElement('input');
@@ -1223,6 +1225,7 @@
         menu.appendChild(search);
       }
       if (actions) menu.appendChild(actions);
+      menuInner.appendChild(menuInnerInner);
       menu.appendChild(menuInner);
       if (doneButton) menu.appendChild(doneButton);
       newElement.appendChild(menu);
@@ -1266,8 +1269,6 @@
 
       document.body.removeChild(newElement);
 
-      if (!this.sizeInfo) this.sizeInfo = {};
-
       this.sizeInfo.liHeight = liHeight;
       this.sizeInfo.dropdownHeaderHeight = dropdownHeaderHeight;
       this.sizeInfo.headerHeight = headerHeight;
@@ -1278,7 +1279,11 @@
       this.sizeInfo.menuPadding = menuPadding;
       this.sizeInfo.menuExtras = menuExtras;
       this.sizeInfo.menuWidth = menuWidth;
+      this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth;
       this.sizeInfo.scrollBarWidth = scrollBarWidth;
+      this.sizeInfo.selectHeight = this.$newElement[0].offsetHeight;
+
+      this.setPositionData();
     },
 
     getSelectPosition: function () {
@@ -1306,18 +1311,10 @@
       this.sizeInfo.selectOffsetLeft -= winPad[3];
     },
 
-    setSize: function (refresh) {
-      this.liHeight(refresh);
+    setMenuSize: function (isAuto) {
+      this.getSelectPosition();
 
-      if (this.options.header) this.$menu.css('padding-top', 0);
-      if (this.options.size === false) return;
-
-      var that = this,
-          $menu = this.$menu,
-          $menuInner = this.$menuInner,
-          $window = $(window),
-          selectHeight = this.$newElement[0].offsetHeight,
-          selectWidth = this.$newElement[0].offsetWidth,
+      var selectWidth = this.sizeInfo['selectWidth'],
           liHeight = this.sizeInfo['liHeight'],
           headerHeight = this.sizeInfo['headerHeight'],
           searchHeight = this.sizeInfo['searchHeight'],
@@ -1325,123 +1322,87 @@
           doneButtonHeight = this.sizeInfo['doneButtonHeight'],
           divHeight = this.sizeInfo['dividerHeight'],
           menuPadding = this.sizeInfo['menuPadding'],
-          menuExtras = this.sizeInfo['menuExtras'],
           menuInnerHeight,
           menuHeight,
-          menuWidth,
-          getHeight,
-          getWidth;
+          divLength = 0,
+          minHeight,
+          _minHeight,
+          maxHeight,
+          menuInnerMinHeight;
 
-      this.getSelectPosition();
+      if (this.options.dropupAuto) {
+        this.$newElement.toggleClass('dropup', this.sizeInfo.selectOffsetTop - this.sizeInfo.selectOffsetBot > this.sizeInfo.menuExtras.vert);
+      }
 
       if (this.options.size === 'auto') {
-        var getSize = function () {
-          var minHeight,
-              hasClass = function (className, include) {
-                return function (element) {
-                    if (include) {
-                        return (element.classList ? element.classList.contains(className) : $(element).hasClass(className));
-                    } else {
-                        return !(element.classList ? element.classList.contains(className) : $(element).hasClass(className));
-                    }
-                };
-              },
-              lis = that.$menuInner[0].getElementsByTagName('li'),
-              lisVisible = Array.prototype.filter ? Array.prototype.filter.call(lis, hasClass('hidden', false)) : that.$lis.not('.hidden'),
-              optGroup = Array.prototype.filter ? Array.prototype.filter.call(lisVisible, hasClass('dropdown-header', true)) : lisVisible.filter('.dropdown-header');
+        _minHeight = this.selectpicker.current.elements.length > 3 ? this.sizeInfo.liHeight * 3 + this.sizeInfo.menuExtras.vert - 2 : 0;
+        menuHeight = this.sizeInfo.selectOffsetBot - this.sizeInfo.menuExtras.vert;
+        menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
+        maxHeight = menuHeight;
+        minHeight = _minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight;
+        menuInnerMinHeight = Math.max(_minHeight - menuPadding.vert, 0);
 
-          that.getSelectPosition();
-          menuHeight = that.sizeInfo.selectOffsetBot - menuExtras.vert;
-          menuWidth = that.sizeInfo.selectOffsetRight - menuExtras.horiz;
-
-          if (that.options.container) {
-            if (!$menu.data('height')) $menu.data('height', $menu.height());
-            getHeight = $menu.data('height');
-
-            if (!$menu.data('width')) $menu.data('width', $menu.width());
-            getWidth = $menu.data('width');
-          } else {
-            getHeight = $menu.height();
-            getWidth = $menu.width();
-          }
-
-          if (that.options.dropupAuto) {
-            that.$newElement.toggleClass('dropup', that.sizeInfo.selectOffsetTop > that.sizeInfo.selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
-          }
-
-          if (that.$newElement.hasClass('dropup')) {
-            menuHeight = that.sizeInfo.selectOffsetTop - menuExtras.vert;
-          }
-
-          if (that.options.dropdownAlignRight === 'auto') {
-            $menu.toggleClass('dropdown-menu-right', that.sizeInfo.selectOffsetLeft > that.sizeInfo.selectOffsetRight && (menuWidth - menuExtras.horiz) < (getWidth - selectWidth));
-          }
-
-          if ((lisVisible.length + optGroup.length) > 3) {
-            minHeight = liHeight * 3 + menuExtras.vert - 2;
-          } else {
-            minHeight = 0;
-          }
-
-          $menu.css({
-            'max-height': menuHeight + 'px',
-            'overflow': 'hidden',
-            'min-height': minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px'
-          });
-
-          menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
-
-          $menuInner.css({
-            'max-height': menuInnerHeight + 'px',
-            'overflow-y': 'auto',
-            'min-height': Math.max(minHeight - menuPadding.vert, 0) + 'px'
-          });
-
-          that.sizeInfo['menuInnerHeight'] = menuInnerHeight;
+        if (this.$newElement.hasClass('dropup')) {
+          menuHeight = this.sizeInfo.selectOffsetTop - this.sizeInfo.menuExtras.vert;
         }
-        getSize();
-
-        this.$searchbox.off('input.getSize propertychange.getSize').on('input.getSize propertychange.getSize', getSize);
-        $window.off('resize.getSize scroll.getSize').on('resize.getSize scroll.getSize', getSize);
       } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
-        var divLength = 0;
-
         for (var i = 0; i < this.options.size; i++) {
           if (this.selectpicker.current.data[i].type === 'divider') divLength++;
         }
 
         menuHeight = liHeight * this.options.size + divLength * divHeight + menuPadding.vert;
-
-        if (that.options.container) {
-          if (!$menu.data('height')) $menu.data('height', $menu.height());
-          getHeight = $menu.data('height');
-        } else {
-          getHeight = $menu.height();
-        }
-
-        if (that.options.dropupAuto) {
-          //noinspection JSUnusedAssignment
-          this.$newElement.toggleClass('dropup', that.sizeInfo.selectOffsetTop > that.sizeInfo.selectOffsetBot && (menuHeight - menuExtras.vert) < getHeight);
-        }
-
-        $menu.css({
-          'max-height': menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight + 'px',
-          'overflow': 'hidden',
-          'min-height': ''
-        });
-
         menuInnerHeight = menuHeight - menuPadding.vert;
+        maxHeight = menuHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight;
+        minHeight = menuInnerMinHeight = '';
+      }
 
-        $menuInner.css({
-          'max-height': menuInnerHeight + 'px',
-          'overflow-y': 'auto',
-          'min-height': ''
+      if (this.options.dropdownAlignRight === 'auto') {
+        this.$menu.toggleClass('dropdown-menu-right', this.sizeInfo.selectOffsetLeft > this.sizeInfo.selectOffsetRight && this.sizeInfo.selectOffsetRight < (this.$menu[0].offsetWidth - selectWidth));
+      }
+
+      this.$menu.css({
+        'max-height': maxHeight + 'px',
+        'overflow': 'hidden',
+        'min-height': minHeight + 'px'
+      });
+
+      this.$menuInner.css({
+        'max-height': menuInnerHeight + 'px',
+        'overflow-y': 'auto',
+        'min-height': menuInnerMinHeight + 'px'
+      });
+
+      this.sizeInfo['menuInnerHeight'] = menuInnerHeight;
+
+      if (this.selectpicker.current.data.length && this.selectpicker.current.data[this.selectpicker.current.data.length - 1].position > this.sizeInfo.menuInnerHeight) {
+        this.sizeInfo.hasScrollBar = true;
+        this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth + this.sizeInfo.scrollBarWidth;
+
+        this.$menu.css('min-width', this.sizeInfo.menuWidth);
+      }
+    },
+
+    setSize: function (refresh) {
+      this.liHeight(refresh);
+
+      if (this.options.header) this.$menu.css('padding-top', 0);
+      if (this.options.size === false) return;
+
+      var that = this,
+          $window = $(window);
+
+      this.setMenuSize();
+
+      if (this.options.size === 'auto') {
+        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize').on('input.setMenuSize propertychange.setMenuSize', function() {
+          return that.setMenuSize();
         });
-
-        that.sizeInfo['menuInnerHeight'] = menuInnerHeight;
-
-        this.$searchbox.off('input.getSize propertychange.getSize');
-        $window.off('resize.getSize scroll.getSize');
+        $window.off('resize.setMenuSize scroll.setMenuSize').on('resize.setMenuSize scroll.setMenuSize', function() {
+          return that.setMenuSize();
+        });
+      } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
+        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize');
+        $window.off('resize.setMenuSize scroll.setMenuSize');
       }
 
       that.createView(false);
@@ -1449,20 +1410,24 @@
     },
 
     setWidth: function () {
+      var that = this;
+
       if (this.options.width === 'auto') {
-        this.$menu.css('min-width', '0');
+        requestAnimationFrame(function() {
+          that.$menu.css('min-width', '0');
+          that.liHeight();
+          that.setMenuSize();
 
-        // Get correct width if element is hidden
-        var $selectClone = this.$menu.parent().clone().appendTo('body'),
-            $selectClone2 = this.options.container ? this.$newElement.clone().appendTo('body') : $selectClone,
-            ulWidth = $selectClone.children('.dropdown-menu').outerWidth(),
-            btnWidth = $selectClone2.css('width', 'auto').children('button').outerWidth();
+          // Get correct width if element is hidden
+          var $selectClone = that.$newElement.clone().appendTo('body'),
+              btnWidth = $selectClone.css('width', 'auto').children('button').outerWidth();
 
-        $selectClone.remove();
-        $selectClone2.remove();
+          $selectClone.remove();
 
-        // Set width to whatever's larger, button title or longest option
-        this.$newElement.css('width', Math.max(ulWidth, btnWidth) + 'px');
+          // Set width to whatever's larger, button title or longest option
+          that.sizeInfo.selectWidth = Math.max(that.sizeInfo.totalMenuWidth, btnWidth);
+          that.$newElement.css('width', that.sizeInfo.selectWidth + 'px');
+        });
       } else if (this.options.width === 'fit') {
         // Remove inline min-width so width can be changed from 'auto'
         this.$menu.css('min-width', '');
@@ -1683,12 +1648,6 @@
       });
 
       this.$element.on('shown.bs.select', function () {
-        // set menu width
-        if (that.$menuInner[0].scrollHeight > that.$menuInner[0].clientHeight) {
-          that.sizeInfo.hasScrollBar = true;
-          that.$menu.css('min-width', that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth);
-        }
-
         if (!that.multiple) {
           var selectedIndex = that.selectpicker.main.map.newIndex[that.$element[0].selectedIndex];
 
@@ -2179,7 +2138,7 @@
             count,
             prevKey;
 
-        $items = that.$lis.filter(selector);
+        $items = that.findLis().filter(selector);
         $items.each(function (i) {
           if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
             keyIndex.push(i);
@@ -2238,7 +2197,6 @@
       var config = $.extend({}, this.options, this.$element.data());
       this.options = config;
 
-      this.$lis = null;
       this.selectpicker.main.map.newIndex = {};
       this.selectpicker.main.map.originalIndex = {};
       this.createLi();
