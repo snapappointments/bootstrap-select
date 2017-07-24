@@ -542,6 +542,7 @@
         // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
         if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.totalMenuWidth) {
           that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
+          that.sizeInfo.totalMenuWidth = that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth;
           that.$menu.css('min-width', that.sizeInfo.menuWidth);
         }
 
@@ -1355,7 +1356,7 @@
         this.sizeInfo.hasScrollBar = true;
         this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth + this.sizeInfo.scrollBarWidth;
 
-        this.$menu.css('min-width', this.sizeInfo.menuWidth);
+        this.$menu.css('min-width', this.sizeInfo.totalMenuWidth);
       }
     },
 
