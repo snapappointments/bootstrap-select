@@ -238,12 +238,11 @@
     this.$newElement = null;
     this.$button = null;
     this.$menu = null;
-    this.$lis = null;
     this.options = options;
     this.selectpicker = {
       main: {
         // store originalIndex (key) and newIndex (value) in this.selectpicker.main.map.newIndex for fast accessibility
-        // allows us to do this.main.elements[this.selectpicker.main.map.newIndex[index]] instead of this.$lis.filter('[data-original-index="' + index + '"]')
+        // allows us to do this.main.elements[this.selectpicker.main.map.newIndex[index]] to select an element based on the originalIndex
         map: {
           newIndex: {},
           originalIndex: {}
@@ -1048,8 +1047,7 @@
     },
 
     findLis: function () {
-      this.$lis = this.$menuInner.find('.inner > li');
-      return this.$lis;
+      return this.$menuInner.find('.inner > li');
     },
 
     render: function () {
@@ -1305,6 +1303,7 @@
           menuHeight,
           divLength = 0,
           minHeight,
+          _minHeight,
           maxHeight,
           menuInnerMinHeight;
 
@@ -1313,12 +1312,12 @@
       }
 
       if (this.options.size === 'auto') {
-        minHeight = this.selectpicker.current.elements.length > 3 ? this.sizeInfo.liHeight * 3 + this.sizeInfo.menuExtras.vert - 2 : 0;
+        _minHeight = this.selectpicker.current.elements.length > 3 ? this.sizeInfo.liHeight * 3 + this.sizeInfo.menuExtras.vert - 2 : 0;
         menuHeight = this.sizeInfo.selectOffsetBot - this.sizeInfo.menuExtras.vert;
         menuInnerHeight = menuHeight - headerHeight - searchHeight - actionsHeight - doneButtonHeight - menuPadding.vert;
         maxHeight = menuHeight;
-        minHeight = minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight;
-        menuInnerMinHeight = Math.max(minHeight - menuPadding.vert, 0);
+        minHeight = _minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight;
+        menuInnerMinHeight = Math.max(_minHeight - menuPadding.vert, 0);
 
         if (this.$newElement.hasClass('dropup')) {
           menuHeight = this.sizeInfo.selectOffsetTop - this.sizeInfo.menuExtras.vert;
@@ -1352,9 +1351,8 @@
 
       this.sizeInfo['menuInnerHeight'] = menuInnerHeight;
 
-      if (this.selectpicker.current.data[this.selectpicker.current.data.length - 1].position > this.sizeInfo.menuInnerHeight) {
+      if (this.selectpicker.current.data.length && this.selectpicker.current.data[this.selectpicker.current.data.length - 1].position > this.sizeInfo.menuInnerHeight) {
         this.sizeInfo.hasScrollBar = true;
-        this.sizeInfo.menuWidth += this.sizeInfo.scrollBarWidth;
         this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth + this.sizeInfo.scrollBarWidth;
 
         this.$menu.css('min-width', this.sizeInfo.menuWidth);
@@ -1373,8 +1371,12 @@
       this.setMenuSize();
 
       if (this.options.size === 'auto') {
-        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize').on('input.setMenuSize propertychange.setMenuSize', this.setMenuSize);
-        $window.off('resize.setMenuSize scroll.setMenuSize').on('resize.setMenuSize scroll.setMenuSize', this.setMenuSize);
+        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize').on('input.setMenuSize propertychange.setMenuSize', function() {
+          return that.setMenuSize();
+        });
+        $window.off('resize.setMenuSize scroll.setMenuSize').on('resize.setMenuSize scroll.setMenuSize', function() {
+          return that.setMenuSize();
+        });
       } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
         this.$searchbox.off('input.setMenuSize propertychange.setMenuSize');
         $window.off('resize.setMenuSize scroll.setMenuSize');
@@ -2113,7 +2115,7 @@
             count,
             prevKey;
 
-        $items = that.$lis.filter(selector);
+        $items = that.findLis().filter(selector);
         $items.each(function (i) {
           if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
             keyIndex.push(i);
@@ -2172,7 +2174,6 @@
       var config = $.extend({}, this.options, this.$element.data());
       this.options = config;
 
-      this.$lis = null;
       this.selectpicker.main.map.newIndex = {};
       this.selectpicker.main.map.originalIndex = {};
       this.createLi();
