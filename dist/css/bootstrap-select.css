@@ -139,6 +139,9 @@ select.selectpicker {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
+.bootstrap-select.btn-group .dropdown-menu > .inner:focus {
+  outline: none !important;
+}
 .bootstrap-select.btn-group .dropdown-menu.inner {
   position: static;
   float: none;

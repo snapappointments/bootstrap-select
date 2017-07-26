@@ -504,7 +504,7 @@
           header +
           searchbox +
           actionsbox +
-          '<div class="inner open" role="listbox" aria-expanded="false">' +
+          '<div class="inner open" role="listbox" aria-expanded="false" tabindex="-1">' +
               '<ul class="dropdown-menu inner">' +
               '</ul>' +
           '</div>' +
@@ -540,7 +540,9 @@
       }
     },
 
-    createView: function (isSearching) {
+    createView: function (isSearching, scrollTop) {
+      scrollTop = scrollTop || 0;
+
       var that = this;
 
       this.selectpicker.current = isSearching ? this.selectpicker.search : this.selectpicker.main;
@@ -554,7 +556,7 @@
 
       this.setPositionData();
 
-      scroll(0, true);
+      scroll(scrollTop, true);
 
       this.$menuInner.off('scroll.createView').on('scroll.createView', function (e, updateValue) {
         if (!that.noScroll) scroll(this.scrollTop, updateValue);
@@ -562,9 +564,12 @@
       });
 
       function scroll(scrollTop, init) {
+        that.selectpicker.view.scrollTop = scrollTop;
+
         // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
         if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.totalMenuWidth) {
           that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
+          that.sizeInfo.totalMenuWidth = that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth;
           that.$menu.css('min-width', that.sizeInfo.menuWidth);
         }
 
@@ -653,8 +658,7 @@
         that.prevActiveIndex = that.activeIndex;
 
         if (!that.options.liveSearch) {
-          $lis = that.$menuInner.find('li');
-          $lis.filter('.active').children('a').focus();
+          that.$menuInner.focus();
         } else if (isSearching && init) {
           $lis = that.$menuInner.find('li');
           var index = 0;
@@ -664,6 +668,7 @@
           }
 
           $lis.removeClass('active').eq(index).addClass('active');
+          that.activeIndex = that.selectpicker.current.map.originalIndex[index];
         }
       }
 
@@ -1378,7 +1383,7 @@
         this.sizeInfo.hasScrollBar = true;
         this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth + this.sizeInfo.scrollBarWidth;
 
-        this.$menu.css('min-width', this.sizeInfo.menuWidth);
+        this.$menu.css('min-width', this.sizeInfo.totalMenuWidth);
       }
     },
 
@@ -1389,7 +1394,9 @@
       if (this.options.size === false) return;
 
       var that = this,
-          $window = $(window);
+          $window = $(window),
+          selectedIndex,
+          offset = 0;
 
       this.setMenuSize();
 
@@ -1405,8 +1412,18 @@
         $window.off('resize.setMenuSize scroll.setMenuSize');
       }
 
-      that.createView(false);
-      this.findLis();
+      if (refresh) {
+        offset = this.$menuInner[0].scrollTop;
+      } else if (!that.multiple) {
+        selectedIndex = that.selectpicker.main.map.newIndex[that.$element[0].selectedIndex];
+
+        if (typeof selectedIndex === 'number' && that.options.size !== false) {
+          offset = that.sizeInfo.liHeight * selectedIndex;
+          offset = offset - (that.sizeInfo.menuInnerHeight / 2) + (that.sizeInfo.liHeight / 2);
+        }
+      }
+
+      that.createView(false, offset);
     },
 
     setWidth: function () {
@@ -1539,6 +1556,11 @@
      * @param {boolean} selected - true if the option is being selected, false if being deselected
      */
     setSelected: function (index, selected, liIndex, li) {
+      var activeIndexIsSet = this.activeIndex !== undefined,
+          thisIsActive = this.activeIndex === index,
+          prevActiveIndex,
+          prevActive;
+
       if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
       if (!li) li = this.selectpicker.main.elements[liIndex];
 
@@ -1550,10 +1572,17 @@
         li.classList.remove('selected');
       }
 
-      if ((this.activeIndex !== undefined ? this.activeIndex === index : selected) && !this.multiple) {
+      if (thisIsActive || selected && !this.multiple && !activeIndexIsSet) {
         li.classList.add('active');
-      } else if (li.classList.contains('active')) {
-        li.classList.remove('active');
+      } else {
+        if (li.classList.contains('active')) li.classList.remove('active');
+
+        if (!activeIndexIsSet && selected && this.prevActiveIndex) {
+          prevActiveIndex = this.selectpicker.main.map.newIndex[this.prevActiveIndex];
+          prevActive = this.selectpicker.main.elements[prevActiveIndex];
+
+          if (prevActive.classList.contains('active')) prevActive.classList.remove('active');
+        }
       }
 
       if (li.firstChild) li.firstChild.setAttribute('aria-selected', selected);
@@ -1643,24 +1672,23 @@
         }
       });
 
-      this.$button.on('click', function () {
+      this.$button.on('click.bs.dropdown.data-api', function () {
         that.setSize();
       });
 
       this.$element.on('shown.bs.select', function () {
-        if (!that.multiple) {
-          var selectedIndex = that.selectpicker.main.map.newIndex[that.$element[0].selectedIndex];
+        if (that.$menuInner[0].scrollTop !== that.selectpicker.view.scrollTop) {
+          that.$menuInner[0].scrollTop = that.selectpicker.view.scrollTop;
+        }
 
-          if (typeof selectedIndex !== 'number' || that.options.size === false) return;
-
-          // scroll to selected option
-          var offset = that.sizeInfo.liHeight * selectedIndex;
-          offset = offset - that.$menuInner[0].offsetHeight/2 + that.sizeInfo.liHeight/2;
-          that.$menuInner[0].scrollTop = offset;
+        if (that.options.liveSearch) {
+          that.$searchbox.focus();
+        } else {
+          that.$menuInner.focus();
         }
       });
 
-      this.$menuInner.on('click', 'li a', function (e) {
+      this.$menuInner.on('click', 'li a', function (e, retainActive) {
         var $this = $(this),
             clickedIndex = that.selectpicker.current.map.originalIndex[$this.parent().index() + that.selectpicker.view.position0],
             prevValue = that.$element.val(),
@@ -1689,6 +1717,14 @@
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
+
+            if (clickedIndex === that.activeIndex) retainActive = true;
+
+            if (!retainActive) {
+              that.prevActiveIndex = that.activeIndex;
+              that.activeIndex = undefined;
+            }
+
             that.setSelected(clickedIndex, !state);
             $this.blur();
 
@@ -1830,20 +1866,13 @@
       var that = this,
           no_results = document.createElement('li');
 
-      this.$button.on('click.dropdown.data-api', function () {
-        that.$menuInner.find('.active').removeClass('active');
+      this.$button.on('click.bs.dropdown.data-api', function () {
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
-          that.createView(false);
-          that.$menuInner.find('.active').removeClass('active');
         }
-        if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
-        setTimeout(function () {
-          that.$searchbox.focus();
-        }, 10);
       });
 
-      this.$searchbox.on('click.dropdown.data-api focus.dropdown.data-api touchend.dropdown.data-api', function (e) {
+      this.$searchbox.on('click.bs.dropdown.data-api focus.bs.dropdown.data-api touchend.bs.dropdown.data-api', function (e) {
         e.stopPropagation();
       });
 
@@ -2044,14 +2073,13 @@
       isActive = that.$newElement.hasClass('open');
 
       if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode >= 65 && e.keyCode <= 90)) {
-        if (!that.options.container) {
-          that.setSize();
-          that.$menu.parent().addClass('open');
-          isActive = true;
+        that.$button.trigger('click.bs.dropdown.data-api');
+        if (that.options.liveSearch) {
+          that.$searchbox.focus();
         } else {
-          that.$button.trigger('click');
+          that.$button.focus();
         }
-        that.$searchbox.focus();
+
         return;
       }
 
@@ -2132,8 +2160,8 @@
 
         if (updateScroll) that.$menuInner[0].scrollTop = offset;
 
-        if (that.options.liveSearch) $this.focus();
-      } else if (!$this.is('input')) {
+        $this.focus();
+      } else if (!$this.is('input') && !(/(13|32)/.test(e.keyCode.toString(10))) ) {
         var keyIndex = [],
             count,
             prevKey;
@@ -2165,18 +2193,16 @@
       // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
       if ((/(13|32)/.test(e.keyCode.toString(10)) || (/(^9$)/.test(e.keyCode.toString(10)) && that.options.selectOnTab)) && isActive) {
         if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
-        if (!that.options.liveSearch) {
-          var elem = $(':focus');
-          elem.click();
-          // Bring back focus for multiselects
-          elem.focus();
-          // Prevent screen from scrolling if the user hit the spacebar
-          e.preventDefault();
-          // Fixes spacebar selection of dropdown items in FF & IE
-          $(document).data('spaceSelect', true);
-        } else if (!/(32)/.test(e.keyCode.toString(10))) {
-          that.$menuInner.find('.active a').click();
+        if (!that.options.liveSearch || !/(32)/.test(e.keyCode.toString(10))) {
+          that.$menuInner.find('.active a').trigger('click', true); // retain active class
           $this.focus();
+
+          if (!that.options.liveSearch) {
+            // Prevent screen from scrolling if the user hit the spacebar
+            e.preventDefault();
+            // Fixes spacebar selection of dropdown items in FF & IE
+            $(document).data('spaceSelect', true);
+          }
         }
         $(document).data('keycount', 0);
       }
@@ -2200,15 +2226,16 @@
       this.selectpicker.main.map.newIndex = {};
       this.selectpicker.main.map.originalIndex = {};
       this.createLi();
+      this.checkDisabled();
+      this.render();
+      this.setStyle();
+      this.setWidth();
+
       if (this.$menuInner.attr('aria-expanded')) {
         this.setSize(true);
       } else {
         this.liHeight(true);
       }
-      this.render();
-      this.checkDisabled();
-      this.setStyle();
-      this.setWidth();
 
       this.$element.trigger('refreshed.bs.select');
     },
