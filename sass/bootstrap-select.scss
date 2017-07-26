@@ -193,6 +193,10 @@ select.selectpicker {
     min-width: 100%;
     @include box-sizing(border-box);
 
+    > .inner:focus {
+      outline: none !important;
+    }
+
     &.inner {
       position: static;
       float: none;
