@@ -2200,7 +2200,7 @@
 
           hasMatch = stringSearch(li, keyHistory, 'startsWith', true);
 
-          if (hasMatch) {
+          if (hasMatch && that.canHighlight[i]) {
             li.index = i;
             matches.push(li.originalIndex);
           }
