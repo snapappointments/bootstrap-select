@@ -574,7 +574,7 @@
     },
 
     setPositionData: function () {
-      this.canHighlight = [];
+      this.selectpicker.view.canHighlight = [];
 
       for (var i = 0; i < this.selectpicker.current.data.length; i++) {
         var li = this.selectpicker.current.data[i],
@@ -592,7 +592,7 @@
 
         if (li.disabled) canHighlight = false;
 
-        this.canHighlight.push(canHighlight);
+        this.selectpicker.view.canHighlight.push(canHighlight);
 
         li.position = (i === 0 ? 0 : this.selectpicker.current.data[i - 1].position) + li.height;
       }
@@ -721,8 +721,8 @@
           $lis = that.findLis();
           var index = 0;
 
-          if (!that.canHighlight[index]) {
-            index = 1 + that.canHighlight.slice(1).indexOf(true);
+          if (!that.selectpicker.view.canHighlight[index]) {
+            index = 1 + that.selectpicker.view.canHighlight.slice(1).indexOf(true);
           }
 
           $lis.removeClass('active').eq(index).addClass('active');
@@ -2113,16 +2113,16 @@
           if (index !== -1) index--;
           if (index + that.selectpicker.view.position0 < 0) index += $items.length;
 
-          if (!that.canHighlight[index + that.selectpicker.view.position0]) {
-            index = that.canHighlight.slice(0, index + that.selectpicker.view.position0).lastIndexOf(true) - that.selectpicker.view.position0;
+          if (!that.selectpicker.view.canHighlight[index + that.selectpicker.view.position0]) {
+            index = that.selectpicker.view.canHighlight.slice(0, index + that.selectpicker.view.position0).lastIndexOf(true) - that.selectpicker.view.position0;
             if (index === -1) index = $items.length - 1;
           }
         } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           index++;
-          if (index + that.selectpicker.view.position0 >= that.canHighlight.length) index = 0;
+          if (index + that.selectpicker.view.position0 >= that.selectpicker.view.canHighlight.length) index = 0;
 
-          if (!that.canHighlight[index + that.selectpicker.view.position0]) {
-            index = index + 1 + that.canHighlight.slice(index + that.selectpicker.view.position0 + 1).indexOf(true);
+          if (!that.selectpicker.view.canHighlight[index + that.selectpicker.view.position0]) {
+            index = index + 1 + that.selectpicker.view.canHighlight.slice(index + that.selectpicker.view.position0 + 1).indexOf(true);
           }
         }
 
@@ -2200,7 +2200,7 @@
 
           hasMatch = stringSearch(li, keyHistory, 'startsWith', true);
 
-          if (hasMatch && that.canHighlight[i]) {
+          if (hasMatch && that.selectpicker.view.canHighlight[i]) {
             li.index = i;
             matches.push(li.originalIndex);
           }
