@@ -250,7 +250,79 @@
   var htmlEscape = createEscaper(escapeMap);
   var htmlUnescape = createEscaper(unescapeMap);
 
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  var keyCodeMap = {
+    32: ' ',
+    48: '0',
+    49: '1',
+    50: '2',
+    51: '3',
+    52: '4',
+    53: '5',
+    54: '6',
+    55: '7',
+    56: '8',
+    57: '9',
+    59: ';',
+    65: 'A',
+    66: 'B',
+    67: 'C',
+    68: 'D',
+    69: 'E',
+    70: 'F',
+    71: 'G',
+    72: 'H',
+    73: 'I',
+    74: 'J',
+    75: 'K',
+    76: 'L',
+    77: 'M',
+    78: 'N',
+    79: 'O',
+    80: 'P',
+    81: 'Q',
+    82: 'R',
+    83: 'S',
+    84: 'T',
+    85: 'U',
+    86: 'V',
+    87: 'W',
+    88: 'X',
+    89: 'Y',
+    90: 'Z',
+    96: '0',
+    97: '1',
+    98: '2',
+    99: '3',
+    100: '4',
+    101: '5',
+    102: '6',
+    103: '7',
+    104: '8',
+    105: '9'
+  };
+
+  var keyCodes = {
+    ESCAPE: 27, // KeyboardEvent.which value for Escape (Esc) key
+    ENTER: 13, // KeyboardEvent.which value for Enter key
+    SPACE: 32, // KeyboardEvent.which value for space key
+    TAB: 9, // KeyboardEvent.which value for tab key
+    ARROW_UP: 38, // KeyboardEvent.which value for up arrow key
+    ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
+  }
+
+  var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
+  var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
+  var REGEXP_ENTER_OR_SPACE = new RegExp(keyCodes.ENTER + '|' + keyCodes.SPACE);
+
   var Selectpicker = function (element, options) {
+    var that = this;
+
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
       $.valHooks.select.set = valHooks._set;
@@ -277,9 +349,18 @@
       search: {
         map: {}
       },
-      view: {}
+      view: {},
+      keydown: {
+        keyHistory: '',
+        resetKeyHistory: {
+          start: function () {
+            return setTimeout(function () {
+              that.selectpicker.keydown.keyHistory = '';
+            }, 800);
+          }
+        }
+      }
     };
-
     // If we have no title yet, try to pull it from the html title attribute (jQuery doesnt' pick it up as it's not a
     // data-attribute)
     if (this.options.title === null) {
@@ -516,7 +597,7 @@
     },
 
     setPositionData: function () {
-      this.canHighlight = [];
+      this.selectpicker.view.canHighlight = [];
 
       for (var i = 0; i < this.selectpicker.current.data.length; i++) {
         var li = this.selectpicker.current.data[i],
@@ -534,7 +615,7 @@
 
         if (li.disabled) canHighlight = false;
 
-        this.canHighlight.push(canHighlight);
+        this.selectpicker.view.canHighlight.push(canHighlight);
 
         li.position = (i === 0 ? 0 : this.selectpicker.current.data[i - 1].position) + li.height;
       }
@@ -660,11 +741,11 @@
         if (!that.options.liveSearch) {
           that.$menuInner.focus();
         } else if (isSearching && init) {
-          $lis = that.$menuInner.find('li');
+          $lis = that.findLis();
           var index = 0;
 
-          if (!that.canHighlight[index]) {
-            index = 1 + that.canHighlight.slice(1).indexOf(true);
+          if (!that.selectpicker.view.canHighlight[index]) {
+            index = 1 + that.selectpicker.view.canHighlight.slice(1).indexOf(true);
           }
 
           $lis.removeClass('active').eq(index).addClass('active');
@@ -1493,7 +1574,7 @@
             });
           };
 
-      this.$button.on('click', function () {
+      this.$button.on('click.bs.dropdown.data-api', function () {
         var $this = $(this);
 
         if (that.isDisabled()) {
@@ -1673,7 +1754,9 @@
       });
 
       this.$button.on('click.bs.dropdown.data-api', function () {
-        that.setSize();
+        if (!that.$newElement.hasClass('open')) {
+          that.setSize();
+        }
       });
 
       this.$element.on('shown.bs.select', function () {
@@ -2007,126 +2090,71 @@
 
       if (e) e.stopPropagation();
 
-      this.$button.trigger('click');
+      this.$button.trigger('click.bs.dropdown.data-api');
     },
 
     keydown: function (e) {
       var $this = $(this),
           $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
-          $items,
           that = $parent.data('this'),
+          $items = that.findLis(),
           index,
           isActive,
           liActive,
-          selector = ':not(.disabled, .dropdown-header, .divider)',
-          keyCodeMap = {
-            32: ' ',
-            48: '0',
-            49: '1',
-            50: '2',
-            51: '3',
-            52: '4',
-            53: '5',
-            54: '6',
-            55: '7',
-            56: '8',
-            57: '9',
-            59: ';',
-            65: 'a',
-            66: 'b',
-            67: 'c',
-            68: 'd',
-            69: 'e',
-            70: 'f',
-            71: 'g',
-            72: 'h',
-            73: 'i',
-            74: 'j',
-            75: 'k',
-            76: 'l',
-            77: 'm',
-            78: 'n',
-            79: 'o',
-            80: 'p',
-            81: 'q',
-            82: 'r',
-            83: 's',
-            84: 't',
-            85: 'u',
-            86: 'v',
-            87: 'w',
-            88: 'x',
-            89: 'y',
-            90: 'z',
-            96: '0',
-            97: '1',
-            98: '2',
-            99: '3',
-            100: '4',
-            101: '5',
-            102: '6',
-            103: '7',
-            104: '8',
-            105: '9'
-          };
+          activeLi,
+          offset,
+          updateScroll = false,
+          downOnTab = e.which === keyCodes.TAB && !$this.hasClass('dropdown-toggle') && !that.options.selectOnTab,
+          isArrowKey = REGEXP_ARROW.test(e.which) || downOnTab,
+          scrollTop = that.$menuInner[0].scrollTop;
 
       isActive = that.$newElement.hasClass('open');
 
-      if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode >= 65 && e.keyCode <= 90)) {
+      if (
+        !isActive &&
+        (
+          isArrowKey ||
+          e.which >= 48 && e.which <= 57 ||
+          e.which >= 96 && e.which <= 105 ||
+          e.which >= 65 && e.which <= 90
+        )
+      ) {
         that.$button.trigger('click.bs.dropdown.data-api');
-        if (that.options.liveSearch) {
-          that.$searchbox.focus();
-        } else {
-          that.$button.focus();
-        }
-
-        return;
       }
 
-      if (that.options.liveSearch) {
-        if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive) { // tab or escape
-          e.preventDefault();
-          e.stopPropagation();
-          that.$menuInner.click();
-          that.$button.focus();
-        }
+      if (e.which === keyCodes.ESCAPE && isActive) {
+        e.preventDefault();
+        that.$button.trigger('click.bs.dropdown.data-api').focus();
       }
 
-      var downOnTab = e.keyCode == 9 && !$this.hasClass('dropdown-toggle') && !that.options.selectOnTab;
-
-      if (/(38|40)/.test(e.keyCode.toString(10)) || downOnTab) { // if up or down
-        $items = that.findLis();
-
+      if (isArrowKey) { // if up or down
         if (!$items.length) return;
 
         index = $items.index($items.filter('.active'));
 
-        if (e.keyCode == 38) { // up
+        if (e.which === keyCodes.ARROW_UP) { // up
           if (index !== -1) index--;
           if (index + that.selectpicker.view.position0 < 0) index += $items.length;
 
-          if (!that.canHighlight[index + that.selectpicker.view.position0]) {
-            index = that.canHighlight.slice(0, index + that.selectpicker.view.position0).lastIndexOf(true) - that.selectpicker.view.position0;
+          if (!that.selectpicker.view.canHighlight[index + that.selectpicker.view.position0]) {
+            index = that.selectpicker.view.canHighlight.slice(0, index + that.selectpicker.view.position0).lastIndexOf(true) - that.selectpicker.view.position0;
             if (index === -1) index = $items.length - 1;
           }
-        } else if (e.keyCode == 40 || downOnTab) { // down
+        } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           index++;
-          if (index + that.selectpicker.view.position0 >= that.canHighlight.length) index = 0;
+          if (index + that.selectpicker.view.position0 >= that.selectpicker.view.canHighlight.length) index = 0;
 
-          if (!that.canHighlight[index + that.selectpicker.view.position0]) {
-            index = index + 1 + that.canHighlight.slice(index + that.selectpicker.view.position0 + 1).indexOf(true);
+          if (!that.selectpicker.view.canHighlight[index + that.selectpicker.view.position0]) {
+            index = index + 1 + that.selectpicker.view.canHighlight.slice(index + that.selectpicker.view.position0 + 1).indexOf(true);
           }
         }
 
         e.preventDefault();
         $items.removeClass('active');
 
-        var activeLi,
-            offset,
-            liActiveIndex = that.selectpicker.view.position0 + index,
-            updateScroll = false;
+        var liActiveIndex = that.selectpicker.view.position0 + index;
 
-        if (e.keyCode == 38) { // up
+        if (e.which === keyCodes.ARROW_UP) { // up
           // scroll to bottom and highlight last option
           if (that.selectpicker.view.position0 === 0 && index === $items.length - 1) {
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollHeight;
@@ -2136,9 +2164,9 @@
             activeLi = that.selectpicker.current.data[liActiveIndex];
             offset = activeLi.position - activeLi.height;
 
-            updateScroll = offset < that.$menuInner[0].scrollTop;
+            updateScroll = offset < scrollTop;
           }
-        } else if (e.keyCode == 40 || downOnTab) { // down
+        } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           // scroll to top and highlight first option
           if (that.selectpicker.view.position0 !== 0 && index === 0) {
             that.$menuInner[0].scrollTop = 0;
@@ -2148,7 +2176,7 @@
             activeLi = that.selectpicker.current.data[liActiveIndex];
             offset = activeLi.position - that.sizeInfo.menuInnerHeight;
 
-            updateScroll = offset > that.$menuInner[0].scrollTop;
+            updateScroll = offset > scrollTop;
           }
         }
 
@@ -2160,57 +2188,110 @@
 
         if (updateScroll) that.$menuInner[0].scrollTop = offset;
 
-        $this.focus();
-      } else if (!$this.is('input') && !(/(13|32)/.test(e.keyCode.toString(10))) ) {
-        var keyIndex = [],
-            count,
-            prevKey;
+        if (that.options.liveSearch) {
+          that.$searchbox.focus();
+        } else {
+          $this.focus();
+        }
+      } else if (
+        !$this.is('input') &&
+        !REGEXP_TAB_OR_ESCAPE.test(e.which) ||
+        (e.which === keyCodes.SPACE && that.selectpicker.keydown.keyHistory)
+      ) {
+        var searchMatch,
+            matches = [],
+            keyHistory;
 
-        $items = that.findLis().filter(selector);
-        $items.each(function (i) {
-          if ($.trim($(this).children('a').text().toLowerCase()).substring(0, 1) == keyCodeMap[e.keyCode]) {
-            keyIndex.push(i);
-          }
-        });
+        e.preventDefault();
 
-        count = $(document).data('keycount');
-        count++;
-        $(document).data('keycount', count);
+        that.selectpicker.keydown.keyHistory += keyCodeMap[e.which];
 
-        prevKey = $.trim($(':focus').text().toLowerCase()).substring(0, 1);
+        if (that.selectpicker.keydown.resetKeyHistory.cancel) clearTimeout(that.selectpicker.keydown.resetKeyHistory.cancel);
+        that.selectpicker.keydown.resetKeyHistory.cancel = that.selectpicker.keydown.resetKeyHistory.start();
 
-        if (prevKey != keyCodeMap[e.keyCode]) {
-          count = 1;
-          $(document).data('keycount', count);
-        } else if (count >= keyIndex.length) {
-          $(document).data('keycount', 0);
-          if (count > keyIndex.length) count = 1;
+        keyHistory = that.selectpicker.keydown.keyHistory;
+
+        // if all letters are the same, set keyHistory to just the first character when searching
+        if (/^(.)\1+$/.test(keyHistory)) {
+          keyHistory = keyHistory.charAt(0);
         }
 
-        $items.eq(keyIndex[count - 1]).children('a').focus();
+        // find matches
+        for (var i = 0; i < that.selectpicker.current.data.length; i++) {
+          var li = that.selectpicker.current.data[i],
+              hasMatch;
+
+          hasMatch = stringSearch(li, keyHistory, 'startsWith', true);
+
+          if (hasMatch && that.selectpicker.view.canHighlight[i]) {
+            li.index = i;
+            matches.push(li.originalIndex);
+          }
+        }
+
+        if (matches.length) {
+          var matchIndex = 0;
+
+          $items.removeClass('active');
+
+          // either only one key has been pressed or they are all the same key
+          if (keyHistory.length === 1) {
+            matchIndex = matches.indexOf(that.activeIndex);
+
+            if (matchIndex === -1 || matchIndex === matches.length - 1) {
+              matchIndex = 0;
+            } else {
+              matchIndex++;
+            }
+          }
+
+          searchMatch = that.selectpicker.current.map.newIndex[matches[matchIndex]];
+
+          activeLi = that.selectpicker.current.data[searchMatch];
+
+          if (scrollTop - activeLi.position > 0) {
+            offset = activeLi.position - activeLi.height;
+            updateScroll = true;
+          } else {
+            offset = activeLi.position - that.sizeInfo.menuInnerHeight;
+            // if the option is already visible at the current scroll position, just keep it the same
+            updateScroll = activeLi.position > scrollTop + that.sizeInfo.menuInnerHeight;         
+          }
+
+          liActive = that.selectpicker.current.elements[searchMatch];
+          liActive.classList.add('active');
+          that.activeIndex = matches[matchIndex];
+
+          liActive.firstChild.focus();
+
+          if (updateScroll) that.$menuInner[0].scrollTop = offset;
+
+          $this.focus();
+        }
       }
 
       // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
-      if ((/(13|32)/.test(e.keyCode.toString(10)) || (/(^9$)/.test(e.keyCode.toString(10)) && that.options.selectOnTab)) && isActive) {
-        if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
-        if (!that.options.liveSearch || !/(32)/.test(e.keyCode.toString(10))) {
+      if (
+        isActive &&
+        (
+          (e.which === keyCodes.SPACE && !that.selectpicker.keydown.keyHistory) ||
+          e.which === keyCodes.ENTER ||
+          (e.which === keyCodes.TAB && that.options.selectOnTab)
+        )
+      ) {
+        if (e.which !== keyCodes.SPACE) e.preventDefault();
+
+        if (!that.options.liveSearch || e.which !== keyCodes.SPACE) {
           that.$menuInner.find('.active a').trigger('click', true); // retain active class
           $this.focus();
 
           if (!that.options.liveSearch) {
-            // Prevent screen from scrolling if the user hit the spacebar
+            // Prevent screen from scrolling if the user hits the spacebar
             e.preventDefault();
             // Fixes spacebar selection of dropdown items in FF & IE
             $(document).data('spaceSelect', true);
           }
         }
-        $(document).data('keycount', 0);
-      }
-
-      if ((/(^9$|27)/.test(e.keyCode.toString(10)) && isActive && (that.multiple || that.options.liveSearch)) || (/(27)/.test(e.keyCode.toString(10)) && !isActive)) { // tab or escape
-        that.$menu.parent().removeClass('open');
-        if (that.options.container) that.$newElement.removeClass('open');
-        that.$button.focus();
       }
     },
 
@@ -2231,7 +2312,7 @@
       this.setStyle();
       this.setWidth();
 
-      if (this.$menuInner.attr('aria-expanded')) {
+      if (this.$newElement.hasClass('open')) {
         this.setSize(true);
       } else {
         this.liHeight(true);
@@ -2329,10 +2410,9 @@
   };
 
   $(document)
-      .data('keycount', 0)
       .off('keydown.bs.dropdown.data-api')
-      .on('keydown.bs.select', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input', Selectpicker.prototype.keydown)
-      .on('focusin.modal', '.bootstrap-select [data-toggle=dropdown], .bootstrap-select [role="listbox"], .bs-searchbox input', function (e) {
+      .on('keydown.bs.select', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bs-searchbox input', Selectpicker.prototype.keydown)
+      .on('focusin.modal', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bs-searchbox input', function (e) {
         e.stopPropagation();
       });
 
