@@ -1,3 +1,33 @@
+
+# v1.13.0-alpha (2017-07-28)
+
+### Bug Fixes
+- [#1303]: val() method doesn't fire changed.bs.select
+- [#1383]: Croatian locale is not cro_CRO. Renamed to hr_HR
+- [#1395]: title option position not correct when adding options dynamically
+- [#1398]: trigger setSize on refresh event
+- [#1674]: Fix li tags inside option being treated as options
+- [#1692]: Live Search Box Not Cleared After Selection
+
+### New Features
+- [#710]: focus on selectpicker triggers focus on actual select, allowing for event listeners
+- [#1110]: 'active' class is only applied when liveSearch is on
+- [#1229]: Large lists and virtualization
+- [#1687]: Improve init performance
+
+[#1303]: https://github.com/silviomoreto/bootstrap-select/issues/1303
+[#1383]: https://github.com/silviomoreto/bootstrap-select/issues/1383
+[#1395]: https://github.com/silviomoreto/bootstrap-select/issues/1395
+[#1398]: https://github.com/silviomoreto/bootstrap-select/issues/1398
+[#1674]: https://github.com/silviomoreto/bootstrap-select/issues/1674
+[#1692]: https://github.com/silviomoreto/bootstrap-select/issues/1692
+[#710]: https://github.com/silviomoreto/bootstrap-select/issues/710
+[#1110]: https://github.com/silviomoreto/bootstrap-select/issues/1110
+[#1229]: https://github.com/silviomoreto/bootstrap-select/issues/1229
+[#1687]: https://github.com/silviomoreto/bootstrap-select/issues/1687
+
+-------------------
+
 # v1.12.4 (2017-07-19)
 
 ### Bug Fixes
