@@ -343,6 +343,7 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
+    addNewText: '<strong>Add new:</strong> {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
@@ -374,6 +375,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    addResults: false,
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
@@ -1461,20 +1463,52 @@
 
         if (that.$searchbox.val()) {
           var $searchBase = that.$lis.not('.is-hidden, .divider, .dropdown-header'),
-              $hideItems;
+              $hideItems,
+              $foundItems;
           if (that.options.liveSearchNormalize) {
             $hideItems = $searchBase.not(':a' + that._searchStyle() + '("' + normalizeToBase(that.$searchbox.val()) + '")');
           } else {
             $hideItems = $searchBase.not(':' + that._searchStyle() + '("' + that.$searchbox.val() + '")');
           }
+          $foundItems = $searchBase.not($hideItems);
+          
+          if (that.options.addResults) {
+            var exactlyMatches = $foundItems.map(function(i, element) {
+              if (element.innerText === that.$searchbox.val()) {
+                return element;
+              }
+            });
 
-          if ($hideItems.length === $searchBase.length) {
-            $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"'));
-            that.$menuInner.append($no_results);
-            that.$lis.addClass('hidden');
+            if (exactlyMatches.size() == 0) {
+              $no_results.html('<a><span class="text">'+that.options.addNewText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"')+'</span></a>');
+              that.$menuInner.append($no_results);
+
+              if ($hideItems.length === $searchBase.length) {
+                $no_results.addClass('active');
+              } else {
+                $no_results.removeClass('active');
+              }
+
+              $no_results.on('click', function() {
+                var val = htmlEscape(that.$searchbox.val());
+                $(that.$element).append($('<option>', {
+                  value: val,
+                  text: val,
+                  selected: 1
+                })).selectpicker('refresh').val(val);
+                that.$element.triggerNative('change');
+              });
+            }
           } else {
-            $hideItems.addClass('hidden');
+            if ($hideItems.length === $searchBase.length) {
+              $no_results.html(that.options.noneResultsText.replace('{0}', '"' + htmlEscape(that.$searchbox.val()) + '"'));
+              that.$menuInner.append($no_results);
+            }
+          }
 
+          $hideItems.addClass('hidden');
+
+          if ($hideItems.length !== $searchBase.length) {
             var $lisVisible = that.$lis.not('.hidden'),
                 $foundDiv;
 
