@@ -1,10 +1,3 @@
-/*!
- * Bootstrap-select v1.8.0 (http://silviomoreto.github.io/bootstrap-select)
- *
- * Copyright 2013-2015 bootstrap-select
- * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
- */
-
 @import "variables";
 
 // Mixins
@@ -103,6 +96,12 @@ select.selectpicker {
 
   &.input-group-btn {
     z-index: auto;
+
+    &:not(:first-child):not(:last-child) {
+      > .btn {
+        border-radius: 0;
+      }
+    }
   }
 }
 
@@ -133,6 +132,13 @@ select.selectpicker {
   .form-group-lg &.form-control,
   .form-group-sm &.form-control {
     padding: 0;
+
+    .dropdown-toggle {
+      height: 100%;
+      font-size: inherit;
+      line-height: inherit;
+      border-radius: inherit;
+    }
   }
 
   // Set the width of the live search (and any other form control within an inline form)
@@ -152,6 +158,8 @@ select.selectpicker {
 
   &.bs-container {
     position: absolute;
+    height: 0 !important;
+    padding: 0 !important;
 
     .dropdown-menu {
       z-index: $zindex-select-dropdown;
@@ -208,10 +216,7 @@ select.selectpicker {
 
       a {
         cursor: pointer;
-        -webkit-user-select: none;
-           -moz-user-select: none;
-            -ms-user-select: none;
-                user-select: none;
+        user-select: none;
 
         &.opt {
           position: relative;

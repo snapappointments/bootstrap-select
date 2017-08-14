@@ -90,6 +90,12 @@ ul.nav li.main {
   padding-bottom: 20px;
 }
 
+.gh-btns {
+  margin: 48px 0 -30px;
+  background: rgba(0,0,0,.1);
+  padding: 20px 0 15px;
+}
+
 .content h1:first-of-type,
 .content h1:first-of-type + p:first-of-type {
   text-align: center;
@@ -162,6 +168,10 @@ ul.nav li.main {
   margin: -15px -15px 15px;
   border-width: 0 0 1px;
   border-radius: 0;
+}
+
+.carbonad {
+  margin-top: 80px;
 }
 
 .carbonad-inner {
@@ -271,7 +281,6 @@ ul.nav li.main {
     border-radius: 4px;
   }
 
-
   .bs-docs-example + .highlight {
     margin-top: -16px;
     margin-right: 0;
@@ -283,6 +292,10 @@ ul.nav li.main {
 
   .logo-container {
     max-width: 33.3333%;
+  }
+
+  .gh-btns {
+    margin-bottom: -48px;
   }
 }
 

@@ -41,8 +41,7 @@ Guidelines for bug reports:
 4. **Create an isolated and reproducible test case.** Create a [reduced test
    case](http://css-tricks.com/6263-reduced-test-cases/).
 
-5. **Include a live example.** Make use of jsFiddle or jsBin to share your
-   isolated test cases.
+5. **Include a live example.** Use [this Plunker debugging template](http://silviomoreto.github.io/bootstrap-select/playground/) to share your isolated test cases. You can also make use of [jsFiddle](http://jsfiddle.net/) or [jsBin](http://jsbin.com/).
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as detailed as possible in your report. What is
@@ -90,8 +89,7 @@ code as deemed necessary.
   to the issue on the tracker, as a team member may be working on the issue in
   a branch or fork.
 * Non-trivial changes should be discussed in an issue first
-* If your change affects the distributed files, re-generate them using the
-  [grunt procedure](#using-grunt)
+* When modifying files, please do not edit the generated or minified files in the dist/ directory. Please edit the original files.
 * If possible, add relevant tests to cover the change
 * Write a convincing description of your PR and why we should land it
 

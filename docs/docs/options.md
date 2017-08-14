@@ -44,6 +44,22 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>deselectAllText</td>
+    <td>string</td>
+    <td><code>'Deselect All'</code></td>
+    <td>
+      <p>The text on the button that deselects all options when <code>actionsBox</code> is enabled.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>dropdownAlignRight</td>
+    <td>boolean | <code>'auto'</code></td>
+    <td><code>false</code></td>
+    <td>
+      <p>Align the menu to the right instead of the left. If set to <code>'auto'</code>, the menu will automatically align right if there isn't room for the menu's full width when aligned to the left.</p>
+    </td>
+  </tr>
+  <tr>
     <td>dropupAuto</td>
     <td>boolean</td>
     <td><code>true</code></td>
@@ -161,6 +177,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>selectAllText</td>
+    <td>string</td>
+    <td><code>'Select All'</code></td>
+    <td>
+      <p>The text on the button that selects all options when <code>actionsBox</code> is enabled.</p>
+    </td>
+  </tr>
+  <tr>
     <td>selectedTextFormat</td>
     <td><code>'values'</code> | <code>'static'</code> | <code>'count'</code> | <code>'count > x'</code> (where x is an integer)</td>
     <td><code>'values'</code></td>
@@ -255,6 +279,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
       widest option.</p>
       <p>When set to a css-width, the width of the selectpicker is forced inline to the given value.</p>
       <p>When set to <code>false</code>, all width information is removed.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>windowPadding</td>
+    <td>integer | array</td>
+    <td><code>0</code></td>
+    <td>
+      <p>This is useful in cases where the window has areas that the dropdown menu should not cover - for instance a fixed header. When set to an integer, the same padding will be added to all sides. Alternatively, an array of integers can be used in the format <code>[top, right, bottom, left]</code>.</p>
     </td>
   </tr>
   </tbody>

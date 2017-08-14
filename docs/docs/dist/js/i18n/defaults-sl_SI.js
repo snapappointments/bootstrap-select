@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2016 bootstrap-select
+ * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -11,13 +11,13 @@
     define(["jquery"], function (a0) {
       return (factory(a0));
     });
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
@@ -25,9 +25,7 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Nič izbranega',
     noneResultsText: 'Ni zadetkov za {0}',
-    countSelectedText: function (numSelected, numTotal) {
-      "Število izbranih: {0}";
-    },
+    countSelectedText: '{0} od {1} izbranih',
     maxOptionsText: function (numAll, numGroup) {
       return [
         'Omejitev dosežena (max. izbranih: {n})',

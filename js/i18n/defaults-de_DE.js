@@ -7,8 +7,17 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Bitte wählen...',
     noneResultsText: 'Keine Ergebnisse für {0}',
-    countSelectedText: '{0} von {1} ausgewählt',
-    maxOptionsText: ['Limit erreicht ({n} {var} max.)', 'Gruppen-Limit erreicht ({n} {var} max.)', ['Eintrag', 'Einträge']],
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected == 1) ? "{0} Element ausgewählt" : "{0} Elemente ausgewählt";
+    },
+    maxOptionsText: function (numAll, numGroup) {
+      return [
+        (numAll == 1) ? 'Limit erreicht ({n} Element max.)' : 'Limit erreicht ({n} Elemente max.)',
+        (numGroup == 1) ? 'Gruppen-Limit erreicht ({n} Element max.)' : 'Gruppen-Limit erreicht ({n} Elemente max.)'
+      ];
+    },
+    selectAllText: 'Alles auswählen',
+    deselectAllText: 'Nichts auswählen',
     multipleSeparator: ', '
   };
 })(jQuery);

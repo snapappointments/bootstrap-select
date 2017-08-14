@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2016 bootstrap-select
+ * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -11,13 +11,13 @@
     define(["jquery"], function (a0) {
       return (factory(a0));
     });
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
@@ -27,7 +27,9 @@
     noneResultsText: 'Nada encontrado contendo {0}',
     countSelectedText: 'Selecionado {0} de {1}',
     maxOptionsText: ['Limite excedido (máx. {n} {var})', 'Limite do grupo excedido (máx. {n} {var})', ['itens', 'item']],
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Selecionar Todos',
+    deselectAllText: 'Desmarcar Todos'
   };
 })(jQuery);
 

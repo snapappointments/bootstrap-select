@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2016 bootstrap-select
+ * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -11,13 +11,13 @@
     define(["jquery"], function (a0) {
       return (factory(a0));
     });
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
@@ -25,8 +25,17 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Bitte wählen...',
     noneResultsText: 'Keine Ergebnisse für {0}',
-    countSelectedText: '{0} von {1} ausgewählt',
-    maxOptionsText: ['Limit erreicht ({n} {var} max.)', 'Gruppen-Limit erreicht ({n} {var} max.)', ['Eintrag', 'Einträge']],
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected == 1) ? "{0} Element ausgewählt" : "{0} Elemente ausgewählt";
+    },
+    maxOptionsText: function (numAll, numGroup) {
+      return [
+        (numAll == 1) ? 'Limit erreicht ({n} Element max.)' : 'Limit erreicht ({n} Elemente max.)',
+        (numGroup == 1) ? 'Gruppen-Limit erreicht ({n} Element max.)' : 'Gruppen-Limit erreicht ({n} Elemente max.)'
+      ];
+    },
+    selectAllText: 'Alles auswählen',
+    deselectAllText: 'Nichts auswählen',
     multipleSeparator: ', '
   };
 })(jQuery);

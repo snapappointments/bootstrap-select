@@ -86,7 +86,9 @@ module.exports = function (grunt) {
 
     uglify: {
       options: {
-        preserveComments: 'some'
+        preserveComments: function(node, comment) {
+          return /^!|@preserve|@license|@cc_on/i.test(comment.value);
+        }
       },
       main: {
         src: '<%= concat.main.dest %>',
@@ -185,19 +187,41 @@ module.exports = function (grunt) {
       }
     },
 
-    sed: {
-      versionNumber: {
-        path: [
-          'js/<%= pkg.name %>.js',
+    version: {
+      js: {
+        options: {
+          prefix: 'Selectpicker.VERSION = \''
+        },
+        src: [
+          'js/<%= pkg.name %>.js'
+        ],
+      },
+      cdn: {
+        options: {
+          prefix: 'ajax/libs/<%= pkg.name %>/'
+        },
+        src: [
+          'README.md',
+          'docs/docs/index.md'
+        ],
+      },
+      nuget: {
+        options: {
+          prefix: '<version>'
+        },
+        src: [
+          'nuget/bootstrap-select.nuspec'
+        ],
+      },
+      default: {
+        options: {
+          prefix: '[\'"]?version[\'"]?:[ "\']*'
+        },
+        src: [
           'composer.json',
+          'docs/mkdocs.yml',
           'package.json'
         ],
-        pattern: (function () {
-          var old = grunt.option('old');
-          return old ? RegExp.quote(old) : old;
-        })(),
-        replacement: grunt.option('new'),
-        recursive: true
       }
     },
 
@@ -264,9 +288,7 @@ module.exports = function (grunt) {
   });
 
   // Version numbering task.
-  // grunt change-version-number --old=A.B.C --new=X.Y.Z
-  // This can be overzealous, so its changes should always be manually reviewed!
-  grunt.registerTask('change-version-number', 'sed');
+  // to update version number, use grunt version::x.y.z
 
   // CSS distribution
   grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);

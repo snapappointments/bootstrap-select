@@ -269,11 +269,15 @@
   </select>
 
   <hr>
-  <select id="tokens" class="selectpicker" multiple data-live-search="true">
-    <option data-tokens="first">I actually am called "first"</option>
-    <option data-tokens="second">And me "second"</option>
-    <option data-tokens="last">I am "last"</option>
-  </select>
+
+  <div class="form-group">
+    <label for="tokens">Key words (data-tokens)</label>
+    <select id="tokens" class="selectpicker form-control" multiple data-live-search="true">
+      <option data-tokens="first">I actually am called "one"</option>
+      <option data-tokens="second">And me "two"</option>
+      <option data-tokens="last">I am "three"</option>
+    </select>
+  </div>
 
   <hr>
   <form class="form-inline">

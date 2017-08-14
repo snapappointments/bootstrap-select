@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.10.0 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2016 bootstrap-select
+ * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -11,13 +11,13 @@
     define(["jquery"], function (a0) {
       return (factory(a0));
     });
-  } else if (typeof exports === 'object') {
+  } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(require("jquery"));
   } else {
-    factory(jQuery);
+    factory(root["jQuery"]);
   }
 }(this, function (jQuery) {
 
@@ -25,9 +25,13 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Nessuna selezione',
     noneResultsText: 'Nessun risultato per {0}',
-    countSelectedText: 'Selezionati {0} di {1}',
+    countSelectedText: function (numSelected, numTotal){
+      return (numSelected == 1) ? 'Selezionato {0} di {1}' : 'Selezionati {0} di {1}';
+    },
     maxOptionsText: ['Limite raggiunto ({n} {var} max)', 'Limite del gruppo raggiunto ({n} {var} max)', ['elementi', 'elemento']],
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Seleziona Tutto',
+    deselectAllText: 'Deseleziona Tutto'
   };
 })(jQuery);
 
