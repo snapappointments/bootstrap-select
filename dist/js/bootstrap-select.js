@@ -414,9 +414,7 @@
 
       this.$element.removeClass('bs-select-hidden');
 
-      if (this.options.dropdownAlignRight === true) {
-        this.$menu.addClass('dropdown-menu-right');
-      }
+      if (this.options.dropdownAlignRight === true) this.$menu.addClass('dropdown-menu-right');
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
@@ -428,13 +426,10 @@
 
       this.checkDisabled();
       this.clickListener();
-      if (this.options.liveSearch) {
-        this.liveSearchListener();
-      }
+      if (this.options.liveSearch) this.liveSearchListener();
       this.render();
       this.setStyle();
-      this.setWidth();
-      
+      this.setWidth();      
       if (this.options.container) this.selectPosition();
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
