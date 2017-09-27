@@ -1338,9 +1338,11 @@
             }
           }
 
+          console.log('that', that)
+
           if (!that.multiple || (that.multiple && that.options.maxOptions === 1)) {
             that.$button.focus();
-          } else if (that.options.liveSearch) {
+          } else if (that.options.liveSearch && !that.options.mobile) {
             that.$searchbox.focus();
           }
 

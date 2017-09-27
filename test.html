@@ -69,6 +69,27 @@
   </form>
 
   <hr>
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="basic-multiple" class="col-lg-2 control-label">"Basic" (liveSearch enabled, multiple)</label>
+
+      <div class="col-lg-10">
+        <select id="basic-multiple" class="selectpicker show-tick form-control" data-live-search="true" multiple>
+          <option>cow</option>
+          <option data-subtext="option subtext">bull</option>
+          <option class="get-class" disabled>ox</option>
+          <optgroup label="test" data-subtext="optgroup subtext">
+            <option>ASD</option>
+            <option selected>Bla</option>
+            <option>Ble</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <label for="basic2" class="col-lg-2 control-label">"Basic" (multiple, maxOptions=1)</label>
@@ -314,6 +335,14 @@
       liveSearch: true,
       maxOptions: 1
     });
+
+    var isMobile = /iphone|ipod|android|mobile|blackberry|iemobile|opera m(obi|ini)|kindle/gi.test(navigator.userAgent)
+
+    if (isMobile) {
+      $('#basic-multiple').selectpicker({
+          mobile: true
+      });
+    }
   });
 </script>
 </body>
