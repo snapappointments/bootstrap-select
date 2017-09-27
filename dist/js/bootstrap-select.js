@@ -429,7 +429,7 @@
       if (this.options.liveSearch) this.liveSearchListener();
       this.render();
       this.setStyle();
-      this.setWidth();      
+      this.setWidth();
       if (this.options.container) this.selectPosition();
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
