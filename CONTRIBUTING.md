@@ -16,7 +16,7 @@ The issue tracker is the preferred channel for [bug reports](#bug-reports),
 respect the following restrictions:
 
 * Please **do not** use the issue tracker for personal support requests (use
-  [Stack Overflow](http://stackoverflow.com) or IRC).
+  [Stack Overflow](https://stackoverflow.com) or IRC).
 
 * Please **do not** derail or troll issues. Keep the discussion on topic and
   respect the opinions of others.
@@ -39,9 +39,9 @@ Guidelines for bug reports:
    jQuery version, Bootstrap version, and bootstrap-select version.
 
 4. **Create an isolated and reproducible test case.** Create a [reduced test
-   case](http://css-tricks.com/6263-reduced-test-cases/).
+   case](https://css-tricks.com/reduced-test-cases/).
 
-5. **Include a live example.** Use [this Plunker debugging template](http://silviomoreto.github.io/bootstrap-select/playground/) to share your isolated test cases. You can also make use of [jsFiddle](http://jsfiddle.net/) or [jsBin](http://jsbin.com/).
+5. **Include a live example.** Use [this Plunker debugging template](https://silviomoreto.github.io/bootstrap-select/playground/) to share your isolated test cases. You can also make use of [CodePen](https://codepen.io/), [jsFiddle](https://jsfiddle.net/) or [jsBin](https://jsbin.com/).
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as detailed as possible in your report. What is
