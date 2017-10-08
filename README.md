@@ -62,7 +62,7 @@ Or
 $('select').selectpicker();
 ```
 
-#### Optional add option if not found####
+#### Optional add option if entered text not found ####
 
 ```html
 
