@@ -77,7 +77,8 @@ $('select').selectpicker({
 });
 
 function someFunct(value) {
-  console.log('Added value:' + value);
+  $('select').append('<option value="' + newValue + '">' + value + '</option>');
+  $('select').selectpicker("refresh");`1`
 }
 ```
 
