@@ -62,6 +62,25 @@ Or
 $('select').selectpicker();
 ```
 
+#### Optional add option if not found####
+
+```html
+
+  <select class="selectpicker" data-live-search="true" data-add-new="true">
+
+```
+
+```js
+$('select').selectpicker({
+  addLabel: 'Add This: ', //default = 'Add:'
+  addCallback: 'someFunct'
+});
+
+function someFunct(value) {
+  console.log('Added value:' + value);
+}
+```
+
 Checkout the [documentation](https://silviomoreto.github.io/bootstrap-select) for further information.
 
 ## CDN
