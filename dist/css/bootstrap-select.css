@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.12.4 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.12.4 (https://silviomoreto.github.io/bootstrap-select)
  *
  * Copyright 2013-2017 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
@@ -296,11 +296,5 @@ select.selectpicker {
   margin-bottom: 0;
   width: 100%;
   float: none;
-}
-div.dropdown-menu.open {
-  width: 100%;
-}
-ul.dropdown-menu.inner > li > a {
-  white-space: initial;
 }
 /*# sourceMappingURL=bootstrap-select.css.map */
