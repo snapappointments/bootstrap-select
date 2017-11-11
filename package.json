@@ -35,6 +35,12 @@
     "type": "git",
     "url": "git://github.com/silviomoreto/bootstrap-select.git"
   },
+  "files": [
+    "dist",
+    "js/**/*.js",
+    "less",
+    "sass"
+  ],
   "license": "MIT",
   "dependencies": {
     "jquery": ">=1.8"
