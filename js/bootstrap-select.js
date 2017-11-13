@@ -193,6 +193,16 @@
     return haystack.startsWith(meta[3].toUpperCase());
   };
 
+  // Case insensitive regex search
+  $.expr.pseudos.iregex = function (obj, index, meta) {
+    var $obj = $(obj).find('a');
+    var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
+
+    var q = meta[3].replace(' ', '(.*)').toUpperCase();
+    var re = new RegExp(q);
+    return haystack.match(re);
+  };
+
   // Case and accent insensitive contains search
   $.expr.pseudos.aicontains = function (obj, index, meta) {
     var $obj = $(obj).find('a');
@@ -205,6 +215,16 @@
     var $obj = $(obj).find('a');
     var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
     return haystack.startsWith(meta[3].toUpperCase());
+  };
+
+  // Case and accent insensitive regex search
+  $.expr.pseudos.airegex = function (obj, index, meta) {
+    var $obj = $(obj).find('a');
+    var haystack = ($obj.data('tokens') || $obj.data('normalizedText') || $obj.text()).toString().toUpperCase();
+
+    var q = meta[3].replace(' ', '(.*)').toUpperCase();
+    var re = new RegExp(q);
+    return haystack.match(re);
   };
 
   /**
@@ -1484,7 +1504,8 @@
     _searchStyle: function () {
       var styles = {
         begins: 'ibegins',
-        startsWith: 'ibegins'
+        startsWith: 'ibegins',
+        regularExpression: 'iregex'
       };
 
       return styles[this.options.liveSearchStyle] || 'icontains';
