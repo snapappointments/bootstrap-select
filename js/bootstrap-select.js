@@ -293,6 +293,14 @@
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
   }
 
+  var classNames = {
+    DISABLED: 'disabled',
+    SHOW: 'open',
+    DROPUP: 'dropup',
+    MENURIGHT: 'dropdown-menu-right',
+    MENULEFT: 'dropdown-menu-left'
+  }
+
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
   var REGEXP_ENTER_OR_SPACE = new RegExp(keyCodes.ENTER + '|' + keyCodes.SPACE);
@@ -440,7 +448,7 @@
 
       this.$element.removeClass('bs-select-hidden');
 
-      if (this.options.dropdownAlignRight === true) this.$menu.addClass('dropdown-menu-right');
+      if (this.options.dropdownAlignRight === true) this.$menu.addClass(classNames.MENURIGHT);
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
@@ -558,11 +566,11 @@
           this.options.template.caret +
           '</span>' +
           '</button>' +
-          '<div class="dropdown-menu open" role="combobox">' +
+          '<div class="dropdown-menu ' + classNames.SHOW + '" role="combobox">' +
           header +
           searchbox +
           actionsbox +
-          '<div class="inner open" role="listbox" aria-expanded="false" tabindex="-1">' +
+          '<div class="inner ' + classNames.SHOW + '" role="listbox" aria-expanded="false" tabindex="-1">' +
               '<ul class="dropdown-menu inner">' +
               '</ul>' +
           '</div>' +
@@ -1259,10 +1267,10 @@
       this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
 
       text.className = 'text';
-      newElement.className = this.$menu[0].parentNode.className + ' open';
+      newElement.className = this.$menu[0].parentNode.className + ' ' + classNames.SHOW;
       newElement.style.width = this.sizeInfo.selectWidth + 'px';
-      menu.className = 'dropdown-menu open';
-      menuInner.className = 'inner open';
+      menu.className = 'dropdown-menu ' + classNames.SHOW;
+      menuInner.className = 'inner ' + classNames.SHOW;
       menuInnerInner.className = 'dropdown-menu inner';
       divider.className = 'divider';
       dropdownHeader.className = 'dropdown-header';
@@ -1394,7 +1402,7 @@
           menuInnerMinHeight;
 
       if (this.options.dropupAuto) {
-        this.$newElement.toggleClass('dropup', this.sizeInfo.selectOffsetTop - this.sizeInfo.selectOffsetBot > this.sizeInfo.menuExtras.vert);
+        this.$newElement.toggleClass(classNames.DROPUP, this.sizeInfo.selectOffsetTop - this.sizeInfo.selectOffsetBot > this.sizeInfo.menuExtras.vert);
       }
 
       if (this.options.size === 'auto') {
@@ -1405,7 +1413,7 @@
         minHeight = _minHeight + headerHeight + searchHeight + actionsHeight + doneButtonHeight;
         menuInnerMinHeight = Math.max(_minHeight - menuPadding.vert, 0);
 
-        if (this.$newElement.hasClass('dropup')) {
+        if (this.$newElement.hasClass(classNames.DROPUP)) {
           menuHeight = this.sizeInfo.selectOffsetTop - this.sizeInfo.menuExtras.vert;
         }
       } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
@@ -1420,7 +1428,7 @@
       }
 
       if (this.options.dropdownAlignRight === 'auto') {
-        this.$menu.toggleClass('dropdown-menu-right', this.sizeInfo.selectOffsetLeft > this.sizeInfo.selectOffsetRight && this.sizeInfo.selectOffsetRight < (this.$menu[0].offsetWidth - selectWidth));
+        this.$menu.toggleClass(classNames.MENURIGHT, this.sizeInfo.selectOffsetLeft > this.sizeInfo.selectOffsetRight && this.sizeInfo.selectOffsetRight < (this.$menu[0].offsetWidth - selectWidth));
       }
 
       this.$menu.css({
@@ -1531,7 +1539,7 @@
           containerPos,
           actualHeight,
           getPlacement = function ($element) {
-            that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass('dropup', $element.hasClass('dropup'));
+            that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass(classNames.DROPUP, $element.hasClass(classNames.DROPUP));
             pos = $element.offset();
 
             if (!$container.is('body')) {
@@ -1542,7 +1550,7 @@
               containerPos = { top: 0, left: 0 };
             }
 
-            actualHeight = $element.hasClass('dropup') ? 0 : $element[0].offsetHeight;
+            actualHeight = $element.hasClass(classNames.DROPUP) ? 0 : $element[0].offsetHeight;
 
             that.$bsContainer.css({
               'top': pos.top - containerPos.top + actualHeight,
@@ -1562,7 +1570,7 @@
 
         that.$bsContainer
           .appendTo(that.options.container)
-          .toggleClass('open', !$this.hasClass('open'))
+          .toggleClass(classNames.SHOW, !$this.hasClass(classNames.SHOW))
           .append(that.$menu);
       });
 
@@ -1658,12 +1666,12 @@
 
       // toggle doesn't work in IE11, use if else instead
       if (disabled) {
-        li.classList.add('disabled');
+        li.classList.add(classNames.DISABLED);
         if (li.firstChild) {
           li.firstChild.setAttribute('tabindex', -1);
         }
       } else {
-        if (li.classList.contains('disabled')) li.classList.remove('disabled');
+        if (li.classList.contains(classNames.DISABLED)) li.classList.remove(classNames.DISABLED);
         if (li.firstChild) {
           li.firstChild.setAttribute('tabindex', 0);
         }
@@ -1678,12 +1686,12 @@
       var that = this;
 
       if (this.isDisabled()) {
-        this.$newElement.addClass('disabled');
-        this.$button.addClass('disabled').attr('tabindex', -1).attr('aria-disabled', true);
+        this.$newElement.addClass(classNames.DISABLED);
+        this.$button.addClass(classNames.DISABLED).attr('tabindex', -1).attr('aria-disabled', true);
       } else {
-        if (this.$button.hasClass('disabled')) {
-          this.$newElement.removeClass('disabled');
-          this.$button.removeClass('disabled').attr('aria-disabled', false);
+        if (this.$button.hasClass(classNames.DISABLED)) {
+          this.$newElement.removeClass(classNames.DISABLED);
+          this.$button.removeClass(classNames.DISABLED).attr('aria-disabled', false);
         }
 
         if (this.$button.attr('tabindex') == -1 && !this.$element.data('tabindex')) {
@@ -1731,7 +1739,7 @@
       });
 
       this.$button.on('click.bs.dropdown.data-api', function () {
-        if (!that.$newElement.hasClass('open')) {
+        if (!that.$newElement.hasClass(classNames.SHOW)) {
           that.setSize();
         }
       });
@@ -1763,7 +1771,7 @@
         e.preventDefault();
 
         //Don't run if we have been disabled
-        if (!that.isDisabled() && !$this.parent().hasClass('disabled')) {
+        if (!that.isDisabled() && !$this.parent().hasClass(classNames.DISABLED)) {
           var $options = that.$element.find('option'),
               $option = $options.eq(clickedIndex),
               state = $option.prop('selected'),
@@ -1863,7 +1871,7 @@
         }
       });
 
-      this.$menu.on('click', 'li.disabled a, .popover-title, .popover-title :not(.close)', function (e) {
+      this.$menu.on('click', 'li.' + classNames.DISABLED + ' a, .popover-title, .popover-title :not(.close)', function (e) {
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
@@ -2085,7 +2093,7 @@
           isArrowKey = REGEXP_ARROW.test(e.which) || downOnTab,
           scrollTop = that.$menuInner[0].scrollTop;
 
-      isActive = that.$newElement.hasClass('open');
+      isActive = that.$newElement.hasClass(classNames.SHOW);
 
       if (
         !isActive &&
