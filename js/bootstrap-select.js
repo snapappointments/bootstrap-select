@@ -2297,11 +2297,7 @@
       this.setStyle();
       this.setWidth();
 
-      if (this.$newElement.hasClass('open')) {
-        this.setSize(true);
-      } else {
-        this.liHeight(true);
-      }
+      this.setSize(true);
 
       this.$element.trigger('refreshed.bs.select');
     },
