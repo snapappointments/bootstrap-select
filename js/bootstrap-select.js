@@ -440,7 +440,7 @@
       this.createLi();
       this.$element
         .after(this.$newElement)
-        .appendTo(this.$newElement);
+        .prependTo(this.$newElement);
       this.$button = this.$newElement.children('button');
       this.$menu = this.$newElement.children('.dropdown-menu');
       this.$menuInner = this.$menu.children('.inner');
