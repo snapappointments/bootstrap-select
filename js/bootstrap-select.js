@@ -571,7 +571,7 @@
       '</div>'
           : '';
       var drop =
-          '<div class="dropdown btn-group bootstrap-select' + showTick + inputGroup + '">' +
+          '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button">' +
           '<span class="filter-option"></span>&nbsp;' +
           '<span class="bs-caret">' +
