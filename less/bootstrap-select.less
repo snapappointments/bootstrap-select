@@ -48,8 +48,15 @@ select.selectpicker {
 
   // Error display
   .has-error & .dropdown-toggle,
-  .error & .dropdown-toggle {
+  .error & .dropdown-toggle,
+  &.is-invalid .dropdown-toggle,
+  .was-validated & .selectpicker:invalid + .dropdown-toggle {
     border-color: @color-red-error;
+  }
+
+  &.is-valid .dropdown-toggle,
+  .was-validated & .selectpicker:valid + .dropdown-toggle {
+    border-color: @color-green-success;
   }
 
   &.fit-width {
