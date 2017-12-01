@@ -1,6 +1,24 @@
 (function ($) {
   'use strict';
 
+  var testElement = document.createElement('_');
+
+  testElement.classList.toggle('c3', false);
+
+  // Polyfill for IE 10 and Firefox <24, where classList.toggle does not
+  // support the second argument.
+  if (testElement.classList.contains('c3')) {
+    var _toggle = DOMTokenList.prototype.toggle;
+
+    DOMTokenList.prototype.toggle = function(token, force) {
+      if (1 in arguments && !this.contains(token) === !force) {
+        return force;
+      } else {
+        return _toggle.call(this, token);
+      }
+    };
+  }
+
   //<editor-fold desc="Shims">
   if (!String.prototype.startsWith) {
     (function () {
