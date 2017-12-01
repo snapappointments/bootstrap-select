@@ -299,6 +299,7 @@
 
   var classNames = {
     DISABLED: 'disabled',
+    DIVIDER: version.major === '4' ? 'dropdown-divider' : 'divider',
     SHOW: version.major === '4' ? 'show' : 'open',
     DROPUP: 'dropup',
     MENURIGHT: 'dropdown-menu-right',
@@ -978,7 +979,14 @@
 
           if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
-            mainElements.push(generateLI(false, null, 'divider', optID + 'div'));
+            mainElements.push(
+              generateLI(
+                false,
+                null,
+                classNames.DIVIDER,
+                optID + 'div'
+              )
+            );
             mainData.push({
               type: 'divider',
               optID: optID,
@@ -1015,7 +1023,14 @@
 
             if (index !== 0 && mainElements.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
-              mainElements.push(generateLI(false, null, 'divider', optID + 'div'));
+              mainElements.push(
+                generateLI(
+                  false,
+                  null,
+                  classNames.DIVIDER,
+                  optID + 'div'
+                )
+              );
               mainData.push({
                 type: 'divider',
                 optID: optID,
@@ -1090,7 +1105,14 @@
 
           if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
-            mainElements.push(generateLI(false, null, 'divider', optID + 'div'));
+            mainElements.push(
+              generateLI(
+                false,
+                null,
+                classNames.DIVIDER,
+                optID + 'div'
+              )
+            );
             mainData.push({
               type: 'divider',
               optID: optID,
@@ -1289,8 +1311,8 @@
       newElement.style.width = this.sizeInfo.selectWidth + 'px';
       menu.className = 'dropdown-menu ' + classNames.SHOW;
       menuInner.className = 'inner ' + classNames.SHOW;
-      menuInnerInner.className = 'dropdown-menu inner';
-      divider.className = 'divider';
+      menuInnerInner.className = 'dropdown-menu inner ' + (version.major === '4' ? classNames.SHOW : '');
+      divider.className = classNames.DIVIDER;
       dropdownHeader.className = 'dropdown-header';
 
       text.appendChild(document.createTextNode('Inner text'));
