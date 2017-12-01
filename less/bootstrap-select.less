@@ -266,17 +266,28 @@ select.selectpicker {
     }
   }
 
-  &.show-tick .dropdown-menu li {
-    &.selected a span.check-mark {
+  &.show-tick .dropdown-menu {
+    .selected span.check-mark {
       position: absolute;
       display: inline-block;
       right: 15px;
-      margin-top: 5px;
+      top: 5px;
     }
 
-    a span.text {
+    li a span.text {
       margin-right: 34px;
     }
+  }
+
+  /* default check mark for use without an icon font */
+  .bs-ok-default:after {
+    content: '';
+    display: block;
+    width: 0.5em;
+    height: 1em;
+    border-style: solid;
+    border-width: 0 0.26em 0.26em 0;
+    transform: rotate(45deg);
   }
 }
 

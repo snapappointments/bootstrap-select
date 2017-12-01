@@ -452,7 +452,7 @@
   if (version.major === '4') {
     Selectpicker.DEFAULTS.style = 'btn-light';
     Selectpicker.DEFAULTS.iconBase = '';
-    Selectpicker.DEFAULTS.tickIcon = 'default-ok';
+    Selectpicker.DEFAULTS.tickIcon = 'bs-ok-default';
   }
 
   Selectpicker.prototype = {
