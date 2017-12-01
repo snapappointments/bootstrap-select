@@ -293,12 +293,18 @@
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
   }
 
+  var version = {};
+  version.full = ($.fn.dropdown.Constructor.VERSION || '').split(' ')[0].split('.');
+  version.major = version.full[0];
+
   var classNames = {
     DISABLED: 'disabled',
-    SHOW: 'open',
+    SHOW: version.major === '4' ? 'show' : 'open',
     DROPUP: 'dropup',
     MENURIGHT: 'dropdown-menu-right',
-    MENULEFT: 'dropdown-menu-left'
+    MENULEFT: 'dropdown-menu-left',
+    // to-do: replace with more advanced template/customization options
+    BUTTONCLASS: version.major === '4' ? 'btn-light' : 'btn-default'
   }
 
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
@@ -424,6 +430,12 @@
     windowPadding: 0
   };
 
+  if (version.major === '4') {
+    Selectpicker.DEFAULTS.style = 'btn-light';
+    Selectpicker.DEFAULTS.iconBase = '';
+    Selectpicker.DEFAULTS.tickIcon = 'default-ok';
+  }
+
   Selectpicker.prototype = {
 
     constructor: Selectpicker,
@@ -540,10 +552,10 @@
       var actionsbox = this.multiple && this.options.actionsBox ?
       '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-group-sm btn-block">' +
-      '<button type="button" class="actions-btn bs-select-all btn btn-default">' +
+      '<button type="button" class="actions-btn bs-select-all btn ' + classNames.BUTTONCLASS + '">' +
       this.options.selectAllText +
       '</button>' +
-      '<button type="button" class="actions-btn bs-deselect-all btn btn-default">' +
+      '<button type="button" class="actions-btn bs-deselect-all btn ' + classNames.BUTTONCLASS + '">' +
       this.options.deselectAllText +
       '</button>' +
       '</div>' +
@@ -552,26 +564,26 @@
       var donebutton = this.multiple && this.options.doneButton ?
       '<div class="bs-donebutton">' +
       '<div class="btn-group btn-block">' +
-      '<button type="button" class="btn btn-sm btn-default">' +
+      '<button type="button" class="btn btn-sm ' + classNames.BUTTONCLASS + '">' +
       this.options.doneButtonText +
       '</button>' +
       '</div>' +
       '</div>'
           : '';
       var drop =
-          '<div class="btn-group bootstrap-select' + showTick + inputGroup + '">' +
+          '<div class="dropdown btn-group bootstrap-select' + showTick + inputGroup + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button">' +
           '<span class="filter-option"></span>&nbsp;' +
           '<span class="bs-caret">' +
           this.options.template.caret +
           '</span>' +
           '</button>' +
-          '<div class="dropdown-menu ' + classNames.SHOW + '" role="combobox">' +
+          '<div class="dropdown-menu ' + (version.major === '4' ? '' : classNames.SHOW) + '" role="combobox">' +
           header +
           searchbox +
           actionsbox +
           '<div class="inner ' + classNames.SHOW + '" role="listbox" aria-expanded="false" tabindex="-1">' +
-              '<ul class="dropdown-menu inner">' +
+              '<ul class="dropdown-menu inner ' + (version.major === '4' ? classNames.SHOW : '') + '">' +
               '</ul>' +
           '</div>' +
           donebutton +
