@@ -694,20 +694,24 @@
 
           if (init) {
             if (that.activeIndex !== that.selectedIndex) {
-              if (active.classList.contains('active')) active.classList.remove('active');
+              active.classList.remove('active');
+              if (active.firstChild) active.firstChild.classList.remove('active');
             }
             that.activeIndex = undefined;
           }
 
           active.classList.add('active');
+          if (active.firstChild) active.firstChild.classList.add('active');
 
           if (that.activeIndex && that.activeIndex !== that.selectedIndex && selected && selected.length) {
-            if (selected.classList.contains('active')) selected.classList.remove('active');
+            selected.classList.remove('active');
+            if (selected.firstChild) selected.firstChild.classList.remove('active');
           }
         }
 
         if (that.prevActiveIndex !== undefined && that.prevActiveIndex !== that.activeIndex && that.prevActiveIndex !== that.selectedIndex && prevActive && prevActive.length) {
-          if (prevActive.classList.contains('active')) prevActive.classList.remove('active');
+          prevActive.classList.remove('active');
+          if (prevActive.firstChild) prevActive.firstChild.classList.remove('active');
         }
 
         if (init || prevPositions[0] !== that.selectpicker.view.position0 || prevPositions[1] !== that.selectpicker.view.position1) {
@@ -745,7 +749,7 @@
             index = 1 + that.selectpicker.view.canHighlight.slice(1).indexOf(true);
           }
 
-          $lis.removeClass('active').eq(index).addClass('active');
+          $lis.removeClass('active').eq(index).addClass('active').find('a').addClass('active');
           that.activeIndex = that.selectpicker.current.map.originalIndex[index];
         }
       }
@@ -1644,33 +1648,37 @@
       var activeIndexIsSet = this.activeIndex !== undefined,
           thisIsActive = this.activeIndex === index,
           prevActiveIndex,
-          prevActive;
+          prevActive,
+          a,
+          keepActive = thisIsActive || selected && !this.multiple && !activeIndexIsSet;
 
       if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
       if (!li) li = this.selectpicker.main.elements[liIndex];
 
-      // classList.toggle doesn't work in IE11, use if else instead
+      a = li.firstChild;
+
       if (selected) {
         this.selectedIndex = index;
-        li.classList.add('selected');
-      } else if (li.classList.contains('selected')) {
-        li.classList.remove('selected');
       }
 
-      if (thisIsActive || selected && !this.multiple && !activeIndexIsSet) {
-        li.classList.add('active');
-      } else {
-        if (li.classList.contains('active')) li.classList.remove('active');
+      li.classList.toggle('selected', selected);
+      li.classList.toggle('active', keepActive);
 
+      if (a) {
+        a.classList.toggle('selected', selected);
+        a.classList.toggle('active', keepActive);
+        a.setAttribute('aria-selected', selected);
+      }
+
+      if (!keepActive) {
         if (!activeIndexIsSet && selected && this.prevActiveIndex) {
           prevActiveIndex = this.selectpicker.main.map.newIndex[this.prevActiveIndex];
           prevActive = this.selectpicker.main.elements[prevActiveIndex];
 
-          if (prevActive.classList.contains('active')) prevActive.classList.remove('active');
+          prevActive.classList.remove('active');
+          if (prevActive.firstChild) prevActive.firstChild.classList.remove('active');
         }
       }
-
-      if (li.firstChild) li.firstChild.setAttribute('aria-selected', selected);
     },
 
     /**
@@ -1678,21 +1686,24 @@
      * @param {boolean} disabled - true if the option is being disabled, false if being enabled
      */
     setDisabled: function (index, disabled, liIndex, li) {
+      var a;
+
       if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
       if (!li) li = this.selectpicker.main.elements[liIndex];
 
-      if (li.firstChild) li.firstChild.setAttribute('aria-disabled', disabled);
+      a = li.firstChild;
 
-      // toggle doesn't work in IE11, use if else instead
-      if (disabled) {
-        li.classList.add(classNames.DISABLED);
-        if (li.firstChild) {
-          li.firstChild.setAttribute('tabindex', -1);
-        }
-      } else {
-        if (li.classList.contains(classNames.DISABLED)) li.classList.remove(classNames.DISABLED);
-        if (li.firstChild) {
-          li.firstChild.setAttribute('tabindex', 0);
+      li.classList.toggle(classNames.DISABLED, disabled);
+
+      if (a) {
+        if (version.major === '4') a.classList.toggle(classNames.DISABLED, disabled);
+
+        a.setAttribute('aria-disabled', disabled);
+
+        if (disabled) {
+          a.setAttribute('tabindex', -1);
+        } else {
+          a.setAttribute('tabindex', 0);
         }
       }
     },
@@ -2154,7 +2165,7 @@
         }
 
         e.preventDefault();
-        $items.removeClass('active');
+        $items.removeClass('active').find('a').removeClass('active');
 
         var liActiveIndex = that.selectpicker.view.position0 + index;
 
@@ -2186,6 +2197,7 @@
 
         liActive = that.selectpicker.current.elements[liActiveIndex];
         liActive.classList.add('active');
+        if (liActive.firstChild) liActive.firstChild.classList.add('active');
         that.activeIndex = that.selectpicker.current.map.originalIndex[liActiveIndex];
 
         liActive.firstChild.focus();
@@ -2236,7 +2248,7 @@
         if (matches.length) {
           var matchIndex = 0;
 
-          $items.removeClass('active');
+          $items.removeClass('active').find('a').removeClass('active');
 
           // either only one key has been pressed or they are all the same key
           if (keyHistory.length === 1) {
@@ -2264,6 +2276,7 @@
 
           liActive = that.selectpicker.current.elements[searchMatch];
           liActive.classList.add('active');
+          if (liActive.firstChild) liActive.firstChild.classList.add('active');
           that.activeIndex = matches[matchIndex];
 
           liActive.firstChild.focus();
