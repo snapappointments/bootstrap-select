@@ -834,6 +834,7 @@
         }
 
         if (typeof classes !== 'undefined' & '' !== classes) a.className = classes;
+        if (version.major === '4') a.classList.add('dropdown-item');
         if (inline) a.setAttribute('style', inline);
 
         return a;
@@ -1283,6 +1284,7 @@
       this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
 
       text.className = 'text';
+      a.className = 'dropdown-item';
       newElement.className = this.$menu[0].parentNode.className + ' ' + classNames.SHOW;
       newElement.style.width = this.sizeInfo.selectWidth + 'px';
       menu.className = 'dropdown-menu ' + classNames.SHOW;
