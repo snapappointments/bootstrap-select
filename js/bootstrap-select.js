@@ -1519,6 +1519,8 @@
 
         this.$menu.css('min-width', this.sizeInfo.totalMenuWidth);
       }
+
+      if (this.dropdown) this.dropdown._popper.update();
     },
 
     setSize: function (refresh) {
@@ -1607,6 +1609,8 @@
           containerPos,
           actualHeight,
           getPlacement = function ($element) {
+            var containerPosition = {};
+
             that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass(classNames.DROPUP, $element.hasClass(classNames.DROPUP));
             pos = $element.offset();
 
@@ -1620,16 +1624,18 @@
 
             actualHeight = $element.hasClass(classNames.DROPUP) ? 0 : $element[0].offsetHeight;
 
-            that.$bsContainer.css({
-              'top': pos.top - containerPos.top + actualHeight,
-              'left': pos.left - containerPos.left,
-              'width': $element[0].offsetWidth
-            });
+            // Bootstrap 4+ uses Popper for menu positioning
+            if (version.major < 4) {
+              containerPosition['top'] = pos.top - containerPos.top + actualHeight;
+              containerPosition['left'] = pos.left - containerPos.left;
+            }
+
+            containerPosition['width'] = $element[0].offsetWidth;
+
+            that.$bsContainer.css(containerPosition);
           };
 
       this.$button.on('click.bs.dropdown.data-api', function () {
-        var $this = $(this);
-
         if (that.isDisabled()) {
           return;
         }
@@ -1638,7 +1644,7 @@
 
         that.$bsContainer
           .appendTo(that.options.container)
-          .toggleClass(classNames.SHOW, !$this.hasClass(classNames.SHOW))
+          .toggleClass(classNames.SHOW, !that.$button.hasClass(classNames.SHOW))
           .append(that.$menu);
       });
 
@@ -1810,6 +1816,13 @@
         if (/(32)/.test(e.keyCode.toString(10)) && $document.data('spaceSelect')) {
             e.preventDefault();
             $document.data('spaceSelect', false);
+        }
+      });
+
+      this.$newElement.on('show.bs.dropdown', function() {
+        if (version.major > 3 && !that.dropdown) {
+          that.dropdown = that.$button.data('bs.dropdown');
+          that.dropdown._menu = that.$menu[0];
         }
       });
 
