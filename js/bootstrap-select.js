@@ -924,7 +924,8 @@
         // since newIndex is recalculated on every refresh, liIndex needs to be decreased even if the titleOption is already appended
         liIndex--;
 
-        var element = this.$element[0];
+        var element = this.$element[0],
+            isSelected = false;
 
         if (!this.selectpicker.view.titleOption.parentNode) {
           // Use native JS to prepend option (faster)
@@ -936,12 +937,14 @@
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
           // if so, the select will have the data-selected attribute
           var $opt = $(element.options[element.selectedIndex]);
-          if ($opt.attr('selected') === undefined && this.$element.data('selected') === undefined) {
-            this.selectpicker.view.titleOption.selected = true;
-          }
+          isSelected = $opt.attr('selected') === undefined && this.$element.data('selected') === undefined;
         }
 
         element.insertBefore(this.selectpicker.view.titleOption, element.firstChild);
+
+        // Set selected *after* appending to select,
+        // otherwise the option doesn't get selected in IE
+        if (isSelected) this.selectpicker.view.titleOption.selected = true;
       }
 
       var $selectOptions = this.$element.find('option');
