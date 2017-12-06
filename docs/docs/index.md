@@ -68,31 +68,4 @@ $('.selectpicker').selectpicker({
 });
 ```
 
-# Used by
-
----
-
-<div class="row logo-block">
-	<div class="logo-container">
-		<a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png" alt="SnapAppointments"></a>
-	</div>
-	<div class="logo-container">
-		<a href="https://www.thermofisher.com" target="_blank"><img src="img/logos/thermofisher.png" alt="Thermo Fisher Scientific Inc."></a>
-	</div>
-	<div class="logo-container">
-		<a href="https://www.membermeister.com" target="_blank"><img src="img/logos/membermeister.png" alt="membermeister"></a>
-	</div>
-	<div class="logo-container">
-		<a href="https://solveforall.com" target="_blank"><img src="img/logos/solveforall.png" alt="Solve for All"></a>
-	</div>
-	<div class="logo-container">
-		<a href="http://www.123itworks.co.uk" target="_blank"><img src="img/logos/estimateit.png" alt="EstiMATEit"></a>
-	</div>
-	<div class="logo-container">
-		<a href="https://convertizer.com" target="_blank"><img src="img/logos/convertizer.png" alt="Convertizer"></a>
-	</div>
-</div>
-
-<div class="text-muted">Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.</div>
-
 
