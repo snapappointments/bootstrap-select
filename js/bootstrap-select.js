@@ -330,6 +330,7 @@
       ];
     },
     selectAllText: 'Select All',
+    closeOnSelect: true,
     deselectAllText: 'Deselect All',
     doneButton: false,
     doneButtonText: 'Close',
@@ -1255,8 +1256,8 @@
             prevIndex = that.$element.prop('selectedIndex'),
             triggerChange = true;
 
-        // Don't close on multi choice menu
-        if (that.multiple && that.options.maxOptions !== 1) {
+        // Don't close on multi choice menu or if closeOnSelect is not set
+        if ((that.multiple && that.options.maxOptions !== 1) || !that.options.closeOnSelect) {
           e.stopPropagation();
         }
 

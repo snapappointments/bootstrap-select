@@ -24,6 +24,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>closeOnSelect</td>
+    <td>boolean</td>
+    <td><code>true</code></td>
+    <td>
+        <p>When set to <code>false</code>, don't close the dropdown upon select.
+    </td>
+  </tr>
+  <tr>
     <td>container</td>
     <td>string | false</td>
     <td><code>false</code></td>
