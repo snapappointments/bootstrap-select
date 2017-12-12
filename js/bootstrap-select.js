@@ -990,7 +990,8 @@
 
         // Set selected *after* appending to select,
         // otherwise the option doesn't get selected in IE
-        if (isSelected) this.selectpicker.view.titleOption.selected = true;
+        // set using selectedIndex, as setting the selected attr to true here doesn't work in IE11
+        if (isSelected) element.selectedIndex = 0;
       }
 
       var $selectOptions = this.$element.find('option');
@@ -1231,11 +1232,6 @@
           widestOption = mainElements[mainElements.length - 1];
         }
       });
-
-      //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
-      if (!this.multiple && $selectOptions.filter(':selected').length === 0 && !this.options.title) {
-        $selectOptions.eq(0).prop('selected', true).attr('selected', 'selected');
-      }
 
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
