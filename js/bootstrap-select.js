@@ -19,6 +19,13 @@
     };
   }
 
+  // shallow array comparison
+  function isEqual (array1, array2) {
+    return array1.length === array2.length && array1.every(function(element, index) {
+      return element === array2[index]; 
+    });
+  };
+
   //<editor-fold desc="Shims">
   if (!String.prototype.startsWith) {
     (function () {
@@ -446,7 +453,8 @@
     mobile: false,
     selectOnTab: false,
     dropdownAlignRight: false,
-    windowPadding: 0
+    windowPadding: 0,
+    virtualScroll: false
   };
 
   if (version.major === '4') {
@@ -661,20 +669,31 @@
       });
 
       function scroll(scrollTop, init) {
+        var size = that.selectpicker.current.elements.length,
+            chunks = [],
+            chunkSize,
+            chunkCount,
+            firstChunk,
+            lastChunk,
+            currentChunk = undefined,
+            prevPositions,
+            positionIsDifferent,
+            previousElements,
+            menuIsDifferent = true;
+
         that.selectpicker.view.scrollTop = scrollTop;
 
-        // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
-        if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.totalMenuWidth) {
-          that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
-          that.sizeInfo.totalMenuWidth = that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth;
-          that.$menu.css('min-width', that.sizeInfo.menuWidth);
+        if (that.options.virtualScroll) {
+          // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
+          if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.totalMenuWidth) {
+            that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
+            that.sizeInfo.totalMenuWidth = that.sizeInfo.menuWidth + that.sizeInfo.scrollBarWidth;
+            that.$menu.css('min-width', that.sizeInfo.menuWidth);
+          }
         }
 
-        var size = that.selectpicker.current.elements.length;
-        var chunks = [];
-        var chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / that.sizeInfo.liHeight * 1.5); // number of options in a chunk
-        var chunkCount = Math.round(size / chunkSize) || 1; // number of chunks
-        var currentChunk = undefined;
+        chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / that.sizeInfo.liHeight * 1.5); // number of options in a chunk
+        chunkCount = Math.round(size / chunkSize) || 1; // number of chunks
 
         for (var i = 0; i < chunkCount; i++) {
           var end_of_chunk = (i + 1) * chunkSize;
@@ -697,14 +716,16 @@
 
         if (currentChunk === undefined) currentChunk = 0;
 
-        var prevPositions = [that.selectpicker.view.position0, that.selectpicker.view.position1];
+        prevPositions = [that.selectpicker.view.position0, that.selectpicker.view.position1];
 
         // always display previous, current, and next chunks
-        var firstChunk = Math.max(0, currentChunk - 1);
-        var lastChunk = Math.min(chunkCount - 1, currentChunk + 1);
+        firstChunk = Math.max(0, currentChunk - 1);
+        lastChunk = Math.min(chunkCount - 1, currentChunk + 1);
 
         that.selectpicker.view.position0 = Math.max(0, chunks[firstChunk][0]) || 0;
         that.selectpicker.view.position1 = Math.min(size, chunks[lastChunk][1]) || 0;
+
+        positionIsDifferent = prevPositions[0] !== that.selectpicker.view.position0 || prevPositions[1] !== that.selectpicker.view.position1;
 
         if (that.activeIndex !== undefined) {
           prevActive = that.selectpicker.current.elements[that.selectpicker.current.map.newIndex[that.prevActiveIndex]];
@@ -719,9 +740,6 @@
             that.activeIndex = undefined;
           }
 
-          active.classList.add('active');
-          if (active.firstChild) active.firstChild.classList.add('active');
-
           if (that.activeIndex && that.activeIndex !== that.selectedIndex && selected && selected.length) {
             selected.classList.remove('active');
             if (selected.firstChild) selected.firstChild.classList.remove('active');
@@ -733,27 +751,44 @@
           if (prevActive.firstChild) prevActive.firstChild.classList.remove('active');
         }
 
-        if (init || prevPositions[0] !== that.selectpicker.view.position0 || prevPositions[1] !== that.selectpicker.view.position1) {
+        if (init || positionIsDifferent) {
+          previousElements = that.selectpicker.view.visibleElements ? that.selectpicker.view.visibleElements.slice() : [];
+
           that.selectpicker.view.visibleElements = that.selectpicker.current.elements.slice(that.selectpicker.view.position0, that.selectpicker.view.position1);
 
           that.setOptionStatus();
 
-          var menuInner = that.$menuInner[0],
-              menuFragment = document.createDocumentFragment(),
-              emptyMenu = menuInner.firstChild.cloneNode(false),
+          // if searching, check to make sure the list has actually been updated before updating DOM
+          // this prevents unnecessary repaints
+          if (isSearching) menuIsDifferent = !isEqual(previousElements, that.selectpicker.view.visibleElements);
+
+          // if virtual scroll is disabled and not searching,
+          // menu should never need to be updated more than once
+          if ( (init || that.options.virtualScroll) && menuIsDifferent ) {
+            var menuInner = that.$menuInner[0],
+                menuFragment = document.createDocumentFragment(),
+                emptyMenu = menuInner.firstChild.cloneNode(false),
+                marginTop,
+                marginBottom,
+                elements = that.options.virtualScroll ? that.selectpicker.view.visibleElements : that.selectpicker.current.elements;
+
+            // replace the existing UL with an empty one - this is faster than $.empty()
+            menuInner.replaceChild(emptyMenu, menuInner.firstChild);
+
+            for (var i = 0, visibleElementsLen = elements.length; i < visibleElementsLen; i++) {
+              menuFragment.appendChild(elements[i]);
+            }
+
+            if (that.options.virtualScroll) {
               marginTop = (that.selectpicker.view.position0 === 0 ? 0 : that.selectpicker.current.data[that.selectpicker.view.position0 - 1].position),
               marginBottom = (that.selectpicker.view.position1 > size - 1 ? 0 : that.selectpicker.current.data[size - 1].position - that.selectpicker.current.data[that.selectpicker.view.position1 - 1].position);
 
-          // replace the existing UL with an empty one - this is faster than $.empty()
-          menuInner.replaceChild(emptyMenu, menuInner.firstChild);
+              menuInner.firstChild.style.marginTop = marginTop + 'px';
+              menuInner.firstChild.style.marginBottom = marginBottom + 'px';
+            }
 
-          for (var i = 0, visibleElementsLen = that.selectpicker.view.visibleElements.length; i < visibleElementsLen; i++) {
-            menuFragment.appendChild(that.selectpicker.view.visibleElements[i]);
+            menuInner.firstChild.appendChild(menuFragment);
           }
-
-          menuInner.firstChild.style.marginTop = marginTop + 'px';
-          menuInner.firstChild.style.marginBottom = marginBottom + 'px';
-          menuInner.firstChild.appendChild(menuFragment);
         }
 
         that.prevActiveIndex = that.activeIndex;
@@ -761,14 +796,25 @@
         if (!that.options.liveSearch) {
           that.$menuInner.focus();
         } else if (isSearching && init) {
-          $lis = that.findLis();
-          var index = 0;
+          var index = 0,
+              newActive;
 
           if (!that.selectpicker.view.canHighlight[index]) {
             index = 1 + that.selectpicker.view.canHighlight.slice(1).indexOf(true);
           }
 
-          $lis.removeClass('active').eq(index).addClass('active').find('a').addClass('active');
+          newActive = that.selectpicker.view.visibleElements[index];
+
+          if (that.selectpicker.view.currentActive) {
+            that.selectpicker.view.currentActive.classList.remove('active');
+            if (that.selectpicker.view.currentActive.firstChild) that.selectpicker.view.currentActive.firstChild.classList.remove('active');
+          }
+
+          if (newActive) {
+            newActive.classList.add('active');
+            if (newActive.firstChild) newActive.firstChild.classList.add('active');
+          }
+
           that.activeIndex = that.selectpicker.current.map.originalIndex[index];
         }
       }
@@ -1715,6 +1761,11 @@
       li.classList.toggle('selected', selected);
       li.classList.toggle('active', keepActive);
 
+      if (keepActive) {
+        this.selectpicker.view.currentActive = li;
+        this.activeIndex = index
+      }
+
       if (a) {
         a.classList.toggle('selected', selected);
         a.classList.toggle('active', keepActive);
@@ -1846,7 +1897,8 @@
 
       this.$menuInner.on('click', 'li a', function (e, retainActive) {
         var $this = $(this),
-            clickedIndex = that.selectpicker.current.map.originalIndex[$this.parent().index() + that.selectpicker.view.position0],
+            position0 = that.options.virtualScroll ? that.selectpicker.view.position0 : 0,
+            clickedIndex = that.selectpicker.current.map.originalIndex[$this.parent().index() + position0],
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex'),
             triggerChange = true;
@@ -2179,7 +2231,8 @@
           updateScroll = false,
           downOnTab = e.which === keyCodes.TAB && !$this.hasClass('dropdown-toggle') && !that.options.selectOnTab,
           isArrowKey = REGEXP_ARROW.test(e.which) || downOnTab,
-          scrollTop = that.$menuInner[0].scrollTop;
+          scrollTop = that.$menuInner[0].scrollTop,
+          position0 = that.options.virtualScroll ? that.selectpicker.view.position0 : 0;
 
       isActive = that.$newElement.hasClass(classNames.SHOW);
 
@@ -2203,33 +2256,41 @@
       if (isArrowKey) { // if up or down
         if (!$items.length) return;
 
-        index = $items.index($items.filter('.active'));
+        // $items.index/.filter is too slow with a large list and no virtual scroll
+        index = that.options.virtualScroll ? $items.index($items.filter('.active')) : that.selectpicker.current.map.newIndex[that.activeIndex];
+
+        if (index === undefined) index = -1;
+
+        if (index !== -1) {
+          liActive = that.selectpicker.current.elements[index + position0];
+          liActive.classList.remove('active');
+          if (liActive.firstChild) liActive.firstChild.classList.remove('active');
+        }
 
         if (e.which === keyCodes.ARROW_UP) { // up
           if (index !== -1) index--;
-          if (index + that.selectpicker.view.position0 < 0) index += $items.length;
+          if (index + position0 < 0) index += $items.length;
 
-          if (!that.selectpicker.view.canHighlight[index + that.selectpicker.view.position0]) {
-            index = that.selectpicker.view.canHighlight.slice(0, index + that.selectpicker.view.position0).lastIndexOf(true) - that.selectpicker.view.position0;
+          if (!that.selectpicker.view.canHighlight[index + position0]) {
+            index = that.selectpicker.view.canHighlight.slice(0, index + position0).lastIndexOf(true) - position0;
             if (index === -1) index = $items.length - 1;
           }
         } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           index++;
-          if (index + that.selectpicker.view.position0 >= that.selectpicker.view.canHighlight.length) index = 0;
+          if (index + position0 >= that.selectpicker.view.canHighlight.length) index = 0;
 
-          if (!that.selectpicker.view.canHighlight[index + that.selectpicker.view.position0]) {
-            index = index + 1 + that.selectpicker.view.canHighlight.slice(index + that.selectpicker.view.position0 + 1).indexOf(true);
+          if (!that.selectpicker.view.canHighlight[index + position0]) {
+            index = index + 1 + that.selectpicker.view.canHighlight.slice(index + position0 + 1).indexOf(true);
           }
         }
 
         e.preventDefault();
-        $items.removeClass('active').find('a').removeClass('active');
 
-        var liActiveIndex = that.selectpicker.view.position0 + index;
+        var liActiveIndex = position0 + index;
 
         if (e.which === keyCodes.ARROW_UP) { // up
           // scroll to bottom and highlight last option
-          if (that.selectpicker.view.position0 === 0 && index === $items.length - 1) {
+          if (position0 === 0 && index === $items.length - 1) {
             that.$menuInner[0].scrollTop = that.$menuInner[0].scrollHeight;
 
             liActiveIndex = that.selectpicker.current.elements.length - 1;
@@ -2241,7 +2302,7 @@
           }
         } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           // scroll to top and highlight first option
-          if (that.selectpicker.view.position0 !== 0 && index === 0) {
+          if (position0 !== 0 && index === 0) {
             that.$menuInner[0].scrollTop = 0;
 
             liActiveIndex = 0;
@@ -2258,7 +2319,7 @@
         if (liActive.firstChild) liActive.firstChild.classList.add('active');
         that.activeIndex = that.selectpicker.current.map.originalIndex[liActiveIndex];
 
-        liActive.firstChild.focus();
+        that.selectpicker.view.currentActive = liActive;
 
         if (updateScroll) that.$menuInner[0].scrollTop = offset;
 
