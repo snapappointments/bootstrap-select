@@ -502,15 +502,17 @@
       if (this.options.container) {
         this.selectPosition();
       } else {
-        this.$element.on('hide.bs.select', function () {
-          // empty menu on close
-          var menuInner = that.$menuInner[0],
-              emptyMenu = menuInner.firstChild.cloneNode(false);
+        if (this.options.virtualScroll) {
+          this.$element.on('hide.bs.select', function () {
+            // empty menu on close
+            var menuInner = that.$menuInner[0],
+                emptyMenu = menuInner.firstChild.cloneNode(false);
 
-          // replace the existing UL with an empty one - this is faster than $.empty() or innerHTML = ''
-          menuInner.replaceChild(emptyMenu, menuInner.firstChild);
-          menuInner.scrollTop = 0;
-        });
+            // replace the existing UL with an empty one - this is faster than $.empty() or innerHTML = ''
+            menuInner.replaceChild(emptyMenu, menuInner.firstChild);
+            menuInner.scrollTop = 0;
+          });
+        }
       }
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
@@ -760,11 +762,11 @@
 
           // if searching, check to make sure the list has actually been updated before updating DOM
           // this prevents unnecessary repaints
-          if (isSearching) menuIsDifferent = !isEqual(previousElements, that.selectpicker.view.visibleElements);
+          if (isSearching || init) menuIsDifferent = !isEqual(previousElements, that.selectpicker.view.visibleElements);
 
           // if virtual scroll is disabled and not searching,
           // menu should never need to be updated more than once
-          if ( (init || that.options.virtualScroll) && menuIsDifferent ) {
+          if ( (init || that.options.virtualScroll) && menuIsDifferent) {
             var menuInner = that.$menuInner[0],
                 menuFragment = document.createDocumentFragment(),
                 emptyMenu = menuInner.firstChild.cloneNode(false),
