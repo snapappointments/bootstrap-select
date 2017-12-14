@@ -28,8 +28,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>string | false</td>
     <td><code>false</code></td>
     <td>
-        <p>When set to a string, appends the select to a specific element or selector, e.g., 
-        <code>container: 'body' | '.main-body'</code></p>
+        <p>When set to a string, appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code></p>
     </td>
   </tr>
   <tr>
@@ -37,8 +36,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>string | function</td>
     <td><code>function</code></td>
     <td>
-      <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > 
-      #</code>. {0} is the selected amount. {1} is total available for selection.</p>
+      <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>. {0} is the selected amount. {1} is total available for selection.</p>
       <p>When set to a function, the first parameter is the number of selected options, and the second is the total number of 
       options. The function must return a string.</p>
     </td>
@@ -131,8 +129,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>false</code></td>
     <td>
       <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
-      <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only 
-      applies to that <code>&lt;optgroup&gt;</code>.</p>
+      <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only applies to that <code>&lt;optgroup&gt;</code>.</p>
     </td>
   </tr>
   <tr>
@@ -190,8 +187,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>boolean</td>
     <td><code>false</code></td>
     <td>
-      <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the 
-      selectpicker dropdown.</p>
+      <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the selectpicker dropdown.</p>
     </td>
   </tr>
   <tr>
@@ -199,8 +195,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td>boolean</td>
     <td><code>true</code></td>
     <td>
-      <p>When set to <code>true</code>, display custom HTML associated with selected option(s) in the button. When set 
-       to <code>false</code>, the option value will be displayed instead.</p>
+      <p>When set to <code>true</code>, display custom HTML associated with selected option(s) in the button. When set to <code>false</code>, the option value will be displayed instead.</p>
     </td>
   </tr>
   <tr>
@@ -275,8 +270,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     <td><code>'auto'</code> | <code>'fit'</code> | css-width | false (where <code>css-width</code> is a CSS width with units, e.g. <code>100px</code>)</td>
     <td><code>false</code></td>
     <td>
-      <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the 
-      widest option.</p>
+      <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the widest option.</p>
       <p>When set to a css-width, the width of the selectpicker is forced inline to the given value.</p>
       <p>When set to <code>false</code>, all width information is removed.</p>
     </td>
