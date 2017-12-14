@@ -46,12 +46,12 @@
 
       <div class="col-lg-5">
         <label>Standard</label>
-        <select class="selectpicker form-control" id="number" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
+        <select class="selectpicker form-control" id="number2" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
       </div>
 
       <div class="col-lg-5">
         <label>Multiple</label>
-        <select class="selectpicker form-control" id="number-multiple" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true" multiple></select>
+        <select class="selectpicker form-control" id="number2-multiple" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true" multiple></select>
       </div>
     </div>
   </form>
@@ -328,27 +328,30 @@ function createOptions(number) {
   
   $('#number')[0].innerHTML = _options;
   $('#number-multiple')[0].innerHTML = _options;
+
+
+  $('#number2')[0].innerHTML = _options;
+  $('#number2-multiple')[0].innerHTML = _options;
 }
-  $(document).ready(function () {
-    var mySelect = $('#first-disabled2');
 
-    createOptions(4000);
+var mySelect = $('#first-disabled2');
 
-    $('#special').on('click', function () {
-      mySelect.find('option:selected').prop('disabled', true);
-      mySelect.selectpicker('refresh');
-    });
+createOptions(4000);
 
-    $('#special2').on('click', function () {
-      mySelect.find('option:disabled').prop('disabled', false);
-      mySelect.selectpicker('refresh');
-    });
+$('#special').on('click', function () {
+  mySelect.find('option:selected').prop('disabled', true);
+  mySelect.selectpicker('refresh');
+});
 
-    $('#basic2').selectpicker({
-      liveSearch: true,
-      maxOptions: 1
-    });
-  });
+$('#special2').on('click', function () {
+  mySelect.find('option:disabled').prop('disabled', false);
+  mySelect.selectpicker('refresh');
+});
+
+$('#basic2').selectpicker({
+  liveSearch: true,
+  maxOptions: 1
+});
 </script>
 </body>
 </html>
