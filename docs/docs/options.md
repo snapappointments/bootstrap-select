@@ -166,6 +166,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>noneResultsText</td>
+    <td>string</td>
+    <td><code>'No results matched {0}'</code></td>
+    <td>
+      <p>The text displayed when a search doesn't return any results.</p>
+    </td>
+  </tr>
+  <tr>
     <td>selectAllText</td>
     <td>string</td>
     <td><code>'Select All'</code></td>
