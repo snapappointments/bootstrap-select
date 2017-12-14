@@ -12,20 +12,6 @@
     body {
       padding-top: 70px;
     }
-
-    .default-ok:after {
-      /*Add another block-level blank space*/
-      content: '';
-      display: block;
-      /*Make it a small rectangle so the border will create an L-shape*/
-      width: 0.5em;
-      height: 1em;
-      /*Add a white border on the bottom and left, creating that 'L' */
-      border-style: solid;
-      border-width: 0 0.26em 0.26em 0;
-      /*Rotate the L 45 degrees to turn it into a checkmark*/
-      transform: rotate(45deg);
-    }
   </style>
 </head>
 <body>
@@ -40,16 +26,32 @@
 <div class="container">
   <form role="form">
     <div class="form-group row">
-      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled)</label>
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled, container: 'body')</label>
 
       <div class="col-lg-5">
         <label>Standard</label>
-        <select class="selectpicker form-control" id="number" xdata-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
+        <select class="selectpicker form-control" id="number" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
+      </div>
+
+      <div class="col-lg-5">
+        <label>Multiple (no virtualScroll)</label>
+        <select multiple class="selectpicker form-control" id="number-multiple" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"></select>
+      </div>
+    </div>
+  </form>
+
+  <form role="form">
+    <div class="form-group row">
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch disabled)</label>
+
+      <div class="col-lg-5">
+        <label>Standard</label>
+        <select class="selectpicker form-control" id="number2" title="Select a number" data-hide-disabled="true"></select>
       </div>
 
       <div class="col-lg-5">
         <label>Multiple</label>
-        <select class="selectpicker form-control" id="number-multiple" xdata-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" multiple></select>
+        <select class="selectpicker form-control" id="number2-multiple" title="Select a number" data-hide-disabled="true" multiple data-actions-box="true"></select>
       </div>
     </div>
   </form>
@@ -133,28 +135,12 @@
   </form>
 
   <hr>
-  <form class="form-inline">
-    <div class="form-group">
-      <label class="col-md-1 control-label" for="lunch">Lunch:</label>
-    </div>
-    <div class="form-group">
-      <select id="lunch" class="selectpicker" data-live-search="true" title="Please select a lunch ...">
-        <option>Hot Dog, Fries and a Soda</option>
-        <option>Burger, Shake and a Smile</option>
-        <option>Sugar, Spice and all things nice</option>
-        <option>Baby Back Ribs</option>
-        <option>A really really long option made to illustrate an issue with the live search in an inline form</option>
-      </select>
-    </div>
-  </form>
+  <form role="form">
+    <div class="form-group form-group-lg row">
+      <label for="error" class="col-lg-2 control-label">is-invalid class</label>
 
-  <hr>
-  <form class="form-horizontal" role="form">
-    <div class="form-group form-group-lg">
-      <label for="error" class="col-lg-2 control-label">error</label>
-
-      <div class="col-lg-10 error">
-        <select id="error" class="selectpicker show-tick form-control">
+      <div class="col-lg-10">
+        <select id="error" class="selectpicker show-tick form-control is-invalid" required>
           <option>pen</option>
           <option>pencil</option>
           <option selected>brush</option>
@@ -164,18 +150,18 @@
   </form>
 
   <hr>
-  <form class="form-horizontal" role="form">
-    <div class="form-group has-error form-group-lg">
-      <label class="control-label col-lg-2" for="country">error type 2</label>
+  <form role="form" class="was-validated">
+    <div class="form-group form-group-lg row">
+      <label class="control-label col-lg-2" for="country">:invalid/:valid pseudoclass</label>
 
       <div class="col-lg-10">
-        <select id="country" name="country" class="form-control selectpicker">
+        <select id="country" name="country" class="form-control selectpicker" required multiple>
           <option>Argentina</option>
-          <option>United State</option>
+          <option>United States</option>
           <option>Mexico</option>
         </select>
 
-        <p class="help-block">No service available in the selected country</p>
+        <p class="help-block">Selecting an option changes to the :valid pseudoclass</p>
       </div>
     </div>
   </form>
@@ -213,10 +199,10 @@
           <input type="text" class="form-control" placeholder="Search" name="q">
 
           <div class="input-group-btn">
-            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <button class="btn btn-dark" type="submit"><i class="glyphicon glyphicon-search"></i></button>
           </div>
         </div>
-        <button type="submit" class="btn btn-default">Search</button>
+        <button type="submit" class="btn btn-dark">Search</button>
       </form>
 
     </div>
@@ -253,8 +239,8 @@
     <option>Orange2</option>
     <option>Pineapple2</option>
   </select>
-  <button id="special" class="btn btn-default">Hide selected by disabling</button>
-  <button id="special2" class="btn btn-default">Reset</button>
+  <button id="special" class="btn btn-light">Hide selected by disabling</button>
+  <button id="special2" class="btn btn-light">Reset</button>
   <p>Just select 1st element, click button and check list again</p>
 
   <hr>
@@ -306,18 +292,18 @@
   </div>
 
   <hr>
-  <form class="form-inline">
-    <div class="form-group">
-      <label class="col-md-1 control-label" for="lunchBegins">Lunch (Begins search):</label>
-    </div>
-    <div class="form-group">
-      <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
-        <option>Hot Dog, Fries and a Soda</option>
-        <option>Burger, Shake and a Smile</option>
-        <option>Sugar, Spice and all things nice</option>
-        <option>Baby Back Ribs</option>
-        <option>A really really long option made to illustrate an issue with the live search in an inline form</option>
-      </select>
+  <form>
+    <div class="form-group row">
+      <label class="col-lg-2 control-label" for="lunchBegins">searchStyle: 'begins'</label>
+      <div class="col-lg-10">
+        <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
+          <option>Hot Dog, Fries and a Soda</option>
+          <option>Burger, Shake and a Smile</option>
+          <option>Sugar, Spice and all things nice</option>
+          <option>Baby Back Ribs</option>
+          <option>A really really long option made to illustrate an issue with the live search in an inline form</option>
+        </select>
+      </div>
     </div>
   </form>
 </div>
@@ -340,6 +326,9 @@ function createOptions(number) {
   
   $('#number')[0].innerHTML = _options;
   $('#number-multiple')[0].innerHTML = _options;
+
+  $('#number2')[0].innerHTML = _options;
+  $('#number2-multiple')[0].innerHTML = _options;
 }
 
 var mySelect = $('#first-disabled2');

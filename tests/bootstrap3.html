@@ -30,7 +30,7 @@
 <div class="container">
   <form class="form-horizontal" role="form">
     <div class="form-group">
-      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled)</label>
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled, container: 'body')</label>
 
       <div class="col-lg-5">
         <label>Standard</label>
@@ -38,8 +38,24 @@
       </div>
 
       <div class="col-lg-5">
+        <label>Multiple (no virtualScroll)</label>
+        <select multiple class="selectpicker form-control" id="number-multiple" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"></select>
+      </div>
+    </div>
+  </form>
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch disabled)</label>
+
+      <div class="col-lg-5">
+        <label>Standard</label>
+        <select class="selectpicker form-control" id="number" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
+      </div>
+
+      <div class="col-lg-5">
         <label>Multiple</label>
-        <select class="selectpicker form-control" id="number-multiple" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" multiple></select>
+        <select class="selectpicker form-control" id="number-multiple" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true" multiple></select>
       </div>
     </div>
   </form>
@@ -54,6 +70,7 @@
         <select id="basic" class="selectpicker show-tick form-control">
           <option>cow</option>
           <option data-subtext="option subtext">bull</option>
+          <option data-divider="true"></option>
           <option class="get-class" disabled>ox</option>
           <optgroup label="test" data-subtext="optgroup subtext">
             <option>ASD</option>
@@ -119,22 +136,6 @@
           <option>goose</option>
         </select>
       </div>
-    </div>
-  </form>
-
-  <hr>
-  <form class="form-inline">
-    <div class="form-group">
-      <label class="col-md-1 control-label" for="lunch">Lunch:</label>
-    </div>
-    <div class="form-group">
-      <select id="lunch" class="selectpicker" data-live-search="true" title="Please select a lunch ...">
-        <option>Hot Dog, Fries and a Soda</option>
-        <option>Burger, Shake and a Smile</option>
-        <option>Sugar, Spice and all things nice</option>
-        <option>Baby Back Ribs</option>
-        <option>A really really long option made to illustrate an issue with the live search in an inline form</option>
-      </select>
     </div>
   </form>
 
