@@ -160,12 +160,27 @@ select.selectpicker {
 
   // The selectpicker button
   .dropdown-toggle {
-    .filter-option {
+    // necessary for proper positioning of caret in bootstrap 4
+    &:before {
+      content: '';
       display: inline-block;
-      float: left;
+      width: 100%;
+    }
+
+    .filter-option {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding-top: inherit;
+      padding-right: inherit;
+      padding-left: inherit;
       overflow: hidden;
       width: 100%;
       text-align: left;
+    }
+
+    .filter-option-inner {
+      overflow: hidden;
     }
 
     .caret {
@@ -282,7 +297,7 @@ select.selectpicker {
     }
   }
 
-  /* default check mark for use without an icon font */
+  // default check mark for use without an icon font
   .bs-ok-default:after {
     content: '';
     display: block;
