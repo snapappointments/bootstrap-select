@@ -454,7 +454,7 @@
     selectOnTab: false,
     dropdownAlignRight: false,
     windowPadding: 0,
-    virtualScroll: false
+    virtualScroll: 600
   };
 
   if (version.major === '4') {
@@ -502,8 +502,8 @@
       if (this.options.container) {
         this.selectPosition();
       } else {
-        if (this.options.virtualScroll) {
-          this.$element.on('hide.bs.select', function () {
+        this.$element.on('hide.bs.select', function () {
+          if (that.isVirtual()) {
             // empty menu on close
             var menuInner = that.$menuInner[0],
                 emptyMenu = menuInner.firstChild.cloneNode(false);
@@ -511,8 +511,8 @@
             // replace the existing UL with an empty one - this is faster than $.empty() or innerHTML = ''
             menuInner.replaceChild(emptyMenu, menuInner.firstChild);
             menuInner.scrollTop = 0;
-          });
-        }
+          }
+        });
       }
       this.$menu.data('this', this);
       this.$newElement.data('this', this);
@@ -647,6 +647,10 @@
       }
     },
 
+    isVirtual: function () {
+      return (this.options.virtualScroll !== false) && this.selectpicker.main.elements.length >= this.options.virtualScroll || this.options.virtualScroll === true;
+    },
+
     createView: function (isSearching, scrollTop) {
       scrollTop = scrollTop || 0;
 
@@ -681,11 +685,12 @@
             prevPositions,
             positionIsDifferent,
             previousElements,
-            menuIsDifferent = true;
+            menuIsDifferent = true,
+            isVirtual = that.isVirtual();
 
         that.selectpicker.view.scrollTop = scrollTop;
 
-        if (that.options.virtualScroll) {
+        if (isVirtual === true) {
           // if an option that is encountered that is wider than the current menu width, update the menu width accordingly
           if (that.sizeInfo.hasScrollBar && that.$menu[0].offsetWidth > that.sizeInfo.totalMenuWidth) {
             that.sizeInfo.menuWidth = that.$menu[0].offsetWidth;
@@ -762,17 +767,17 @@
 
           // if searching, check to make sure the list has actually been updated before updating DOM
           // this prevents unnecessary repaints
-          if (isSearching || init) menuIsDifferent = !isEqual(previousElements, that.selectpicker.view.visibleElements);
+          if ( isSearching || (isVirtual === false && init) ) menuIsDifferent = !isEqual(previousElements, that.selectpicker.view.visibleElements);
 
           // if virtual scroll is disabled and not searching,
           // menu should never need to be updated more than once
-          if ( (init || that.options.virtualScroll) && menuIsDifferent) {
+          if ( (init || isVirtual === true) && menuIsDifferent ) {
             var menuInner = that.$menuInner[0],
                 menuFragment = document.createDocumentFragment(),
                 emptyMenu = menuInner.firstChild.cloneNode(false),
                 marginTop,
                 marginBottom,
-                elements = that.options.virtualScroll ? that.selectpicker.view.visibleElements : that.selectpicker.current.elements;
+                elements = isVirtual === true ? that.selectpicker.view.visibleElements : that.selectpicker.current.elements;
 
             // replace the existing UL with an empty one - this is faster than $.empty()
             menuInner.replaceChild(emptyMenu, menuInner.firstChild);
@@ -781,7 +786,7 @@
               menuFragment.appendChild(elements[i]);
             }
 
-            if (that.options.virtualScroll) {
+            if (isVirtual === true) {
               marginTop = (that.selectpicker.view.position0 === 0 ? 0 : that.selectpicker.current.data[that.selectpicker.view.position0 - 1].position),
               marginBottom = (that.selectpicker.view.position1 > size - 1 ? 0 : that.selectpicker.current.data[size - 1].position - that.selectpicker.current.data[that.selectpicker.view.position1 - 1].position);
 
@@ -1895,7 +1900,7 @@
 
       this.$menuInner.on('click', 'li a', function (e, retainActive) {
         var $this = $(this),
-            position0 = that.options.virtualScroll ? that.selectpicker.view.position0 : 0,
+            position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
             clickedIndex = that.selectpicker.current.map.originalIndex[$this.parent().index() + position0],
             prevValue = that.$element.val(),
             prevIndex = that.$element.prop('selectedIndex'),
@@ -2230,7 +2235,8 @@
           downOnTab = e.which === keyCodes.TAB && !$this.hasClass('dropdown-toggle') && !that.options.selectOnTab,
           isArrowKey = REGEXP_ARROW.test(e.which) || downOnTab,
           scrollTop = that.$menuInner[0].scrollTop,
-          position0 = that.options.virtualScroll ? that.selectpicker.view.position0 : 0;
+          isVirtual = that.isVirtual(),
+          position0 = isVirtual === true ? that.selectpicker.view.position0 : 0;
 
       isActive = that.$newElement.hasClass(classNames.SHOW);
 
@@ -2255,7 +2261,7 @@
         if (!$items.length) return;
 
         // $items.index/.filter is too slow with a large list and no virtual scroll
-        index = that.options.virtualScroll ? $items.index($items.filter('.active')) : that.selectpicker.current.map.newIndex[that.activeIndex];
+        index = isVirtual === true ? $items.index($items.filter('.active')) : that.selectpicker.current.map.newIndex[that.activeIndex];
 
         if (index === undefined) index = -1;
 
