@@ -263,6 +263,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>virtualScroll</td>
+    <td>boolean | integer</td>
+    <td><code>600</code></td>
+    <td>
+      <p>If enabled, the items in the dropdown will be rendered using virtualization (i.e. only the items that are within the viewport will be rendered). This drastically improves performance for selects with a large number of options. Set to an integer to only use virtualization if the select has at least that number of options.</p>
+    </td>
+  </tr>
+  <tr>
     <td>width</td>
     <td><code>'auto'</code> | <code>'fit'</code> | css-width | false (where <code>css-width</code> is a CSS width with units, e.g. <code>100px</code>)</td>
     <td><code>false</code></td>
