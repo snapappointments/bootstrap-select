@@ -218,7 +218,6 @@ module.exports = function (grunt) {
           prefix: '[\'"]?version[\'"]?:[ "\']*'
         },
         src: [
-          'composer.json',
           'docs/mkdocs.yml',
           'package.json'
         ],
