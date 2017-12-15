@@ -82,6 +82,6 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 
 ## Copyright and license
 
-Copyright (C) 2013-2015 bootstrap-select
+Copyright (C) 2012-2015 SnapAppointments, LLC
 
 Licensed under [the MIT license](LICENSE).
