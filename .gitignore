@@ -4,7 +4,6 @@
 
 # Folders to ignore
 node_modules
-bower_components
 .sass-cache
 
 # Dist zip

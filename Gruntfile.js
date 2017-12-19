@@ -258,7 +258,7 @@ module.exports = function (grunt) {
             src: '**',
             dest: 'bootstrap-select-<%= pkg.version %>/'
           }, {
-            src: ['bower.json', 'composer.json', 'package.json'],
+            src: ['composer.json', 'package.json'],
             dest: 'bootstrap-select-<%= pkg.version %>/'
           }
         ]
