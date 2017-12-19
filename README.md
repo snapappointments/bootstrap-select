@@ -1,15 +1,15 @@
 bootstrap-select
 ================
 
-[![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
 [![Bower](https://img.shields.io/bower/v/bootstrap-select.svg)]()
+[![Latest release](https://img.shields.io/github/release/snapappointments/bootstrap-select.svg)](https://github.com/snapappointments/bootstrap-select/releases/latest)
 [![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
 [![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
 [![CDNJS](https://img.shields.io/cdnjs/v/bootstrap-select.svg)](https://cdnjs.com/libraries/bootstrap-select)
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
-[![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
+[![Dependency Status](https://david-dm.org/snapappointments/bootstrap-select.svg)](https://david-dm.org/snapappointments/bootstrap-select)
+[![devDependency Status](https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg)](https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies)
 
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
@@ -17,9 +17,9 @@ Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to sty
 
 ## Demo and Documentation
 
-You can view a live demo and some examples of how to use the various options [here](http://silviomoreto.github.io/bootstrap-select).
+You can view a live demo and some examples of how to use the various options [here](http://snapappointments.github.io/bootstrap-select).
 
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at http://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at http://snapappointments.github.io/bootstrap-select. The documentation may also be run locally.
 
 
 ### Running documentation locally
@@ -62,11 +62,11 @@ Or
 $('select').selectpicker();
 ```
 
-Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for further information.
+Checkout the [documentation](http://snapappointments.github.io/bootstrap-select) for further information.
 
 ## CDN
 
-**N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
+**N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/snapappointments/bootstrap-select/releases) for the latest release.
 
 * [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-alpha/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-alpha/css/bootstrap-select.min.css)
 * [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-alpha/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-alpha/js/bootstrap-select.min.js)

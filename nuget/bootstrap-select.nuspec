@@ -6,7 +6,7 @@
         <title>bootstrap-select</title>
         <authors>Silvio Moreto,Ana Carolina,caseyjhol,Matt Bryson,and t0xicCode.</authors>
         <owners>Silvio Moreto</owners>
-        <projectUrl>https://github.com/silviomoreto/bootstrap-select</projectUrl>
+        <projectUrl>https://github.com/snapappointments/bootstrap-select</projectUrl>
         <description>Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.</description>
         <tags>bootstrap dropdown select</tags>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>

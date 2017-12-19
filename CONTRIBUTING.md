@@ -41,7 +41,7 @@ Guidelines for bug reports:
 4. **Create an isolated and reproducible test case.** Create a [reduced test
    case](http://css-tricks.com/6263-reduced-test-cases/).
 
-5. **Include a live example.** Use [this Plunker debugging template](http://silviomoreto.github.io/bootstrap-select/playground/) to share your isolated test cases. You can also make use of [jsFiddle](http://jsfiddle.net/) or [jsBin](http://jsbin.com/).
+5. **Include a live example.** Use [this Plunker debugging template](http://snapappointments.github.io/bootstrap-select/playground/) to share your isolated test cases. You can also make use of [jsFiddle](http://jsfiddle.net/) or [jsBin](http://jsbin.com/).
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as detailed as possible in your report. What is

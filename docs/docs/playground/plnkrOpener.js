@@ -41,12 +41,12 @@ $(document).ready(function() {
         },
         {
           name: 'bootstrap-select.js',
-          url: 'https://raw.githubusercontent.com/silviomoreto/bootstrap-select/master/dist/js/bootstrap-select.js',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/master/dist/js/bootstrap-select.js',
           content: ''
         },
         {
           name: 'bootstrap-select.css',
-          url: 'https://raw.githubusercontent.com/silviomoreto/bootstrap-select/master/dist/css/bootstrap-select.css',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/master/dist/css/bootstrap-select.css',
           content: ''
         }
       ]
