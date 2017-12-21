@@ -499,7 +499,7 @@
           : '';
       var drop =
           '<div class="btn-group bootstrap-select' + showTick + inputGroup + '">' +
-          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button" aria-labelledby="'+this.$element.attr("aria-labelledby")+'">' +
+          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button" aria-describedby="'+this.$element.attr("aria-describedby")+'" aria-labelledby="'+this.$element.attr("aria-labelledby")+'">' +
           '<span class="filter-option pull-left"></span>&nbsp;' +
           '<span class="bs-caret">' +
           this.options.template.caret +
