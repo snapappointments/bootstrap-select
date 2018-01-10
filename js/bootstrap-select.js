@@ -1551,6 +1551,22 @@
       this.$button.trigger('click');
     },
 
+    open: function (e) {
+      e = e || window.event;
+
+      if (e) e.stopPropagation();
+
+      if (!this.$newElement.hasClass('open')) this.$button.trigger('click');      
+    },
+
+    close: function (e) {
+      e = e || window.event;
+
+      if (e) e.stopPropagation();
+
+      if (this.$newElement.hasClass('open')) this.$button.trigger('click');      
+    },
+
     keydown: function (e) {
       var $this = $(this),
           $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
