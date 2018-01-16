@@ -343,8 +343,9 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
-    countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
+	countSelectedValue: 'items',
+    countSelectedText: function (numSelected, numTotal, countSelectedValue) {
+      return (numSelected == 1) ? "{0} item selected" : "{0} " + countSelectedValue + " selected";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -797,14 +798,21 @@
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
       var title = !this.multiple ? selectedItems[0] : selectedItems.join(this.options.multipleSeparator);
-
+	  var countSelectedValue = this.options.countSelectedValue;
+	  
+	  //if user has not provided a count custom value, then use default
+		if(this.$element.attr('data-selected-text-value') !== undefined) {
+			countSelectedValue = this.$element.attr('data-selected-text-value');
+		
+		}
+		
       //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
         var max = this.options.selectedTextFormat.split('>');
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length == 1 && selectedItems.length >= 2)) {
           notDisabled = this.options.hideDisabled ? ', [disabled]' : '';
           var totalCount = $selectOptions.not('[data-divider="true"], [data-hidden="true"]' + notDisabled).length,
-              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount, countSelectedValue) : this.options.countSelectedText;
           title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
         }
       }
