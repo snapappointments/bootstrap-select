@@ -4,8 +4,8 @@
         <id>bootstrap-select</id>
         <version>1.13.0-alpha</version>
         <title>bootstrap-select</title>
-        <authors>Silvio Moreto,Ana Carolina,caseyjhol,Matt Bryson,and t0xicCode.</authors>
-        <owners>Silvio Moreto</owners>
+        <authors>Casey Holzer, Silvio Moreto, SnapAppointments LLC</authors>
+        <owners>SnapAppointments, LLC</owners>
         <projectUrl>https://github.com/snapappointments/bootstrap-select</projectUrl>
         <description>Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.</description>
         <tags>bootstrap dropdown select</tags>
