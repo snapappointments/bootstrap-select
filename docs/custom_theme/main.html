@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% if page_description %}<meta name="description" content="{{ page_description }}">{% endif %}
-  {% if site_author %}<meta name="author" content="{{ site_author }}">{% endif %}
-  {% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}">{% endif %}
+  {% if config.site_description %}<meta name="description" content="{{ config.site_description }}">{% endif %}
+  {% if config.site_author %}<meta name="author" content="{{ config.site_author }}">{% endif %}
+  {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
   {% if favicon %}<link rel="shortcut icon" href="{{ favicon }}">
   {% else %}<link rel="shortcut icon" href="{{ base_url }}/img/favicon.ico">{% endif %}
 
-  <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ config.site_name }}</title>
 
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 
 {% include "nav.html" %}
 
-{% if current_page and current_page.is_homepage %} 
+{% if page and page.is_homepage %} 
 <div class="jumbotron bs-docs-header text-center">
   <div class="container">
     <h1>bootstrap-select</h1>
@@ -51,7 +51,7 @@
 {% else %}
 <section class="jumbotron">
   <div class="container">
-    <h1>{{ page_title }}</h1>
+    <h1>{{ page.title }}</h1>
   </div>
 </section>
 <div class="container">
@@ -62,8 +62,8 @@
 
   <div class="footer">
     <div class="container text-center">
-      <p class="text-muted">Bootstrap-select is maintained by <a href="https://github.com/caseyjhol">caseyjhol</a>,
-        <a href="https://github.com/t0xicCode">t0xicCode</a>, and the community.</p>
+      <p class="text-muted">Bootstrap-select is maintained by <a href="https://snapappointments.com">SnapAppointments</a>, <a href="https://github.com/caseyjhol">caseyjhol</a>,
+        and the community.</p>
     </div>
   </div>
 
@@ -74,20 +74,14 @@
 {%- for path in extra_javascript %}
 <script src="{{ path }}"></script>
 {%- endfor %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113793762-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-35848102-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function () {
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-  })();
+  gtag('config', 'UA-113793762-1');
 </script>
 </body>
 </html>
