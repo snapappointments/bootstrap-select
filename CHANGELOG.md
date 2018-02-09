@@ -1,4 +1,19 @@
 
+# v1.13.0-beta (2018-02-09)
+
+### Bug Fixes
+- [silviomoreto/bootstrap-select#1034]: Issue with long option inside input-group
+
+### New Features
+- [silviomoreto/bootstrap-select#1135]: Support Bootstrap 4 (via auto-detection)
+- virtualization is now optional via `virtualScroll`. Can be set to false, true, or an integer to only use virtualization if the select has more than the specified number of options. Defaults to 600.
+- update docs to support MkDocs v0.17.0
+
+[silviomoreto/bootstrap-select#1034]: https://github.com/silviomoreto/bootstrap-select/issues/1034
+[silviomoreto/bootstrap-select#1135]: https://github.com/silviomoreto/bootstrap-select/issues/1135
+
+-------------------
+
 # v1.13.0-alpha (2017-07-28)
 
 ### Bug Fixes
