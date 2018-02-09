@@ -30,14 +30,6 @@ Bootstrap-select's documentation, included in this repo in the root directory, i
 
 Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
 
-## Authors
-
-[Silvio Moreto](https://github.com/silviomoreto),
-[Ana Carolina](https://github.com/anacarolinats),
-[caseyjhol](https://github.com/caseyjhol),
-[Matt Bryson](https://github.com/mattbryson), and
-[t0xicCode](https://github.com/t0xicCode).
-
 ## Usage
 
 Create your `<select>` with the `.selectpicker` class.
