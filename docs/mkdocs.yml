@@ -1,8 +1,10 @@
 site_name: bootstrap-select
 site_description: Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 repo_url: https://github.com/snapappointments/bootstrap-select
-theme: bootstrap
-theme_dir: custom_theme
+plugins: []
+theme:
+  name: bootstrap
+  custom_dir: custom_theme
 extra_css:
 - css/custom.css
 - dist/css/bootstrap-select.min.css
