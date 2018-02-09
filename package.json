@@ -4,7 +4,7 @@
   "main": "dist/js/bootstrap-select.js",
   "description": "Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
   "version": "1.13.0-beta",
-  "homepage": "http://snapappointments.github.io/bootstrap-select",
+  "homepage": "https://developer.snapappointments.com/bootstrap-select",
   "author": {
     "name": "Casey Holzer",
     "url": "https://github.com/caseyjhol"
