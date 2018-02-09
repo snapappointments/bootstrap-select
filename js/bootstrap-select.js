@@ -405,7 +405,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.0-alpha';
+  Selectpicker.VERSION = '1.13.0-beta';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {

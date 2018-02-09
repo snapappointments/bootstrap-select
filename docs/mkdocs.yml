@@ -16,4 +16,4 @@ pages:
 - Options: options.md
 - Methods: methods.md
 extra:
-    version: 1.13.0-alpha
+    version: 1.13.0-beta
