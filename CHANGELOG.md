@@ -1,5 +1,5 @@
 
-# v1.13.0-beta (2018-02-09)
+# v1.13.0-beta (2018-02-12)
 
 ### Bug Fixes
 - [silviomoreto/bootstrap-select#1034]: Issue with long option inside input-group
