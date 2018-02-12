@@ -74,6 +74,6 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 
 ## Copyright and license
 
-Copyright (C) 2012-2018 SnapAppointments, LLC
+Copyright (C) 2012-2018 [SnapAppointments, LLC](https://snapappointments.com)
 
 Licensed under [the MIT license](LICENSE).
