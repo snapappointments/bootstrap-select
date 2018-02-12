@@ -34,6 +34,7 @@ select.selectpicker {
 
   // The selectpicker button
   > .dropdown-toggle {
+    position: relative;
     width: 100%;
     padding-right: 25px;
     z-index: 1;
@@ -66,8 +67,15 @@ select.selectpicker {
 
   // Error display
   .has-error & .dropdown-toggle,
-  .error & .dropdown-toggle {
+  .error & .dropdown-toggle,
+  &.is-invalid .dropdown-toggle,
+  .was-validated & .selectpicker:invalid + .dropdown-toggle {
     border-color: $color-red-error;
+  }
+
+  &.is-valid .dropdown-toggle,
+  .was-validated & .selectpicker:valid + .dropdown-toggle {
+    border-color: @color-green-success;
   }
 
   &.fit-width {
@@ -106,7 +114,7 @@ select.selectpicker {
 }
 
 // The selectpicker components
-.bootstrap-select.btn-group {
+.bootstrap-select {
   &:not(.input-group-btn),
   &[class*="col-"] {
     float: none;
@@ -158,6 +166,8 @@ select.selectpicker {
 
   &.bs-container {
     position: absolute;
+    top: 0;
+    left: 0;
     height: 0 !important;
     padding: 0 !important;
 
@@ -168,11 +178,27 @@ select.selectpicker {
 
   // The selectpicker button
   .dropdown-toggle {
-    .filter-option {
+    // necessary for proper positioning of caret in bootstrap 4
+    &:before {
+      content: '';
       display: inline-block;
+      width: 100%;
+    }
+
+    .filter-option {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding-top: inherit;
+      padding-right: inherit;
+      padding-left: inherit;
       overflow: hidden;
       width: 100%;
       text-align: left;
+    }
+
+    .filter-option-inner {
+      overflow: hidden;
     }
 
     .caret {
@@ -276,17 +302,28 @@ select.selectpicker {
     }
   }
 
-  &.show-tick .dropdown-menu li {
-    &.selected a span.check-mark {
+  &.show-tick .dropdown-menu {
+    .selected span.check-mark {
       position: absolute;
       display: inline-block;
       right: 15px;
-      margin-top: 5px;
+      top: 5px;
     }
 
-    a span.text {
+    li a span.text {
       margin-right: 34px;
     }
+  }
+
+  // default check mark for use without an icon font
+  .bs-ok-default:after {
+    content: '';
+    display: block;
+    width: 0.5em;
+    height: 1em;
+    border-style: solid;
+    border-width: 0 0.26em 0.26em 0;
+    transform: rotate(45deg);
   }
 }
 
