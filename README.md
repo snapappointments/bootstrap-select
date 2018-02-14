@@ -1,7 +1,6 @@
 bootstrap-select
 ================
 
-[![Bower](https://img.shields.io/bower/v/bootstrap-select.svg)]()
 [![Latest release](https://img.shields.io/github/release/snapappointments/bootstrap-select.svg)](https://github.com/snapappointments/bootstrap-select/releases/latest)
 [![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
 [![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
