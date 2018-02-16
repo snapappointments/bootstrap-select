@@ -75,7 +75,7 @@ select.selectpicker {
 
   &.is-valid .dropdown-toggle,
   .was-validated & .selectpicker:valid + .dropdown-toggle {
-    border-color: @color-green-success;
+    border-color: $color-green-success;
   }
 
   &.fit-width {
