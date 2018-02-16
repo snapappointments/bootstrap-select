@@ -36,17 +36,17 @@ $(document).ready(function() {
       ctrl.example.files = [
         {
           name: 'index.html',
-          url: 'test.html',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/tests/bootstrap4.html',
           content: ''
         },
         {
           name: 'bootstrap-select.js',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/master/dist/js/bootstrap-select.js',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/dist/js/bootstrap-select.js',
           content: ''
         },
         {
           name: 'bootstrap-select.css',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/master/dist/css/bootstrap-select.css',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/dist/css/bootstrap-select.css',
           content: ''
         }
       ]
