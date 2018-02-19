@@ -24,7 +24,8 @@
     "url": "git://github.com/snapappointments/bootstrap-select.git"
   },
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "peerDependencies": {
     "jquery": ">=1.8"
   },
   "devDependencies": {
