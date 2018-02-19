@@ -47,6 +47,8 @@
     "load-grunt-tasks": "^3.5.2"
   },
   "keywords": [
+    "javascript",
+    "jquery",
     "form",
     "bootstrap",
     "select",
