@@ -18,7 +18,7 @@ Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to sty
 
 You can view a live demo and some examples of how to use the various options [here](https://developer.snapappointments.com/bootstrap-select).
 
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at https://developer.snapappointments.com/bootstrap-select. The documentation may also be run locally.
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be run locally.
 
 
 ### Running documentation locally
