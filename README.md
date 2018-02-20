@@ -8,6 +8,7 @@ bootstrap-select
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Dependency Status](https://david-dm.org/snapappointments/bootstrap-select.svg)](https://david-dm.org/snapappointments/bootstrap-select)
+[![peerDependencies Status](https://img.shields.io/david/peer/snapappointments/bootstrap-select.svg)](https://david-dm.org/snapappointments/bootstrap-select?type=peer)
 [![devDependency Status](https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg)](https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies)
 
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
