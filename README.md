@@ -1,18 +1,37 @@
-bootstrap-select
-================
+<h1 align="center">bootstrap-select</h1>
 
-[![Latest release](https://img.shields.io/github/release/snapappointments/bootstrap-select.svg)](https://github.com/snapappointments/bootstrap-select/releases/latest)
-[![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
-[![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
-[![CDNJS](https://img.shields.io/cdnjs/v/bootstrap-select.svg)](https://cdnjs.com/libraries/bootstrap-select)
+<p align="center">
+	<strong>Bring select elements into the 21st century with intuitive multiselection and searching. Just 10kb gzipped.</strong>
+</p>
 
-[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![peerDependencies Status](https://img.shields.io/david/peer/snapappointments/bootstrap-select.svg)](https://david-dm.org/snapappointments/bootstrap-select?type=peer)
-[![devDependency Status](https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg)](https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies)
+<p align="center">
+	<a href="https://github.com/snapappointments/bootstrap-select/releases/latest" target="_blank">
+		<img src="https://img.shields.io/github/release/snapappointments/bootstrap-select.svg" alt="Latest release">
+	</a>
+	<a href="https://www.npmjs.com/package/bootstrap-select" target="_blank">
+		<img src="https://img.shields.io/npm/v/bootstrap-select.svg" alt="npm">
+	</a>
+	<a href="https://www.nuget.org/packages/bootstrap-select" target="_blank">
+		<img src="https://img.shields.io/nuget/v/bootstrap-select.svg" alt="NuGet">
+	</a>
+	<a href="https://cdnjs.com/libraries/bootstrap-select" target="_blank">
+		<img src="https://img.shields.io/cdnjs/v/bootstrap-select.svg" alt="CDNJS">
+	</a>
+	<br>
+	<a href="https://cdnjs.com/libraries/bootstrap-select" target="_blank">
+		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
+	</a>
+	<a href="https://david-dm.org/snapappointments/bootstrap-select?type=peer" target="_blank">
+		<img src="https://img.shields.io/david/peer/snapappointments/bootstrap-select.svg" alt="peerDependencies Status">
+	</a>
+	<a href="https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies" target="_blank">
+		<img src="https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg" alt="devDependency Status">
+	</a>
+</p>
 
-Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
-
-<a href="http://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
+<p align="center">
+	<a href="http://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
+</p>
 
 ## Demo and Documentation
 
