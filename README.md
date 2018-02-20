@@ -7,7 +7,6 @@ bootstrap-select
 [![CDNJS](https://img.shields.io/cdnjs/v/bootstrap-select.svg)](https://cdnjs.com/libraries/bootstrap-select)
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Dependency Status](https://david-dm.org/snapappointments/bootstrap-select.svg)](https://david-dm.org/snapappointments/bootstrap-select)
 [![peerDependencies Status](https://img.shields.io/david/peer/snapappointments/bootstrap-select.svg)](https://david-dm.org/snapappointments/bootstrap-select?type=peer)
 [![devDependency Status](https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg)](https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies)
 
