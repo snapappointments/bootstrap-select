@@ -1594,7 +1594,7 @@
         this.$menu.css('min-width', this.sizeInfo.totalMenuWidth);
       }
 
-      if (this.dropdown) this.dropdown._popper.update();
+      if (this.dropdown && this.dropdown._popper) this.dropdown._popper.update();
     },
 
     setSize: function (refresh) {
