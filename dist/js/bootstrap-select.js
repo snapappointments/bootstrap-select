@@ -627,7 +627,7 @@
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button">' +
           '<div class="filter-option">' +
             '<div class="filter-option-inner"></div>' +
-          '</div>&nbsp;' +
+          '</div>' +
           '<span class="bs-caret">' +
           this.options.template.caret +
           '</span>' +
