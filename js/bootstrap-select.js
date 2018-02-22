@@ -605,9 +605,12 @@
           '<div class="filter-option">' +
             '<div class="filter-option-inner"></div>' +
           '</div>' +
+          (version.major === '4' ?
+            '' :
           '<span class="bs-caret">' +
           this.options.template.caret +
-          '</span>' +
+          '</span>'
+          ) +
           '</button>' +
           '<div class="dropdown-menu ' + (version.major === '4' ? '' : classNames.SHOW) + '" role="combobox">' +
           header +
