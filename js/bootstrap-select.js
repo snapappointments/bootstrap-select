@@ -1781,12 +1781,16 @@
       }
 
       if (!keepActive) {
-        if (!activeIndexIsSet && selected && this.prevActiveIndex) {
+        if (!activeIndexIsSet && selected && this.prevActiveIndex !== undefined) {
           prevActiveIndex = this.selectpicker.main.map.newIndex[this.prevActiveIndex];
           prevActive = this.selectpicker.main.elements[prevActiveIndex];
 
+          prevActive.classList.remove('selected');
           prevActive.classList.remove('active');
-          if (prevActive.firstChild) prevActive.firstChild.classList.remove('active');
+          if (prevActive.firstChild) {
+            prevActive.firstChild.classList.remove('selected');
+            prevActive.firstChild.classList.remove('active');
+          }
         }
       }
     },
