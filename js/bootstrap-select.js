@@ -1930,6 +1930,13 @@
               $optgroup = $option.parent('optgroup'),
               maxOptions = that.options.maxOptions,
               maxOptionsGrp = $optgroup.data('maxOptions') || false;
+              
+          if (clickedIndex === that.activeIndex) retainActive = true;
+
+          if (!retainActive) {
+            that.prevActiveIndex = that.activeIndex;
+            that.activeIndex = undefined;
+          }
 
           if (!that.multiple) { // Deselect all others if not multi select box
             $options.prop('selected', false);
@@ -1937,13 +1944,6 @@
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
-
-            if (clickedIndex === that.activeIndex) retainActive = true;
-
-            if (!retainActive) {
-              that.prevActiveIndex = that.activeIndex;
-              that.activeIndex = undefined;
-            }
 
             that.setSelected(clickedIndex, !state);
             $this.blur();
