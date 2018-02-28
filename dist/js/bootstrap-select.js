@@ -206,7 +206,22 @@
   $.expr.pseudos.icontains = function (obj, index, meta) {
     var $obj = $(obj).find('a');
     var haystack = ($obj.data('tokens') || $obj.text()).toString().toUpperCase();
-    return haystack.includes(meta[3].toUpperCase());
+    var keywords=meta[3].toUpperCase();
+    keywords=keywords.trim();
+    var hits=0;
+    if(keywords.indexOf(' ')>-1){
+      keywords=keywords.replace(/\s\s/ig,' ')
+      var kwArray=keywords.split(" ");
+      var match=0;
+      $.each(kwArray,function (i,text) {
+        if(haystack.indexOf(text)>-1){
+          match++;
+        }
+      });
+      if(match===kwArray.length){return true;}
+      return false;
+    }
+    return haystack.match(new RegExp(keywords,'ig'));
   };
 
   // Case insensitive begins search
