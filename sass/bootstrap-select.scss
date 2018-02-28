@@ -132,6 +132,13 @@ select.selectpicker {
   .form-group-lg &.form-control,
   .form-group-sm &.form-control {
     padding: 0;
+
+    .dropdown-toggle {
+      height: 100%;
+      font-size: inherit;
+      line-height: inherit;
+      border-radius: inherit;
+    }
   }
 
   // Set the width of the live search (and any other form control within an inline form)

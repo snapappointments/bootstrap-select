@@ -151,9 +151,7 @@ module.exports = function (grunt) {
 
     cssmin: {
       options: {
-        compatibility: 'ie8',
-        keepSpecialComments: '*',
-        advanced: false
+        compatibility: 'ie8'
       },
       css: {
         src: '<%= less.css.dest %>',

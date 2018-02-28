@@ -3,8 +3,8 @@
   "title": "bootstrap-select",
   "main": "dist/js/bootstrap-select.js",
   "description": "Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
-  "version": "1.11.2",
-  "homepage": "http://silviomoreto.github.io/bootstrap-select",
+  "version": "1.12.4",
+  "homepage": "https://silviomoreto.github.io/bootstrap-select",
   "author": {
     "name": "Silvio Moreto",
     "url": "https://github.com/silviomoreto"
@@ -35,6 +35,12 @@
     "type": "git",
     "url": "git://github.com/silviomoreto/bootstrap-select.git"
   },
+  "files": [
+    "dist",
+    "js/**/*.js",
+    "less",
+    "sass"
+  ],
   "license": "MIT",
   "dependencies": {
     "jquery": ">=1.8"
@@ -48,7 +54,7 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-csslint": "^2.0.0",
-    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-less": "^1.4.0",
     "grunt-contrib-uglify": "^2.0.0",

@@ -5,20 +5,21 @@ bootstrap-select
 [![Bower](https://img.shields.io/bower/v/bootstrap-select.svg)]()
 [![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
 [![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
+[![CDNJS](https://img.shields.io/cdnjs/v/bootstrap-select.svg)](https://cdnjs.com/libraries/bootstrap-select)
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Dependency Status](https://david-dm.org/silviomoreto/bootstrap-select.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
-[![devDependency Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select#info=devDependencies)
+[![dependencies Status](https://david-dm.org/silviomoreto/bootstrap-select/status.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
+[![devDependencies Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select?type=dev)
 
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
-<a href="http://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
+<a href="https://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
 
 ## Demo and Documentation
 
-You can view a live demo and some examples of how to use the various options [here](http://silviomoreto.github.io/bootstrap-select).
+You can view a live demo and some examples of how to use the various options [here](https://silviomoreto.github.io/bootstrap-select/examples).
 
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at http://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at https://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
 
 
 ### Running documentation locally
@@ -50,7 +51,7 @@ Create your `<select>` with the `.selectpicker` class.
 
 If you use a 1.6.3 or newer, you don't need to do anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
 
-If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](http://api.jquery.com/ready/) block.
+If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](https://api.jquery.com/ready/) block.
 ```js
 // To style only <select>s with the selectpicker class
 $('.selectpicker').selectpicker();
@@ -61,15 +62,15 @@ Or
 $('select').selectpicker();
 ```
 
-Checkout the [documentation](http://silviomoreto.github.io/bootstrap-select) for further information.
+Checkout the [documentation](https://silviomoreto.github.io/bootstrap-select) for further information.
 
 ## CDN
 
 **N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
 
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css)
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js)
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/i18n/defaults-*.min.js (The translation files)
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css)
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js)
+* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js (The translation files)
 
 ## Bugs and feature requests
 
@@ -92,5 +93,6 @@ Licensed under [the MIT license](LICENSE).
 * [membermeister](https://www.membermeister.com)
 * [Solve for All](https://solveforall.com)
 * [EstiMATEit](http://www.123itworks.co.uk)
+* [Convertizer](https://convertizer.com)
 
 Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.

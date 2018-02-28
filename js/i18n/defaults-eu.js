@@ -9,6 +9,8 @@
     noneResultsText: 'Emaitzarik ez {0}',
     countSelectedText: '{1}(e)tik {0} hautatuta',
     maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Hautatu Guztiak',
+    deselectAllText: 'Desautatu Guztiak'
   };
 })(jQuery);
