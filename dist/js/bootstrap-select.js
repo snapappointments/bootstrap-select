@@ -628,9 +628,12 @@
           '<div class="filter-option">' +
             '<div class="filter-option-inner"></div>' +
           '</div>' +
+          (version.major === '4' ?
+            '' :
           '<span class="bs-caret">' +
           this.options.template.caret +
-          '</span>' +
+          '</span>'
+          ) +
           '</button>' +
           '<div class="dropdown-menu ' + (version.major === '4' ? '' : classNames.SHOW) + '" role="combobox">' +
           header +
@@ -1775,6 +1778,13 @@
           prevActiveIndex,
           prevActive,
           a,
+          // if current option is already active
+          // OR
+          // if the current option is being selected, it's NOT multiple, and
+          // activeIndex is undefined:
+          //  - when the menu is first being opened, OR
+          //  - after a search has been performed, OR
+          //  - when retainActive is false when selecting a new option (i.e. index of the newly selected option is not the same as the current activeIndex)
           keepActive = thisIsActive || selected && !this.multiple && !activeIndexIsSet;
 
       if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
@@ -1791,7 +1801,7 @@
 
       if (keepActive) {
         this.selectpicker.view.currentActive = li;
-        this.activeIndex = index
+        this.activeIndex = index;
       }
 
       if (a) {
@@ -1801,12 +1811,16 @@
       }
 
       if (!keepActive) {
-        if (!activeIndexIsSet && selected && this.prevActiveIndex) {
+        if (!activeIndexIsSet && selected && this.prevActiveIndex !== undefined) {
           prevActiveIndex = this.selectpicker.main.map.newIndex[this.prevActiveIndex];
           prevActive = this.selectpicker.main.elements[prevActiveIndex];
 
+          prevActive.classList.remove('selected');
           prevActive.classList.remove('active');
-          if (prevActive.firstChild) prevActive.firstChild.classList.remove('active');
+          if (prevActive.firstChild) {
+            prevActive.firstChild.classList.remove('selected');
+            prevActive.firstChild.classList.remove('active');
+          }
         }
       }
     },
@@ -1946,6 +1960,13 @@
               $optgroup = $option.parent('optgroup'),
               maxOptions = that.options.maxOptions,
               maxOptionsGrp = $optgroup.data('maxOptions') || false;
+              
+          if (clickedIndex === that.activeIndex) retainActive = true;
+
+          if (!retainActive) {
+            that.prevActiveIndex = that.activeIndex;
+            that.activeIndex = undefined;
+          }
 
           if (!that.multiple) { // Deselect all others if not multi select box
             $options.prop('selected', false);
@@ -1953,13 +1974,6 @@
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
             $option.prop('selected', !state);
-
-            if (clickedIndex === that.activeIndex) retainActive = true;
-
-            if (!retainActive) {
-              that.prevActiveIndex = that.activeIndex;
-              that.activeIndex = undefined;
-            }
 
             that.setSelected(clickedIndex, !state);
             $this.blur();
