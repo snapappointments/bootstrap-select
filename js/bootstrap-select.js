@@ -1292,7 +1292,7 @@
             } else if (thisData.content && that.options.showContent) {
               titleItem = thisData.content.toString();
             } else {
-              titleItem = icon + $this.html() + subtext;
+              titleItem = icon + $this.html().trim() + subtext;
             }
 
             selectedItemsInTitle.push(titleItem);
