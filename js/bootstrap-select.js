@@ -166,6 +166,7 @@
           string = li[stringType];
 
       if (string) {
+        string = string.toString();
         if (normalize) string = normalizeToBase(string);
         string = string.toUpperCase();
 
