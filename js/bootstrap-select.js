@@ -1273,7 +1273,7 @@
         if (this.selected) {
           selectedItems.push(this);
 
-          if (selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') {
+          if (selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count' || selectedItems.length === 1) {
             if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
 
             var $this = $(this),
@@ -1307,8 +1307,8 @@
       // add ellipsis
       if (selectedItems.length > 100) title += '...';
 
-      //If this is multi select, and the selectText type is count, the show 1 of 2 selected etc..
-      if (this.multiple && this.options.selectedTextFormat.indexOf('count') > -1) {
+      // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected etc..
+      if (this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1) {
         var max = this.options.selectedTextFormat.split('>');
 
         if ((max.length > 1 && selectedItems.length > max[1]) || (max.length === 1 && selectedItems.length >= 2)) {
