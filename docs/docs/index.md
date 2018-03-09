@@ -21,6 +21,14 @@ The folks at CDNJS host a copy of the library. The CDN is updated after the rele
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.0-beta/js/i18n/defaults-*.min.js"></script>
 ```
 
+## Install with Bower
+
+You can also install bootstrap-select using [Bower](http://bower.io):
+
+```elixir
+$ bower install bootstrap-select
+```
+
 ## Install with npm
 
 You can also install bootstrap-select using [npm](https://www.npmjs.com/package/bootstrap-select):
