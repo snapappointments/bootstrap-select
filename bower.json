@@ -1,15 +1,33 @@
 {
   "name": "bootstrap-select",
+  "description": "Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.",
   "main": [
     "less/bootstrap-select.less",
     "dist/css/bootstrap-select.css",
     "dist/js/bootstrap-select.js"
   ],
-  "homepage": "http://silviomoreto.github.io/bootstrap-select",
+  "homepage": "https://developer.snapappointments.com/bootstrap-select",
   "authors": [
-    "silviomoreto"
+    {
+      "name": "Casey Holzer",
+      "homepage": "https://github.com/caseyjhol"
+    },
+    {
+      "name": "Silvio Moreto",
+      "homepage": "https://github.com/silviomoreto"
+    },
+    {
+      "name": "SnapAppointments, LLC",
+      "homepage": "https://snapappointments.com"
+    }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/snapappointments/bootstrap-select.git"
+  },
   "keywords": [
+    "javascript",
+    "jquery",
     "form",
     "bootstrap",
     "select",
