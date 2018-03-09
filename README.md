@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-	<a href="http://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
+	<a href="https://developer.snapappointments.com/bootstrap-select"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
 </p>
 
 ## Demo and Documentation
@@ -42,11 +42,11 @@ Bootstrap-select's documentation, included in this repo in the root directory, i
 
 ### Running documentation locally
 
-1. If necessary, [install MkDocs](http://www.mkdocs.org/#installation).
+1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
 3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
 4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
 
-Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
+Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
 
 ## Usage
 
@@ -61,7 +61,7 @@ Create your `<select>` with the `.selectpicker` class.
 
 If you use a 1.6.3 or newer, you don't need to do anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
 
-If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](http://api.jquery.com/ready/) block.
+If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](https://api.jquery.com/ready/) block.
 ```js
 // To style only <select>s with the selectpicker class
 $('.selectpicker').selectpicker();
