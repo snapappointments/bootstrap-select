@@ -36,7 +36,6 @@ select.selectpicker {
   > .dropdown-toggle {
     position: relative;
     width: 100%;
-    padding-right: 25px;
     z-index: 1;
 
     &.bs-placeholder,
@@ -199,6 +198,11 @@ select.selectpicker {
 
     .filter-option-inner {
       overflow: hidden;
+      padding-right: inherit;
+    }
+
+    .filter-option-inner-inner {
+      overflow: hidden;
     }
 
     .caret {
@@ -291,8 +295,24 @@ select.selectpicker {
   }
 
   &.fit-width .dropdown-toggle {
+    &:before {
+      display: none;
+    }
+
     .filter-option {
+      &:after {
+        content: ' ';
+        display: inline;
+      }
+
       position: static;
+      display: inline;
+      padding: 0;
+    }
+
+    .filter-option-inner,
+    .filter-option-inner-inner {
+      display: inline;
     }
 
     .caret {
