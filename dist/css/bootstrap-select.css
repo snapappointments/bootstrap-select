@@ -16,7 +16,6 @@ select.selectpicker {
 .bootstrap-select > .dropdown-toggle {
   position: relative;
   width: 100%;
-  padding-right: 25px;
   z-index: 1;
 }
 .bootstrap-select > .dropdown-toggle.bs-placeholder,
@@ -144,6 +143,10 @@ select.selectpicker {
 }
 .bootstrap-select .dropdown-toggle .filter-option-inner {
   overflow: hidden;
+  padding-right: inherit;
+}
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  overflow: hidden;
 }
 .bootstrap-select .dropdown-toggle .caret {
   position: absolute;
@@ -226,8 +229,21 @@ select.selectpicker {
   margin: 0 5px;
   white-space: nowrap;
 }
+.bootstrap-select.fit-width .dropdown-toggle:before {
+  display: none;
+}
 .bootstrap-select.fit-width .dropdown-toggle .filter-option {
   position: static;
+  display: inline;
+  padding: 0;
+}
+.bootstrap-select.fit-width .dropdown-toggle .filter-option:after {
+  content: ' ';
+  display: inline;
+}
+.bootstrap-select.fit-width .dropdown-toggle .filter-option-inner,
+.bootstrap-select.fit-width .dropdown-toggle .filter-option-inner-inner {
+  display: inline;
 }
 .bootstrap-select.fit-width .dropdown-toggle .caret {
   position: static;
