@@ -1548,7 +1548,9 @@
         selectedOptions[selectedOptions.length] = $options.eq(origIndex)[0];
       }
 
-      $(selectedOptions).prop('selected', status);
+      $(selectedOptions)
+        .prop('selected', status)
+        .attr('selected', state);
 
       this.render(false);
 
