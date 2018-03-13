@@ -25,6 +25,7 @@
 
 // Rules
 select.bs-select-hidden,
+.bootstrap-select > select.bs-select-hidden,
 select.selectpicker {
   display: none !important;
 }

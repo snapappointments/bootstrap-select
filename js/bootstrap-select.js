@@ -2203,6 +2203,8 @@
           previousSelected = 0,
           currentSelected = 0;
 
+      this.$element.addClass('bs-select-hidden');
+
       for (var i = 0; i < this.selectpicker.current.elements.length; i++) {
         var index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
             option = $selectOptions[index];
@@ -2213,6 +2215,8 @@
           if (option.selected) currentSelected++;
         }
       }
+
+      this.$element.removeClass('bs-select-hidden');
 
       if (previousSelected === currentSelected) return;
 
