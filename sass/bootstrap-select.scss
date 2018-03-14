@@ -341,7 +341,8 @@ select.selectpicker {
 }
 
 .bootstrap-select.show-menu-arrow {
-  &.open > .dropdown-toggle .filter-option {
+  &.open > .dropdown-toggle,
+  &.show > .dropdown-toggle {
     z-index: ($zindex-select-dropdown + 1);
   }
 
@@ -397,7 +398,8 @@ select.selectpicker {
     }
   }
 
-  &.open > .dropdown-toggle .filter-option {
+  &.open > .dropdown-toggle .filter-option,
+  &.show > .dropdown-toggle .filter-option {
     &:before,
     &:after {
       display: block;
