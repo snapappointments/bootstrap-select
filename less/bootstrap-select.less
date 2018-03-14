@@ -20,6 +20,8 @@ select.selectpicker {
     position: relative;
     width: 100%;
     z-index: 1;
+    // necessary for proper positioning of caret in Bootstrap 4 (pushes caret to the right)
+    text-align: right;
 
     &.bs-placeholder,
     &.bs-placeholder:hover,
@@ -160,11 +162,10 @@ select.selectpicker {
 
   // The selectpicker button
   .dropdown-toggle {
-    // necessary for proper positioning of caret in bootstrap 4
+    // necessary to maintain proper button height with Bootstrap 3
     &:before {
       content: '';
       display: inline-block;
-      width: 100%;
     }
 
     .filter-option {
@@ -278,10 +279,6 @@ select.selectpicker {
   }
 
   &.fit-width .dropdown-toggle {
-    &:before {
-      display: none;
-    }
-
     .filter-option {
       &:after {
         content: ' ';
