@@ -174,14 +174,14 @@ select.selectpicker {
       left: 0;
       padding-top: inherit;
       padding-right: inherit;
+      padding-bottom: inherit; // needed for proper alignment of show-menu-arrow (deprecated)
       padding-left: inherit;
-      overflow: hidden;
+      height: 100%;
       width: 100%;
       text-align: left;
     }
 
     .filter-option-inner {
-      overflow: hidden;
       padding-right: inherit;
     }
 
@@ -280,11 +280,6 @@ select.selectpicker {
 
   &.fit-width .dropdown-toggle {
     .filter-option {
-      &:after {
-        content: ' ';
-        display: inline;
-      }
-
       position: static;
       display: inline;
       padding: 0;
@@ -328,11 +323,11 @@ select.selectpicker {
 }
 
 .bootstrap-select.show-menu-arrow {
-  &.open > .dropdown-toggle {
+  &.open > .dropdown-toggle .filter-option {
     z-index: (@zindex-select-dropdown + 1);
   }
 
-  .dropdown-toggle {
+  .dropdown-toggle .filter-option {
     &:before {
       content: '';
       border-left: 7px solid transparent;
@@ -356,23 +351,23 @@ select.selectpicker {
     }
   }
 
-  &.dropup .dropdown-toggle {
+  &.dropup .dropdown-toggle .filter-option {
     &:before {
       bottom: auto;
-      top: -3px;
+      top: -4px;
       border-top: 7px solid @color-grey-arrow;
       border-bottom: 0;
     }
 
     &:after {
       bottom: auto;
-      top: -3px;
+      top: -4px;
       border-top: 6px solid white;
       border-bottom: 0;
     }
   }
 
-  &.pull-right .dropdown-toggle {
+  &.pull-right .dropdown-toggle .filter-option {
     &:before {
       right: 12px;
       left: auto;
@@ -384,7 +379,7 @@ select.selectpicker {
     }
   }
 
-  &.open > .dropdown-toggle {
+  &.open > .dropdown-toggle .filter-option {
     &:before,
     &:after {
       display: block;

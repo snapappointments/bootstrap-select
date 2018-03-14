@@ -606,7 +606,7 @@
           '<div class="filter-option">' +
             '<div class="filter-option-inner">' +
               '<div class="filter-option-inner-inner"></div>' +
-            '</div>' +
+            '</div> ' +
           '</div>' +
           (version.major === '4' ?
             '' :
