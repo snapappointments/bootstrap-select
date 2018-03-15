@@ -569,7 +569,6 @@
       // Options
       // If we are multiple or showTick option is set, then add the show-tick class
       var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
-          inputGroup = this.$element.parent().hasClass('input-group') ? ' input-group-btn' : '',
           autofocus = this.autofocus ? ' autofocus' : '';
       // Elements
       var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
@@ -601,7 +600,7 @@
       '</div>'
           : '';
       var drop =
-          '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
+          '<div class="dropdown bootstrap-select' + showTick + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button">' +
           '<div class="filter-option">' +
             '<div class="filter-option-inner">' +

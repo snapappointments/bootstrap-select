@@ -216,6 +216,10 @@ select.selectpicker {
     }
   }
 
+  .input-group &.form-control .dropdown-toggle {
+    border-radius: inherit;
+  }
+
   &[class*="col-"] .dropdown-toggle {
     width: 100%;
   }
