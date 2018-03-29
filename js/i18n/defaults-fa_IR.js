@@ -4,7 +4,7 @@
  * Region: IR (Iran)
  */
 (function ($) {
-    $.fn.selectpicker.defaults = {
+    $.fn.selectpicker.LoadLanguage("fa-IR", {
         noneSelectedText: 'چیزی انتخاب نشده است',
         noneResultsText: 'هیج مشابهی برای {0} پیدا نشد',
         countSelectedText: "{0} از {1} مورد انتخاب شده",
@@ -12,5 +12,5 @@
         selectAllText: 'انتخاب همه',
         deselectAllText: 'انتخاب هیچ کدام',
         multipleSeparator: ', '
-    };
+    });
 })(jQuery);
