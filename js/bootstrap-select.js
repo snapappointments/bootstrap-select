@@ -1791,7 +1791,7 @@
         if (!data) {
             var language = options.language || Selectpicker.DEFAULTS.language;
 
-            var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults[language] || $.fn.selectpicker.defaults["lastLoaded"] || $.fn.selectpicker.defaults || {}, $this.data(), options);
+            var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults[language] || $.fn.selectpicker.defaults || {}, $this.data(), options);
           config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), $this.data().template, options.template);
           $this.data('selectpicker', (data = new Selectpicker(this, config)));
         } else if (options) {
@@ -1830,8 +1830,6 @@
       }
 
       $.fn.selectpicker.defaults[languageCode] = messages;
-
-      $.fn.selectpicker.defaults["lastLoaded"] = $.fn.selectpicker.defaults[languageCode]; //Compatibility with previous version
   }
 
   // SELECTPICKER NO CONFLICT
