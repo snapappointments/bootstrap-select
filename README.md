@@ -27,8 +27,7 @@ Bootstrap-select's documentation, included in this repo in the root directory, i
 
 ### Bootstrap 4 Support
 
-This version currently does not support Bootstrap 4 officially. 
-Bootstrap 4 support was added in v1.13.0-beta, available [here](https://github.com/snapappointments/bootstrap-select/releases)
+This version currently does not support Bootstrap 4 officially. We are looking to keep it updated to the new Bootstrap version, do you want to help us?
 
 ### Running documentation locally
 
