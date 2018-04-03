@@ -17,7 +17,7 @@ Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to sty
 
 # HEY YOU! DO YOU WANT TO HELP?
 
-*He are looking for new maintainers on this project. If you think you can help on this, please send me an email so we can continue improving our plugin!*
+*He are looking for new maintainers on this project. If you think you can help on this, please send me an email to silviomoreto@gmail.com so we can continue improving the community plugin!*
 
 ## Demo and Documentation
 
