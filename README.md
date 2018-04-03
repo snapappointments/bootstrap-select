@@ -11,19 +11,13 @@ bootstrap-select
 [![dependencies Status](https://david-dm.org/silviomoreto/bootstrap-select/status.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
 [![devDependencies Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select?type=dev)
 
----
-Development of Bootstrap-Select has moved
-================
-**Development of Bootstrap-Select has been moved to https://github.com/snapappointments/bootstrap-select. Future releases will be made available there. Documentation has been moved to https://developer.snapappointments.com/bootstrap-select.**
-
-## Bootstrap 4 Support
-**Bootstrap 4 support was added in v1.13.0-beta, available [here](https://github.com/snapappointments/bootstrap-select/releases).**
-
----
-
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
 <a href="https://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
+
+# HEY YOU! DO YOU WANT TO HELP?
+
+*He are looking for new maintainers on this project. If you think you can help on this, please send me an email so we can continue improving our plugin!*
 
 ## Demo and Documentation
 
@@ -31,6 +25,10 @@ You can view a live demo and some examples of how to use the various options [he
 
 Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at https://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
 
+### Bootstrap 4 Support
+
+This version currently does not support Bootstrap 4 officially. 
+Bootstrap 4 support was added in v1.13.0-beta, available [here](https://github.com/snapappointments/bootstrap-select/releases)
 
 ### Running documentation locally
 
