@@ -409,7 +409,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
 
 <div class="bs-docs-example">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col-sm-3">
       <div class="form-group">
         <select class="selectpicker form-control">
           <option>Mustard</option>
@@ -418,7 +418,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
         </select>
       </div>
     </div>
-    <div class="col-xs-9">
+    <div class="col-sm-9">
       <div class="form-group">
         <select class="selectpicker form-control">
           <option>Mustard</option>
@@ -429,7 +429,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-sm-4">
        <div class="form-group">
         <select class="selectpicker form-control">
           <option>Mustard</option>
@@ -438,7 +438,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
         </select>
       </div>
     </div>
-    <div class="col-xs-8">
+    <div class="col-sm-8">
        <div class="form-group">
         <select class="selectpicker form-control">
           <option>Mustard</option>
@@ -449,7 +449,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-5">
+    <div class="col-sm-5">
       <div class="form-group">
         <select class="selectpicker form-control">
           <option>Mustard</option>
@@ -458,7 +458,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
         </select>
       </div>
     </div>
-    <div class="col-xs-7">
+    <div class="col-sm-7">
       <div class="form-group">
         <select class="selectpicker form-control">
           <option>Mustard</option>
@@ -472,7 +472,7 @@ Wrap selects in grid columns, or any custom parent element, to easily enforce de
 
 ```html
 <div class="row">
-  <div class="col-xs-3">
+  <div class="col-sm-3">
     <div class="form-group">
       <select class="selectpicker form-control">
         <option>Mustard</option>
@@ -490,7 +490,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
 
 <div class="bs-docs-example">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
       <div class="form-group">
         <label>width: 'auto'</label>
         <select class="selectpicker form-control" data-width="auto">
@@ -503,7 +503,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
       <div class="form-group">
         <label>width: 'fit'</label>
         <select class="selectpicker form-control" data-width="fit">
@@ -516,7 +516,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
       <div class="form-group">
         <label>width: '100px'</label>
         <select class="selectpicker form-control" data-width="100px">
@@ -529,7 +529,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
       <div class="form-group">
         <label>width: '75%'</label>
         <select class="selectpicker form-control" data-width="75%">

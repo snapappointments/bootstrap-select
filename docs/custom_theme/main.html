@@ -23,8 +23,8 @@
 
   <title>{% if page.title %}{{ page.title }} | {% endif %}bootstrap-select &middot; SnapAppointments Developer</title>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="{{ base_url }}/css/highlight.css" rel="stylesheet">
   <link href="{{ base_url }}/css/base.css" rel="stylesheet">
   {%- for path in extra_css %}
@@ -38,12 +38,12 @@
   <![endif]-->
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#sidebar" data-offset="240">
 
 {% include "nav.html" %}
 
 {% if page and page.is_homepage %} 
-<div class="jumbotron bs-docs-header text-center">
+<div class="jumbotron jumbotron-fluid bs-docs-header text-center">
   <div class="container">
     <h1>bootstrap-select</h1>
     <p class="lead">Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.</p>
@@ -56,18 +56,20 @@
     <iframe src="https://ghbtns.com/github-btn.html?user=snapappointments&repo=bootstrap-select&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
   </div>
 </div>
-<div class="container">
+<div class="container pb-4">
 {% include "content.html" %}
 </div>
 {% else %}
-<section class="jumbotron">
-  <div class="container">
+<section class="jumbotron jumbotron-fluid">
+  <div class="container-fluid">
     <h1>{{ page.title }}</h1>
   </div>
 </section>
-<div class="container">
-  <div class="col-md-3">{% include "toc.html" %}</div>
-  <div class="col-md-9" role="main">{% include "content.html" %}</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3">{% include "toc.html" %}</div>
+    <div class="col-lg-9" role="main">{% include "content.html" %}</div>
+  </div>
 </div>
 {% endif %}
 
@@ -78,13 +80,16 @@
     </div>
   </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="{{ base_url }}/js/highlight.pack.js"></script>
 <script src="{{ base_url }}/js/base.js"></script>
 {%- for path in extra_javascript %}
 <script src="{{ path }}"></script>
 {%- endfor %}
+<script>
+  $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
+</script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113793762-1"></script>
 <script>

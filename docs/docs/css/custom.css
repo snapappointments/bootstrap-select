@@ -3,9 +3,9 @@ html {
   min-height: 100%;
 }
 body {
-  padding-top: 51px;
+  padding-top: 56px;
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  margin-bottom: 64px;
 }
 label {
   display: block;
@@ -24,7 +24,7 @@ ul.nav li.main {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
+  height: 64px;
   background-color: #f5f5f5;
 }
 
@@ -67,7 +67,6 @@ ul.nav li.main {
 }
 
 .bs-docs-header {
-  margin-bottom: 0;
   background: #337ab7;
   color: #fff;
 }
@@ -239,7 +238,7 @@ ul.nav li.main {
   }
 
   .gh-btns {
-    margin-bottom: -48px;
+    margin-bottom: -63px;
   }
 }
 
