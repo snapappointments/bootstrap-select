@@ -566,19 +566,23 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
 
 Add an icon to an option or optgroup with the `data-icon` attribute:
 
+<span class="alert alert-info" role="alert">
+  <strong>Note:</strong> Glyphicons are not included in Bootstrap 4. To use FontAwesome, or another icon library, you'll need to set `iconBase` to something other than `'glyphicon'`.
+</span>
+
 <div class="bs-docs-example">
   <select class="selectpicker">
-    <option data-icon="glyphicon-glass">Mustard</option>
-    <option data-icon="glyphicon-heart">Ketchup</option>
-    <option data-icon="glyphicon-film">Relish</option>
-    <option data-icon="glyphicon-home">Mayonnaise</option>
-    <option data-icon="glyphicon-print">Barbecue Sauce</option>
+    <option data-icon="fa-glass">Mustard</option>
+    <option data-icon="fa-heart">Ketchup</option>
+    <option data-icon="fa-film">Relish</option>
+    <option data-icon="fa-home">Mayonnaise</option>
+    <option data-icon="fa-print">Barbecue Sauce</option>
   </select>
 </div>
 
 ```html
 <select class="selectpicker">
-  <option data-icon="glyphicon-heart">Ketchup</option>
+  <option data-icon="fa-heart">Ketchup</option>
 </select>
 ```
 
