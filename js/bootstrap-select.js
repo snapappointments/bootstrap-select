@@ -100,6 +100,27 @@
     };
   }
 
+  // much faster than $.val()
+  function getSelectValues(select) {
+    var result = [];
+    var options = select && select.options;
+    var opt;
+
+    if (select.multiple) {
+      for (var i = 0, len = options.length; i < len; i++) {
+        opt = options[i];
+
+        if (opt.selected) {
+          result.push(opt.value || opt.text);
+        }
+      }
+    } else {
+      result = select.value;
+    }
+
+    return result;
+  }
+
   // set data-selected on select element if the value has been programmatically selected
   // prior to initialization of bootstrap-select
   // * consider removing or replacing an alternative method *
@@ -1920,7 +1941,7 @@
         var $this = $(this),
             position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
             clickedIndex = that.selectpicker.current.map.originalIndex[$this.parent().index() + position0],
-            prevValue = that.$element.val(),
+            prevValue = getSelectValues(that.$element[0]),
             prevIndex = that.$element.prop('selectedIndex'),
             triggerChange = true;
 
@@ -2022,9 +2043,9 @@
 
           // Trigger select 'change'
           if (triggerChange) {
-            if ((prevValue != that.$element.val() && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
-              // $option.prop('selected') is current option state (selected/unselected). state is previous option state.
-              changed_arguments = [clickedIndex, $option.prop('selected'), state];
+            if ((prevValue != getSelectValues(that.$element[0]) && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
+              // $option.prop('selected') is current option state (selected/unselected). prevValue is the value of the select prior to being changed.
+              changed_arguments = [clickedIndex, $option.prop('selected'), prevValue];
               that.$element
                 .triggerNative('change');
             }
@@ -2200,7 +2221,8 @@
 
       var $selectOptions = this.$element.find('option'),
           previousSelected = 0,
-          currentSelected = 0;
+          currentSelected = 0,
+          prevValue = getSelectValues(this.$element[0]);
 
       this.$element.addClass('bs-select-hidden');
 
@@ -2222,6 +2244,8 @@
       this.setOptionStatus();
 
       this.togglePlaceholder();
+
+      changed_arguments = [null, null, prevValue];
 
       this.$element
         .triggerNative('change');
