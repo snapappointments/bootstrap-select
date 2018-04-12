@@ -352,7 +352,8 @@
     MENURIGHT: 'dropdown-menu-right',
     MENULEFT: 'dropdown-menu-left',
     // to-do: replace with more advanced template/customization options
-    BUTTONCLASS: version.major === '4' ? 'btn-light' : 'btn-default'
+    BUTTONCLASS: version.major === '4' ? 'btn-light' : 'btn-default',
+    POPOVERHEADER: version.major === '4' ? 'popover-header' : 'popover-title'
   }
 
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
@@ -592,7 +593,7 @@
       var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
           autofocus = this.autofocus ? ' autofocus' : '';
       // Elements
-      var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
+      var header = this.options.header ? '<div class="' + classNames.POPOVERHEADER + '"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
       var searchbox = this.options.liveSearch ?
       '<div class="bs-searchbox">' +
       '<input type="text" class="form-control" autocomplete="off"' +
@@ -1396,7 +1397,7 @@
           li = document.createElement('li'),
           a = document.createElement('a'),
           text = document.createElement('span'),
-          header = this.options.header && this.$menu.find('.popover-title').length > 0 ? this.$menu.find('.popover-title')[0].cloneNode(true) : null,
+          header = this.options.header && this.$menu.find('.' + classNames.POPOVERHEADER).length > 0 ? this.$menu.find('.' + classNames.POPOVERHEADER)[0].cloneNode(true) : null,
           search = this.options.liveSearch ? document.createElement('div') : null,
           actions = this.options.actionsBox && this.multiple && this.$menu.find('.bs-actionsbox').length > 0 ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null;
@@ -2053,7 +2054,7 @@
         }
       });
 
-      this.$menu.on('click', 'li.' + classNames.DISABLED + ' a, .popover-title, .popover-title :not(.close)', function (e) {
+      this.$menu.on('click', 'li.' + classNames.DISABLED + ' a, .' + classNames.POPOVERHEADER + ', .' + classNames.POPOVERHEADER + ' :not(.close)', function (e) {
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
@@ -2075,7 +2076,7 @@
         }
       });
 
-      this.$menu.on('click', '.popover-title .close', function () {
+      this.$menu.on('click', '.' + classNames.POPOVERHEADER + ' .close', function () {
         that.$button.click();
       });
 
