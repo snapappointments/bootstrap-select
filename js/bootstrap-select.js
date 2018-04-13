@@ -1184,7 +1184,8 @@
             optID: optID,
             headerIndex: headerIndex,
             lastIndex: headerIndex + parent.childElementCount,
-            originalIndex: index
+            originalIndex: index,
+            data: thisData
           });
 
           availableOptionsCount++;
@@ -1239,7 +1240,8 @@
             subtext: subtext,
             tokens: tokens,
             type: 'option',
-            originalIndex: index
+            originalIndex: index,
+            data: thisData
           });
 
           availableOptionsCount++;
@@ -1294,15 +1296,17 @@
 
       this.tabIndex();
 
-      $selectOptions.each(function (index) {
-        if (this.selected) {
-          selectedItems.push(this);
+      for (var i = 0, len = this.selectpicker.main.elements.length; i < len; i++) {
+        var index = this.selectpicker.main.map.originalIndex[i],
+            option = $selectOptions[index];
+
+        if (option && option.selected) {
+          selectedItems.push(option);
 
           if (selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count' || selectedItems.length === 1) {
-            if (that.options.hideDisabled && (this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled)) return;
+            if (that.options.hideDisabled && (option.disabled || option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled)) return;
 
-            var $this = $(this),
-                thisData = $this.data(),
+            var thisData = this.selectpicker.main.data[i].data,
                 icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
                 subtext,
                 titleItem;
@@ -1312,18 +1316,19 @@
             } else {
               subtext = '';
             }
-            if (typeof $this.attr('title') !== 'undefined') {
-              titleItem = $this.attr('title');
+
+            if (option.title) {
+              titleItem = option.title;
             } else if (thisData.content && that.options.showContent) {
               titleItem = thisData.content.toString();
             } else {
-              titleItem = icon + $this.html().trim() + subtext;
+              titleItem = icon + option.innerHTML.trim() + subtext;
             }
 
             selectedItemsInTitle.push(titleItem);
           }
         }
-      });
+      }
 
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
