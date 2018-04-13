@@ -1335,7 +1335,7 @@
       var title = !this.multiple ? selectedItemsInTitle[0] : selectedItemsInTitle.join(this.options.multipleSeparator);
 
       // add ellipsis
-      if (selectedItems.length > 100) title += '...';
+      if (selectedItems.length > 50) title += '...';
 
       // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1) {
