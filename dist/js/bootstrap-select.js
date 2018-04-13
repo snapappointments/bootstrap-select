@@ -211,6 +211,12 @@
 
       if (string) {
         string = string.toString();
+
+        // Strip HTML tags. This isn't perfect, but it's much faster than any other method
+        if (stringType === 'content') {
+          string = string.replace(/<[^>]+>/g, '');
+        }
+
         if (normalize) string = normalizeToBase(string);
         string = string.toUpperCase();
 
@@ -1200,7 +1206,7 @@
 
           mainElements.push(generateLI(generateA(textElement, 'opt ' + optionClass + optGroupClass, inline), index, '', optID));
           mainData.push({
-            content: text,
+            content: optionContent || text,
             subtext: subtext,
             tokens: tokens,
             type: 'option',
@@ -1259,7 +1265,7 @@
 
           mainElements.push(generateLI(generateA(textElement, optionClass, inline), index));
           mainData.push({
-            content: text,
+            content: optionContent || text,
             subtext: subtext,
             tokens: tokens,
             type: 'option',
