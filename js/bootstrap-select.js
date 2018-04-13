@@ -1350,7 +1350,7 @@
       }
 
       if (this.options.title == undefined) {
-        this.options.title = this.$element.attr('title');
+        this.options.title = this.$element[0].title;
       }
 
       if (this.options.selectedTextFormat == 'static') {
@@ -1363,8 +1363,8 @@
       }
 
       //strip all HTML tags and trim the result, then unescape any escaped tags
-      this.$button.attr('title', htmlUnescape($.trim(title.replace(/<[^>]*>?/g, ''))));
-      this.$button.find('.filter-option-inner-inner').html(title);
+      this.$button[0].title = htmlUnescape(title.replace(/<[^>]*>?/g, '').trim());
+      this.$button.find('.filter-option-inner-inner')[0].innerHTML = title;
 
       this.$element.trigger('rendered.bs.select');
     },
