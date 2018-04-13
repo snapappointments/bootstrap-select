@@ -1007,12 +1007,12 @@
         liIndex--;
 
         var element = this.$element[0],
-            isSelected = false;
+            isSelected = false,
+            titleNotAppended = !this.selectpicker.view.titleOption.parentNode;
 
-        if (!this.selectpicker.view.titleOption.parentNode) {
+        if (titleNotAppended) {
           // Use native JS to prepend option (faster)
           this.selectpicker.view.titleOption.className = 'bs-title-option';
-          this.selectpicker.view.titleOption.innerHTML = this.options.title;
           this.selectpicker.view.titleOption.value = '';
 
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
@@ -1022,7 +1022,9 @@
           isSelected = $opt.attr('selected') === undefined && this.$element.data('selected') === undefined;
         }
 
-        element.insertBefore(this.selectpicker.view.titleOption, element.firstChild);
+        if (titleNotAppended || this.selectpicker.view.titleOption.index !== 0) {
+          element.insertBefore(this.selectpicker.view.titleOption, element.firstChild);
+        }
 
         // Set selected *after* appending to select,
         // otherwise the option doesn't get selected in IE
