@@ -96,9 +96,9 @@ You can add a search input by passing `data-live-search="true"` attribute:
   </select>
 </div>
 
-## Add live search string to select options
+## Add current live search string as new select option
 
-You can add an option to insert your live search string as a new result by passing `data-add-results="true"` attribute:
+You can add an option which will prompt you to add currenct live search string as a new result by passing `data-add-results="true"` attribute:
 
 <div class="bs-docs-example no-code">
   <select class="selectpicker" data-live-search="true" data-add-results="true">
