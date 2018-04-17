@@ -2,7 +2,7 @@
 
 Package.describe({
   name: 'snapappointments:bootstrap-select',  // https://atmospherejs.com/snapappointments/bootstrap-select
-  summary: 'bootstrap-select (official): The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more.',
+  summary: 'bootstrap-select (official): enhance select elements with intuitive multiselection, searching & more',
   version: '1.13.0-beta',
   git: 'https://github.com/snapappointments/bootstrap-select.git'
 });
