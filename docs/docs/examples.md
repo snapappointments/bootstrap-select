@@ -570,7 +570,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
 
 Add an icon to an option or optgroup with the `data-icon` attribute:
 
-<span class="alert alert-info" role="alert">
+<span class="alert alert-info d-block" role="alert">
   <strong>Note:</strong> Glyphicons are not included in Bootstrap 4. To use FontAwesome, or another icon library, you'll need to set `iconBase` to something other than `'glyphicon'`.
 </span>
 
