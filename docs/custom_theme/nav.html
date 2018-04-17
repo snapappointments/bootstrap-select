@@ -5,11 +5,8 @@
   <!-- Collapsed navigation -->
   {% if nav|length>1 or (page.next_page or page.previous_page) or config.repo_url %}
   <!-- Expander button -->
-  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-    <span class="sr-only">Toggle navigation</span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
   {% endif %}
 
