@@ -352,9 +352,13 @@ You can also show the checkmark icon on standard select boxes with the `show-tic
 </select>
 ```
 
-## Menu arrow
+## Menu arrow <span class="text-muted small">(deprecated)</span>
 
 The Bootstrap menu arrow can be added with the `show-menu-arrow` class:
+
+<span class="alert alert-danger d-block" role="alert">
+  <strong>Note:</strong> This feature has been deprecated and will be removed in v2.0.0.
+</span>
 
 <div class="bs-docs-example">
   <select class="selectpicker show-menu-arrow">
