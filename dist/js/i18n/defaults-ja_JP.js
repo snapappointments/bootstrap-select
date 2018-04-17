@@ -1,7 +1,7 @@
 /*!
  * Bootstrap-select v1.12.4 (https://silviomoreto.github.io/bootstrap-select)
  *
- * Copyright 2013-2017 bootstrap-select
+ * Copyright 2013-2018 bootstrap-select
  * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -23,11 +23,11 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: '何もが選択した',
+    noneSelectedText: '未選択',
     noneResultsText: '\'{0}\'が結果を返さない',
-    countSelectedText: '{0}/{1}が選択した',
-    maxOptionsText: ['限界は達した({n}{var}最大)', '限界をグループは達した({n}{var}最大)', ['アイテム', 'アイテム']],
-    selectAllText: '全部を選択する',
+    countSelectedText: '{0}/{1}を選択した',
+    maxOptionsText: ['上限に達した(最大{n}{var})', 'グループ上限に達した(最大{n}{var})', ['項目', '項目']],
+    selectAllText: '全て選択する',
     deselectAllText: '何も選択しない',
     multipleSeparator: ', '
   };

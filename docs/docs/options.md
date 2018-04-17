@@ -126,6 +126,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>addResults</td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>
+      <p>When set to <code>true</code>, replaces 'No Results' message with prompt to add search string to select options.</p>
+    </td>
+  </tr>
+  <tr>
     <td>maxOptions</td>
     <td>integer | false</td>
     <td><code>false</code></td>
