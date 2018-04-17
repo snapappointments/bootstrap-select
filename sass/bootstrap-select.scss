@@ -151,6 +151,21 @@ select.selectpicker {
     }
   }
 
+  &.form-control-sm .dropdown-toggle,
+  &.form-control-lg .dropdown-toggle {
+    font-size: inherit;
+    line-height: inherit;
+    border-radius: inherit;
+  }
+
+  &.form-control-sm .dropdown-toggle {
+    padding: $input-padding-y-sm $input-padding-x-sm;
+  }
+
+  &.form-control-lg .dropdown-toggle {
+    padding: $input-padding-y-lg $input-padding-x-lg;
+  }
+
   // Set the width of the live search (and any other form control within an inline form)
   // see https://github.com/silviomoreto/bootstrap-select/issues/685
   .form-inline & .form-control {
