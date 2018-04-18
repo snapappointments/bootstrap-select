@@ -1,4 +1,46 @@
 
+# v1.13.0 (2018-04-18)
+
+### Bug Fixes
+- [#2]: form control sizing classes not working
+- [#3]: fix sass variable syntax
+- [#5]: popper error when bootstrap-select is in a navbar
+- [silviomoreto/bootstrap-select#1913]: `&nbsp;` causing formatting errors on MacOS
+- [#6]: unnecessary caret code with Bootstrap 4
+- [#9]: .empty() method is not working
+- [#11]: New-lines in options cause formatting issues with title attribute (if multiple options selected)
+- [#13]: Purely numeric `data-subtext` breaks live search
+- [#17]: Button padding when using data-width="fit" is incorrect
+- [#19]: input group addons not displaying properly
+- [#20]: selectAll performance in Edge is abysmal
+- [#22]: show-menu-arrow not displaying properly
+- [#26]: Bootstrap 4 validation pseudo classes not being applied properly when new options are appended dynamically
+- [#30]: popover-title is not popover-header in Bootstrap 4
+- [#31]: liveSearch with data-content not working
+
+### New Features
+- [silviomoreto/bootstrap-select#1404], [silviomoreto/bootstrap-select#1697]: changed.bs.select now passes through previousValue as the third parameter (instead of the previous value of the option, which was redundant). This is the value of the select prior to being changed.
+
+[#2]: https://github.com/snapappointments/bootstrap-select/issues/2
+[#3]: https://github.com/snapappointments/bootstrap-select/issues/3
+[#5]: https://github.com/snapappointments/bootstrap-select/issues/5
+[#6]: https://github.com/snapappointments/bootstrap-select/issues/6
+[#9]: https://github.com/snapappointments/bootstrap-select/issues/9
+[#11]: https://github.com/snapappointments/bootstrap-select/issues/11
+[#13]: https://github.com/snapappointments/bootstrap-select/issues/13
+[#17]: https://github.com/snapappointments/bootstrap-select/issues/17
+[#19]: https://github.com/snapappointments/bootstrap-select/issues/19
+[#20]: https://github.com/snapappointments/bootstrap-select/issues/20
+[#22]: https://github.com/snapappointments/bootstrap-select/issues/22
+[#26]: https://github.com/snapappointments/bootstrap-select/issues/26
+[#30]: https://github.com/snapappointments/bootstrap-select/issues/30
+[#31]: https://github.com/snapappointments/bootstrap-select/issues/31
+[silviomoreto/bootstrap-select#1913]: https://github.com/silviomoreto/bootstrap-select/issues/1913
+[silviomoreto/bootstrap-select#1404]: https://github.com/silviomoreto/bootstrap-select/issues/1404
+[silviomoreto/bootstrap-select#1697]: https://github.com/silviomoreto/bootstrap-select/issues/1697
+
+-------------------
+
 # v1.13.0-beta (2018-02-12)
 
 ### Bug Fixes
