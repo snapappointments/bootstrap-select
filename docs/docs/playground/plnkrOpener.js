@@ -17,7 +17,8 @@ $(document).ready(function() {
   }
   
   function plnkrOpener() {
-    var ctrl = {};
+    var ctrl = {},
+        bootstrapVersion = $('#plnkrOpener').data('bootstrapVersion');
   
     ctrl.example = {
       path: ctrl.examplePath,
@@ -36,7 +37,7 @@ $(document).ready(function() {
       ctrl.example.files = [
         {
           name: 'index.html',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/tests/bootstrap4.html',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/tests/bootstrap' + bootstrapVersion + '.html',
           content: ''
         },
         {
