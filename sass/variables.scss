@@ -8,6 +8,7 @@ $zindex-select-dropdown: 1060 !default; // must be higher than a modal backgroun
 
 //** Placeholder text color
 $input-color-placeholder: #999 !default;
+$input-alt-color-placeholder: rgba(255, 255, 255, 0.5) !default;
 
 $input-padding-y-sm: .25rem !default;
 $input-padding-x-sm: .5rem !default;

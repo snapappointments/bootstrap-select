@@ -24,10 +24,28 @@ select.selectpicker {
     text-align: right;
     white-space: nowrap;
 
-    &.bs-placeholder,
-    &.bs-placeholder:hover,
-    &.bs-placeholder:focus,
-    &.bs-placeholder:active { color: @input-color-placeholder; }
+    &.bs-placeholder {
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        color: @input-color-placeholder;
+      }
+
+      &.btn-primary,
+      &.btn-secondary,
+      &.btn-success,
+      &.btn-danger,
+      &.btn-info,
+      &.btn-dark {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+          color: @input-alt-color-placeholder;
+        }
+      }
+    }
   }
 
   > select {
