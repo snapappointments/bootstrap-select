@@ -340,13 +340,13 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
     </tr>
     <tr>
       <td>changed.bs.select</td>
-      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
+      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, isSelected, previousValue. previousValue is the value of the select prior to being changed.</td>
     </tr>
   </tbody>
 </table>
 
 ```js
-$('#mySelect').on('hidden.bs.select', function (e) {
+$('#mySelect').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
   // do something...
 });
 ```
