@@ -40,12 +40,12 @@ $(document).ready(function() {
           content: ''
         },
         {
-          name: 'bootstrap-select.js',
+          name: 'js/bootstrap-select.js',
           url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/dist/js/bootstrap-select.js',
           content: ''
         },
         {
-          name: 'bootstrap-select.css',
+          name: 'css/bootstrap-select.css',
           url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/dist/css/bootstrap-select.css',
           content: ''
         }
@@ -58,6 +58,11 @@ $(document).ready(function() {
         })
         .then(function(data) {
           file.content = data;
+
+          if (file.name === 'index.html') {
+            file.content = file.content.replace(new RegExp('../dist/', 'g'), '');
+          }
+
           postData['files[' + file.name + ']'] = file.content;
         });
       }
