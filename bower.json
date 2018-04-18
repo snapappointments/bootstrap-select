@@ -30,6 +30,7 @@
     "jquery",
     "form",
     "bootstrap",
+    "dropdown",
     "select",
     "replacement"
   ],
