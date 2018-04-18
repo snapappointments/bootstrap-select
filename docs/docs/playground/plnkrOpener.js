@@ -24,7 +24,7 @@ $(document).ready(function() {
       path: ctrl.examplePath,
       manifest: undefined,
       files: undefined,
-      name: 'bootstrap-select example'
+      name: 'bootstrap-select playground (Bootstrap ' + bootstrapVersion + ')'
     };
   
     ctrl.open = function() {
