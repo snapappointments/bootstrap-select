@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.0-beta (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.0 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -457,7 +457,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.0-beta';
+  Selectpicker.VERSION = '1.13.0';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
