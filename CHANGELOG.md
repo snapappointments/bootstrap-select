@@ -1,5 +1,5 @@
 
-# v1.13.0 (2018-04-18)
+# v1.13.0 (2018-04-19)
 
 ### Bug Fixes
 - [#2]: form control sizing classes not working
