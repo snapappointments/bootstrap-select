@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-	<a href="https://developer.snapappointments.com/bootstrap-select"><img src="https://user-images.githubusercontent.com/2874325/38964631-0f40cf4c-4335-11e8-9871-5e4637bf1d14.gif" width="289" height="396" alt="bootstrap-select demo"></a>
+	<a href="https://developer.snapappointments.com/bootstrap-select"><img src="https://user-images.githubusercontent.com/2874325/38997831-97e12bbe-43ab-11e8-85f5-b8c05d91c7b1.gif" width="289" height="396" alt="bootstrap-select demo"></a>
 </p>
 
 ## Demo and Documentation
