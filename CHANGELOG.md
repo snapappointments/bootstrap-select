@@ -17,6 +17,8 @@
 - [#26]: Bootstrap 4 validation pseudo classes not being applied properly when new options are appended dynamically
 - [#30]: popover-title is not popover-header in Bootstrap 4
 - [#31]: liveSearch with data-content not working
+- [#43]: Button text breaks to the next line when using form-control as styleBase (Bootstrap 4)
+- [#44]: Placeholder text is unreadable on darker buttons (btn-primary, btn-success, etc.)
 
 ### New Features
 - [silviomoreto/bootstrap-select#1404], [silviomoreto/bootstrap-select#1697]: changed.bs.select now passes through previousValue as the third parameter (instead of the previous value of the option, which was redundant). This is the value of the select prior to being changed.
@@ -35,6 +37,8 @@
 [#26]: https://github.com/snapappointments/bootstrap-select/issues/26
 [#30]: https://github.com/snapappointments/bootstrap-select/issues/30
 [#31]: https://github.com/snapappointments/bootstrap-select/issues/31
+[#43]: https://github.com/snapappointments/bootstrap-select/issues/43
+[#44]: https://github.com/snapappointments/bootstrap-select/issues/44
 [silviomoreto/bootstrap-select#1913]: https://github.com/silviomoreto/bootstrap-select/issues/1913
 [silviomoreto/bootstrap-select#1404]: https://github.com/silviomoreto/bootstrap-select/issues/1404
 [silviomoreto/bootstrap-select#1697]: https://github.com/silviomoreto/bootstrap-select/issues/1697
