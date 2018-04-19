@@ -26,7 +26,8 @@
   "license": "MIT",
   "dependencies": {},
   "peerDependencies": {
-    "jquery": ">=1.8"
+    "jquery": ">=1.8",
+    "bootstrap": ">=3.0.0"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
