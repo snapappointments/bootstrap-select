@@ -22,6 +22,7 @@
 
 ### New Features
 - [silviomoreto/bootstrap-select#1404], [silviomoreto/bootstrap-select#1697]: changed.bs.select now passes through previousValue as the third parameter (instead of the previous value of the option, which was redundant). This is the value of the select prior to being changed.
+- update jQuery range to make v1.9.1 the minimum (and exclude version 4)
 
 [#2]: https://github.com/snapappointments/bootstrap-select/issues/2
 [#3]: https://github.com/snapappointments/bootstrap-select/issues/3
