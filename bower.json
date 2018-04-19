@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-select",
-  "description": "The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.",
+  "description": "The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more.",
   "main": [
     "less/bootstrap-select.less",
     "dist/css/bootstrap-select.css",
