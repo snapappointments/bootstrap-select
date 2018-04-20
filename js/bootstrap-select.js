@@ -969,7 +969,7 @@
 
           if (options.optionSubtext) {
             optionSubtextElement = elementTemplates.subtext.cloneNode(false);
-            optionSubtextElement.textContent = options.optionSubtext;
+            optionSubtextElement.innerHTML = options.optionSubtext;
             textElement.appendChild(optionSubtextElement);
           }
         }
