@@ -19,6 +19,7 @@
 - [#31]: liveSearch with data-content not working
 - [#43]: Button text breaks to the next line when using form-control as styleBase (Bootstrap 4)
 - [#44]: Placeholder text is unreadable on darker buttons (btn-primary, btn-success, etc.)
+- [silviomoreto/bootstrap-select#1691]: XSS vulnerability in option title
 
 ### New Features
 - [silviomoreto/bootstrap-select#1404], [silviomoreto/bootstrap-select#1697]: changed.bs.select now passes through previousValue as the third parameter (instead of the previous value of the option, which was redundant). This is the value of the select prior to being changed.
@@ -42,6 +43,7 @@
 [#44]: https://github.com/snapappointments/bootstrap-select/issues/44
 [silviomoreto/bootstrap-select#1913]: https://github.com/silviomoreto/bootstrap-select/issues/1913
 [silviomoreto/bootstrap-select#1404]: https://github.com/silviomoreto/bootstrap-select/issues/1404
+[silviomoreto/bootstrap-select#1691]: https://github.com/silviomoreto/bootstrap-select/issues/1691
 [silviomoreto/bootstrap-select#1697]: https://github.com/silviomoreto/bootstrap-select/issues/1697
 
 -------------------
