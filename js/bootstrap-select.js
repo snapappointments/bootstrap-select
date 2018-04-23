@@ -353,7 +353,7 @@
     version.major = version.full[0];
   }
   catch(err) {
-    console.error('There was an issue retreiving Bootstrap\'s version. Ensure Bootstrap is being loaded before bootstrap-select and there is no namespace collision.', err);
+    console.error('There was an issue retrieving Bootstrap\'s version. Ensure Bootstrap is being loaded before bootstrap-select and there is no namespace collision.', err);
     version.major = '3';
   }
 
