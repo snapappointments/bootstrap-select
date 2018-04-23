@@ -1,4 +1,19 @@
 
+# v1.13.1 (2018-04-23)
+
+### Bug Fixes
+- #46: HTML content in the subtext get escaped in 1.13.0
+- #47: Error retrieving Bootstrap version
+- #47: Bower description is too long
+- #48: noneSelectedText not working
+
+[#46]: https://github.com/snapappointments/bootstrap-select/issues/46
+[#47]: https://github.com/snapappointments/bootstrap-select/issues/47
+[#47]: https://github.com/snapappointments/bootstrap-select/issues/47
+[#48]: https://github.com/snapappointments/bootstrap-select/issues/48
+
+-------------------
+
 # v1.13.0 (2018-04-19)
 
 ### Bug Fixes
