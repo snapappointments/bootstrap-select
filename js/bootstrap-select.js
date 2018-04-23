@@ -1363,7 +1363,8 @@
       }
 
       if (this.options.title == undefined) {
-        this.options.title = this.$element[0].title;
+        // use .attr to ensure undefined is returned if title attribute is not set
+        this.options.title = this.$element.attr('title');
       }
 
       if (this.options.selectedTextFormat == 'static') {
