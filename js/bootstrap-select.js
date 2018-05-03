@@ -991,7 +991,7 @@
             labelSubtextElement,
             labelIconElement;
 
-        labelTextElement.textContent = options.labelEscaped;
+        labelTextElement.innerHTML = options.labelEscaped;
 
         if (options.labelIcon) {
           var whitespace = elementTemplates.whitespace.cloneNode(false);
