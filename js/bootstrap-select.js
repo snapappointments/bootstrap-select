@@ -1429,6 +1429,7 @@
       a.className = 'dropdown-item';
       newElement.className = this.$menu[0].parentNode.className + ' ' + classNames.SHOW;
       newElement.style.width = this.sizeInfo.selectWidth + 'px';
+      if (this.options.width === 'auto') menu.style.minWidth = 0;
       menu.className = 'dropdown-menu ' + classNames.SHOW;
       menuInner.className = 'inner ' + classNames.SHOW;
       menuInnerInner.className = 'dropdown-menu inner ' + (version.major === '4' ? classNames.SHOW : '');
