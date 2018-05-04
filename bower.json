@@ -16,7 +16,7 @@
     "replacement"
   ],
   "dependencies": {
-    "jquery": ">=1.8"
+    "jquery": "1.8.0 - 1.11.3"
   },
   "license": "MIT",
   "ignore": [
