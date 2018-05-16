@@ -1659,6 +1659,11 @@
           };
 
 
+      // we destroy the modal/popup using the ESC key and then turns out we get
+      // here and the parent doesn't even exist anymore, in this case fail silently.
+      // probably not the best idea, but works.
+      if(!$parent.length) return false;
+	    
       isActive = that.$newElement.hasClass('open');
 
       if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode >= 65 && e.keyCode <= 90)) {
