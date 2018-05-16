@@ -2253,7 +2253,7 @@
         var index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
             option = $selectOptions[index];
 
-        if (option) {
+        if (option && !option.disabled) {
           if (option.selected) previousSelected++;
           option.selected = status;
           if (option.selected) currentSelected++;
