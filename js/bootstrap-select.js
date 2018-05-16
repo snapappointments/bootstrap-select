@@ -1600,7 +1600,7 @@
 
     keydown: function (e) {
       var $this = $(this),
-          $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
+          $parent = $this.closest('div.dropdown-menu'),
           $items,
           that = $parent.data('this'),
           index,
