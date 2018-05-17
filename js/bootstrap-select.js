@@ -346,27 +346,41 @@
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
   }
 
-  var version = {};
+  var version = {
+    success: false,
+    major: '3'
+  };
 
   try {
     version.full = ($.fn.dropdown.Constructor.VERSION || '').split(' ')[0].split('.');
     version.major = version.full[0];
+    version.success = true;
   }
   catch(err) {
-    console.error('There was an issue retrieving Bootstrap\'s version. Ensure Bootstrap is being loaded before bootstrap-select and there is no namespace collision.', err);
-    version.major = '3';
+    console.warn(
+      'There was an issue retrieving Bootstrap\'s version. ' +
+      'Ensure Bootstrap is being loaded before bootstrap-select and there is no namespace collision. ' +
+      'If loading Bootstrap asynchronously, the version may need to be manually specified via $.fn.selectpicker.Constructor.BootstrapVersion.'
+    , err);
   }
 
   var classNames = {
     DISABLED: 'disabled',
-    DIVIDER: version.major === '4' ? 'dropdown-divider' : 'divider',
-    SHOW: version.major === '4' ? 'show' : 'open',
+    DIVIDER: 'divider',
+    SHOW: 'open',
     DROPUP: 'dropup',
     MENURIGHT: 'dropdown-menu-right',
     MENULEFT: 'dropdown-menu-left',
     // to-do: replace with more advanced template/customization options
-    BUTTONCLASS: version.major === '4' ? 'btn-light' : 'btn-default',
-    POPOVERHEADER: version.major === '4' ? 'popover-header' : 'popover-title'
+    BUTTONCLASS: 'btn-default',
+    POPOVERHEADER: 'popover-title'
+  }
+
+  if (version.major === '4') {
+    classNames.DIVIDER = 'dropdown-divider';
+    classNames.SHOW = 'show';
+    classNames.BUTTONCLASS = 'btn-light';
+    classNames.POPOVERHEADER = 'popover-header';
   }
 
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
@@ -443,6 +457,8 @@
 
   Selectpicker.VERSION = '1.13.1';
 
+  Selectpicker.BootstrapVersion = version.major;
+
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
@@ -462,7 +478,7 @@
     doneButtonText: 'Close',
     multipleSeparator: ', ',
     styleBase: 'btn',
-    style: 'btn-default',
+    style: classNames.BUTTONCLASS,
     size: 'auto',
     title: null,
     selectedTextFormat: 'values',
@@ -2565,6 +2581,29 @@
     var _option = option;
 
     [].shift.apply(args);
+
+    // if the version was not set successfully
+    if (!version.success) {
+      // try to retreive it again
+      try {
+        version.full = ($.fn.dropdown.Constructor.VERSION || '').split(' ')[0].split('.');
+      }
+      // fall back to use BootstrapVersion
+      catch(err) {
+        version.full = Selectpicker.BootstrapVersion.split(' ')[0].split('.');
+      }
+
+      version.major = version.full[0];
+      version.success = true;
+
+      if (version.major === '4') {
+        classNames.DIVIDER = 'dropdown-divider';
+        classNames.SHOW = 'show';
+        classNames.BUTTONCLASS = 'btn-light';
+        Selectpicker.DEFAULTS.style = classNames.BUTTONCLASS = 'btn-light';
+        classNames.POPOVERHEADER = 'popover-header';
+      }
+    }
 
     var value;
     var chain = this.each(function () {

@@ -1,3 +1,15 @@
+# Bootstrap version
+
+---
+
+Because there are some changes in class names and layout between Bootstrap 3 and Bootstrap 4, bootstrap-select needs to know the version of Bootstrap you are using. By default, bootstrap-select automatically detects the version of Bootstrap. However, there are some instances where the version detection does not work properly (e.g. Bootstrap is being loaded asynchronously or there is a namespace collision). For now, bootstrap-select defaults to using Bootstrap 3 formatting if version detection fails. This will be changed in the next major release.
+
+You can manually specify Bootstrap's version via bootstrap-select's `Constructor.BootstrapVersion` object:
+
+```js
+$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+```
+
 # Core options
 
 ---
