@@ -306,6 +306,16 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tbody>
 </table>
 
+# Default settings
+
+---
+
+You can change the default settings for bootstrap-select by modifying its `Constructor.DEFAULTS` object:
+
+```js
+$.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ' | ';
+```
+
 # Events
 
 ---
