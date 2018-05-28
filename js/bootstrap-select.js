@@ -506,7 +506,8 @@
     selectOnTab: false,
     dropdownAlignRight: false,
     windowPadding: 0,
-    virtualScroll: 600
+    virtualScroll: 600,
+    display: false
   };
 
   if (version.major === '4') {
@@ -652,7 +653,7 @@
           : '';
       var drop =
           '<div class="dropdown bootstrap-select' + showTick + '">' +
-          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button">' +
+          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="button">' +
           '<div class="filter-option">' +
             '<div class="filter-option-inner">' +
               '<div class="filter-option-inner-inner"></div>' +
@@ -1725,7 +1726,9 @@
           containerPos,
           actualHeight,
           getPlacement = function ($element) {
-            var containerPosition = {};
+            var containerPosition = {},
+                // fall back to dropdown's default display setting if display is not manually set
+                display = that.options.display || $.fn.dropdown.Constructor.Default.display;
 
             that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass(classNames.DROPUP, $element.hasClass(classNames.DROPUP));
             pos = $element.offset();
@@ -1741,7 +1744,7 @@
             actualHeight = $element.hasClass(classNames.DROPUP) ? 0 : $element[0].offsetHeight;
 
             // Bootstrap 4+ uses Popper for menu positioning
-            if (version.major < 4) {
+            if (version.major < 4 || display === 'static') {
               containerPosition['top'] = pos.top - containerPos.top + actualHeight;
               containerPosition['left'] = pos.left - containerPos.left;
             }
