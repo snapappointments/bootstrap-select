@@ -1964,16 +1964,32 @@
         }
       });
 
-      this.$element.on('shown.bs.select', function () {
-        if (that.$menuInner[0].scrollTop !== that.selectpicker.view.scrollTop) {
-          that.$menuInner[0].scrollTop = that.selectpicker.view.scrollTop;
-        }
-
+      function setFocus () {
         if (that.options.liveSearch) {
           that.$searchbox.focus();
         } else {
           that.$menuInner.focus();
         }
+      }
+
+      function checkPopperExists () {
+        if (that.dropdown && that.dropdown._popper && that.dropdown._popper.state.isCreated) {
+          setFocus();
+        } else {
+          requestAnimationFrame(checkPopperExists);
+        }
+      }
+
+      this.$element.on('shown.bs.select', function () {
+        if (that.$menuInner[0].scrollTop !== that.selectpicker.view.scrollTop) {
+          that.$menuInner[0].scrollTop = that.selectpicker.view.scrollTop;
+        }
+
+        if (version.major > 3) {
+          requestAnimationFrame(checkPopperExists);
+        } else {
+          setFocus();
+        }        
       });
 
       this.$menuInner.on('click', 'li a', function (e, retainActive) {
