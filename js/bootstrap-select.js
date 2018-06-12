@@ -487,6 +487,11 @@
         });
       }
 
+      that.$newElement.siblings().each(function(i, sibling) {
+        var $sibling = $(sibling);
+        if ($sibling.is(".invalid-feedback, .valid-feedback")) $sibling.appendTo(that.$newElement);
+      })
+
       setTimeout(function () {
         that.$element.trigger('loaded.bs.select');
       });
