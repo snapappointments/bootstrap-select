@@ -1225,7 +1225,7 @@
 
           availableOptionsCount++;
         } else if (thisData.divider === true) {
-          mainElements.push(generateLI(false, index, 'divider'));
+          mainElements.push(generateLI(false, index, classNames.DIVIDER));
           mainData.push({
             type: 'divider',
             originalIndex: index
