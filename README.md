@@ -1,3 +1,8 @@
+# THIS PROJECT HAS A NEW MAINTAINER
+and now supports Bootstrap 4 as well as large dropdowns with virtualization
+Go here: https://github.com/snapappointments/bootstrap-select/
+
+
 bootstrap-select
 ================
 
@@ -14,10 +19,6 @@ bootstrap-select
 Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
 <a href="https://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
-
-# HEY YOU! DO YOU WANT TO HELP?
-
-*He are looking for new maintainers on this project. If you think you can help on this, please send me an email to silviomoreto@gmail.com so we can continue improving the community plugin!*
 
 ## Demo and Documentation
 
