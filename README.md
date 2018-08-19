@@ -2,7 +2,6 @@ bootstrap-select
 ================
 
 [![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
-[![Bower](https://img.shields.io/bower/v/bootstrap-select.svg)]()
 [![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
 [![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
 [![CDNJS](https://img.shields.io/cdnjs/v/bootstrap-select.svg)](https://cdnjs.com/libraries/bootstrap-select)
@@ -31,11 +30,11 @@ This version currently does not support Bootstrap 4 officially. We are looking t
 
 ### Running documentation locally
 
-1. If necessary, [install MkDocs](http://www.mkdocs.org/#installation).
+1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
 3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
 4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
 
-Learn more about using MkDocs by reading its [documentation](http://www.mkdocs.org/).
+Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
 
 ## Authors
 
@@ -99,7 +98,7 @@ Licensed under [the MIT license](LICENSE).
 * [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
 * [membermeister](https://www.membermeister.com)
 * [Solve for All](https://solveforall.com)
-* [EstiMATEit](http://www.123itworks.co.uk)
+* [EstiMATEit](https://www.123itworks.co.uk)
 * [Convertizer](https://convertizer.com)
 
 Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.

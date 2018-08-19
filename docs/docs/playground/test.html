@@ -5,12 +5,18 @@
 
   <meta charset="utf-8">
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bootstrap-select.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+  <link rel="stylesheet" href="../dist/css/bootstrap-select.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script src="bootstrap-select.js"></script>
+  <style>
+    body {
+      padding-top: 70px;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.js" defer></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" defer></script>
+  <script src="../dist/js/bootstrap-select.js" defer></script>
 </head>
 <body>
 
@@ -256,11 +262,15 @@
   </select>
 
   <hr>
-  <select id="tokens" class="selectpicker" multiple data-live-search="true">
-    <option data-tokens="first">I actually am called "first"</option>
-    <option data-tokens="second">And me "second"</option>
-    <option data-tokens="last">I am "last"</option>
-  </select>
+
+  <div class="form-group">
+    <label for="tokens">Key words (data-tokens)</label>
+    <select id="tokens" class="selectpicker form-control" multiple data-live-search="true">
+      <option data-tokens="first">I actually am called "one"</option>
+      <option data-tokens="second">And me "two"</option>
+      <option data-tokens="last">I am "three"</option>
+    </select>
+  </div>
 
   <hr>
   <form class="form-inline">
@@ -280,7 +290,7 @@
 </div>
 
 <script>
-  $(document).ready(function () {
+  document.addEventListener('DOMContentLoaded', function () {
     var mySelect = $('#first-disabled2');
 
     $('#special').on('click', function () {
