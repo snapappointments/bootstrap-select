@@ -4,7 +4,7 @@
 
 ## Dependencies
 
-Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the minimum requirements can be downloaded [here](http://getbootstrap.com/customize/?id=7830063837006f6fc84f).
+Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the minimum requirements can be downloaded [here](https://getbootstrap.com/customize/?id=7830063837006f6fc84f).
 
 ## CDNJS
 
@@ -23,7 +23,7 @@ The folks at CDNJS host a copy of the library. The CDN is updated after the rele
 
 ## Install with Bower
 
-You can also install bootstrap-select using [Bower](http://bower.io):
+You can also install bootstrap-select using [Bower](https://bower.io):
 
 ```elixir
 $ bower install bootstrap-select
@@ -86,7 +86,7 @@ $('.selectpicker').selectpicker({
 		<a href="https://solveforall.com" target="_blank"><img src="img/logos/solveforall.png" alt="Solve for All"></a>
 	</div>
 	<div class="logo-container">
-		<a href="http://www.123itworks.co.uk" target="_blank"><img src="img/logos/estimateit.png" alt="EstiMATEit"></a>
+		<a href="https://www.123itworks.co.uk" target="_blank"><img src="img/logos/estimateit.png" alt="EstiMATEit"></a>
 	</div>
 	<div class="logo-container">
 		<a href="https://convertizer.com" target="_blank"><img src="img/logos/convertizer.png" alt="Convertizer"></a>

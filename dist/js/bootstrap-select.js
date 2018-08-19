@@ -871,7 +871,7 @@
 
       if (!this.options.initInProcess || this.options.lazyLoadLiElements !== true) { // this is very expensive on IE and we haven;t really rendered the select if we are lazy loading, so hold off on this event
          this.$element.trigger('rendered.bs.select');
-      };
+      }
     },
 
     /**
@@ -962,7 +962,7 @@
             horiz: menuPadding.horiz +
                   parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
                   parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
-          }
+          };
 
       document.body.removeChild(newElement);
 
@@ -991,14 +991,14 @@
           $window = $(window),
           selectHeight = this.$newElement[0].offsetHeight,
           selectWidth = this.$newElement[0].offsetWidth,
-          liHeight = this.sizeInfo['liHeight'],
-          headerHeight = this.sizeInfo['headerHeight'],
-          searchHeight = this.sizeInfo['searchHeight'],
-          actionsHeight = this.sizeInfo['actionsHeight'],
-          doneButtonHeight = this.sizeInfo['doneButtonHeight'],
-          divHeight = this.sizeInfo['dividerHeight'],
-          menuPadding = this.sizeInfo['menuPadding'],
-          menuExtras = this.sizeInfo['menuExtras'],
+          liHeight = this.sizeInfo.liHeight,
+          headerHeight = this.sizeInfo.headerHeight,
+          searchHeight = this.sizeInfo.searchHeight,
+          actionsHeight = this.sizeInfo.actionsHeight,
+          doneButtonHeight = this.sizeInfo.doneButtonHeight,
+          divHeight = this.sizeInfo.dividerHeight,
+          menuPadding = this.sizeInfo.menuPadding,
+          menuExtras = this.sizeInfo.menuExtras,
           notDisabled = this.options.hideDisabled ? '.disabled' : '',
           menuHeight,
           menuWidth,
@@ -1623,7 +1623,7 @@
 
     keydown: function (e) {
       var $this = $(this),
-          $parent = $this.is('input') ? $this.parent().parent() : $this.parent(),
+          $parent = $this.closest('div.dropdown-menu'),
           $items,
           that = $parent.data('this'),
           index,
@@ -1682,6 +1682,11 @@
           };
 
 
+      // we destroy the modal/popup using the ESC key and then turns out we get
+      // here and the parent doesn't even exist anymore, in this case fail silently.
+      // probably not the best idea, but works.
+      if(!$parent.length) return false;
+	    
       isActive = that.$newElement.hasClass('open');
 
       if (!isActive && (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode >= 65 && e.keyCode <= 90)) {
@@ -1911,7 +1916,7 @@
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
-    })
+    });
   });
 })(jQuery);
 
