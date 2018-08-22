@@ -169,6 +169,57 @@ ul.nav li.main {
   border-radius: 0;
 }
 
+.carbonad {
+  margin-top: 80px;
+}
+ .carbonad-inner {
+  width: auto!important;
+  height: auto!important;
+  padding: 20px!important;
+  margin: 30px -15px 0!important;
+  overflow: hidden;
+  font-size: 13px!important;
+  line-height: 16px!important;
+  text-align: left;
+  background: 0 0!important;
+  border: solid rgba(255, 255, 255, 0.50) !important;
+  border-width: 1px 0!important;
+}
+ .carbon-poweredby,
+.carbon-text {
+  display: block!important;
+  float: none!important;
+  width: auto!important;
+  height: auto!important;
+  margin-left: 145px!important;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif!important;
+  color: #fff!important;
+}
+ .carbon-poweredby {
+  float: left;
+  margin-top: 9px;
+  text-align: left;
+  width: 142px;
+  opacity: 0.5;
+}
+ .charity {
+  opacity: 0.5;
+  padding: 4px;
+  margin-bottom: -31px;
+  font-size: 14px;
+}
+ .charity a {
+  color: #fff;
+}
+ .carbon-img img {
+    border: none;
+    display: inline;
+    float: left;
+    height: 100px;
+    margin: 0 !important;
+    width: 130px;
+}
+
 .logo-block a {
   display: block;
   padding: 5px;
