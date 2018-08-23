@@ -1130,8 +1130,7 @@
             );
             mainData.push({
               type: 'divider',
-              optID: optID,
-              originalIndex: index
+              optID: optID
             });
           }
 
@@ -1174,8 +1173,7 @@
               );
               mainData.push({
                 type: 'divider',
-                optID: optID,
-                originalIndex: index
+                optID: optID
               });
             }
             liIndex++;
@@ -1191,8 +1189,7 @@
               content: labelEscaped,
               subtext: labelSubtext,
               type: 'optgroup-label',
-              optID: optID,
-              originalIndex: index
+              optID: optID
             });
             
             headerIndex = liIndex - 1;
@@ -1257,8 +1254,7 @@
             );
             mainData.push({
               type: 'divider',
-              optID: optID,
-              originalIndex: index
+              optID: optID
             });
           }
 
@@ -2248,8 +2244,11 @@
             if ( li.type !== 'divider' || ( li.type === 'divider' && liPrev && liPrev.type !== 'divider' && cacheLen - 1 !== i ) ) {
               that.selectpicker.search.data.push(li);
               searchMatch.push(that.selectpicker.main.elements[index]);
-              that.selectpicker.search.map.newIndex[li.originalIndex] = searchMatch.length - 1;
-              that.selectpicker.search.map.originalIndex[searchMatch.length - 1] = li.originalIndex;
+
+              if (li.hasOwnProperty('originalIndex')) {
+                that.selectpicker.search.map.newIndex[li.originalIndex] = searchMatch.length - 1;
+                that.selectpicker.search.map.originalIndex[searchMatch.length - 1] = li.originalIndex;
+              }
             }
           }
 
