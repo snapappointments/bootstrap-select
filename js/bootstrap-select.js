@@ -2055,7 +2055,7 @@
                   $optgroup.find('option:selected').prop('selected', false);
                   $option.prop('selected', true);
                   var optgroupID = that.selectpicker.current.data[$this.parent().index() + that.selectpicker.view.position0].optID;
-                  that.$menuInner.find('.optgroup-' + optgroupID).removeClass('selected');
+                  that.$menuInner.find('.optgroup-' + optgroupID).removeClass('selected').find('a').removeClass('selected').attr('aria-selected', false);
                   that.setSelected(clickedIndex, true);
                 } else {
                   var maxOptionsText = typeof that.options.maxOptionsText === 'string' ? [that.options.maxOptionsText, that.options.maxOptionsText] : that.options.maxOptionsText,
