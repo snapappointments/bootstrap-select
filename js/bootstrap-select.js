@@ -1225,7 +1225,8 @@
           mainElements.push(generateLI(false, index, classNames.DIVIDER));
           mainData.push({
             type: 'divider',
-            originalIndex: index
+            originalIndex: index,
+            data: thisData
           });
         } else {
           // if previous element is not an optgroup and hideDisabled is true
@@ -2298,10 +2299,11 @@
       this.$element.addClass('bs-select-hidden');
 
       for (var i = 0; i < this.selectpicker.current.elements.length; i++) {
-        var index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
+        var liData = this.selectpicker.current.data[i],
+            index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
             option = $selectOptions[index];
 
-        if (option && !option.disabled) {
+        if (option && !option.disabled && liData.type !== 'divider') {
           if (option.selected) previousSelected++;
           option.selected = status;
           if (option.selected) currentSelected++;
