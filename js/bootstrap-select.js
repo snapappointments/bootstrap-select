@@ -511,11 +511,11 @@
       var actionsbox = this.multiple && this.options.actionsBox ?
       '<div class="bs-actionsbox">' +
       '<div class="btn-group btn-group-sm btn-block">' +
-      '<button type="button" class="actions-btn bs-select-all btn btn-default">' +
-      this.options.selectAllText +
+      '<button type="button" class="actions-btn bs-select-all btn btn-default" title="' + this.options.selectAllText + '">' +
+      '<span class="glyphicon glyphicon-ok-sign"></span>' +
       '</button>' +
-      '<button type="button" class="actions-btn bs-deselect-all btn btn-default">' +
-      this.options.deselectAllText +
+      '<button type="button" class="actions-btn bs-deselect-all btn btn-default" title="' + this.options.deselectAllText + '">' +
+      '<span class="glyphicon glyphicon-remove-sign"></span>' +
       '</button>' +
       '</div>' +
       '</div>'
