@@ -279,6 +279,10 @@ select.selectpicker {
 .bs-actionsbox .btn-group button {
   width: 50%;
 }
+.bs-select-all > .glyphicon, .bs-deselect-all > .glyphicon {
+    font-size: 1.4em;
+    vertical-align: middle;
+}
 .bs-donebutton {
   float: left;
   width: 100%;
