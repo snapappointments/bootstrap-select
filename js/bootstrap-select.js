@@ -1445,7 +1445,7 @@
       this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
 
       text.className = 'text';
-      a.className = 'dropdown-item';
+      a.className = 'dropdown-item ' + this.$element.find('option')[0].className;
       newElement.className = this.$menu[0].parentNode.className + ' ' + classNames.SHOW;
       newElement.style.width = this.sizeInfo.selectWidth + 'px';
       if (this.options.width === 'auto') menu.style.minWidth = 0;
