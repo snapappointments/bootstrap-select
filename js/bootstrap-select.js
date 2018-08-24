@@ -2426,7 +2426,7 @@
           }
         } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           // scroll to top and highlight first option
-          if (position0 !== 0 && index === 0) {
+          if (index === 0) {
             that.$menuInner[0].scrollTop = 0;
 
             liActiveIndex = 0;
