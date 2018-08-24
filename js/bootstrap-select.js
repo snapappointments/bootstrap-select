@@ -2439,8 +2439,12 @@
         }
 
         liActive = that.selectpicker.current.elements[liActiveIndex];
-        liActive.classList.add('active');
-        if (liActive.firstChild) liActive.firstChild.classList.add('active');
+
+        if (liActive) {
+          liActive.classList.add('active');
+          if (liActive.firstChild) liActive.firstChild.classList.add('active');
+        }
+        
         that.activeIndex = that.selectpicker.current.map.originalIndex[liActiveIndex];
 
         that.selectpicker.view.currentActive = liActive;
