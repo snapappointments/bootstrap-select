@@ -33,24 +33,41 @@
 	<a href="https://developer.snapappointments.com/bootstrap-select"><img src="https://user-images.githubusercontent.com/2874325/38997831-97e12bbe-43ab-11e8-85f5-b8c05d91c7b1.gif" width="289" height="396" alt="bootstrap-select demo"></a>
 </p>
 
-## Demo and Documentation
+## Demo
 
 You can view a live demo and some examples of how to use the various options [here](https://developer.snapappointments.com/bootstrap-select).
 
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be run locally.
+## Quick start
 
+Several quick start options are available:
 
-### Running documentation locally
+- [Download the latest release.](https://github.com/snapappointments/bootstrap-select/archive/v1.13.1.zip)
+- Clone the repo: `git clone https://github.com/snapappointments/bootstrap-select.git`
+- Install with [npm](https://www.npmjs.com/package/bootstrap-select): `npm install bootstrap-select`
+- Install with [yarn](https://yarn.pm/bootstrap-select): `yarn add bootstrap-select`
+- Install with [Composer](https://getcomposer.org): `composer require snapappointments/bootstrap-select`
+- Install with [NuGet](https://www.nuget.org/packages/bootstrap-select): `Install-Package bootstrap-select`
+- Install with [Bower](https://bower.io): `bower install bootstrap-select`
+- Install via CDN:
 
-1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
-3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
-4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+```html
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
 
-Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
+```
+> The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN.
 
 ## Usage
 
-Create your `<select>` with the `.selectpicker` class.
+> Bootstrap 4 only works with bootstrap-select v1.13.0+. By default, bootstrap-select automatically detects the version of Bootstrap being used. However, there are some instances where the version detection won't work. See the [documentation](https://developer.snapappointments.com/bootstrap-select/options/#bootstrap-version) for more information.
+
+### Via `selectpicker` class
+Add the `selectpicker` class to your select element to use the data-api.
 ```html
 <select class="selectpicker">
   <option>Mustard</option>
@@ -59,28 +76,21 @@ Create your `<select>` with the `.selectpicker` class.
 </select>
 ```
 
-If you use a 1.6.3 or newer, you don't need to do anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
-
-If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](https://api.jquery.com/ready/) block.
+### Via JavaScript
 ```js
-// To style only <select>s with the selectpicker class
+// To style only selects with the selectpicker class
 $('.selectpicker').selectpicker();
 ```
-Or
+or
 ```js
-// To style all <select>s
+// To style all selects
 $('select').selectpicker();
 ```
 
-Checkout the [documentation](https://developer.snapappointments.com/bootstrap-select) for further information.
+If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`$(document).ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
 
-## CDN
 
-**N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/snapappointments/bootstrap-select/releases) for the latest release.
-
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css)
-* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js)
-* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js (The translation files)
+Check out the [documentation](https://developer.snapappointments.com/bootstrap-select) for further information.
 
 ## Bugs and feature requests
 
@@ -89,6 +99,19 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 
 * [Bug reports](CONTRIBUTING.md#bug-reports)
 * [Feature requests](CONTRIBUTING.md#feature-requests)
+
+## Documentation
+
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be run locally.
+
+### Running documentation locally
+
+1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
+2. Install [mkdocs-bootstrap](https://mkdocs.github.io/mkdocs-bootstrap/) using `pip install mkdocs-bootstrap`.
+3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
+4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+
+Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
 
 ## Copyright and license
 
