@@ -35,7 +35,7 @@
 
 ## Demo
 
-You can view a live demo and some examples of how to use the various options [here](https://developer.snapappointments.com/bootstrap-select).
+You can view a live demo and some examples of how to use the various options [here](https://developer.snapappointments.com/bootstrap-select/examples/).
 
 ## Quick start
 
