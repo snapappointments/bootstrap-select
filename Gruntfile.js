@@ -196,6 +196,15 @@ module.exports = function (grunt) {
           'js/<%= pkg.name %>.js'
         ],
       },
+      docs: {
+        options: {
+          prefix: '<%= pkg.name %>/archive/v',
+          replace: '[0-9a-zA-Z\\-_\\+\\.]+)([^\/]+(?=\.zip+)'
+        },
+        src: [
+          'docs/docs/index.md'
+        ],
+      },
       cdn: {
         options: {
           prefix: 'ajax/libs/<%= pkg.name %>/'
