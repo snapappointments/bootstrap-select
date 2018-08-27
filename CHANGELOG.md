@@ -2,79 +2,78 @@
 # v1.13.1 (2018-04-23)
 
 ### Bug Fixes
-- [#46]: HTML content in the subtext get escaped in 1.13.0
-- [#47]: Error retrieving Bootstrap version
-- [#47]: Bower description is too long
-- [#48]: noneSelectedText not working
+- [#2076]: HTML content in the subtext get escaped in 1.13.0
+- [#2073]: Error retrieving Bootstrap version
+- [#2073]: Bower description is too long
+- [#2071]: noneSelectedText not working
 
-[#46]: https://github.com/snapappointments/bootstrap-select/issues/46
-[#47]: https://github.com/snapappointments/bootstrap-select/issues/47
-[#47]: https://github.com/snapappointments/bootstrap-select/issues/47
-[#48]: https://github.com/snapappointments/bootstrap-select/issues/48
+[#2076]: https://github.com/snapappointments/bootstrap-select/issues/2076
+[#2073]: https://github.com/snapappointments/bootstrap-select/issues/2073
+[#2073]: https://github.com/snapappointments/bootstrap-select/issues/2073
+[#2071]: https://github.com/snapappointments/bootstrap-select/issues/2071
 
 -------------------
 
 # v1.13.0 (2018-04-19)
 
 ### Bug Fixes
-- [#2]: form control sizing classes not working
-- [#3]: fix sass variable syntax
-- [#5]: popper error when bootstrap-select is in a navbar
-- [silviomoreto/bootstrap-select#1913]: `&nbsp;` causing formatting errors on MacOS
-- [#6]: unnecessary caret code with Bootstrap 4
-- [#9]: .empty() method is not working
-- [#11]: New-lines in options cause formatting issues with title attribute (if multiple options selected)
-- [#13]: Purely numeric `data-subtext` breaks live search
-- [#17]: Button padding when using data-width="fit" is incorrect
-- [#19]: input group addons not displaying properly
-- [#20]: selectAll performance in Edge is abysmal
-- [#22]: show-menu-arrow not displaying properly
-- [#26]: Bootstrap 4 validation pseudo classes not being applied properly when new options are appended dynamically
-- [#30]: popover-title is not popover-header in Bootstrap 4
-- [#31]: liveSearch with data-content not working
-- [#43]: Button text breaks to the next line when using form-control as styleBase (Bootstrap 4)
-- [#44]: Placeholder text is unreadable on darker buttons (btn-primary, btn-success, etc.)
-- [silviomoreto/bootstrap-select#1691]: XSS vulnerability in option title
+- [#2060]: form control sizing classes not working
+- fix sass variable syntax
+- [#2062]: popper error when bootstrap-select is in a navbar
+- [#1913]: `&nbsp;` causing formatting errors on MacOS
+- [#2061]: unnecessary caret code with Bootstrap 4
+- [#2065]: .empty() method is not working
+- [#2063]: New-lines in options cause formatting issues with title attribute (if multiple options selected)
+- [#2064]: Purely numeric `data-subtext` breaks live search
+- [#2066]: Button padding when using data-width="fit" is incorrect
+- [#2067]: input group addons not displaying properly
+- [#2077]: selectAll performance in Edge is abysmal
+- [#2074]: show-menu-arrow not displaying properly
+- [#2068]: Bootstrap 4 validation pseudo classes not being applied properly when new options are appended dynamically
+- [#2070]: popover-title is not popover-header in Bootstrap 4
+- [#2075]: liveSearch with data-content not working
+- [#2072]: Button text breaks to the next line when using form-control as styleBase (Bootstrap 4)
+- [#2069]: Placeholder text is unreadable on darker buttons (btn-primary, btn-success, etc.)
+- [#1691]: XSS vulnerability in option title
 
 ### New Features
-- [silviomoreto/bootstrap-select#1404], [silviomoreto/bootstrap-select#1697]: changed.bs.select now passes through previousValue as the third parameter (instead of the previous value of the option, which was redundant). This is the value of the select prior to being changed.
+- [#1404], [#1697]: changed.bs.select now passes through previousValue as the third parameter (instead of the previous value of the option, which was redundant). This is the value of the select prior to being changed.
 - update jQuery range to make v1.9.1 the minimum (and exclude version 4)
 
-[#2]: https://github.com/snapappointments/bootstrap-select/issues/2
-[#3]: https://github.com/snapappointments/bootstrap-select/issues/3
-[#5]: https://github.com/snapappointments/bootstrap-select/issues/5
-[#6]: https://github.com/snapappointments/bootstrap-select/issues/6
-[#9]: https://github.com/snapappointments/bootstrap-select/issues/9
-[#11]: https://github.com/snapappointments/bootstrap-select/issues/11
-[#13]: https://github.com/snapappointments/bootstrap-select/issues/13
-[#17]: https://github.com/snapappointments/bootstrap-select/issues/17
-[#19]: https://github.com/snapappointments/bootstrap-select/issues/19
-[#20]: https://github.com/snapappointments/bootstrap-select/issues/20
-[#22]: https://github.com/snapappointments/bootstrap-select/issues/22
-[#26]: https://github.com/snapappointments/bootstrap-select/issues/26
-[#30]: https://github.com/snapappointments/bootstrap-select/issues/30
-[#31]: https://github.com/snapappointments/bootstrap-select/issues/31
-[#43]: https://github.com/snapappointments/bootstrap-select/issues/43
-[#44]: https://github.com/snapappointments/bootstrap-select/issues/44
-[silviomoreto/bootstrap-select#1913]: https://github.com/silviomoreto/bootstrap-select/issues/1913
-[silviomoreto/bootstrap-select#1404]: https://github.com/silviomoreto/bootstrap-select/issues/1404
-[silviomoreto/bootstrap-select#1691]: https://github.com/silviomoreto/bootstrap-select/issues/1691
-[silviomoreto/bootstrap-select#1697]: https://github.com/silviomoreto/bootstrap-select/issues/1697
+[#2060]: https://github.com/snapappointments/bootstrap-select/issues/2060
+[#2062]: https://github.com/snapappointments/bootstrap-select/issues/2062
+[#1913]: https://github.com/snapappointments/bootstrap-select/issues/1913
+[#2061]: https://github.com/snapappointments/bootstrap-select/issues/2061
+[#2065]: https://github.com/snapappointments/bootstrap-select/issues/2065
+[#2063]: https://github.com/snapappointments/bootstrap-select/issues/2063
+[#2064]: https://github.com/snapappointments/bootstrap-select/issues/2064
+[#2066]: https://github.com/snapappointments/bootstrap-select/issues/2066
+[#2067]: https://github.com/snapappointments/bootstrap-select/issues/2067
+[#2077]: https://github.com/snapappointments/bootstrap-select/issues/2077
+[#2074]: https://github.com/snapappointments/bootstrap-select/issues/2074
+[#2068]: https://github.com/snapappointments/bootstrap-select/issues/2068
+[#2070]: https://github.com/snapappointments/bootstrap-select/issues/2070
+[#2075]: https://github.com/snapappointments/bootstrap-select/issues/2075
+[#2072]: https://github.com/snapappointments/bootstrap-select/issues/2072
+[#2069]: https://github.com/snapappointments/bootstrap-select/issues/2069
+[#1691]: https://github.com/snapappointments/bootstrap-select/issues/1691
+[#1404]: https://github.com/snapappointments/bootstrap-select/issues/1404
+[#1697]: https://github.com/snapappointments/bootstrap-select/issues/1697
 
 -------------------
 
 # v1.13.0-beta (2018-02-12)
 
 ### Bug Fixes
-- [silviomoreto/bootstrap-select#1034]: Issue with long option inside input-group
+- [#1034]: Issue with long option inside input-group
 
 ### New Features
-- [silviomoreto/bootstrap-select#1135]: Support Bootstrap 4 (via auto-detection)
+- [#1135]: Support Bootstrap 4 (via auto-detection)
 - virtualization is now optional via `virtualScroll`. Can be set to false, true, or an integer to only use virtualization if the select has more than the specified number of options. Defaults to 600.
 - update docs to support MkDocs v0.17.0
 
-[silviomoreto/bootstrap-select#1034]: https://github.com/silviomoreto/bootstrap-select/issues/1034
-[silviomoreto/bootstrap-select#1135]: https://github.com/silviomoreto/bootstrap-select/issues/1135
+[#1034]: https://github.com/snapappointments/bootstrap-select/issues/1034
+[#1135]: https://github.com/snapappointments/bootstrap-select/issues/1135
 
 -------------------
 
@@ -94,16 +93,16 @@
 - [#1229]: Large lists and virtualization
 - [#1687]: Improve init performance
 
-[#1303]: https://github.com/silviomoreto/bootstrap-select/issues/1303
-[#1383]: https://github.com/silviomoreto/bootstrap-select/issues/1383
-[#1395]: https://github.com/silviomoreto/bootstrap-select/issues/1395
-[#1398]: https://github.com/silviomoreto/bootstrap-select/issues/1398
-[#1674]: https://github.com/silviomoreto/bootstrap-select/issues/1674
-[#1692]: https://github.com/silviomoreto/bootstrap-select/issues/1692
-[#710]: https://github.com/silviomoreto/bootstrap-select/issues/710
-[#1110]: https://github.com/silviomoreto/bootstrap-select/issues/1110
-[#1229]: https://github.com/silviomoreto/bootstrap-select/issues/1229
-[#1687]: https://github.com/silviomoreto/bootstrap-select/issues/1687
+[#1303]: https://github.com/snapappointments/bootstrap-select/issues/1303
+[#1383]: https://github.com/snapappointments/bootstrap-select/issues/1383
+[#1395]: https://github.com/snapappointments/bootstrap-select/issues/1395
+[#1398]: https://github.com/snapappointments/bootstrap-select/issues/1398
+[#1674]: https://github.com/snapappointments/bootstrap-select/issues/1674
+[#1692]: https://github.com/snapappointments/bootstrap-select/issues/1692
+[#710]: https://github.com/snapappointments/bootstrap-select/issues/710
+[#1110]: https://github.com/snapappointments/bootstrap-select/issues/1110
+[#1229]: https://github.com/snapappointments/bootstrap-select/issues/1229
+[#1687]: https://github.com/snapappointments/bootstrap-select/issues/1687
 
 -------------------
 
@@ -113,8 +112,8 @@
 - [#1286]: Event creation throws illegal constructor error on stock Android Browser < 5.0
 - [#1764]: Bootstrap-select steals focus on form.checkValidity
 
-[#1286]: https://github.com/silviomoreto/bootstrap-select/issues/1286
-[#1764]: https://github.com/silviomoreto/bootstrap-select/issues/1764
+[#1286]: https://github.com/snapappointments/bootstrap-select/issues/1286
+[#1764]: https://github.com/snapappointments/bootstrap-select/issues/1764
 
 -------------------
 
@@ -129,10 +128,10 @@
 ### New Features
 - Add/update various translations
 
-[#1529]: https://github.com/silviomoreto/bootstrap-select/issues/1529
-[#1604]: https://github.com/silviomoreto/bootstrap-select/pull/1604
-[#1630]: https://github.com/silviomoreto/bootstrap-select/issues/1630
-[#1631]: https://github.com/silviomoreto/bootstrap-select/pull/1631
+[#1529]: https://github.com/snapappointments/bootstrap-select/issues/1529
+[#1604]: https://github.com/snapappointments/bootstrap-select/pull/1604
+[#1630]: https://github.com/snapappointments/bootstrap-select/issues/1630
+[#1631]: https://github.com/snapappointments/bootstrap-select/pull/1631
 
 -------------------
 
@@ -143,9 +142,9 @@
 * [#1570]: properly adjust size when inside form-group-sm or form-group-lg
 * [#1590]: menu height calculated improperly when using liveSearch and input has custom height
 
-[#1563]: https://github.com/silviomoreto/bootstrap-select/issues/1563
-[#1570]: https://github.com/silviomoreto/bootstrap-select/issues/1570
-[#1590]: https://github.com/silviomoreto/bootstrap-select/issues/1590
+[#1563]: https://github.com/snapappointments/bootstrap-select/issues/1563
+[#1570]: https://github.com/snapappointments/bootstrap-select/issues/1570
+[#1590]: https://github.com/snapappointments/bootstrap-select/issues/1590
 
 -------------------
 
@@ -154,8 +153,8 @@
 ### Bug Fixes
 * [#1167], [#1366]: using a method before initializing bootstrap-select throws an error
 
-[#1167]: https://github.com/silviomoreto/bootstrap-select/issues/1167
-[#1366]: https://github.com/silviomoreto/bootstrap-select/issues/1366
+[#1167]: https://github.com/snapappointments/bootstrap-select/issues/1167
+[#1366]: https://github.com/snapappointments/bootstrap-select/issues/1366
 
 -------------------
 
@@ -179,20 +178,20 @@
 * [#1440]: allow HTML in placeholder title for non-multiple selects
 * [#1555]: Use default with SCSS variables
 
-[#1220]: https://github.com/silviomoreto/bootstrap-select/issues/1220
-[#1275]: https://github.com/silviomoreto/bootstrap-select/issues/1275
-[#1348]: https://github.com/silviomoreto/bootstrap-select/issues/1348
-[#1506]: https://github.com/silviomoreto/bootstrap-select/issues/1506
-[#1509]: https://github.com/silviomoreto/bootstrap-select/issues/1509
-[#1477]: https://github.com/silviomoreto/bootstrap-select/issues/1477
-[#1489]: https://github.com/silviomoreto/bootstrap-select/issues/1489
-[#1533]: https://github.com/silviomoreto/bootstrap-select/issues/1533
-[#1531]: https://github.com/silviomoreto/bootstrap-select/issues/1531
-[#1503]: https://github.com/silviomoreto/bootstrap-select/issues/1503
-[#1516]: https://github.com/silviomoreto/bootstrap-select/issues/1516
-[#1440]: https://github.com/silviomoreto/bootstrap-select/issues/1440
-[#1553]: https://github.com/silviomoreto/bootstrap-select/issues/1553
-[#1555]: https://github.com/silviomoreto/bootstrap-select/issues/1555
+[#1220]: https://github.com/snapappointments/bootstrap-select/issues/1220
+[#1275]: https://github.com/snapappointments/bootstrap-select/issues/1275
+[#1348]: https://github.com/snapappointments/bootstrap-select/issues/1348
+[#1506]: https://github.com/snapappointments/bootstrap-select/issues/1506
+[#1509]: https://github.com/snapappointments/bootstrap-select/issues/1509
+[#1477]: https://github.com/snapappointments/bootstrap-select/issues/1477
+[#1489]: https://github.com/snapappointments/bootstrap-select/issues/1489
+[#1533]: https://github.com/snapappointments/bootstrap-select/issues/1533
+[#1531]: https://github.com/snapappointments/bootstrap-select/issues/1531
+[#1503]: https://github.com/snapappointments/bootstrap-select/issues/1503
+[#1516]: https://github.com/snapappointments/bootstrap-select/issues/1516
+[#1440]: https://github.com/snapappointments/bootstrap-select/issues/1440
+[#1553]: https://github.com/snapappointments/bootstrap-select/issues/1553
+[#1555]: https://github.com/snapappointments/bootstrap-select/issues/1555
 
 -------------------
 
@@ -210,9 +209,9 @@
 * [#1484]: Change events fire twice on IE8
 * [#1489]: hide.bs.select and hidden.bs.select events not fired when "Esc" key pressed with live search enabled
 
-[#1475]: https://github.com/silviomoreto/bootstrap-select/issues/1475
-[#1484]: https://github.com/silviomoreto/bootstrap-select/issues/1484
-[#1489]: https://github.com/silviomoreto/bootstrap-select/issues/1489
+[#1475]: https://github.com/snapappointments/bootstrap-select/issues/1475
+[#1484]: https://github.com/snapappointments/bootstrap-select/issues/1484
+[#1489]: https://github.com/snapappointments/bootstrap-select/issues/1489
 
 -------------------
 
@@ -239,27 +238,27 @@
 * [58ed408]: support using a string for maxOptionsText
 * [#541]: ARIA - Accessibility
 
-[#1291]: https://github.com/silviomoreto/bootstrap-select/issues/1291
-[#1284]: https://github.com/silviomoreto/bootstrap-select/issues/1284
-[#1245]: https://github.com/silviomoreto/bootstrap-select/issues/1245
-[#1257]: https://github.com/silviomoreto/bootstrap-select/issues/1257
-[#1310]: https://github.com/silviomoreto/bootstrap-select/issues/1310
-[#1346]: https://github.com/silviomoreto/bootstrap-select/issues/1346
-[#1338]: https://github.com/silviomoreto/bootstrap-select/issues/1338
-[#1373]: https://github.com/silviomoreto/bootstrap-select/issues/1373
-[#1363]: https://github.com/silviomoreto/bootstrap-select/issues/1363
-[#1422]: https://github.com/silviomoreto/bootstrap-select/issues/1422
-[#1451]: https://github.com/silviomoreto/bootstrap-select/issues/1451
-[#1465]: https://github.com/silviomoreto/bootstrap-select/issues/1465
-[#1459]: https://github.com/silviomoreto/bootstrap-select/issues/1459
-[#1139]: https://github.com/silviomoreto/bootstrap-select/issues/1139
-[#1290]: https://github.com/silviomoreto/bootstrap-select/issues/1290
-[#1127]: https://github.com/silviomoreto/bootstrap-select/issues/1127
-[#1016]: https://github.com/silviomoreto/bootstrap-select/issues/1016
-[#1160]: https://github.com/silviomoreto/bootstrap-select/issues/1160
-[#1269]: https://github.com/silviomoreto/bootstrap-select/issues/1269
-[58ed408]: https://github.com/silviomoreto/bootstrap-select/commit/58ed4085019526141be07beeada37788dfe2d316
-[#541]: https://github.com/silviomoreto/bootstrap-select/issues/541
+[#1291]: https://github.com/snapappointments/bootstrap-select/issues/1291
+[#1284]: https://github.com/snapappointments/bootstrap-select/issues/1284
+[#1245]: https://github.com/snapappointments/bootstrap-select/issues/1245
+[#1257]: https://github.com/snapappointments/bootstrap-select/issues/1257
+[#1310]: https://github.com/snapappointments/bootstrap-select/issues/1310
+[#1346]: https://github.com/snapappointments/bootstrap-select/issues/1346
+[#1338]: https://github.com/snapappointments/bootstrap-select/issues/1338
+[#1373]: https://github.com/snapappointments/bootstrap-select/issues/1373
+[#1363]: https://github.com/snapappointments/bootstrap-select/issues/1363
+[#1422]: https://github.com/snapappointments/bootstrap-select/issues/1422
+[#1451]: https://github.com/snapappointments/bootstrap-select/issues/1451
+[#1465]: https://github.com/snapappointments/bootstrap-select/issues/1465
+[#1459]: https://github.com/snapappointments/bootstrap-select/issues/1459
+[#1139]: https://github.com/snapappointments/bootstrap-select/issues/1139
+[#1290]: https://github.com/snapappointments/bootstrap-select/issues/1290
+[#1127]: https://github.com/snapappointments/bootstrap-select/issues/1127
+[#1016]: https://github.com/snapappointments/bootstrap-select/issues/1016
+[#1160]: https://github.com/snapappointments/bootstrap-select/issues/1160
+[#1269]: https://github.com/snapappointments/bootstrap-select/issues/1269
+[58ed408]: https://github.com/snapappointments/bootstrap-select/commit/58ed4085019526141be07beeada37788dfe2d316
+[#541]: https://github.com/snapappointments/bootstrap-select/issues/541
 
 -------------------
 
@@ -277,12 +276,12 @@
 
 Add Lithuanian translations.
 
-[#1268]: https://github.com/silviomoreto/bootstrap-select/issues/1268
-[#1273]: https://github.com/silviomoreto/bootstrap-select/issues/1273
-[#1295]: https://github.com/silviomoreto/bootstrap-select/issues/1295
-[#950]: https://github.com/silviomoreto/bootstrap-select/issues/950
-[#1272]: https://github.com/silviomoreto/bootstrap-select/issues/1272
-[#1284]: https://github.com/silviomoreto/bootstrap-select/issues/1284
+[#1268]: https://github.com/snapappointments/bootstrap-select/issues/1268
+[#1273]: https://github.com/snapappointments/bootstrap-select/issues/1273
+[#1295]: https://github.com/snapappointments/bootstrap-select/issues/1295
+[#950]: https://github.com/snapappointments/bootstrap-select/issues/950
+[#1272]: https://github.com/snapappointments/bootstrap-select/issues/1272
+[#1284]: https://github.com/snapappointments/bootstrap-select/issues/1284
 
 -------------------
 
@@ -294,8 +293,8 @@ Add Lithuanian translations.
 
 Add new translations.
 
-[#1250]: https://github.com/silviomoreto/bootstrap-select/issues/1250
-[#1230]: https://github.com/silviomoreto/bootstrap-select/issues/1230
+[#1250]: https://github.com/snapappointments/bootstrap-select/issues/1250
+[#1230]: https://github.com/snapappointments/bootstrap-select/issues/1230
 
 -------------------
 
@@ -304,4 +303,4 @@ Add new translations.
 ### Bug fixes
 * Fix [#1235] - issue with selects that had `form-control` class
 
-[#1235]: https://github.com/silviomoreto/bootstrap-select/issues/1235
+[#1235]: https://github.com/snapappointments/bootstrap-select/issues/1235
