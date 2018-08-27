@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.1 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.2 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -224,7 +224,7 @@ select.selectpicker {
   position: relative;
 }
 .bootstrap-select .dropdown-menu li.active small {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 .bootstrap-select .dropdown-menu li.disabled a {
   cursor: not-allowed;

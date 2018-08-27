@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>bootstrap-select</id>
-        <version>1.13.1</version>
+        <version>1.13.2</version>
         <title>bootstrap-select</title>
         <authors>Casey Holzer, Silvio Moreto, SnapAppointments LLC</authors>
         <owners>SnapAppointments, LLC</owners>
