@@ -1,3 +1,37 @@
+# v1.13.2 (2018-08-27)
+
+### Bug Fixes
+- [#1999]: selected styling removed from previous option in a multiselect
+- [#2024]: Arrow down key doesn't scroll the view to the top when virtualScroll is disabled
+- [#2027]: data-max-options="1" not removing selected class
+- [#2029]: LiveSearch and "Select All" selects too many options
+- [#2033]: Dividers broken on bootstrap 4
+- [#2035]: Selectbox with live search throwing error when UP/DOWN key is pressed
+- [#2038]: Select / Deselect All buttons are modifying disabled options
+- [#2044]: When data-container is set, first click resets scroll position
+- [#2045]: 'auto' width not working
+- [#2047]: Optgroup labels are escaped
+- [#2058]: Menu hight is not properly calculated when using data-size and styling the options' height
+
+### New Features
+- [#1972]: add option to manually specify Bootstrap's version
+- [#2036]: Add support for Bootstrap dropdown's display property added in v4.1.0
+
+[#1999]: https://github.com/snapappointments/bootstrap-select/issues/1999
+[#2024]: https://github.com/snapappointments/bootstrap-select/issues/2024
+[#2027]: https://github.com/snapappointments/bootstrap-select/issues/2027
+[#2029]: https://github.com/snapappointments/bootstrap-select/issues/2029
+[#2033]: https://github.com/snapappointments/bootstrap-select/issues/2033
+[#2035]: https://github.com/snapappointments/bootstrap-select/issues/2035
+[#2038]: https://github.com/snapappointments/bootstrap-select/issues/2038
+[#2044]: https://github.com/snapappointments/bootstrap-select/issues/2044
+[#2045]: https://github.com/snapappointments/bootstrap-select/issues/2045
+[#2047]: https://github.com/snapappointments/bootstrap-select/issues/2047
+[#2058]: https://github.com/snapappointments/bootstrap-select/issues/2058
+[#1972]: https://github.com/snapappointments/bootstrap-select/issues/1972
+[#2036]: https://github.com/snapappointments/bootstrap-select/issues/2036
+
+-------------------
 
 # v1.13.1 (2018-04-23)
 
