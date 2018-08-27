@@ -12,6 +12,7 @@
 - [#2045]: 'auto' width not working
 - [#2047]: Optgroup labels are escaped
 - [#2058]: Menu hight is not properly calculated when using data-size and styling the options' height
+- [#2079]: Subtext is difficult to read on active options
 
 ### New Features
 - [#1972]: add option to manually specify Bootstrap's version
@@ -28,6 +29,7 @@
 [#2045]: https://github.com/snapappointments/bootstrap-select/issues/2045
 [#2047]: https://github.com/snapappointments/bootstrap-select/issues/2047
 [#2058]: https://github.com/snapappointments/bootstrap-select/issues/2058
+[#2079]: https://github.com/snapappointments/bootstrap-select/issues/2079
 [#1972]: https://github.com/snapappointments/bootstrap-select/issues/1972
 [#2036]: https://github.com/snapappointments/bootstrap-select/issues/2036
 
