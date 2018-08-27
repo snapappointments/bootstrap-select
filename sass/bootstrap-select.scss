@@ -281,7 +281,7 @@ select.selectpicker {
       position: relative;
 
       &.active small {
-        color: #fff;
+        color: $input-alt-color-placeholder !important;
       }
 
       &.disabled a {
