@@ -1096,6 +1096,7 @@
         $menuInner.css({
           'max-height': menuHeight - menuPadding.vert + 'px',
           'overflow-y': 'auto',
+          'overflow-x': 'hidden',
           'min-height': ''
         });
       }
