@@ -82,6 +82,7 @@ ul.nav li.main {
 
 .bs-docs-header .lead {
   margin: 0 auto 30px;
+  line-height: 1.5;
 }
 
 .bs-docs-sub-header {
