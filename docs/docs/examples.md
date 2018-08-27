@@ -89,7 +89,7 @@
 You can add a search input by passing `data-live-search="true"` attribute:
 
 <div class="bs-docs-example no-code">
-  <select class="selectpicker" data-live-search="true">
+  <select class="selectpicker" data-live-search="true" data-width="fit">
     <option>Hot Dog, Fries and a Soda</option>
     <option>Burger, Shake and a Smile</option>
     <option>Sugar, Spice and all things nice</option>
@@ -101,7 +101,7 @@ You can add a search input by passing `data-live-search="true"` attribute:
 Add key words to options to improve their searchability using `data-tokens`.
 
 <div class="bs-docs-example">
-  <select class="selectpicker" data-live-search="true">
+  <select class="selectpicker" data-live-search="true" data-width="fit">
     <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
     <option data-tokens="mustard">Burger, Shake and a Smile</option>
     <option data-tokens="frosting">Sugar, Spice and all things nice</option>
@@ -173,7 +173,7 @@ Using the `title` attribute will set the default placeholder text when nothing i
 <div class="bs-docs-example">
   <div class="form-group">
     <label>Multiple</label>
-    <select class="selectpicker" multiple title="Choose one of the following...">
+    <select class="selectpicker" multiple title="Choose one of the following..." data-width="fit">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
@@ -182,7 +182,7 @@ Using the `title` attribute will set the default placeholder text when nothing i
 
   <div class="form-group">
     <label>Standard</label>
-    <select class="selectpicker" title="Choose one of the following...">
+    <select class="selectpicker" title="Choose one of the following..." data-width="fit">
       <option>Mustard</option>
       <option>Ketchup</option>
       <option>Relish</option>
