@@ -3,9 +3,9 @@ html {
   min-height: 100%;
 }
 body {
-  padding-top: 51px;
+  padding-top: 56px;
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  margin-bottom: 64px;
 }
 label {
   display: block;
@@ -24,7 +24,7 @@ ul.nav li.main {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
+  height: 64px;
   background-color: #f5f5f5;
 }
 
@@ -67,7 +67,6 @@ ul.nav li.main {
 }
 
 .bs-docs-header {
-  margin-bottom: 0;
   background: #337ab7;
   color: #fff;
 }
@@ -83,6 +82,7 @@ ul.nav li.main {
 
 .bs-docs-header .lead {
   margin: 0 auto 30px;
+  line-height: 1.5;
 }
 
 .bs-docs-sub-header {
@@ -134,47 +134,41 @@ ul.nav li.main {
 
 .bs-docs-example {
   position: relative;
-  padding: 45px 15px 15px;
+  padding: 15px;
   margin: 0 -15px 15px;
-  border-color: #e5e5e5 #eee #eee;
+  border-color: #f7f7f9;
   border-style: solid;
   border-width: 1px 0;
   -webkit-box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
   box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
 }
 
-/* Echo out a label for the example */
-.bs-docs-example:after {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #959595;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  content: "Example";
-}
-
 .highlight {
   padding: 9px 14px;
   margin-bottom: 14px;
   background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
-  border-radius: 4px;
+  border-radius: 0;
+  margin-left: -15px;
+  margin-right: -15px;
 }
 
-.bs-docs-example + .highlight {
+.bs-docs-example + .highlight,
+.highlight-before .highlight {
   margin: -15px -15px 15px;
-  border-width: 0 0 1px;
+  border-width: 0;
+}
+
+.highlight + .bs-docs-example {
+  margin: -15px -15px 15px;
+  border-width: 0 0 4px;
   border-radius: 0;
 }
 
 .carbonad {
   margin-top: 80px;
+  margin-bottom: -3rem;
 }
-
-.carbonad-inner {
+ .carbonad-inner {
   width: auto!important;
   height: auto!important;
   padding: 20px!important;
@@ -187,8 +181,7 @@ ul.nav li.main {
   border: solid rgba(255, 255, 255, 0.50) !important;
   border-width: 1px 0!important;
 }
-
-.carbon-poweredby,
+ .carbon-poweredby,
 .carbon-text {
   display: block!important;
   float: none!important;
@@ -198,26 +191,23 @@ ul.nav li.main {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif!important;
   color: #fff!important;
 }
-
-.carbon-poweredby {
+ .carbon-poweredby {
   float: left;
   margin-top: 9px;
   text-align: left;
   width: 142px;
   opacity: 0.5;
 }
-
-.charity {
+ .charity {
   opacity: 0.5;
   padding: 4px;
   margin-bottom: -31px;
+  font-size: 14px;
 }
-
-.charity a {
+ .charity a {
   color: #fff;
 }
-
-.carbon-img img {
+ .carbon-img img {
     border: none;
     display: inline;
     float: left;
@@ -266,19 +256,23 @@ ul.nav li.main {
 }
 
 @media (min-width: 768px) {
+  .highlight {
+    margin-left: 0;
+    margin-right: 0;
+  }
   .bs-docs-example {
     margin-right: 0;
     margin-left: 0;
     background-color: #fff;
-    border-color: #ddd;
-    border-width: 1px;
-    border-radius: 4px 4px 0 0;
+    border-color: #f7f7f9;
+    border-width: 4px;
+    border-radius: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
   }
 
   .bs-docs-example.no-code {
-    border-radius: 4px;
+    border-radius: 0;
   }
 
   .bs-docs-example + .highlight {
@@ -286,8 +280,13 @@ ul.nav li.main {
     margin-right: 0;
     margin-left: 0;
     border-width: 1px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+  }
+
+  .highlight + .bs-docs-example {
+    margin-top: -16px;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 4px;
   }
 
   .logo-container {
@@ -295,7 +294,7 @@ ul.nav li.main {
   }
 
   .gh-btns {
-    margin-bottom: -48px;
+    margin-bottom: -63px;
   }
 }
 

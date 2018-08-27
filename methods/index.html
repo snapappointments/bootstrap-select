@@ -4,15 +4,27 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.">
   
-  
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
+  <link rel="canonical" href="https://developer.snapappointments.com/bootstrap-select/methods/">
+  <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2d80b5">
+  <meta name="application-name" content="SnapAppointments Scheduling">
+  <meta name="apple-mobile-web-app-title" content="SnapAppointments Scheduling">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-TileColor" content="#00a300">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#2d80b5">
+  <link rel="icon" href="/favicon.ico">
 
-  <title>Methods - bootstrap-select</title>
+  <title>Methods | bootstrap-select &middot; SnapAppointments Developer</title>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="../css/highlight.css" rel="stylesheet">
   <link href="../css/base.css" rel="stylesheet">
   <link href="../css/custom.css" rel="stylesheet">
@@ -25,118 +37,113 @@
   <![endif]-->
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#sidebar" data-offset="240">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
+<header class="navbar navbar-expand-md navbar-light fixed-top bg-light" role="navigation">
+  <!-- Main title -->
+  <a class="navbar-brand" href="..">bootstrap-select</a>
 
-    <!-- Collapsed navigation -->
-    <div class="navbar-header">
+  <!-- Collapsed navigation -->
+  
+  <!-- Expander button -->
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+
+  <!-- Expanded navigation -->
+  <div class="navbar-collapse collapse">
+    
+    <!-- Main navigation -->
+    <ul class="navbar-nav mr-auto">
       
-      <!-- Expander button -->
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       
-
-      <!-- Main title -->
-      <a class="navbar-brand" href="..">bootstrap-select</a>
-    </div>
-
-    <!-- Expanded navigation -->
-    <div class="navbar-collapse collapse">
+      <li class="nav-item">
+        <a class="nav-link" href="..">Getting Started</a>
+      </li>
       
-      <!-- Main navigation -->
-      <ul class="nav navbar-nav">
-        
-        
-        <li >
-          <a href="..">Bootstrap-select</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="../examples/">Examples</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="../options/">Options</a>
-        </li>
-        
-        
-        
-        <li class="active">
-          <a href="./">Methods</a>
-        </li>
-        
-        
-      </ul>
       
+      
+      <li class="nav-item">
+        <a class="nav-link" href="../examples/">Examples</a>
+      </li>
+      
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="../options/">Options</a>
+      </li>
+      
+      
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="./">Methods</a>
+      </li>
+      
+      
+    </ul>
+    
 
-      <ul class="nav navbar-nav navbar-right">
-        
-        <li>
-          <a href="https://github.com/silviomoreto/bootstrap-select">
-            
-            <i class="fa fa-github"></i>
-            
-            GitHub
-          </a>
-        </li>
-        
-      </ul>
-    </div>
+    <ul class="navbar-nav ml-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/snapappointments/bootstrap-select/">
+          
+          <i class="fa fa-github"></i>
+          
+          GitHub
+        </a>
+      </li>
+      
+    </ul>
   </div>
-</div>
+</header>
 
 
-<section class="jumbotron">
-  <div class="container">
+<section class="jumbotron jumbotron-fluid">
+  <div class="container-fluid">
     <h1>Methods</h1>
   </div>
 </section>
-<div class="container">
-  <div class="col-md-3"><div class="bs-sidebar hidden-print affix-top" role="complementary">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3"><div class="bs-sidebar hidden-print" role="complementary" id="sidebar">
     <ul class="nav bs-sidenav">
+      
     
-        <li class="main active">
-	        <a href="#methods">Methods</a>
-	        <ul class="nav">
+        <li class="nav-item main">
+        	<a class="nav-link active" href="#methods">Methods</a>
+        	<ul class="nav">
 	        
-	            <li><a href="#selectpickerval">.selectpicker('val')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerval">.selectpicker('val')</a></li>
 	        
-	            <li><a href="#selectpickerselectall">.selectpicker('selectAll')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerselectall">.selectpicker('selectAll')</a></li>
 	        
-	            <li><a href="#selectpickerdeselectall">.selectpicker('deselectAll')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerdeselectall">.selectpicker('deselectAll')</a></li>
 	        
-	            <li><a href="#selectpickerrender">.selectpicker('render')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerrender">.selectpicker('render')</a></li>
 	        
-	            <li><a href="#selectpickermobile">.selectpicker('mobile')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickermobile">.selectpicker('mobile')</a></li>
 	        
-	            <li><a href="#selectpickersetstyle">.selectpicker('setStyle')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickersetstyle">.selectpicker('setStyle')</a></li>
 	        
-	            <li><a href="#selectpickerrefresh">.selectpicker('refresh')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerrefresh">.selectpicker('refresh')</a></li>
 	        
-	            <li><a href="#selectpickertoggle">.selectpicker('toggle')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickertoggle">.selectpicker('toggle')</a></li>
 	        
-	            <li><a href="#selectpickerhide">.selectpicker('hide')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerhide">.selectpicker('hide')</a></li>
 	        
-	            <li><a href="#selectpickershow">.selectpicker('show')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickershow">.selectpicker('show')</a></li>
 	        
-	            <li><a href="#selectpickerdestroy">.selectpicker('destroy')</a></li>
+	            <li class="nav-item"><a class="nav-link" href="#selectpickerdestroy">.selectpicker('destroy')</a></li>
 	        
-	        </ul>
+	    	</ul>
         </li>
+    
     
     </ul>
 </div></div>
-  <div class="col-md-9" role="main">
+    <div class="col-lg-9" role="main">
 
 <h1 id="methods">Methods</h1>
 <p>Interface with bootstrap-select.</p>
@@ -314,35 +321,33 @@ $('.ex-enable').click(function () {
 <p>To programmatically destroy the bootstrap-select, use the <code>destroy</code> method.</p>
 <pre><code class="js">$('.selectpicker').selectpicker('destroy');
 </code></pre></div>
+  </div>
 </div>
 
 
   <div class="footer">
     <div class="container text-center">
-      <p class="text-muted">Bootstrap-select is maintained by <a href="https://github.com/caseyjhol">caseyjhol</a>,
-        <a href="https://github.com/t0xicCode">t0xicCode</a>, and the community.</p>
+      <p class="text-muted">Bootstrap-select is maintained by <a href="https://snapappointments.com">SnapAppointments</a>, <a href="https://github.com/caseyjhol">caseyjhol</a>,
+        and the community.</p>
     </div>
   </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="../js/highlight.pack.js"></script>
 <script src="../js/base.js"></script>
 <script src="../dist/js/bootstrap-select.min.js"></script>
+<script>
+  $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113793762-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-35848102-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function () {
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-  })();
+  gtag('config', 'UA-113793762-1');
 </script>
 </body>
 </html>

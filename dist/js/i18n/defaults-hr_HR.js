@@ -24,13 +24,20 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Hautapenik ez',
-    noneResultsText: 'Emaitzarik ez {0}',
-    countSelectedText: '{1}(e)tik {0} hautatuta',
-    maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
-    multipleSeparator: ', ',
-    selectAllText: 'Hautatu Guztiak',
-    deselectAllText: 'Desautatu Guztiak'
+    noneSelectedText: 'Odaberite stavku',
+    noneResultsText: 'Nema rezultata pretrage {0}',
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected == 1) ? "{0} stavka selektirana" : "{0} stavke selektirane";
+    },
+    maxOptionsText: function (numAll, numGroup) {
+      return [
+        (numAll == 1) ? 'Limit je postignut ({n} stvar maximalno)' : 'Limit je postignut ({n} stavke maksimalno)',
+        (numGroup == 1) ? 'Grupni limit je postignut ({n} stvar maksimalno)' : 'Grupni limit je postignut ({n} stavke maksimalno)'
+      ];
+    },
+    selectAllText: 'Selektiraj sve',
+    deselectAllText: 'Deselektiraj sve',
+    multipleSeparator: ', '
   };
 })(jQuery);
 

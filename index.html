@@ -4,15 +4,27 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.">
+  <meta name="description" content="The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.">
   
-  
-  <link rel="shortcut icon" href="./img/favicon.ico">
+  <link rel="canonical" href="https://developer.snapappointments.com/bootstrap-select/">
+  <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2d80b5">
+  <meta name="application-name" content="SnapAppointments Scheduling">
+  <meta name="apple-mobile-web-app-title" content="SnapAppointments Scheduling">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-TileColor" content="#00a300">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#2d80b5">
+  <link rel="icon" href="/favicon.ico">
 
-  <title>bootstrap-select</title>
+  <title>Getting Started | bootstrap-select &middot; SnapAppointments Developer</title>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="./css/highlight.css" rel="stylesheet">
   <link href="./css/base.css" rel="stylesheet">
   <link href="./css/custom.css" rel="stylesheet">
@@ -23,246 +35,179 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
-  <style type="text/css">
-    #carbonads .carbon-wrap,
-    #yxqg_5 .yxqg_5-wrap {
-      width: 150px;
-    }
-    #carbonads .carbon-img,
-    #yxqg_5 .yxqg_5-img {
-      display: block;
-      float: left;
-    }
-    #carbonads .carbon-img img,
-    #yxqg_5 .yxqg_5-img img {
-      display: block;
-    }
-    #carbonads .carbon-text,
-    #yxqg_5 .yxqg_5-text {
-      display: block;
-      padding: 10px 0 0 10px;
-      color: #FFF;
-      font-size: 12px;
-      line-height: 1.5em;
-      width: 160px;
-      float: left;
-    }
-    #carbonads .carbon-poweredby,
-    #yxqg_5 .yxqg_5-poweredby {
-      display: block;
-      color: #ADB0BA;
-      font-size: .9em;
-      padding: 10px 0 0;
-      float: right;
-    }
-    .placement-display {
-      padding-top: 15px;
-    }
-  </style>
-  <script type='text/javascript'>           	
-    (function(window, base) {
-      var script = document.createElement("script");
-      script.src = "//" + base + "/c?r=" + Math.random();
-      script.async = true;
-      document.getElementsByTagName('head')[0].appendChild(script);
-    })(window, "yxqg.misosoup.io");
-  </script>
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#sidebar" data-offset="240">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
+<header class="navbar navbar-expand-md navbar-light fixed-top bg-light" role="navigation">
+  <!-- Main title -->
+  <a class="navbar-brand" href=".">bootstrap-select</a>
 
-    <!-- Collapsed navigation -->
-    <div class="navbar-header">
+  <!-- Collapsed navigation -->
+  
+  <!-- Expander button -->
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+
+  <!-- Expanded navigation -->
+  <div class="navbar-collapse collapse">
+    
+    <!-- Main navigation -->
+    <ul class="navbar-nav mr-auto">
       
-      <!-- Expander button -->
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       
-
-      <!-- Main title -->
-      <a class="navbar-brand" href=".">bootstrap-select</a>
-    </div>
-
-    <!-- Expanded navigation -->
-    <div class="navbar-collapse collapse">
+      <li class="nav-item active">
+        <a class="nav-link" href=".">Getting Started</a>
+      </li>
       
-      <!-- Main navigation -->
-      <ul class="nav navbar-nav">
-        
-        
-        <li class="active">
-          <a href=".">Bootstrap-select</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="examples/">Examples</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="options/">Options</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="methods/">Methods</a>
-        </li>
-        
-        
-      </ul>
       
+      
+      <li class="nav-item">
+        <a class="nav-link" href="examples/">Examples</a>
+      </li>
+      
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="options/">Options</a>
+      </li>
+      
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="methods/">Methods</a>
+      </li>
+      
+      
+    </ul>
+    
 
-      <ul class="nav navbar-nav navbar-right">
-        
-        <li>
-          <a href="https://github.com/silviomoreto/bootstrap-select">
-            
-            <i class="fa fa-github"></i>
-            
-            GitHub
-          </a>
-        </li>
-        
-      </ul>
-    </div>
+    <ul class="navbar-nav ml-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/snapappointments/bootstrap-select/">
+          
+          <i class="fa fa-github"></i>
+          
+          GitHub
+        </a>
+      </li>
+      
+    </ul>
   </div>
-</div>
+</header>
 
  
-<div class="jumbotron bs-docs-header text-center">
+<div class="jumbotron jumbotron-fluid bs-docs-header text-center">
   <div class="container">
     <h1>bootstrap-select</h1>
-    <p class="lead">Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.</p>
-    <a class="btn btn-outline-inverse btn-lg" href="//github.com/silviomoreto/bootstrap-select/archive/v1.12.4.zip" role="button">
-      <i class="fa fa-download"></i> Download (v1.12.4)
+    <h2 class="lead">
+      The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.
+    </h2>
+    <a class="btn btn-outline-inverse btn-lg" href="//github.com/snapappointments/bootstrap-select/archive/v1.13.2.zip" role="button">
+      <i class="fa fa-download"></i> Download (v1.13.2)
     </a>
   </div>
   <div class="gh-btns">
-    <iframe src="https://ghbtns.com/github-btn.html?user=silviomoreto&repo=bootstrap-select&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-    <iframe src="https://ghbtns.com/github-btn.html?user=silviomoreto&repo=bootstrap-select&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+    <iframe src="https://ghbtns.com/github-btn.html?user=snapappointments&repo=bootstrap-select&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+    <iframe src="https://ghbtns.com/github-btn.html?user=snapappointments&repo=bootstrap-select&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
   </div>
-  <div class="placement-display">
-      <div class="carbonad-inner">
-        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
-      </div>
-      <div class="charity">Ad revenue is donated to charity <a href="http://www.projetocana.org/" target="_blank" rel="nofollow">Projeto Cana</a>. <br> or donate by <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FSC9BZ4WTN57Y" title="Donate to this project using PayPal" target="_blank">Paypal</a></div>
+  <div class="carbonad">
+    <div class="carbonad-inner">
+      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
+    </div>
+    <div class="charity">
+      Ad revenue is donated to the charity <a href="http://www.projetocana.org/" target="_blank" rel="nofollow">Projeto Cana</a>. <br> Donate directly via <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FSC9BZ4WTN57Y" title="Donate to this project using PayPal" target="_blank">PayPal</a>.
+    </div>
   </div>
 </div>
-<div class="container">
+<div class="container pb-4">
 
 
 <h1 id="getting-started">Getting Started</h1>
 <hr />
-<h2 id="dependencies">Dependencies</h2>
-<p>Requires jQuery v1.8.0+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the minimum requirements can be downloaded <a href="http://getbootstrap.com/customize/?id=7830063837006f6fc84f">here</a>.</p>
-<h2 id="cdnjs">CDNJS</h2>
-<p>The folks at CDNJS host a copy of the library. The CDN is updated after the release is made public, which means there is a delay between the publishing of a release and its availability on the CDN, so keep that in mind. Just use these links:</p>
+<h2 id="quick-start">Quick start</h2>
+<p>Bootstrap-select requires jQuery v1.9.1+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the Bootstrap v3.3.7 minimum requirements can be downloaded <a href="https://getbootstrap.com/docs/3.3/customize/?id=7830063837006f6fc84f">here</a>. If using bootstrap-select with Bootstrap v4+, you'll also need Popper.js. For all of Bootstrap v4's requirements, see <a href="https://getbootstrap.com/docs/4.1/getting-started/introduction/">Getting started</a>. A precompiled version of the requirements will be made available in an upcoming release of bootstrap-select.</p>
+<p>Several quick start options are available:</p>
+<ul>
+<li><a href="https://github.com/snapappointments/bootstrap-select/archive/v1.13.2.zip">Download the latest release.</a></li>
+<li>Clone the repo: <code>git clone https://github.com/snapappointments/bootstrap-select.git</code></li>
+<li>Install with <a href="https://www.npmjs.com/package/bootstrap-select">npm</a>: <code>npm install bootstrap-select</code></li>
+<li>Install with <a href="https://yarn.pm/bootstrap-select">yarn</a>: <code>yarn add bootstrap-select</code></li>
+<li>Install with <a href="https://getcomposer.org">Composer</a>: <code>composer require snapappointments/bootstrap-select</code></li>
+<li>Install with <a href="https://www.nuget.org/packages/bootstrap-select">NuGet</a>: <code>Install-Package bootstrap-select</code></li>
+<li>Install with <a href="https://bower.io">Bower</a>: <code>bower install bootstrap-select</code></li>
+<li>Install via CDN:</li>
+</ul>
 <pre><code class="html">&lt;!-- Latest compiled and minified CSS --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css&quot;&gt;
 
 &lt;!-- Latest compiled and minified JavaScript --&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js&quot;&gt;&lt;/script&gt;
 
 &lt;!-- (Optional) Latest compiled and minified JavaScript translation files --&gt;
-&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 
-<h2 id="install-with-bower">Install with Bower</h2>
-<p>You can also install bootstrap-select using <a href="http://bower.io">Bower</a>:</p>
-<pre><code class="elixir">$ bower install bootstrap-select
-</code></pre>
-
-<h2 id="install-with-npm">Install with npm</h2>
-<p>You can also install bootstrap-select using <a href="https://www.npmjs.com/package/bootstrap-select">npm</a>:</p>
-<pre><code class="elixir">$ npm install bootstrap-select
-</code></pre>
-
-<h2 id="install-with-nuget">Install with NuGet</h2>
-<p>You can also install bootstrap-select using <a href="https://www.nuget.org/packages/bootstrap-select">NuGet</a>:</p>
-<pre><code class="elixir">$ Install-Package bootstrap-select
-</code></pre>
+<div class="bs-docs-example small">
+    The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN.
+</div>
 
 <h1 id="usage">Usage</h1>
 <hr />
-<p>Create your <code>&lt;select&gt;</code> with the <code>.selectpicker</code> class. The data-api will automatically theme these elements.</p>
+<p><div class="card border-warning">
+    <div class="card-body">
+        Bootstrap 4 only works with bootstrap-select v1.13.0+. By default, bootstrap-select automatically detects the version of Bootstrap being used. However, there are some instances where the version detection won't work. See the <a href="https://developer.snapappointments.com/bootstrap-select/options/#bootstrap-version">documentation</a> for more information.
+    </div>
+</div></p>
+<h3 id="via-selectpicker-class">Via <code>selectpicker</code> class</h3>
+<p>Add the <code>selectpicker</code> class to your select element to use the data-api.</p>
 <pre><code class="html">&lt;select class=&quot;selectpicker&quot;&gt;
   &lt;option&gt;Mustard&lt;/option&gt;
   &lt;option&gt;Ketchup&lt;/option&gt;
-  &lt;option&gt;Relish&lt;/option&gt;
+  &lt;option&gt;Barbecue&lt;/option&gt;
 &lt;/select&gt;
 </code></pre>
 
-<p>Options can be passed via data attributes or JavaScript.</p>
-<pre><code class="js">$('.selectpicker').selectpicker({
-  style: 'btn-info',
-  size: 4
-});
+<h3 id="via-javascript">Via JavaScript</h3>
+<pre><code class="js">// To style only selects with the selectpicker class
+$('.selectpicker').selectpicker();
 </code></pre>
 
-<h1 id="used-by">Used by</h1>
-<hr />
-<div class="row logo-block">
-    <div class="logo-container">
-        <a href="https://snapappointments.com" target="_blank"><img src="img/logos/snapappointments.png" alt="SnapAppointments"></a>
-    </div>
-    <div class="logo-container">
-        <a href="https://www.thermofisher.com" target="_blank"><img src="img/logos/thermofisher.png" alt="Thermo Fisher Scientific Inc."></a>
-    </div>
-    <div class="logo-container">
-        <a href="https://www.membermeister.com" target="_blank"><img src="img/logos/membermeister.png" alt="membermeister"></a>
-    </div>
-    <div class="logo-container">
-        <a href="https://solveforall.com" target="_blank"><img src="img/logos/solveforall.png" alt="Solve for All"></a>
-    </div>
-    <div class="logo-container">
-        <a href="http://www.123itworks.co.uk" target="_blank"><img src="img/logos/estimateit.png" alt="EstiMATEit"></a>
-    </div>
-    <div class="logo-container">
-        <a href="https://convertizer.com" target="_blank"><img src="img/logos/convertizer.png" alt="Convertizer"></a>
-    </div>
-</div>
+<p>or</p>
+<pre><code class="js">// To style all selects
+$('select').selectpicker();
+</code></pre>
 
-<div class="text-muted">Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.</div>
+<p>If calling bootstrap-select via JavaScript, you will need to wrap your code in a <a href="https://api.jquery.com/ready/"><code>$(document).ready()</code></a> block or place it at the bottom of the page (after the last instance of bootstrap-select).</p>
 </div>
 
 
   <div class="footer">
     <div class="container text-center">
-      <p class="text-muted">Bootstrap-select is maintained by <a href="https://github.com/caseyjhol">caseyjhol</a>,
-        <a href="https://github.com/t0xicCode">t0xicCode</a>, and the community.</p>
+      <p class="text-muted">Bootstrap-select is maintained by <a href="https://snapappointments.com">SnapAppointments</a>, <a href="https://github.com/caseyjhol">caseyjhol</a>,
+        and the community.</p>
     </div>
   </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="./js/highlight.pack.js"></script>
 <script src="./js/base.js"></script>
 <script src="./dist/js/bootstrap-select.min.js"></script>
+<script>
+  $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113793762-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-35848102-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function () {
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-  })();
+  gtag('config', 'UA-113793762-1');
 </script>
 </body>
 </html>

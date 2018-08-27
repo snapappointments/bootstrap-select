@@ -17,13 +17,14 @@ $(document).ready(function() {
   }
   
   function plnkrOpener() {
-    var ctrl = {};
+    var ctrl = {},
+        bootstrapVersion = $('#plnkrOpener').data('bootstrapVersion');
   
     ctrl.example = {
       path: ctrl.examplePath,
       manifest: undefined,
       files: undefined,
-      name: 'bootstrap-select example'
+      name: 'bootstrap-select playground (Bootstrap ' + bootstrapVersion + ')'
     };
   
     ctrl.open = function() {
@@ -36,17 +37,17 @@ $(document).ready(function() {
       ctrl.example.files = [
         {
           name: 'index.html',
-          url: 'test.html',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/tests/bootstrap' + bootstrapVersion + '.html',
           content: ''
         },
         {
-          name: 'bootstrap-select.js',
-          url: 'https://raw.githubusercontent.com/silviomoreto/bootstrap-select/master/dist/js/bootstrap-select.js',
+          name: 'js/bootstrap-select.js',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/dist/js/bootstrap-select.js',
           content: ''
         },
         {
-          name: 'bootstrap-select.css',
-          url: 'https://raw.githubusercontent.com/silviomoreto/bootstrap-select/master/dist/css/bootstrap-select.css',
+          name: 'css/bootstrap-select.css',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/dist/css/bootstrap-select.css',
           content: ''
         }
       ]
@@ -58,6 +59,11 @@ $(document).ready(function() {
         })
         .then(function(data) {
           file.content = data;
+
+          if (file.name === 'index.html') {
+            file.content = file.content.replace(new RegExp('../dist/', 'g'), '');
+          }
+
           postData['files[' + file.name + ']'] = file.content;
         });
       }

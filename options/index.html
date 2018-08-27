@@ -4,15 +4,27 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.">
   
-  
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
+  <link rel="canonical" href="https://developer.snapappointments.com/bootstrap-select/options/">
+  <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2d80b5">
+  <meta name="application-name" content="SnapAppointments Scheduling">
+  <meta name="apple-mobile-web-app-title" content="SnapAppointments Scheduling">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="msapplication-TileColor" content="#00a300">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#2d80b5">
+  <link rel="icon" href="/favicon.ico">
 
-  <title>Options - bootstrap-select</title>
+  <title>Options | bootstrap-select &middot; SnapAppointments Developer</title>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="../css/highlight.css" rel="stylesheet">
   <link href="../css/base.css" rel="stylesheet">
   <link href="../css/custom.css" rel="stylesheet">
@@ -25,103 +37,119 @@
   <![endif]-->
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#sidebar" data-offset="240">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
+<header class="navbar navbar-expand-md navbar-light fixed-top bg-light" role="navigation">
+  <!-- Main title -->
+  <a class="navbar-brand" href="..">bootstrap-select</a>
 
-    <!-- Collapsed navigation -->
-    <div class="navbar-header">
+  <!-- Collapsed navigation -->
+  
+  <!-- Expander button -->
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+
+  <!-- Expanded navigation -->
+  <div class="navbar-collapse collapse">
+    
+    <!-- Main navigation -->
+    <ul class="navbar-nav mr-auto">
       
-      <!-- Expander button -->
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
       
-
-      <!-- Main title -->
-      <a class="navbar-brand" href="..">bootstrap-select</a>
-    </div>
-
-    <!-- Expanded navigation -->
-    <div class="navbar-collapse collapse">
+      <li class="nav-item">
+        <a class="nav-link" href="..">Getting Started</a>
+      </li>
       
-      <!-- Main navigation -->
-      <ul class="nav navbar-nav">
-        
-        
-        <li >
-          <a href="..">Bootstrap-select</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="../examples/">Examples</a>
-        </li>
-        
-        
-        
-        <li class="active">
-          <a href="./">Options</a>
-        </li>
-        
-        
-        
-        <li >
-          <a href="../methods/">Methods</a>
-        </li>
-        
-        
-      </ul>
       
+      
+      <li class="nav-item">
+        <a class="nav-link" href="../examples/">Examples</a>
+      </li>
+      
+      
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="./">Options</a>
+      </li>
+      
+      
+      
+      <li class="nav-item">
+        <a class="nav-link" href="../methods/">Methods</a>
+      </li>
+      
+      
+    </ul>
+    
 
-      <ul class="nav navbar-nav navbar-right">
-        
-        <li>
-          <a href="https://github.com/silviomoreto/bootstrap-select">
-            
-            <i class="fa fa-github"></i>
-            
-            GitHub
-          </a>
-        </li>
-        
-      </ul>
-    </div>
+    <ul class="navbar-nav ml-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/snapappointments/bootstrap-select/">
+          
+          <i class="fa fa-github"></i>
+          
+          GitHub
+        </a>
+      </li>
+      
+    </ul>
   </div>
-</div>
+</header>
 
 
-<section class="jumbotron">
-  <div class="container">
+<section class="jumbotron jumbotron-fluid">
+  <div class="container-fluid">
     <h1>Options</h1>
   </div>
 </section>
-<div class="container">
-  <div class="col-md-3"><div class="bs-sidebar hidden-print affix-top" role="complementary">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3"><div class="bs-sidebar hidden-print" role="complementary" id="sidebar">
     <ul class="nav bs-sidenav">
+      
     
-        <li class="main active">
-	        <a href="#core-options">Core options</a>
-	        <ul class="nav">
+        <li class="nav-item main">
+        	<a class="nav-link active" href="#bootstrap-version">Bootstrap version</a>
+        	<ul class="nav">
 	        
-	        </ul>
+	    	</ul>
         </li>
     
-        <li class="main ">
-	        <a href="#events">Events</a>
-	        <ul class="nav">
+        <li class="nav-item main">
+        	<a class="nav-link " href="#core-options">Core options</a>
+        	<ul class="nav">
 	        
-	        </ul>
+	    	</ul>
         </li>
+    
+        <li class="nav-item main">
+        	<a class="nav-link " href="#default-settings">Default settings</a>
+        	<ul class="nav">
+	        
+	    	</ul>
+        </li>
+    
+        <li class="nav-item main">
+        	<a class="nav-link " href="#events">Events</a>
+        	<ul class="nav">
+	        
+	    	</ul>
+        </li>
+    
     
     </ul>
 </div></div>
-  <div class="col-md-9" role="main">
+    <div class="col-lg-9" role="main">
+
+<h1 id="bootstrap-version">Bootstrap version</h1>
+<hr />
+<p>Because there are some changes in class names and layout between Bootstrap 3 and Bootstrap 4, bootstrap-select needs to know the version of Bootstrap you are using. By default, bootstrap-select automatically detects the version of Bootstrap. However, there are some instances where the version detection does not work properly (e.g. Bootstrap is being loaded asynchronously or there is a namespace collision). For now, bootstrap-select defaults to using Bootstrap 3 formatting if version detection fails. This will be changed in the next major release.</p>
+<p>You can manually specify Bootstrap's version via bootstrap-select's <code>Constructor.BootstrapVersion</code> object:</p>
+<pre><code class="js">$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+</code></pre>
 
 <h1 id="core-options">Core options</h1>
 <hr />
@@ -150,8 +178,7 @@
     <td>string | false</td>
     <td><code>false</code></td>
     <td>
-        <p>When set to a string, appends the select to a specific element or selector, e.g., 
-        <code>container: 'body' | '.main-body'</code></p>
+        <p>When set to a string, appends the select to a specific element or selector, e.g., <code>container: 'body' | '.main-body'</code></p>
     </td>
   </tr>
   <tr>
@@ -159,8 +186,7 @@
     <td>string | function</td>
     <td><code>function</code></td>
     <td>
-      <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > 
-      #</code>. {0} is the selected amount. {1} is total available for selection.</p>
+      <p>Sets the format for the text displayed when selectedTextFormat is <code>count</code> or <code>count > #</code>. {0} is the selected amount. {1} is total available for selection.</p>
       <p>When set to a function, the first parameter is the number of selected options, and the second is the total number of 
       options. The function must return a string.</p>
     </td>
@@ -253,8 +279,7 @@
     <td><code>false</code></td>
     <td>
       <p>When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.</p>
-      <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only 
-      applies to that <code>&lt;optgroup&gt;</code>.</p>
+      <p>This option can also exist as a data-attribute for an <code>&lt;optgroup&gt;</code>, in which case it only applies to that <code>&lt;optgroup&gt;</code>.</p>
     </td>
   </tr>
   <tr>
@@ -291,6 +316,14 @@
     </td>
   </tr>
   <tr>
+    <td>noneResultsText</td>
+    <td>string</td>
+    <td><code>'No results matched {0}'</code></td>
+    <td>
+      <p>The text displayed when a search doesn't return any results.</p>
+    </td>
+  </tr>
+  <tr>
     <td>selectAllText</td>
     <td>string</td>
     <td><code>'Select All'</code></td>
@@ -312,8 +345,7 @@
     <td>boolean</td>
     <td><code>false</code></td>
     <td>
-      <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the 
-      selectpicker dropdown.</p>
+      <p>When set to <code>true</code>, treats the tab character like the enter or space characters within the selectpicker dropdown.</p>
     </td>
   </tr>
   <tr>
@@ -321,8 +353,7 @@
     <td>boolean</td>
     <td><code>true</code></td>
     <td>
-      <p>When set to <code>true</code>, display custom HTML associated with selected option(s) in the button. When set 
-       to <code>false</code>, the option value will be displayed instead.</p>
+      <p>When set to <code>true</code>, display custom HTML associated with selected option(s) in the button. When set to <code>false</code>, the option value will be displayed instead.</p>
     </td>
   </tr>
   <tr>
@@ -385,12 +416,19 @@
     </td>
   </tr>
   <tr>
+    <td>virtualScroll</td>
+    <td>boolean | integer</td>
+    <td><code>600</code></td>
+    <td>
+      <p>If enabled, the items in the dropdown will be rendered using virtualization (i.e. only the items that are within the viewport will be rendered). This drastically improves performance for selects with a large number of options. Set to an integer to only use virtualization if the select has at least that number of options.</p>
+    </td>
+  </tr>
+  <tr>
     <td>width</td>
     <td><code>'auto'</code> | <code>'fit'</code> | css-width | false (where <code>css-width</code> is a CSS width with units, e.g. <code>100px</code>)</td>
     <td><code>false</code></td>
     <td>
-      <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the 
-      widest option.</p>
+      <p>When set to <code>auto</code>, the width of the selectpicker is automatically adjusted to accommodate the widest option.</p>
       <p>When set to a css-width, the width of the selectpicker is forced inline to the given value.</p>
       <p>When set to <code>false</code>, all width information is removed.</p>
     </td>
@@ -405,6 +443,12 @@
   </tr>
   </tbody>
 </table>
+
+<h1 id="default-settings">Default settings</h1>
+<hr />
+<p>You can change the default settings for bootstrap-select by modifying its <code>Constructor.DEFAULTS</code> object:</p>
+<pre><code class="js">$.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ' | ';
+</code></pre>
 
 <h1 id="events">Events</h1>
 <hr />
@@ -448,44 +492,42 @@
     </tr>
     <tr>
       <td>changed.bs.select</td>
-      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, newValue, oldValue.</td>
+      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, isSelected, previousValue. previousValue is the value of the select prior to being changed.</td>
     </tr>
   </tbody>
 </table>
 
-<pre><code class="js">$('#mySelect').on('hidden.bs.select', function (e) {
+<pre><code class="js">$('#mySelect').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
   // do something...
 });
 </code></pre></div>
+  </div>
 </div>
 
 
   <div class="footer">
     <div class="container text-center">
-      <p class="text-muted">Bootstrap-select is maintained by <a href="https://github.com/caseyjhol">caseyjhol</a>,
-        <a href="https://github.com/t0xicCode">t0xicCode</a>, and the community.</p>
+      <p class="text-muted">Bootstrap-select is maintained by <a href="https://snapappointments.com">SnapAppointments</a>, <a href="https://github.com/caseyjhol">caseyjhol</a>,
+        and the community.</p>
     </div>
   </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <script src="../js/highlight.pack.js"></script>
 <script src="../js/base.js"></script>
 <script src="../dist/js/bootstrap-select.min.js"></script>
+<script>
+  $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113793762-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-35848102-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function () {
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-  })();
+  gtag('config', 'UA-113793762-1');
 </script>
 </body>
 </html>
