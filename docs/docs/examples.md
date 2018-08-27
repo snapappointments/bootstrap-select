@@ -596,16 +596,16 @@ Insert custom HTML into the option with the `data-content` attribute:
 
 <div class="bs-docs-example">
   <select class="selectpicker">
-    <option data-content="<span class='label label-warning'>Mustard</span>">Mustard</option>
-    <option data-content="<span class='label label-danger label-important'>Ketchup</span>">Ketchup</option>
-    <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
-    <option data-content="<span class='label label-info'>Mayonnaise</span>">Mayonnaise</option>
+    <option data-content="<span class='badge badge-warning'>Mustard</span>">Mustard</option>
+    <option data-content="<span class='badge badge-danger label-important'>Ketchup</span>">Ketchup</option>
+    <option data-content="<span class='badge badge-success'>Relish</span>">Relish</option>
+    <option data-content="<span class='badge badge-info'>Mayonnaise</span>">Mayonnaise</option>
   </select>
 </div>
 
 ```html
 <select class="selectpicker">
-  <option data-content="<span class='label label-success'>Relish</span>">Relish</option>
+  <option data-content="<span class='badge badge-success'>Relish</span>">Relish</option>
 </select>
 ```
 
