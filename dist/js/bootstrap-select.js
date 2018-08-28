@@ -1479,7 +1479,7 @@
       divider.className = classNames.DIVIDER;
       dropdownHeader.className = 'dropdown-header';
 
-      text.appendChild(document.createTextNode('Inner text'));
+      text.appendChild(document.createTextNode('\u200b'));
       a.appendChild(text);
       li.appendChild(a);
       dropdownHeader.appendChild(text.cloneNode(true));
