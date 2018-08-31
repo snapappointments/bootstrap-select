@@ -930,7 +930,6 @@
       // Helper functions
       /**
        * @param content
-       * @param [index]
        * @param [classes]
        * @param [optgroup]
        * @returns {HTMLElement}
