@@ -1360,7 +1360,7 @@
 
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
-      var title = !this.multiple ? selectedItemsInTitle[0] : selectedItemsInTitle.join(this.options.multipleSeparator);
+      var title = !this.multiple ? selectedItemsInTitle[0] : selectedItemsInTitle.map($.trim).join(this.options.multipleSeparator);
 
       // add ellipsis
       if (selectedItems.length > 50) title += '...';
