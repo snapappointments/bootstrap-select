@@ -100,6 +100,28 @@
   </form>
 
   <hr>
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label for="basic" class="col-lg-2 control-label">"Basic" (liveSearch enabled, focus disabled)</label>
+
+      <div class="col-lg-10">
+        <select id="basic" class="selectpicker show-tick form-control" data-live-search="true" data-live-search-focus="false">
+          <option>cow</option>
+          <option data-subtext="option subtext">bull</option>
+          <option class="get-class" disabled>ox</option>
+          <optgroup label="test" data-subtext="optgroup subtext">
+            <option>ASD</option>
+            <option selected>Bla</option>
+            <option>Ble</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <label for="basic2" class="col-lg-2 control-label">"Basic" (multiple, maxOptions=1)</label>

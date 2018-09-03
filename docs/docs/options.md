@@ -136,6 +136,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearchFocus</td>
+    <td>boolean</td>
+    <td><code>true</code></td>
+    <td>
+      <p>Enable focus on liveSearch input.</p>
+    </td>
+  </tr>
+  <tr>
     <td>maxOptions</td>
     <td>integer | false</td>
     <td><code>false</code></td>

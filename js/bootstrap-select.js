@@ -755,6 +755,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    liveSearchFocus: true,
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
@@ -2156,7 +2157,7 @@
       });
 
       function setFocus () {
-        if (that.options.liveSearch) {
+        if (that.options.liveSearch && that.options.liveSearchFocus) {
           that.$searchbox.trigger('focus');
         } else {
           that.$menuInner.trigger('focus');
