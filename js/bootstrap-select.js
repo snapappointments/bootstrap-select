@@ -627,61 +627,87 @@
       // If we are multiple or showTick option is set, then add the show-tick class
       var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
           autofocus = this.autofocus ? ' autofocus' : '';
+
       // Elements
-      var header = this.options.header ? '<div class="' + classNames.POPOVERHEADER + '"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
-      var searchbox = this.options.liveSearch ?
-      '<div class="bs-searchbox">' +
-      '<input type="text" class="form-control" autocomplete="off"' +
-      (null === this.options.liveSearchPlaceholder ? '' : ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"') + ' role="textbox" aria-label="Search">' +
-      '</div>'
-          : '';
-      var actionsbox = this.multiple && this.options.actionsBox ?
-      '<div class="bs-actionsbox">' +
-      '<div class="btn-group btn-group-sm btn-block">' +
-      '<button type="button" class="actions-btn bs-select-all btn ' + classNames.BUTTONCLASS + '">' +
-      this.options.selectAllText +
-      '</button>' +
-      '<button type="button" class="actions-btn bs-deselect-all btn ' + classNames.BUTTONCLASS + '">' +
-      this.options.deselectAllText +
-      '</button>' +
-      '</div>' +
-      '</div>'
-          : '';
-      var donebutton = this.multiple && this.options.doneButton ?
-      '<div class="bs-donebutton">' +
-      '<div class="btn-group btn-block">' +
-      '<button type="button" class="btn btn-sm ' + classNames.BUTTONCLASS + '">' +
-      this.options.doneButtonText +
-      '</button>' +
-      '</div>' +
-      '</div>'
-          : '';
-      var drop =
-          '<div class="dropdown bootstrap-select' + showTick + '">' +
+      var drop,
+          header = '',
+          searchbox = '',
+          actionsbox = '',
+          donebutton = '';
+
+      if (this.options.header) {
+        header =
+          '<div class="' + classNames.POPOVERHEADER + '">' +
+            '<button type="button" class="close" aria-hidden="true">&times;</button>' +
+              this.options.header +
+          '</div>';
+      }
+
+      if (this.options.liveSearch) {
+        searchbox =
+          '<div class="bs-searchbox">' +
+            '<input type="text" class="form-control" autocomplete="off"' +
+              (
+                null === this.options.liveSearchPlaceholder ? ''
+                :
+                ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"'
+              ) +
+              ' role="textbox" aria-label="Search">' +
+          '</div>';
+      }
+
+      if (this.multiple && this.options.actionsBox) {
+        actionsbox =
+          '<div class="bs-actionsbox">' +
+            '<div class="btn-group btn-group-sm btn-block">' +
+              '<button type="button" class="actions-btn bs-select-all btn ' + classNames.BUTTONCLASS + '">' +
+                this.options.selectAllText +
+              '</button>' +
+              '<button type="button" class="actions-btn bs-deselect-all btn ' + classNames.BUTTONCLASS + '">' +
+                this.options.deselectAllText +
+              '</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      if (this.multiple && this.options.doneButton) {
+        donebutton =
+          '<div class="bs-donebutton">' +
+            '<div class="btn-group btn-block">' +
+              '<button type="button" class="btn btn-sm ' + classNames.BUTTONCLASS + '">' +
+                this.options.doneButtonText +
+              '</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      drop =
+        '<div class="dropdown bootstrap-select' + showTick + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="button">' +
-          '<div class="filter-option">' +
-            '<div class="filter-option-inner">' +
-              '<div class="filter-option-inner-inner"></div>' +
-            '</div> ' +
-          '</div>' +
-          (version.major === '4' ?
-            '' :
-          '<span class="bs-caret">' +
-          this.options.template.caret +
-          '</span>'
-          ) +
+            '<div class="filter-option">' +
+              '<div class="filter-option-inner">' +
+                '<div class="filter-option-inner-inner"></div>' +
+              '</div> ' +
+            '</div>' +
+            (
+              version.major === '4' ? ''
+              :
+              '<span class="bs-caret">' +
+                this.options.template.caret +
+              '</span>'
+            ) +
           '</button>' +
           '<div class="' + classNames.MENU + ' ' + (version.major === '4' ? '' : classNames.SHOW) + '" role="combobox">' +
-          header +
-          searchbox +
-          actionsbox +
-          '<div class="inner ' + classNames.SHOW + '" role="listbox" aria-expanded="false" tabindex="-1">' +
-              '<ul class="' + classNames.MENU + ' inner ' + (version.major === '4' ? classNames.SHOW : '') + '">' +
-              '</ul>' +
+            header +
+            searchbox +
+            actionsbox +
+            '<div class="inner ' + classNames.SHOW + '" role="listbox" aria-expanded="false" tabindex="-1">' +
+                '<ul class="' + classNames.MENU + ' inner ' + (version.major === '4' ? classNames.SHOW : '') + '">' +
+                '</ul>' +
+            '</div>' +
+            donebutton +
           '</div>' +
-          donebutton +
-          '</div>' +
-          '</div>';
+        '</div>';
 
       return $(drop);
     },
