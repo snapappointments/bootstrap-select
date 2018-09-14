@@ -2293,7 +2293,7 @@
 
           if (!that.multiple || (that.multiple && that.options.maxOptions === 1)) {
             that.$button.trigger('focus');
-          } else if (that.options.liveSearch) {
+          } else if (that.options.liveSearch && that.options.liveSearchFocus) {
             that.$searchbox.trigger('focus');
           }
 
@@ -2313,7 +2313,7 @@
         if (e.currentTarget == this) {
           e.preventDefault();
           e.stopPropagation();
-          if (that.options.liveSearch && !$(e.target).hasClass('close')) {
+          if (that.options.liveSearch && that.options.liveSearchFocus && !$(e.target).hasClass('close')) {
             that.$searchbox.trigger('focus');
           } else {
             that.$button.trigger('focus');
@@ -2324,7 +2324,7 @@
       this.$menuInner.on('click', '.divider, .dropdown-header', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (that.options.liveSearch) {
+        if (that.options.liveSearch && that.options.liveSearchFocus) {
           that.$searchbox.trigger('focus');
         } else {
           that.$button.trigger('focus');
@@ -2340,7 +2340,7 @@
       });
 
       this.$menu.on('click', '.actions-btn', function (e) {
-        if (that.options.liveSearch) {
+        if (that.options.liveSearch && that.options.liveSearchFocus) {
           that.$searchbox.trigger('focus');
         } else {
           that.$button.trigger('focus');
@@ -2645,7 +2645,7 @@
 
         if (updateScroll) that.$menuInner[0].scrollTop = offset;
 
-        if (that.options.liveSearch) {
+        if (that.options.liveSearch && that.options.liveSearchFocus) {
           that.$searchbox.trigger('focus');
         } else {
           $this.trigger('focus');
