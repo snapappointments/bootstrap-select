@@ -598,10 +598,10 @@
           that.$button.addClass('bs-invalid');
 
           that.$element.on({
-            'shown.bs.select': function () {
+            'shown.bs.select.invalid': function () {
               that.$element
                 .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
-                .off('shown.bs.select');
+                .off('shown.bs.select.invalid');
             },
             'rendered.bs.select': function () {
               // if select is no longer invalid, remove the bs-invalid class
@@ -2203,7 +2203,7 @@
           changed_arguments = null;
         },
         'focus': function () {
-          that.$button.focus();
+          if (!that.options.mobile) that.$button.focus();
         }
       });
     },
