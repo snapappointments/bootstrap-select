@@ -1886,10 +1886,8 @@
           prevActiveIndex = this.selectpicker.main.map.newIndex[this.prevActiveIndex];
           prevActive = this.selectpicker.main.elements[prevActiveIndex];
 
-          prevActive.classList.toggle('selected', selected);
           prevActive.classList.remove('active');
           if (prevActive.firstChild) {
-            prevActive.firstChild.classList.toggle('selected', selected);
             prevActive.firstChild.classList.remove('active');
           }
         }
