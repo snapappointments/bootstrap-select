@@ -1,3 +1,22 @@
+# v1.13.3 (2018-10-15)
+
+### Bug Fixes
+- [#1425]: Don't render checkMark (tickIcon) if showTick is false or the select is not multiple
+- [#1828]: Select not working on mobile
+- [#2045]: 'auto' width not working
+- [#2086]: Cannot read property 'display' of undefined
+- [#2092]: Cannot read property 'className' of undefined
+- [#2101]: Extra tick mark when using livesearch in Bootstrap 4
+
+[#1425]: https://github.com/snapappointments/bootstrap-select/issues/#1425
+[#1828]: https://github.com/snapappointments/bootstrap-select/issues/#1828
+[#2045]: https://github.com/snapappointments/bootstrap-select/issues/#2045
+[#2086]: https://github.com/snapappointments/bootstrap-select/issues/#2086
+[#2092]: https://github.com/snapappointments/bootstrap-select/issues/#2092
+[#2101]: https://github.com/snapappointments/bootstrap-select/issues/#2101
+
+-------------------
+
 # v1.13.2 (2018-08-27)
 
 ### Bug Fixes
