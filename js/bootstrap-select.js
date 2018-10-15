@@ -941,11 +941,15 @@
           li: document.createElement('li'),
           whitespace: document.createTextNode("\u00A0")
         },
-        checkMark = elementTemplates.span.cloneNode(false),
+        checkMark,
         fragment = document.createDocumentFragment();
 
-      checkMark.className = that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
-      elementTemplates.a.appendChild(checkMark);
+      if (that.options.showTick || that.multiple) {
+        checkMark = elementTemplates.span.cloneNode(false);
+        checkMark.className = that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
+        elementTemplates.a.appendChild(checkMark);
+      }
+
       elementTemplates.a.setAttribute('role', 'option');
 
       elementTemplates.subtext.className = 'text-muted';
