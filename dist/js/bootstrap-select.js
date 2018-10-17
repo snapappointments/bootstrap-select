@@ -1103,8 +1103,16 @@
         if (that.options.container) {
           if (!$menu.data('height')) $menu.data('height', $menu.height());
           getHeight = $menu.data('height');
+          if (!$menu.data('width')) $menu.data('width', $menu.width());
+          getWidth = $menu.data('width');
         } else {
           getHeight = $menu.height();
+          getWidth = $menu.width();
+        }
+        menuWidth = selectOffsetRight - menuExtras.horiz;
+
+        if (that.options.dropdownAlignRight === 'auto') {
+          $menu.toggleClass('dropdown-menu-right', selectOffsetLeft > selectOffsetRight && (menuWidth - menuExtras.horiz) < (getWidth - selectWidth));
         }
 
         if (that.options.dropupAuto) {
