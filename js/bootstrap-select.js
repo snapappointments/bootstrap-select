@@ -2241,6 +2241,8 @@
               searchStyle = that._searchStyle(),
               normalizeSearch = that.options.liveSearchNormalize;
 
+          if (normalizeSearch) q = normalizeToBase(q);
+
           that._$lisSelected = that.$menuInner.find('.selected');
 
           for (var i = 0; i < that.selectpicker.main.data.length; i++) {
