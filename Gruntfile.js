@@ -86,6 +86,9 @@ module.exports = function (grunt) {
 
     uglify: {
       options: {
+        output: {
+          ascii_only: true
+        },
         preserveComments: function(node, comment) {
           return /^!|@preserve|@license|@cc_on/i.test(comment.value);
         }
