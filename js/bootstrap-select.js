@@ -24,7 +24,7 @@
     return array1.length === array2.length && array1.every(function(element, index) {
       return element === array2[index]; 
     });
-  };
+  }
 
   //<editor-fold desc="Shims">
   if (!String.prototype.startsWith) {
@@ -295,7 +295,7 @@
 
   function deburrLetter (key) {
     return deburredLetters[key];
-  };
+  }
 
   function normalizeToBase(string) {
     string = string.toString();
@@ -403,7 +403,7 @@
     TAB: 9, // KeyboardEvent.which value for tab key
     ARROW_UP: 38, // KeyboardEvent.which value for up arrow key
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
-  }
+  };
 
   var version = {
     success: false,
@@ -434,11 +434,11 @@
     // to-do: replace with more advanced template/customization options
     BUTTONCLASS: 'btn-default',
     POPOVERHEADER: 'popover-title'
-  }
+  };
 
   var Selector = {
     MENU: '.' + classNames.MENU
-  }
+  };
 
   if (version.major === '4') {
     classNames.DIVIDER = 'dropdown-divider';
@@ -1122,7 +1122,7 @@
         fragment.appendChild(labelTextElement);
 
         return fragment;
-      }
+      };
 
       if (this.options.title && !this.multiple) {
         // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
@@ -2795,6 +2795,6 @@
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
-    })
+    });
   });
 })(jQuery);
