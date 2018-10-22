@@ -21,8 +21,8 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <thead>
   <tr>
     <th style="width: 15%;">Name</th>
-    <th style="width: 32%;">Type</th>
-    <th style="width: 10%;">Default</th>
+    <th style="width: 22%;">Type</th>
+    <th style="width: 20%;">Default</th>
     <th style="width: 43%;">Description</th>
   </tr>
   </thead>
@@ -256,9 +256,21 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>style</td>
     <td>string | null</td>
-    <td><code>null</code></td>
+    <td>
+      <code>Bootstrap 4: 'btn-light'</code>
+      <code>Bootstrap 3: 'btn-default'</code>
+    </td>
     <td>
       <p>When set to a string, add the value to the button's style.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>styleBase</td>
+    <td>string | null</td>
+    <td><code>'btn'</code></td>
+    <td>
+      <p>The default class applied to the button. When using the <code>setStyle</code> method, this class will always remain.</p>
+      <p>Hint: If you want to style the element as a form control, set style to <code>''</code> and styleBase to <code>'form-control'</code>.</p>
     </td>
   </tr>
   <tr>
