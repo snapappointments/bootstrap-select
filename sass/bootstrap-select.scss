@@ -32,6 +32,7 @@ select.selectpicker {
 
 .bootstrap-select {
   width: 220px \0; /*IE9 and below*/
+  vertical-align: middle;
 
   // The selectpicker button
   > .dropdown-toggle {
