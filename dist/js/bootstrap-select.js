@@ -447,6 +447,10 @@
     , err);
   }
 
+  var selectId = 0;
+
+  var EVENT_KEY = '.bs.select';
+
   var classNames = {
     DISABLED: 'disabled',
     DIVIDER: 'divider',
@@ -612,6 +616,8 @@
       var that = this,
           id = this.$element.attr('id');
 
+      this.selectId = selectId++;
+
       this.$element.addClass('bs-select-hidden');
 
       this.multiple = this.$element.prop('multiple');
@@ -643,7 +649,7 @@
       if (this.options.container) {
         this.selectPosition();
       } else {
-        this.$element.on('hide.bs.select', function () {
+        this.$element.on('hide' + EVENT_KEY, function () {
           if (that.isVirtual()) {
             // empty menu on close
             var menuInner = that.$menuInner[0],
@@ -662,17 +668,17 @@
       this.$newElement.on({
         'hide.bs.dropdown': function (e) {
           that.$menuInner.attr('aria-expanded', false);
-          that.$element.trigger('hide.bs.select', e);
+          that.$element.trigger('hide' + EVENT_KEY, e);
         },
         'hidden.bs.dropdown': function (e) {
-          that.$element.trigger('hidden.bs.select', e);
+          that.$element.trigger('hidden' + EVENT_KEY, e);
         },
         'show.bs.dropdown': function (e) {
           that.$menuInner.attr('aria-expanded', true);
-          that.$element.trigger('show.bs.select', e);
+          that.$element.trigger('show' + EVENT_KEY, e);
         },
         'shown.bs.dropdown': function (e) {
-          that.$element.trigger('shown.bs.select', e);
+          that.$element.trigger('shown' + EVENT_KEY, e);
         }
       });
 
@@ -680,28 +686,27 @@
         this.$element.on('invalid', function () {
           that.$button.addClass('bs-invalid');
 
-          that.$element.on({
-            'shown.bs.select.invalid': function () {
+          that.$element
+            .on('shown' + EVENT_KEY + '.invalid', function () {
               that.$element
                 .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
-                .off('shown.bs.select.invalid');
-            },
-            'rendered.bs.select': function () {
+                .off('shown' + EVENT_KEY + '.invalid');
+            })
+            .on('rendered' + EVENT_KEY, function () {
               // if select is no longer invalid, remove the bs-invalid class
               if (this.validity.valid) that.$button.removeClass('bs-invalid');
-              that.$element.off('rendered.bs.select');
-            }
-          });
+              that.$element.off('rendered' + EVENT_KEY);
+            });
 
-          that.$button.on('blur.bs.select', function () {
+          that.$button.on('blur' + EVENT_KEY, function () {
             that.$element.focus().blur();
-            that.$button.off('blur.bs.select');
+            that.$button.off('blur' + EVENT_KEY);
           });
         });
       }
 
       setTimeout(function () {
-        that.$element.trigger('loaded.bs.select');
+        that.$element.trigger('loaded' + EVENT_KEY);
       });
     },
 
@@ -999,9 +1004,13 @@
         }
       }
 
-      $(window).off('resize.createView').on('resize.createView', function () {
-        scroll(that.$menuInner[0].scrollTop);
-      });
+      $(window)
+        .off('resize' + EVENT_KEY + '.' + this.selectId + '.createView')
+        .on('resize' + EVENT_KEY + '.' + this.selectId + '.createView', function () {
+          var isActive = that.$newElement.hasClass(classNames.SHOW);
+
+          if (isActive) scroll(that.$menuInner[0].scrollTop);
+        });
     },
 
     createLi: function () {
@@ -1508,7 +1517,7 @@
       this.$button[0].title = htmlUnescape(title.replace(/<[^>]*>?/g, '').trim());
       this.$button.find('.filter-option-inner-inner')[0].innerHTML = title;
 
-      this.$element.trigger('rendered.bs.select');
+      this.$element.trigger('rendered' + EVENT_KEY);
     },
 
     /**
@@ -1725,7 +1734,7 @@
       }
 
       if (this.options.dropdownAlignRight === 'auto') {
-        this.$menu.toggleClass(classNames.MENURIGHT, this.sizeInfo.selectOffsetLeft > this.sizeInfo.selectOffsetRight && this.sizeInfo.selectOffsetRight < (this.$menu[0].offsetWidth - selectWidth));
+        this.$menu.toggleClass(classNames.MENURIGHT, this.sizeInfo.selectOffsetLeft > this.sizeInfo.selectOffsetRight && this.sizeInfo.selectOffsetRight < (this.sizeInfo.totalMenuWidth - selectWidth));
       }
 
       this.$menu.css({
@@ -1766,15 +1775,20 @@
       this.setMenuSize();
 
       if (this.options.size === 'auto') {
-        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize').on('input.setMenuSize propertychange.setMenuSize', function() {
-          return that.setMenuSize();
-        });
-        $window.off('resize.setMenuSize scroll.setMenuSize').on('resize.setMenuSize scroll.setMenuSize', function() {
-          return that.setMenuSize();
-        });
+        this.$searchbox
+          .off('input.setMenuSize propertychange.setMenuSize')
+          .on('input.setMenuSize propertychange.setMenuSize', function() {
+            return that.setMenuSize();
+          });
+
+        $window
+          .off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize')
+          .on('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize', function() {
+            return that.setMenuSize();
+          });
       } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
         this.$searchbox.off('input.setMenuSize propertychange.setMenuSize');
-        $window.off('resize.setMenuSize scroll.setMenuSize');
+        $window.off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize');
       }
 
       if (refresh) {
@@ -1883,11 +1897,15 @@
           .append(that.$menu);
       });
 
-      $(window).on('resize scroll', function () {
-        getPlacement(that.$newElement);
-      });
+      $(window)
+        .off('resize' + EVENT_KEY + '.' + this.selectId + ' scroll' + EVENT_KEY + '.' + this.selectId)
+        .on('resize' + EVENT_KEY + '.' + this.selectId + ' scroll' + EVENT_KEY + '.' + this.selectId, function () {
+          var isActive = that.$newElement.hasClass(classNames.SHOW);
 
-      this.$element.on('hide.bs.select', function () {
+          if (isActive) getPlacement(that.$newElement);
+        });
+
+      this.$element.on('hide' + EVENT_KEY, function () {
         that.$menu.data('height', that.$menu.height());
         that.$bsContainer.detach();
       });
@@ -2097,7 +2115,7 @@
         }
       }
 
-      this.$element.on('shown.bs.select', function () {
+      this.$element.on('shown' + EVENT_KEY, function () {
         if (that.$menuInner[0].scrollTop !== that.selectpicker.view.scrollTop) {
           that.$menuInner[0].scrollTop = that.selectpicker.view.scrollTop;
         }
@@ -2195,13 +2213,13 @@
                   if (maxOptions && maxReached) {
                     $notify.append($('<div>' + maxTxt + '</div>'));
                     triggerChange = false;
-                    that.$element.trigger('maxReached.bs.select');
+                    that.$element.trigger('maxReached' + EVENT_KEY);
                   }
 
                   if (maxOptionsGrp && maxReachedGrp) {
                     $notify.append($('<div>' + maxTxtGrp + '</div>'));
                     triggerChange = false;
-                    that.$element.trigger('maxReachedGrp.bs.select');
+                    that.$element.trigger('maxReachedGrp' + EVENT_KEY);
                   }
 
                   setTimeout(function () {
@@ -2284,7 +2302,7 @@
       this.$element.on({
         'change': function () {
           that.render();
-          that.$element.trigger('changed.bs.select', changed_arguments);
+          that.$element.trigger('changed' + EVENT_KEY, changed_arguments);
           changed_arguments = null;
         },
         'focus': function () {
@@ -2391,10 +2409,9 @@
 
     val: function (value) {
       if (typeof value !== 'undefined') {
-        this.$element.val(value);
-        this.render();
-        this.$element.trigger('changed.bs.select', changed_arguments);
-        changed_arguments = null;
+        this.$element
+          .val(value)
+          .triggerNative('change');
 
         return this.$element;
       } else {
@@ -2693,7 +2710,7 @@
 
       this.setSize(true);
 
-      this.$element.trigger('refreshed.bs.select');
+      this.$element.trigger('refreshed' + EVENT_KEY);
     },
 
     hide: function () {
@@ -2719,9 +2736,11 @@
       }
 
       this.$element
-        .off('.bs.select')
+        .off(EVENT_KEY)
         .removeData('selectpicker')
         .removeClass('bs-select-hidden selectpicker');
+
+      $(window).off(EVENT_KEY + '.' + this.selectId);
     }
   };
 
@@ -2809,14 +2828,14 @@
 
   $(document)
       .off('keydown.bs.dropdown.data-api')
-      .on('keydown.bs.select', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
+      .on('keydown' + EVENT_KEY, '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
       .on('focusin.modal', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
         e.stopPropagation();
       });
 
   // SELECTPICKER DATA-API
   // =====================
-  $(window).on('load.bs.select.data-api', function () {
+  $(window).on('load' + EVENT_KEY + '.data-api', function () {
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
