@@ -423,6 +423,8 @@
     , err);
   }
 
+  var selectId = 0;
+
   var EVENT_KEY = '.bs.select';
 
   var classNames = {
@@ -590,6 +592,8 @@
       var that = this,
           id = this.$element.attr('id');
 
+      this.selectId = selectId++;
+
       this.$element.addClass('bs-select-hidden');
 
       this.multiple = this.$element.prop('multiple');
@@ -668,7 +672,7 @@
               // if select is no longer invalid, remove the bs-invalid class
               if (this.validity.valid) that.$button.removeClass('bs-invalid');
               that.$element.off('rendered' + EVENT_KEY);
-          });
+            });
 
           that.$button.on('blur' + EVENT_KEY, function () {
             that.$element.focus().blur();
@@ -976,9 +980,13 @@
         }
       }
 
-      $(window).off('resize.createView').on('resize.createView', function () {
-        scroll(that.$menuInner[0].scrollTop);
-      });
+      $(window)
+        .off('resize' + EVENT_KEY + '.' + this.selectId + '.createView')
+        .on('resize' + EVENT_KEY + '.' + this.selectId + '.createView', function () {
+          var isActive = that.$newElement.hasClass(classNames.SHOW);
+
+          if (isActive) scroll(that.$menuInner[0].scrollTop);
+        });
     },
 
     createLi: function () {
@@ -1743,15 +1751,20 @@
       this.setMenuSize();
 
       if (this.options.size === 'auto') {
-        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize').on('input.setMenuSize propertychange.setMenuSize', function() {
-          return that.setMenuSize();
-        });
-        $window.off('resize.setMenuSize scroll.setMenuSize').on('resize.setMenuSize scroll.setMenuSize', function() {
-          return that.setMenuSize();
-        });
+        this.$searchbox
+          .off('input.setMenuSize propertychange.setMenuSize')
+          .on('input.setMenuSize propertychange.setMenuSize', function() {
+            return that.setMenuSize();
+          });
+
+        $window
+          .off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize')
+          .on('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize', function() {
+            return that.setMenuSize();
+          });
       } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
         this.$searchbox.off('input.setMenuSize propertychange.setMenuSize');
-        $window.off('resize.setMenuSize scroll.setMenuSize');
+        $window.off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize');
       }
 
       if (refresh) {
@@ -1860,9 +1873,13 @@
           .append(that.$menu);
       });
 
-      $(window).on('resize scroll', function () {
-        getPlacement(that.$newElement);
-      });
+      $(window)
+        .off('resize' + EVENT_KEY + '.' + this.selectId + ' scroll' + EVENT_KEY + '.' + this.selectId)
+        .on('resize' + EVENT_KEY + '.' + this.selectId + ' scroll' + EVENT_KEY + '.' + this.selectId, function () {
+          var isActive = that.$newElement.hasClass(classNames.SHOW);
+
+          if (isActive) getPlacement(that.$newElement);
+        });
 
       this.$element.on('hide' + EVENT_KEY, function () {
         that.$menu.data('height', that.$menu.height());
@@ -2698,6 +2715,8 @@
         .off(EVENT_KEY)
         .removeData('selectpicker')
         .removeClass('bs-select-hidden selectpicker');
+
+      $(window).off(EVENT_KEY + '.' + this.selectId);
     }
   };
 
