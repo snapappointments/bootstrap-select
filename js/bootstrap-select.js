@@ -423,6 +423,8 @@
     , err);
   }
 
+  var EVENT_KEY = '.bs.select';
+
   var classNames = {
     DISABLED: 'disabled',
     DIVIDER: 'divider',
@@ -619,7 +621,7 @@
       if (this.options.container) {
         this.selectPosition();
       } else {
-        this.$element.on('hide.bs.select', function () {
+        this.$element.on('hide' + EVENT_KEY, function () {
           if (that.isVirtual()) {
             // empty menu on close
             var menuInner = that.$menuInner[0],
@@ -638,17 +640,17 @@
       this.$newElement.on({
         'hide.bs.dropdown': function (e) {
           that.$menuInner.attr('aria-expanded', false);
-          that.$element.trigger('hide.bs.select', e);
+          that.$element.trigger('hide' + EVENT_KEY, e);
         },
         'hidden.bs.dropdown': function (e) {
-          that.$element.trigger('hidden.bs.select', e);
+          that.$element.trigger('hidden' + EVENT_KEY, e);
         },
         'show.bs.dropdown': function (e) {
           that.$menuInner.attr('aria-expanded', true);
-          that.$element.trigger('show.bs.select', e);
+          that.$element.trigger('show' + EVENT_KEY, e);
         },
         'shown.bs.dropdown': function (e) {
-          that.$element.trigger('shown.bs.select', e);
+          that.$element.trigger('shown' + EVENT_KEY, e);
         }
       });
 
@@ -656,28 +658,27 @@
         this.$element.on('invalid', function () {
           that.$button.addClass('bs-invalid');
 
-          that.$element.on({
-            'shown.bs.select.invalid': function () {
+          that.$element
+            .on('shown' + EVENT_KEY + '.invalid', function () {
               that.$element
                 .val(that.$element.val()) // set the value to hide the validation message in Chrome when menu is opened
-                .off('shown.bs.select.invalid');
-            },
-            'rendered.bs.select': function () {
+                .off('shown' + EVENT_KEY + '.invalid');
+            })
+            .on('rendered' + EVENT_KEY, function () {
               // if select is no longer invalid, remove the bs-invalid class
               if (this.validity.valid) that.$button.removeClass('bs-invalid');
-              that.$element.off('rendered.bs.select');
-            }
+              that.$element.off('rendered' + EVENT_KEY);
           });
 
-          that.$button.on('blur.bs.select', function () {
+          that.$button.on('blur' + EVENT_KEY, function () {
             that.$element.focus().blur();
-            that.$button.off('blur.bs.select');
+            that.$button.off('blur' + EVENT_KEY);
           });
         });
       }
 
       setTimeout(function () {
-        that.$element.trigger('loaded.bs.select');
+        that.$element.trigger('loaded' + EVENT_KEY);
       });
     },
 
@@ -1484,7 +1485,7 @@
       this.$button[0].title = htmlUnescape(title.replace(/<[^>]*>?/g, '').trim());
       this.$button.find('.filter-option-inner-inner')[0].innerHTML = title;
 
-      this.$element.trigger('rendered.bs.select');
+      this.$element.trigger('rendered' + EVENT_KEY);
     },
 
     /**
@@ -1863,7 +1864,7 @@
         getPlacement(that.$newElement);
       });
 
-      this.$element.on('hide.bs.select', function () {
+      this.$element.on('hide' + EVENT_KEY, function () {
         that.$menu.data('height', that.$menu.height());
         that.$bsContainer.detach();
       });
@@ -2073,7 +2074,7 @@
         }
       }
 
-      this.$element.on('shown.bs.select', function () {
+      this.$element.on('shown' + EVENT_KEY, function () {
         if (that.$menuInner[0].scrollTop !== that.selectpicker.view.scrollTop) {
           that.$menuInner[0].scrollTop = that.selectpicker.view.scrollTop;
         }
@@ -2171,13 +2172,13 @@
                   if (maxOptions && maxReached) {
                     $notify.append($('<div>' + maxTxt + '</div>'));
                     triggerChange = false;
-                    that.$element.trigger('maxReached.bs.select');
+                    that.$element.trigger('maxReached' + EVENT_KEY);
                   }
 
                   if (maxOptionsGrp && maxReachedGrp) {
                     $notify.append($('<div>' + maxTxtGrp + '</div>'));
                     triggerChange = false;
-                    that.$element.trigger('maxReachedGrp.bs.select');
+                    that.$element.trigger('maxReachedGrp' + EVENT_KEY);
                   }
 
                   setTimeout(function () {
@@ -2260,7 +2261,7 @@
       this.$element.on({
         'change': function () {
           that.render();
-          that.$element.trigger('changed.bs.select', changed_arguments);
+          that.$element.trigger('changed' + EVENT_KEY, changed_arguments);
           changed_arguments = null;
         },
         'focus': function () {
@@ -2668,7 +2669,7 @@
 
       this.setSize(true);
 
-      this.$element.trigger('refreshed.bs.select');
+      this.$element.trigger('refreshed' + EVENT_KEY);
     },
 
     hide: function () {
@@ -2694,7 +2695,7 @@
       }
 
       this.$element
-        .off('.bs.select')
+        .off(EVENT_KEY)
         .removeData('selectpicker')
         .removeClass('bs-select-hidden selectpicker');
     }
@@ -2784,14 +2785,14 @@
 
   $(document)
       .off('keydown.bs.dropdown.data-api')
-      .on('keydown.bs.select', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
+      .on('keydown' + EVENT_KEY, '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
       .on('focusin.modal', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
         e.stopPropagation();
       });
 
   // SELECTPICKER DATA-API
   // =====================
-  $(window).on('load.bs.select.data-api', function () {
+  $(window).on('load' + EVENT_KEY + '.data-api', function () {
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
