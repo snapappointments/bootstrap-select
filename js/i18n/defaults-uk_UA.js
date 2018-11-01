@@ -1,6 +1,6 @@
 /*
  * Translated default messages for bootstrap-select.
- * Locale: UA (Ukrainian; Українська)
+ * Locale: UK (Ukrainian; Українська)
  * Region: UA (Ukraine)
  */
 (function ($) {
