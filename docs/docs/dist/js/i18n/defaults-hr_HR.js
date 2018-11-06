@@ -1,8 +1,15 @@
 /*!
+<<<<<<< HEAD:docs/docs/dist/js/i18n/defaults-hr_HR.js
  * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
+=======
+ * Bootstrap-select v1.12.4 (https://silviomoreto.github.io/bootstrap-select)
+ *
+ * Copyright 2013-2018 bootstrap-select
+ * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634:docs/docs/dist/js/i18n/defaults-cro_CRO.js
  */
 
 (function (root, factory) {

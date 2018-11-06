@@ -6,7 +6,7 @@
   <meta charset="utf-8">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../dist/css/bootstrap-select.css">
+  <link rel="stylesheet" href="../dist/css/bootstrap-select.min.css">
 
   <style>
     body {
@@ -327,42 +327,24 @@
 <script src="../dist/js/bootstrap-select.js"></script>
 
 <script>
-function createOptions(number) {
-  var options = [], _options;
+  document.addEventListener('DOMContentLoaded', function () {
+    var mySelect = $('#first-disabled2');
 
-  for (var i = 0; i < number; i++) {
-    var option = '<option value="' + i + '">Option ' + i + '</option>';
-    options.push(option);
-  }
+    $('#special').on('click', function () {
+      mySelect.find('option:selected').prop('disabled', true);
+      mySelect.selectpicker('refresh');
+    });
 
-  _options = options.join('');
-  
-  $('#number')[0].innerHTML = _options;
-  $('#number-multiple')[0].innerHTML = _options;
+    $('#special2').on('click', function () {
+      mySelect.find('option:disabled').prop('disabled', false);
+      mySelect.selectpicker('refresh');
+    });
 
-
-  $('#number2')[0].innerHTML = _options;
-  $('#number2-multiple')[0].innerHTML = _options;
-}
-
-var mySelect = $('#first-disabled2');
-
-createOptions(4000);
-
-$('#special').on('click', function () {
-  mySelect.find('option:selected').prop('disabled', true);
-  mySelect.selectpicker('refresh');
-});
-
-$('#special2').on('click', function () {
-  mySelect.find('option:disabled').prop('disabled', false);
-  mySelect.selectpicker('refresh');
-});
-
-$('#basic2').selectpicker({
-  liveSearch: true,
-  maxOptions: 1
-});
+    $('#basic2').selectpicker({
+      liveSearch: true,
+      maxOptions: 1
+    });
+  });
 </script>
 </body>
 </html>

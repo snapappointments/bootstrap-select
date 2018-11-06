@@ -164,8 +164,8 @@
 # v1.12.4 (2017-07-19)
 
 ### Bug Fixes
-- [#1286]: Event creation throws illegal constructor error on stock Android Browser < 5.0
-- [#1764]: Bootstrap-select steals focus on form.checkValidity
+* [#1286]: Event creation throws illegal constructor error on stock Android Browser < 5.0
+* [#1764]: Bootstrap-select steals focus on form.checkValidity
 
 [#1286]: https://github.com/snapappointments/bootstrap-select/issues/1286
 [#1764]: https://github.com/snapappointments/bootstrap-select/issues/1764
@@ -175,10 +175,10 @@
 # v1.12.3 (2017-07-06)
 
 ### Bug Fixes
-- [#1529]: add selectAllText and deselectAllText to translation files (used Google Translate)
-- [#1604]: Keydown improvements
-- [#1630]: htmlEscape inline style
-- [#1631]: Livesearch performance
+* [#1529]: add selectAllText and deselectAllText to translation files (used Google Translate)
+* [#1604]: Keydown improvements
+* [#1630]: htmlEscape inline style
+* [#1631]: Livesearch performance
 
 ### New Features
 - Add/update various translations
@@ -193,7 +193,7 @@
 # v1.12.2 (2017-01-30)
 
 ### Bug Fixes
-* [#1563]: key word searching broken in [#1516].
+* [#1563]: key word searching broken in [#1516]
 * [#1570]: properly adjust size when inside form-group-sm or form-group-lg
 * [#1590]: menu height calculated improperly when using liveSearch and input has custom height
 

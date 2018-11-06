@@ -1,8 +1,15 @@
 /*!
+<<<<<<< HEAD
  * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
+=======
+ * Bootstrap-select v1.12.4 (https://silviomoreto.github.io/bootstrap-select)
+ *
+ * Copyright 2013-2018 bootstrap-select
+ * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
  */
 
 (function (root, factory) {
@@ -492,6 +499,7 @@
   Selectpicker.DEFAULTS = {
     noneSelectedText: 'Nothing selected',
     noneResultsText: 'No results matched {0}',
+    addNewText: '<strong>Add new:</strong> {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
     },
@@ -523,6 +531,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    addResults: false,
     actionsBox: false,
     iconBase: 'glyphicon',
     tickIcon: 'glyphicon-ok',
@@ -553,6 +562,16 @@
       var that = this,
           id = this.$element.attr('id');
 
+      // remember that we are doing the init
+      this.options.initInProcess = true;
+      if (this.options.width === 'auto' && this.options.lazyLoadLiElements === true) {
+          // creates a bit of a problem for us. we would need to render the LIs to figure out their width
+          // that is what lazyLoading is all about avoiding.  these options are incompatible
+          // tell somebody and opt out of lazy load
+          console.log('Selectpicker option lazyLoadLiElements=true is incompatible with option width="auto".  Option \'lazyLoadLiElements\' has been reset to false, however this may cause serious performance degradation.');
+          this.options.lazyLoadLiElements = false;
+      }
+
       this.$element.addClass('bs-select-hidden');
 
       this.multiple = this.$element.prop('multiple');
@@ -577,6 +596,24 @@
 
       this.checkDisabled();
       this.clickListener();
+
+      // we lazy loaded this select picker, so we need to make sure
+      // that we finish the rendering the first time someone actually activates
+      // the menu
+      if (this.options.lazyLoadLiElements === true) {
+        this.$button.one('click.dropdown.data-api', function (e) {
+          // render the menu
+          that.$lis = null;
+          that.liObj = {};
+          that.reloadLi();
+          that.render();
+          that.checkDisabled();
+          that.liHeight(true);
+          that.setStyle();
+          that.setWidth();
+        });
+      }
+
       if (this.options.liveSearch) this.liveSearchListener();
       this.render();
       this.setStyle();
@@ -644,6 +681,8 @@
       setTimeout(function () {
         that.$element.trigger('loaded.bs.select');
       });
+
+      this.options.initInProcess = false;
     },
 
     createDropdown: function () {
@@ -653,6 +692,7 @@
           autofocus = this.autofocus ? ' autofocus' : '';
 
       // Elements
+<<<<<<< HEAD
       var drop,
           header = '',
           searchbox = '',
@@ -720,6 +760,43 @@
                 this.options.template.caret +
               '</span>'
             ) +
+=======
+      var header = this.options.header ? '<div class="popover-title"><button type="button" class="close" aria-hidden="true">&times;</button>' + this.options.header + '</div>' : '';
+      var searchbox = this.options.liveSearch ?
+      '<div class="bs-searchbox">' +
+      '<input type="text" class="form-control" autocomplete="off"' +
+      (null === this.options.liveSearchPlaceholder ? '' : ' placeholder="' + htmlEscape(this.options.liveSearchPlaceholder) + '"') + ' role="textbox" aria-label="Search">' +
+      '</div>'
+          : '';
+      var actionsbox = this.multiple && this.options.actionsBox ?
+      '<div class="bs-actionsbox">' +
+      '<div class="btn-group btn-group-sm btn-block">' +
+      '<button type="button" class="actions-btn bs-select-all btn btn-default">' +
+      this.options.selectAllText +
+      '</button>' +
+      '<button type="button" class="actions-btn bs-deselect-all btn btn-default">' +
+      this.options.deselectAllText +
+      '</button>' +
+      '</div>' +
+      '</div>'
+          : '';
+      var donebutton = this.multiple && this.options.doneButton ?
+      '<div class="bs-donebutton">' +
+      '<div class="btn-group btn-block">' +
+      '<button type="button" class="btn btn-sm btn-default">' +
+      this.options.doneButtonText +
+      '</button>' +
+      '</div>' +
+      '</div>'
+          : '';
+      var drop =
+          '<div class="btn-group bootstrap-select' + showTick + inputGroup + '">' +
+          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" data-toggle="dropdown"' + autofocus + ' role="button" aria-labelledby="'+this.$element.attr("aria-labelledby")+'">' +
+          '<span class="filter-option pull-left"></span>&nbsp;' +
+          '<span class="bs-caret">' +
+          this.options.template.caret +
+          '</span>' +
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
           '</button>' +
           '<div class="' + classNames.MENU + ' ' + (version.major === '4' ? '' : classNames.SHOW) + '" role="combobox">' +
             header +
@@ -1120,6 +1197,8 @@
         if (isSelected) element.selectedIndex = 0;
       }
 
+      if (!this.options.initInProcess || this.options.lazyLoadLiElements !== true) { // skip LI creation when lazy loading
+
       var $selectOptions = this.$element.find('option');
 
       $selectOptions.each(function (index) {
@@ -1355,8 +1434,17 @@
         }
       });
 
+<<<<<<< HEAD
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
+=======
+      } // end if for skipping li creation when lazy loading
+
+      //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
+      if (!this.multiple && this.$element.find('option:selected').length === 0 && !this.options.title) {
+        this.$element.find('option').eq(0).prop('selected', true).attr('selected', 'selected');
+      }
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
 
       this.selectpicker.current = this.selectpicker.main;
 
@@ -1368,16 +1456,37 @@
       return this.$menuInner.find('.inner > li');
     },
 
+<<<<<<< HEAD
     render: function () {
       var that = this,
           $selectOptions = this.$element.find('option'),
           selectedItems = [],
           selectedItemsInTitle = [];
+=======
+    /**
+     * @param [updateLi] defaults to true
+     */
+    render: function (updateLi) {
+      var that = this,
+          notDisabled,
+          $selectOptions = this.$element.find('option');
+
+      //Update the LI to match the SELECT
+      if (updateLi !== false && (!this.options.initInProcess || this.options.lazyLoadLiElements !== true)) { // skip this if we are lazy loading
+        $selectOptions.each(function (index) {
+          var $lis = that.findLis().eq(that.liObj[index]);
+
+          that.setDisabled(index, this.disabled || this.parentNode.tagName === 'OPTGROUP' && this.parentNode.disabled, $lis);
+          that.setSelected(index, this.selected, $lis);
+        });
+      }
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
 
       this.togglePlaceholder();
 
       this.tabIndex();
 
+<<<<<<< HEAD
       for (var i = 0, len = this.selectpicker.main.elements.length; i < len; i++) {
         var index = this.selectpicker.main.map.originalIndex[i],
             option = $selectOptions[index];
@@ -1408,9 +1517,41 @@
             }
 
             selectedItemsInTitle.push(titleItem);
+=======
+      var createOptionText = function(opt){
+          if (that.options.hideDisabled && (opt.disabled || opt.parentNode.tagName === 'OPTGROUP' && opt.parentNode.disabled)) return;
+
+          var $this = $(opt),
+              icon = $this.data('icon') && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + $this.data('icon') + '"></i> ' : '',
+              subtext;
+
+          if (that.options.showSubtext && $this.data('subtext') && !that.multiple) {
+              subtext = ' <small class="text-muted">' + $this.data('subtext') + '</small>';
+          } else {
+              subtext = '';
           }
+          if (typeof $this.attr('title') !== 'undefined') {
+              return $this.attr('title');
+          } else if ($this.data('content') && that.options.showContent) {
+              return $this.data('content').toString();
+          } else {
+              return icon + $this.html() + subtext;
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
+          }
+      };
+
+      var selectedItems = (this.multiple || this.options.singleSelectPerfTweak !== true ? $selectOptions.map(function () {
+        if (this.selected) {
+            return createOptionText(this);
         }
+<<<<<<< HEAD
       }
+=======
+      }).toArray() :
+        // only single select - do not need to iterate every single option
+        [ createOptionText(this.$element[0][this.$element[0].selectedIndex]) ]
+      );
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
 
       //Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
       //Convert all the values into a comma delimited string
@@ -1449,7 +1590,9 @@
       this.$button[0].title = htmlUnescape(title.replace(/<[^>]*>?/g, '').trim());
       this.$button.find('.filter-option-inner-inner')[0].innerHTML = title;
 
-      this.$element.trigger('rendered.bs.select');
+      if (!this.options.initInProcess || this.options.lazyLoadLiElements !== true) { // this is very expensive on IE and we haven;t really rendered the select if we are lazy loading, so hold off on this event
+         this.$element.trigger('rendered.bs.select');
+      }
     },
 
     /**
@@ -1560,10 +1703,16 @@
                   toInteger(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
                   toInteger(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
             horiz: menuPadding.horiz +
+<<<<<<< HEAD
                   toInteger(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
                   toInteger(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
           },
           scrollBarWidth;
+=======
+                  parseInt(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
+                  parseInt(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
+          };
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
 
       menuInner.style.overflowY = 'scroll';
 
@@ -1591,6 +1740,7 @@
     getSelectPosition: function () {
       var that = this,
           $window = $(window),
+<<<<<<< HEAD
           pos = that.$newElement.offset(),
           $container = $(that.options.container),
           containerPos;
@@ -1625,6 +1775,19 @@
           divHeight = this.sizeInfo['dividerHeight'],
           menuPadding = this.sizeInfo['menuPadding'],
           menuInnerHeight,
+=======
+          selectHeight = this.$newElement[0].offsetHeight,
+          selectWidth = this.$newElement[0].offsetWidth,
+          liHeight = this.sizeInfo.liHeight,
+          headerHeight = this.sizeInfo.headerHeight,
+          searchHeight = this.sizeInfo.searchHeight,
+          actionsHeight = this.sizeInfo.actionsHeight,
+          doneButtonHeight = this.sizeInfo.doneButtonHeight,
+          divHeight = this.sizeInfo.dividerHeight,
+          menuPadding = this.sizeInfo.menuPadding,
+          menuExtras = this.sizeInfo.menuExtras,
+          notDisabled = this.options.hideDisabled ? '.disabled' : '',
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
           menuHeight,
           divLength = 0,
           minHeight,
@@ -2009,11 +2172,18 @@
         }
       });
 
+<<<<<<< HEAD
       this.$newElement.on('show.bs.dropdown', function() {
         if (version.major > 3 && !that.dropdown) {
           that.dropdown = that.$button.data('bs.dropdown');
           that.dropdown._menu = that.$menu[0];
         }
+=======
+      //TODO: this should not happen before the list is initialised in case
+      //lazy loading option is used.
+      this.$button.on('click', function () {
+        that.setSize();
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
       });
 
       this.$button.on('click.bs.dropdown.data-api', function () {
@@ -2396,8 +2566,13 @@
 
     keydown: function (e) {
       var $this = $(this),
+<<<<<<< HEAD
           isToggle = $this.hasClass('dropdown-toggle'),
           $parent = isToggle ? $this.closest('.dropdown') : $this.closest(Selector.MENU),
+=======
+          $parent = $this.closest('div.dropdown-menu'),
+          $items,
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
           that = $parent.data('this'),
           $items = that.findLis(),
           index,
@@ -2431,8 +2606,17 @@
         that.$button.trigger('click.bs.dropdown.data-api').focus();
       }
 
+<<<<<<< HEAD
       if (isArrowKey) { // if up or down
         if (!$items.length) return;
+=======
+      // we destroy the modal/popup using the ESC key and then turns out we get
+      // here and the parent doesn't even exist anymore, in this case fail silently.
+      // probably not the best idea, but works.
+      if(!$parent.length) return false;
+	    
+      isActive = that.$newElement.hasClass('open');
+>>>>>>> ec243882c07ea16bef828a908c753366636dd634
 
         // $items.index/.filter is too slow with a large list and no virtual scroll
         index = isVirtual === true ? $items.index($items.filter('.active')) : that.selectpicker.current.map.newIndex[that.activeIndex];
@@ -2759,7 +2943,7 @@
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
-    })
+    });
   });
 })(jQuery);
 

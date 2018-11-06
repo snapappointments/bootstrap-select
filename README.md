@@ -1,75 +1,52 @@
-<h1 align="center">bootstrap-select</h1>
+bootstrap-select
+================
 
-<p align="center">
-	<strong>The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.</strong>
-</p>
+[![Latest release](https://img.shields.io/github/release/silviomoreto/bootstrap-select.svg)](https://github.com/silviomoreto/bootstrap-select/releases/latest)
+[![npm](https://img.shields.io/npm/v/bootstrap-select.svg)](https://www.npmjs.com/package/bootstrap-select)
+[![NuGet](https://img.shields.io/nuget/v/bootstrap-select.svg)](https://www.nuget.org/packages/bootstrap-select/)
+[![CDNJS](https://img.shields.io/cdnjs/v/bootstrap-select.svg)](https://cdnjs.com/libraries/bootstrap-select)
 
-<p align="center">
-	<a href="https://github.com/snapappointments/bootstrap-select/releases/latest" target="_blank">
-		<img src="https://img.shields.io/github/release/snapappointments/bootstrap-select.svg" alt="Latest release">
-	</a>
-	<a href="https://www.npmjs.com/package/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/npm/v/bootstrap-select.svg" alt="npm">
-	</a>
-	<a href="https://www.nuget.org/packages/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/nuget/v/bootstrap-select.svg" alt="NuGet">
-	</a>
-	<a href="https://cdnjs.com/libraries/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/cdnjs/v/bootstrap-select.svg" alt="CDNJS">
-	</a>
-	<br>
-	<a href="https://cdnjs.com/libraries/bootstrap-select" target="_blank">
-		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
-	</a>
-	<a href="https://david-dm.org/snapappointments/bootstrap-select?type=peer" target="_blank">
-		<img src="https://img.shields.io/david/peer/snapappointments/bootstrap-select.svg" alt="peerDependencies Status">
-	</a>
-	<a href="https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies" target="_blank">
-		<img src="https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg" alt="devDependency Status">
-	</a>
-</p>
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+[![dependencies Status](https://david-dm.org/silviomoreto/bootstrap-select/status.svg)](https://david-dm.org/silviomoreto/bootstrap-select)
+[![devDependencies Status](https://david-dm.org/silviomoreto/bootstrap-select/dev-status.svg)](https://david-dm.org/silviomoreto/bootstrap-select?type=dev)
 
-<p align="center">
-	<a href="https://developer.snapappointments.com/bootstrap-select"><img src="https://user-images.githubusercontent.com/2874325/38997831-97e12bbe-43ab-11e8-85f5-b8c05d91c7b1.gif" width="289" height="396" alt="bootstrap-select demo"></a>
-</p>
+Bootstrap-select is a jQuery plugin that utilizes Bootstrap's dropdown.js to style and bring additional functionality to standard select elements.
 
-## Demo
+<a href="https://silviomoreto.github.io/bootstrap-select/"><img src="https://cloud.githubusercontent.com/assets/2874325/18023324/42cf556c-6bb5-11e6-84ce-35be08ae57ba.gif" alt="bootstrap-select demo"></a>
 
-You can view a live demo and some examples of how to use the various options [here](https://developer.snapappointments.com/bootstrap-select/examples/).
+# HEY YOU! DO YOU WANT TO HELP?
 
-## Quick start
+*He are looking for new maintainers on this project. If you think you can help on this, please send me an email to silviomoreto@gmail.com so we can continue improving the community plugin!*
 
-Bootstrap-select requires jQuery v1.9.1+, Bootstrap’s dropdown.js component, and Bootstrap's CSS. If you're not already using Bootstrap in your project, a precompiled version of the Bootstrap v3.3.7 minimum requirements can be downloaded [here](https://getbootstrap.com/docs/3.3/customize/?id=7830063837006f6fc84f). If using bootstrap-select with Bootstrap v4+, you'll also need Popper.js. For all of Bootstrap v4's requirements, see [Getting started](https://getbootstrap.com/docs/4.1/getting-started/introduction/). A precompiled version of the requirements will be made available in an upcoming release of bootstrap-select.
+## Demo and Documentation
 
-Several quick start options are available:
+You can view a live demo and some examples of how to use the various options [here](https://silviomoreto.github.io/bootstrap-select/examples).
 
-- [Download the latest release.](https://github.com/snapappointments/bootstrap-select/archive/v1.13.3.zip)
-- Clone the repo: `git clone https://github.com/snapappointments/bootstrap-select.git`
-- Install with [npm](https://www.npmjs.com/package/bootstrap-select): `npm install bootstrap-select`
-- Install with [yarn](https://yarn.pm/bootstrap-select): `yarn add bootstrap-select`
-- Install with [Composer](https://getcomposer.org): `composer require snapappointments/bootstrap-select`
-- Install with [NuGet](https://www.nuget.org/packages/bootstrap-select): `Install-Package bootstrap-select`
-- Install with [Bower](https://bower.io): `bower install bootstrap-select`
-- Install via CDN:
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and publicly hosted on GitHub Pages at https://silviomoreto.github.io/bootstrap-select. The documentation may also be run locally.
 
-```html
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.3/css/bootstrap-select.min.css">
+### Bootstrap 4 Support
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.3/js/bootstrap-select.min.js"></script>
+This version currently does not support Bootstrap 4 officially. We are looking to keep it updated to the new Bootstrap version, do you want to help us?
 
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.3/js/i18n/defaults-*.min.js"></script>
-```
-> The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN.
+### Running documentation locally
+
+1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
+3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
+4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+
+Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
+
+## Authors
+
+[Silvio Moreto](https://github.com/silviomoreto),
+[Ana Carolina](https://github.com/anacarolinats),
+[caseyjhol](https://github.com/caseyjhol),
+[Matt Bryson](https://github.com/mattbryson), and
+[t0xicCode](https://github.com/t0xicCode).
 
 ## Usage
 
-> Bootstrap 4 only works with bootstrap-select v1.13.0+. By default, bootstrap-select automatically detects the version of Bootstrap being used. However, there are some instances where the version detection won't work. See the [documentation](https://developer.snapappointments.com/bootstrap-select/options/#bootstrap-version) for more information.
-
-### Via `selectpicker` class
-Add the `selectpicker` class to your select element to use the data-api.
+Create your `<select>` with the `.selectpicker` class.
 ```html
 <select class="selectpicker">
   <option>Mustard</option>
@@ -78,21 +55,28 @@ Add the `selectpicker` class to your select element to use the data-api.
 </select>
 ```
 
-### Via JavaScript
+If you use a 1.6.3 or newer, you don't need to do anything else, as the data-api automatically picks up the `<select>`s with the `selectpicker` class.
+
+If you use an older version, you need to add the following either at the bottom of the page (after the last selectpicker), or in a [`$(document).ready()`](https://api.jquery.com/ready/) block.
 ```js
-// To style only selects with the selectpicker class
+// To style only <select>s with the selectpicker class
 $('.selectpicker').selectpicker();
 ```
-or
+Or
 ```js
-// To style all selects
+// To style all <select>s
 $('select').selectpicker();
 ```
 
-If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`$(document).ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
+Checkout the [documentation](https://silviomoreto.github.io/bootstrap-select) for further information.
 
+## CDN
 
-Check out the [documentation](https://developer.snapappointments.com/bootstrap-select) for further information.
+**N.B.**: The CDN is updated after the release is made public, which means that there is a delay between the publishing of a release and its availability on the CDN. Check [the GitHub page](https://github.com/silviomoreto/bootstrap-select/releases) for the latest release.
+
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css)
+* [//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js](//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js)
+* //cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js (The translation files)
 
 ## Bugs and feature requests
 
@@ -102,21 +86,19 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 * [Bug reports](CONTRIBUTING.md#bug-reports)
 * [Feature requests](CONTRIBUTING.md#feature-requests)
 
-## Documentation
-
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be run locally.
-
-### Running documentation locally
-
-1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
-2. Install [mkdocs-bootstrap](https://mkdocs.github.io/mkdocs-bootstrap/) using `pip install mkdocs-bootstrap`.
-3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
-4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
-
-Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
-
 ## Copyright and license
 
-Copyright (C) 2012-2018 [SnapAppointments, LLC](https://snapappointments.com)
+Copyright (C) 2013-2015 bootstrap-select
 
 Licensed under [the MIT license](LICENSE).
+
+## Used by
+
+* [SnapAppointments](https://snapappointments.com)
+* [Thermo Fisher Scientific Inc.](https://www.thermofisher.com)
+* [membermeister](https://www.membermeister.com)
+* [Solve for All](https://solveforall.com)
+* [EstiMATEit](https://www.123itworks.co.uk)
+* [Convertizer](https://convertizer.com)
+
+Does your organization use bootstrap-select? Open an issue, and include a link and logo, and you'll be added to the list.

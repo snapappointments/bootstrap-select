@@ -87,10 +87,9 @@ module.exports = function (grunt) {
     uglify: {
       options: {
         output: {
-          ascii_only: true
-        },
-        preserveComments: function(node, comment) {
-          return /^!|@preserve|@license|@cc_on/i.test(comment.value);
+          comments: function(node, comment) {
+            return /^!|@preserve|@license|@cc_on/i.test(comment.value);
+          }
         }
       },
       main: {
@@ -154,9 +153,7 @@ module.exports = function (grunt) {
 
     cssmin: {
       options: {
-        compatibility: 'ie8',
-        keepSpecialComments: '*',
-        advanced: false
+        compatibility: 'ie8'
       },
       css: {
         src: '<%= less.css.dest %>',
