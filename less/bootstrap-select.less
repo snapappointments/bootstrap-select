@@ -287,6 +287,15 @@ select.selectpicker {
 
         span.text {
           display: inline-block;
+          .bootstrap-select-text-span {
+            display: block;
+            margin-left: 9px;
+          }
+          .bootstrap-select-checkbox {
+            position: absolute;
+            left: 8px;
+            top: 30%;
+          }
         }
       }
 
@@ -317,7 +326,12 @@ select.selectpicker {
     margin: 0 5px;
     white-space: nowrap;
   }
-
+  .bootstrap-dropdown-item {
+    padding:.25rem 1.5rem;
+  }
+  .bs-checkbox-for-old {
+    top: 3px!important;
+  }
   &.fit-width .dropdown-toggle {
     .filter-option {
       position: static;
@@ -347,6 +361,12 @@ select.selectpicker {
 
     li a span.text {
       margin-right: 34px;
+
+      .bootstrap-select-checkbox {
+        position: absolute;
+        left: 8px;
+        top: 30%;
+      }
     }
   }
 

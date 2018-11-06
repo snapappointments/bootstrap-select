@@ -248,6 +248,15 @@ select.selectpicker {
 .bootstrap-select .dropdown-menu li a span.text {
   display: inline-block;
 }
+.bootstrap-select .dropdown-menu li a span.text .bootstrap-select-text-span {
+  display: block;
+  margin-left: 9px;
+}
+.bootstrap-select .dropdown-menu li a span.text .bootstrap-select-checkbox {
+  position: absolute;
+  left: 8px;
+  top: 30%;
+}
 .bootstrap-select .dropdown-menu li small {
   padding-left: 0.5em;
 }
@@ -274,6 +283,12 @@ select.selectpicker {
   margin: 0 5px;
   white-space: nowrap;
 }
+.bootstrap-select .bootstrap-dropdown-item {
+  padding: 0.25rem 1.5rem;
+}
+.bootstrap-select .bs-checkbox-for-old {
+  top: 3px!important;
+}
 .bootstrap-select.fit-width .dropdown-toggle .filter-option {
   position: static;
   display: inline;
@@ -296,6 +311,11 @@ select.selectpicker {
 }
 .bootstrap-select.show-tick .dropdown-menu li a span.text {
   margin-right: 34px;
+}
+.bootstrap-select.show-tick .dropdown-menu li a span.text .bootstrap-select-checkbox {
+  position: absolute;
+  left: 8px;
+  top: 30%;
 }
 .bootstrap-select .bs-ok-default:after {
   content: '';
