@@ -1066,7 +1066,7 @@
           }
         }
 
-        if (typeof classes !== 'undefined' & '' !== classes) a.className = classes;
+        if (typeof classes !== 'undefined' && '' !== classes) a.className = classes;
         if (version.major === '4') a.classList.add('dropdown-item');
         if (inline) a.setAttribute('style', inline);
 
