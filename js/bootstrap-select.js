@@ -352,6 +352,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    liveSearchFocus: true,
     addResults: false,
     actionsBox: false,
     iconBase: 'glyphicon',
@@ -1261,6 +1262,17 @@
       this.$element.attr('tabindex', -98);
     },
 
+    searchboxFocus: function (inLiveSearch) {
+      if (!this.options.liveSearch)
+        return;
+
+      // ignoring liveSearchFocus=false when already searching
+      if (!this.options.liveSearchFocus && !inLiveSearch)
+        return;
+
+      this.$searchbox.focus();
+    },
+
     clickListener: function () {
       var that = this,
           $document = $(document);
@@ -1388,7 +1400,7 @@
           if (!that.multiple || (that.multiple && that.options.maxOptions === 1)) {
             that.$button.focus();
           } else if (that.options.liveSearch) {
-            that.$searchbox.focus();
+            that.searchboxFocus();
           }
 
           // Trigger select 'change'
@@ -1408,7 +1420,7 @@
           e.preventDefault();
           e.stopPropagation();
           if (that.options.liveSearch && !$(e.target).hasClass('close')) {
-            that.$searchbox.focus();
+            that.searchboxFocus();
           } else {
             that.$button.focus();
           }
@@ -1419,7 +1431,7 @@
         e.preventDefault();
         e.stopPropagation();
         if (that.options.liveSearch) {
-          that.$searchbox.focus();
+          that.searchboxFocus();
         } else {
           that.$button.focus();
         }
@@ -1435,7 +1447,7 @@
 
       this.$menu.on('click', '.actions-btn', function (e) {
         if (that.options.liveSearch) {
-          that.$searchbox.focus();
+          that.searchboxFocus();
         } else {
           that.$button.focus();
         }
@@ -1470,7 +1482,7 @@
         }
         if (!that.multiple) that.$menuInner.find('.selected').addClass('active');
         setTimeout(function () {
-          that.$searchbox.focus();
+          that.searchboxFocus();
         }, 10);
       });
 
@@ -1674,7 +1686,7 @@
         } else {
           that.$button.trigger('click');
         }
-        that.$searchbox.focus();
+        that.searchboxFocus(true); // live search event
         return;
       }
 
