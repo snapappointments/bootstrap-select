@@ -126,6 +126,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>liveSearchFocus</td>
+    <td>boolean</td>
+    <td><code>true</code></td>
+    <td>
+      <p>When set to <code>false</code>, the search box only gets focused when typing, not on item selection. (Prevents scroll ups, and mobile keyboard showing up.)</p>
+    </td>
+  </tr>
+  <tr>
     <td>addResults</td>
     <td>boolean</td>
     <td><code>false</code></td>
