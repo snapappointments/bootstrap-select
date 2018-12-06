@@ -27,7 +27,7 @@
     noneSelectedText: 'ምንም አልተመረጠም',
     noneResultsText: 'ከ{0} ጋር ተመሳሳይ ውጤት የለም',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} ምርጫ ተመርጧል" : "{0} ምርጫዎች ተመርጠዋል";
+      return (numSelected == 1) ? '{0} ምርጫ ተመርጧል' : '{0} ምርጫዎች ተመርጠዋል';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
