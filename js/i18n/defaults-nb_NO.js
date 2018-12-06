@@ -8,7 +8,7 @@
     noneSelectedText: 'Ingen valgt',
     noneResultsText: 'Søket gir ingen treff {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} alternativ valgt" : "{0} alternativer valgt";
+      return (numSelected == 1) ? '{0} alternativ valgt' : '{0} alternativer valgt';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

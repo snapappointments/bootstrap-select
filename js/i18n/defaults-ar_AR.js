@@ -8,7 +8,7 @@
     noneSelectedText: 'لم يتم إختيار شئ',
     noneResultsText: 'لا توجد نتائج مطابقة لـ {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} خيار تم إختياره" : "{0} خيارات تمت إختيارها";
+      return (numSelected == 1) ? '{0} خيار تم إختياره' : '{0} خيارات تمت إختيارها';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

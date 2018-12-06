@@ -8,7 +8,7 @@
     noneSelectedText: 'Нищо избрано',
     noneResultsText: 'Няма резултат за {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} избран елемент" : "{0} избрани елемента";
+      return (numSelected == 1) ? '{0} избран елемент' : '{0} избрани елемента';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

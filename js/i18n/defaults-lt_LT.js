@@ -8,7 +8,7 @@
     noneSelectedText: 'Niekas nepasirinkta',
     noneResultsText: 'Niekas nesutapo su {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} elementas pasirinktas" : "{0} elementai(-ų) pasirinkta";
+      return (numSelected == 1) ? '{0} elementas pasirinktas' : '{0} elementai(-ų) pasirinkta';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

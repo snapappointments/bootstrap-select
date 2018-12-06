@@ -8,7 +8,7 @@
     noneSelectedText: 'Ei valintoja',
     noneResultsText: 'Ei hakutuloksia {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} valittu" : "{0} valitut";
+      return (numSelected == 1) ? '{0} valittu' : '{0} valitut';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

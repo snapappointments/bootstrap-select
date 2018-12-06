@@ -8,7 +8,7 @@
     noneSelectedText: 'Aucune sélection',
     noneResultsText: 'Aucun résultat pour {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected > 1) ? "{0} éléments sélectionnés" : "{0} élément sélectionné";
+      return (numSelected > 1) ? '{0} éléments sélectionnés' : '{0} élément sélectionné';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -18,6 +18,6 @@
     },
     multipleSeparator: ', ',
     selectAllText: 'Tout sélectionner',
-    deselectAllText: 'Tout désélectionner',
+    deselectAllText: 'Tout désélectionner'
   };
 })(jQuery);

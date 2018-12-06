@@ -8,7 +8,7 @@
     noneSelectedText: 'Chưa chọn',
     noneResultsText: 'Không có kết quả cho {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return "{0} mục đã chọn";
+      return '{0} mục đã chọn';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

@@ -8,7 +8,7 @@
     noneSelectedText: 'Inget valt',
     noneResultsText: 'Inget sökresultat matchar {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected === 1) ? "{0} alternativ valt" : "{0} alternativ valda";
+      return (numSelected === 1) ? '{0} alternativ valt' : '{0} alternativ valda';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

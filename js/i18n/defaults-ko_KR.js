@@ -8,7 +8,7 @@
     noneSelectedText: '항목을 선택해주세요',
     noneResultsText: '{0} 검색 결과가 없습니다',
     countSelectedText: function (numSelected, numTotal) {
-      return "{0}개를 선택하였습니다";
+      return '{0}개를 선택하였습니다';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

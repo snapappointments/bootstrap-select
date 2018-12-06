@@ -8,7 +8,7 @@
     noneSelectedText: 'Odaberite stavku',
     noneResultsText: 'Nema rezultata pretrage {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} stavka selektirana" : "{0} stavke selektirane";
+      return (numSelected == 1) ? '{0} stavka selektirana' : '{0} stavke selektirane';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

@@ -39,10 +39,10 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-csslint": "^2.0.0",
     "grunt-contrib-cssmin": "^2.2.1",
-    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-less": "^2.0.0",
     "grunt-contrib-uglify": "^3.4.0",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^21.0.0",
     "grunt-umd": "^3.0.0",
     "grunt-version": "^1.1.1",
     "load-grunt-tasks": "^4.0.0"

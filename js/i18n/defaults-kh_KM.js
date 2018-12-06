@@ -8,7 +8,7 @@
     noneSelectedText: 'មិនមានអ្វីបានជ្រើសរើស',
     noneResultsText: 'មិនមានលទ្ធផល {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} ធាតុដែលបានជ្រើស" : "{0} ធាតុដែលបានជ្រើស";
+      return (numSelected == 1) ? '{0} ធាតុដែលបានជ្រើស' : '{0} ធាតុដែលបានជ្រើស';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

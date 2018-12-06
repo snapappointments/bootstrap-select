@@ -8,7 +8,7 @@
     noneSelectedText: 'Bitte wählen...',
     noneResultsText: 'Keine Ergebnisse für {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} Element ausgewählt" : "{0} Elemente ausgewählt";
+      return (numSelected == 1) ? '{0} Element ausgewählt' : '{0} Elemente ausgewählt';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

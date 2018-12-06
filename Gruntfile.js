@@ -1,5 +1,4 @@
 module.exports = function (grunt) {
-
   // From TWBS
   RegExp.quote = function (string) {
     return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -25,13 +24,15 @@ module.exports = function (grunt) {
       docs: 'docs/docs/dist'
     },
 
-    jshint: {
+    eslint: {
       options: {
-        jshintrc: 'js/.jshintrc'
+        configFile: 'js/.eslintrc.json'
       },
       gruntfile: {
         options: {
-          'node': true
+          'envs': [
+            'node'
+          ]
         },
         src: 'Gruntfile.js'
       },
@@ -48,12 +49,12 @@ module.exports = function (grunt) {
         stripBanners: true
       },
       main: {
-        src: '<%= jshint.main.src %>',
+        src: '<%= eslint.main.src %>',
         dest: 'dist/js/<%= pkg.name %>.js'
       },
       i18n: {
         expand: true,
-        src: '<%= jshint.i18n.src %>',
+        src: '<%= eslint.i18n.src %>',
         dest: 'dist/'
       }
     },
@@ -79,7 +80,7 @@ module.exports = function (grunt) {
             global: ['jQuery']
           }
         },
-        src: 'dist/<%= jshint.i18n.src %>',
+        src: 'dist/<%= eslint.i18n.src %>',
         dest: '.'
       }
     },
@@ -89,7 +90,7 @@ module.exports = function (grunt) {
         output: {
           ascii_only: true
         },
-        preserveComments: function(node, comment) {
+        preserveComments: function (node, comment) {
           return /^!|@preserve|@license|@cc_on/i.test(comment.value);
         }
       },
@@ -103,7 +104,7 @@ module.exports = function (grunt) {
       },
       i18n: {
         expand: true,
-        src: 'dist/<%= jshint.i18n.src %>',
+        src: 'dist/<%= eslint.i18n.src %>',
         ext: '.min.js'
       }
     },
@@ -136,7 +137,7 @@ module.exports = function (grunt) {
         src: [
           '<%= concat.main.dest %>',
           '<%= uglify.main.dest %>',
-          'dist/<%= jshint.i18n.src %>',
+          'dist/<%= eslint.i18n.src %>'
         ]
       }
     },
@@ -197,17 +198,17 @@ module.exports = function (grunt) {
         },
         src: [
           'js/<%= pkg.name %>.js'
-        ],
+        ]
       },
       docs: {
         options: {
           prefix: '<%= pkg.name %>/archive/v',
-          replace: '[0-9a-zA-Z\\-_\\+\\.]+)([^\/]+(?=\.zip+)'
+          replace: '[0-9a-zA-Z\\-_\\+\\.]+)([^/]+(?=\.zip+)'
         },
         src: [
           'README.md',
           'docs/docs/index.md'
-        ],
+        ]
       },
       cdn: {
         options: {
@@ -216,7 +217,7 @@ module.exports = function (grunt) {
         src: [
           'README.md',
           'docs/docs/index.md'
-        ],
+        ]
       },
       nuget: {
         options: {
@@ -224,7 +225,7 @@ module.exports = function (grunt) {
         },
         src: [
           'nuget/bootstrap-select.nuspec'
-        ],
+        ]
       },
       default: {
         options: {
@@ -233,7 +234,7 @@ module.exports = function (grunt) {
         src: [
           'docs/mkdocs.yml',
           'package.json'
-        ],
+        ]
       }
     },
 
@@ -280,11 +281,11 @@ module.exports = function (grunt) {
 
     watch: {
       gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: 'jshint:gruntfile'
+        files: '<%= eslint.gruntfile.src %>',
+        tasks: 'eslint:gruntfile'
       },
       js: {
-        files: ['<%= jshint.main.src %>', '<%= jshint.i18n.src %>'],
+        files: ['<%= eslint.main.src %>', '<%= eslint.i18n.src %>'],
         tasks: 'build-js'
       },
       less: {
@@ -306,7 +307,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('build-js', ['clean:js', 'concat', 'umd', 'uglify', 'usebanner:js']);
+  grunt.registerTask('build-js', ['clean:js', 'eslint', 'concat', 'umd', 'uglify', 'usebanner:js']);
 
   // Copy dist to docs
   grunt.registerTask('docs', ['clean:docs', 'copy:docs']);
@@ -319,5 +320,4 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('default', ['build-css', 'build-js']);
-
 };
