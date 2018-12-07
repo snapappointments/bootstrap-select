@@ -989,6 +989,7 @@
     createLi: function () {
       var that = this,
           mainElements = [],
+          hiddenOptions = {},
           widestOption,
           availableOptionsCount = 0,
           widestOptionLength = 0,
@@ -1193,7 +1194,7 @@
 
         var parentData = $parent.data();
 
-        if (thisData.hidden === true || (that.options.hideDisabled && ((isDisabled && !isOptgroup) || isOptgroupDisabled))) {
+        if (thisData.hidden === true || (that.options.hideDisabled && (isDisabled || isOptgroupDisabled))) {
           // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
           // used to determine whether or not a divider should be placed after an optgroup if there are
           // hidden options between the optgroup and the first visible option
@@ -1201,6 +1202,11 @@
           $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
 
           liIndex--;
+
+          hiddenOptions[index] = {
+            type: 'hidden',
+            data: thisData
+          }
 
           // if previous element is not an optgroup
           if (!showDivider) {
@@ -1245,9 +1251,16 @@
             }
           }
 
-          var optGroupClass = ' ' + parent.className || '';
+          var optGroupClass = ' ' + parent.className || '',
+              previousOption = this.previousElementSibling;
 
-          if (!this.previousElementSibling) { // Is it the first option of the optgroup?
+          prevHiddenIndex = thisData.prevHiddenIndex;
+
+          if (prevHiddenIndex !== undefined) {
+            previousOption = $selectOptions[prevHiddenIndex].previousElementSibling;
+          }
+
+          if (!previousOption) { // Is it the first option of the optgroup?
             optID += 1;
 
             // Get the opt group label
@@ -1287,11 +1300,6 @@
             });
 
             headerIndex = liIndex - 1;
-          }
-
-          if (that.options.hideDisabled && (isDisabled || thisData.hidden === true)) {
-            liIndex--;
-            return;
           }
 
           textElement = generateText({
@@ -1400,6 +1408,7 @@
 
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
+      this.selectpicker.main.hidden = hiddenOptions;
 
       this.selectpicker.current = this.selectpicker.main;
 
@@ -1421,17 +1430,15 @@
 
       this.tabIndex();
 
-      for (var i = 0, len = this.selectpicker.main.elements.length; i < len; i++) {
-        var index = this.selectpicker.main.map.originalIndex[i],
+      for (var index = 0, len = $selectOptions.length; index < len; index++) {
+        var i = that.selectpicker.main.map.newIndex[index],
             option = $selectOptions[index];
 
         if (option && option.selected) {
           selectedItems.push(option);
 
           if ((selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
-            if (that.options.hideDisabled && (option.disabled || (option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled))) return;
-
-            var thisData = this.selectpicker.main.data[i].data,
+            var thisData = (that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index]).data,
                 icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
                 subtext,
                 titleItem;
