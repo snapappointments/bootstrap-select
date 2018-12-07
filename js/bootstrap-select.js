@@ -1194,7 +1194,7 @@
 
         var parentData = $parent.data();
 
-        if (thisData.hidden === true || (that.options.hideDisabled && (isDisabled || isOptgroupDisabled))) {
+        if ((thisData.hidden === true || this.hidden) || (that.options.hideDisabled && (isDisabled || isOptgroupDisabled))) {
           // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
           // used to determine whether or not a divider should be placed after an optgroup if there are
           // hidden options between the optgroup and the first visible option
