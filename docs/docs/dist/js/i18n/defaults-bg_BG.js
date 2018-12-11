@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.4 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -27,7 +27,7 @@
     noneSelectedText: 'Нищо избрано',
     noneResultsText: 'Няма резултат за {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} избран елемент" : "{0} избрани елемента";
+      return (numSelected == 1) ? '{0} избран елемент' : '{0} избрани елемента';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

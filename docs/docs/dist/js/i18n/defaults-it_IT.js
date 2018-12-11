@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.4 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -26,7 +26,7 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Nessuna selezione',
     noneResultsText: 'Nessun risultato per {0}',
-    countSelectedText: function (numSelected, numTotal){
+    countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? 'Selezionato {0} di {1}' : 'Selezionati {0} di {1}';
     },
     maxOptionsText: ['Limite raggiunto ({n} {var} max)', 'Limite del gruppo raggiunto ({n} {var} max)', ['elementi', 'elemento']],

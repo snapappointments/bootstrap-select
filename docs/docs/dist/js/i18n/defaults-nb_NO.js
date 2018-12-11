@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.4 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -27,7 +27,7 @@
     noneSelectedText: 'Ingen valgt',
     noneResultsText: 'Søket gir ingen treff {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} alternativ valgt" : "{0} alternativer valgt";
+      return (numSelected == 1) ? '{0} alternativ valgt' : '{0} alternativer valgt';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [

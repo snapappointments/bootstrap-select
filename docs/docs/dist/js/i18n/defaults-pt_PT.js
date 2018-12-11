@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.4 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -23,15 +23,15 @@
 }(this, function (jQuery) {
 
 (function ($) {
-$.fn.selectpicker.defaults = {
-	noneSelectedText: 'Nenhum seleccionado',
-	noneResultsText: 'Sem resultados contendo {0}',
-	countSelectedText: 'Selecionado {0} de {1}',
-	maxOptionsText: ['Limite ultrapassado (máx. {n} {var})', 'Limite de seleções ultrapassado (máx. {n} {var})', ['itens', 'item']],
+  $.fn.selectpicker.defaults = {
+    noneSelectedText: 'Nenhum seleccionado',
+    noneResultsText: 'Sem resultados contendo {0}',
+    countSelectedText: 'Selecionado {0} de {1}',
+    maxOptionsText: ['Limite ultrapassado (máx. {n} {var})', 'Limite de seleções ultrapassado (máx. {n} {var})', ['itens', 'item']],
     multipleSeparator: ', ',
     selectAllText: 'Selecionar Tudo',
     deselectAllText: 'Desmarcar Todos'
-};
+  };
 })(jQuery);
 
 

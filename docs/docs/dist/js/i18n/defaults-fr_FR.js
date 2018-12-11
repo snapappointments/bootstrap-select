@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.4 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -27,7 +27,7 @@
     noneSelectedText: 'Aucune sélection',
     noneResultsText: 'Aucun résultat pour {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected > 1) ? "{0} éléments sélectionnés" : "{0} élément sélectionné";
+      return (numSelected > 1) ? '{0} éléments sélectionnés' : '{0} élément sélectionné';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -37,7 +37,7 @@
     },
     multipleSeparator: ', ',
     selectAllText: 'Tout sélectionner',
-    deselectAllText: 'Tout désélectionner',
+    deselectAllText: 'Tout désélectionner'
   };
 })(jQuery);
 

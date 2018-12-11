@@ -1,3 +1,45 @@
+# v1.13.4 (2018-12-11)
+
+### Bug Fixes
+- [#1710]: When listening for keydown event on .bs-searchbox, ensure it is a child of .bootstrap-select
+- [#1943]: Option dropdownAlignRight auto doesn't work
+- [#2034]: Uncaught TypeError: Cannot read property '0' of undefined
+- [#2082]: button vertical alignment
+- [#2105]: Dynamically added picker causes resize JS error
+- [#2118]: Memory leak: getPlacement resize & scroll
+- [#2140]: data-hidden broken in v1.13.0
+- [#2151]: This plugins broken when the version of IE below 10
+
+### Documentation
+- [#2125]: add styleBase option to documentation
+
+### New Features
+- [#767], [#1876], [#2026]: Improve/expand liveSearchNormalize
+- [#2120], [#2121], [#2152] - replace JSHint with ESLint (clean up code)
+- [#1910]: Amharic locale
+- [#1926]: Latvian locale
+
+[#767]: https://github.com/snapappointments/bootstrap-select/issues/767
+[#1876]: https://github.com/snapappointments/bootstrap-select/issues/1876
+[#2026]: https://github.com/snapappointments/bootstrap-select/issues/2026
+[#1710]: https://github.com/snapappointments/bootstrap-select/issues/1710
+[#1943]: https://github.com/snapappointments/bootstrap-select/issues/1943
+[#2034]: https://github.com/snapappointments/bootstrap-select/issues/2034
+[#2082]: https://github.com/snapappointments/bootstrap-select/issues/2082
+[#2105]: https://github.com/snapappointments/bootstrap-select/issues/2105
+[#2118]: https://github.com/snapappointments/bootstrap-select/issues/2118
+[#2140]: https://github.com/snapappointments/bootstrap-select/issues/2140
+[#2151]: https://github.com/snapappointments/bootstrap-select/issues/2151
+[#2125]: https://github.com/snapappointments/bootstrap-select/issues/2125
+
+[#1910]: https://github.com/snapappointments/bootstrap-select/pull/1910
+[#1926]: https://github.com/snapappointments/bootstrap-select/pull/1926
+[#2120]: https://github.com/snapappointments/bootstrap-select/pull/2120
+[#2121]: https://github.com/snapappointments/bootstrap-select/pull/2121
+[#2152]: https://github.com/snapappointments/bootstrap-select/pull/2152
+
+-------------------
+
 # v1.13.3 (2018-10-15)
 
 ### Bug Fixes
@@ -8,12 +50,12 @@
 - [#2092]: Cannot read property 'className' of undefined
 - [#2101]: Extra tick mark when using livesearch in Bootstrap 4
 
-[#1425]: https://github.com/snapappointments/bootstrap-select/issues/#1425
-[#1828]: https://github.com/snapappointments/bootstrap-select/issues/#1828
-[#2045]: https://github.com/snapappointments/bootstrap-select/issues/#2045
-[#2086]: https://github.com/snapappointments/bootstrap-select/issues/#2086
-[#2092]: https://github.com/snapappointments/bootstrap-select/issues/#2092
-[#2101]: https://github.com/snapappointments/bootstrap-select/issues/#2101
+[#1425]: https://github.com/snapappointments/bootstrap-select/issues/1425
+[#1828]: https://github.com/snapappointments/bootstrap-select/issues/1828
+[#2045]: https://github.com/snapappointments/bootstrap-select/issues/2045
+[#2086]: https://github.com/snapappointments/bootstrap-select/issues/2086
+[#2092]: https://github.com/snapappointments/bootstrap-select/issues/2092
+[#2101]: https://github.com/snapappointments/bootstrap-select/issues/2101
 
 -------------------
 
