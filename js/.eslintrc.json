@@ -52,6 +52,7 @@
     "new-cap": ["error", { "newIsCap": true, "capIsNew": false }],
     "new-parens": "error",
     "no-array-constructor": "error",
+    "no-bitwise": "error",
     "no-caller": "error",
     "no-class-assign": "error",
     "no-compare-neg-zero": "error",
