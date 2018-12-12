@@ -1,3 +1,11 @@
+# v1.13.5 (2018-12-11)
+### Bug Fixes
+- [#2160]: Selects with a title option throw an error in the render function
+
+[#2160]: https://github.com/snapappointments/bootstrap-select/issues/2160
+
+-------------------
+
 # v1.13.4 (2018-12-11)
 
 ### Bug Fixes

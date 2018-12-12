@@ -8,7 +8,7 @@ Bootstrap-select requires jQuery v1.9.1+, Bootstrap’s dropdown.js component, a
 
 Several quick start options are available:
 
-- [Download the latest release.](https://github.com/snapappointments/bootstrap-select/archive/v1.13.4.zip)
+- [Download the latest release.](https://github.com/snapappointments/bootstrap-select/archive/v1.13.5.zip)
 - Clone the repo: `git clone https://github.com/snapappointments/bootstrap-select.git`
 - Install with [npm](https://www.npmjs.com/package/bootstrap-select): `npm install bootstrap-select`
 - Install with [yarn](https://yarn.pm/bootstrap-select): `yarn add bootstrap-select`
@@ -19,13 +19,13 @@ Several quick start options are available:
 
 ```html
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.4/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.4/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/js/bootstrap-select.min.js"></script>
 
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.4/js/i18n/defaults-*.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.5/js/i18n/defaults-*.min.js"></script>
 ```
 
 <div class="bs-docs-example small">

@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.4 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.5 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2018 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -600,7 +600,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.4';
+  Selectpicker.VERSION = '1.13.5';
 
   Selectpicker.BootstrapVersion = version.major;
 
@@ -1509,13 +1509,14 @@
 
       for (var index = 0, len = $selectOptions.length; index < len; index++) {
         var i = that.selectpicker.main.map.newIndex[index],
-            option = $selectOptions[index];
+            option = $selectOptions[index],
+            optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
-        if (option && option.selected) {
+        if (option && option.selected && optionData) {
           selectedItems.push(option);
 
           if ((selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
-            var thisData = (that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index]).data,
+            var thisData = optionData.data,
                 icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
                 subtext,
                 titleItem;
