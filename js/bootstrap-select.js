@@ -1485,13 +1485,14 @@
 
       for (var index = 0, len = $selectOptions.length; index < len; index++) {
         var i = that.selectpicker.main.map.newIndex[index],
-            option = $selectOptions[index];
+            option = $selectOptions[index],
+            optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
-        if (option && option.selected) {
+        if (option && option.selected && optionData) {
           selectedItems.push(option);
 
           if ((selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
-            var thisData = (that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index]).data,
+            var thisData = optionData.data,
                 icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
                 subtext,
                 titleItem;
