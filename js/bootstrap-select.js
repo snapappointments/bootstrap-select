@@ -2071,11 +2071,11 @@
 
       if (this.isDisabled()) {
         this.$newElement.addClass(classNames.DISABLED);
-        this.$button.addClass(classNames.DISABLED).attr('tabindex', -1).attr('aria-disabled', true).prop('disabled', true);
+        this.$button.addClass(classNames.DISABLED).attr('tabindex', -1).attr('aria-disabled', true);
       } else {
         if (this.$button.hasClass(classNames.DISABLED)) {
           this.$newElement.removeClass(classNames.DISABLED);
-          this.$button.removeClass(classNames.DISABLED).attr('aria-disabled', false).prop('disabled', false);
+          this.$button.removeClass(classNames.DISABLED).attr('aria-disabled', false);
         }
 
         if (this.$button.attr('tabindex') == -1 && !this.$element.data('tabindex')) {
