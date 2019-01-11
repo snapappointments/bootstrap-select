@@ -91,12 +91,12 @@ select.selectpicker {
   .has-error & .dropdown-toggle,
   .error & .dropdown-toggle,
   &.is-invalid .dropdown-toggle,
-  .was-validated & .selectpicker:invalid + .dropdown-toggle {
+  .was-validated & select:invalid + .dropdown-toggle {
     border-color: $color-red-error;
   }
 
   &.is-valid .dropdown-toggle,
-  .was-validated & .selectpicker:valid + .dropdown-toggle {
+  .was-validated & select:valid + .dropdown-toggle {
     border-color: $color-green-success;
   }
 
