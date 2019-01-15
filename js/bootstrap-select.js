@@ -1289,6 +1289,8 @@
           }
 
           return;
+        } else {
+          $this.next().removeData('prevHiddenIndex');
         }
 
         if (isOptgroup && thisData.divider !== true) {
@@ -1309,6 +1311,8 @@
 
           prevHiddenIndex = thisData.prevHiddenIndex;
 
+          // Get the first visible option before the first hidden option in the group.
+          // Ensures a divider is shown if, for example, the first option in the optgroup is hidden.
           if (prevHiddenIndex !== undefined) {
             previousOption = $selectOptions[prevHiddenIndex].previousElementSibling;
           }
