@@ -1795,7 +1795,8 @@
         'min-height': menuInnerMinHeight + 'px'
       });
 
-      this.sizeInfo.menuInnerHeight = menuInnerHeight;
+      // ensure menuInnerHeight is always a positive number to prevent issues calculating chunkSize in createView
+      this.sizeInfo.menuInnerHeight = Math.max(menuInnerHeight, 1);
 
       if (this.selectpicker.current.data.length && this.selectpicker.current.data[this.selectpicker.current.data.length - 1].position > this.sizeInfo.menuInnerHeight) {
         this.sizeInfo.hasScrollBar = true;
