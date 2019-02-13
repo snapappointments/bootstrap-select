@@ -2548,6 +2548,10 @@
         )
       ) {
         that.$button.trigger('click.bs.dropdown.data-api');
+
+        if (that.options.liveSearch) {
+          return;
+        }
       }
 
       if (e.which === keyCodes.ESCAPE && isActive) {
