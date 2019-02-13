@@ -20,7 +20,6 @@ select.selectpicker {
   > .dropdown-toggle {
     position: relative;
     width: 100%;
-    z-index: 1;
     // necessary for proper positioning of caret in Bootstrap 4 (pushes caret to the right)
     text-align: right;
     white-space: nowrap;
@@ -107,14 +106,9 @@ select.selectpicker {
     width: 100%;
   }
 
+  .input-group &,
   &.input-group-btn {
     z-index: auto;
-
-    &:not(:first-child):not(:last-child) {
-      > .btn {
-        border-radius: 0;
-      }
-    }
   }
 }
 
