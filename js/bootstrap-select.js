@@ -944,7 +944,7 @@
           selected = that.selectpicker.current.elements[that.selectpicker.current.map.newIndex[that.selectedIndex]];
 
           if (init) {
-            if (that.activeIndex !== that.selectedIndex) {
+            if (that.activeIndex !== that.selectedIndex && active && active.length) {
               active.classList.remove('active');
               if (active.firstChild) active.firstChild.classList.remove('active');
             }
