@@ -514,6 +514,8 @@
     fragment: document.createDocumentFragment()
   }
 
+  elementTemplates.a.setAttribute('role', 'option');
+
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
 
@@ -1169,8 +1171,6 @@
         elementTemplates.a.appendChild(checkMark);
       }
 
-      elementTemplates.a.setAttribute('role', 'option');
-
       elementTemplates.subtext.className = 'text-muted';
 
       elementTemplates.text = elementTemplates.span.cloneNode(false);
@@ -1209,20 +1209,21 @@
 
       var $selectOptions = this.$element.find('option');
 
-      $selectOptions.each(function (index) {
-        var $this = $(this);
+      for (var index = 0, len = $selectOptions.length; index < len; index++) {
+        var option = $selectOptions[index],
+            $this = $(option);
 
         liIndex++;
 
-        if ($this.hasClass('bs-title-option')) return;
+        if ($this.hasClass('bs-title-option')) continue;
 
         var thisData = $this.data();
 
         // Get the class and text for the option
-        var optionClass = this.className || '',
-            inline = htmlEscape(this.style.cssText),
+        var optionClass = option.className || '',
+            inline = htmlEscape(option.style.cssText),
             optionContent = thisData.content,
-            text = this.textContent,
+            text = option.textContent,
             tokens = thisData.tokens,
             subtext = thisData.subtext,
             icon = thisData.icon,
@@ -1230,9 +1231,9 @@
             parent = $parent[0],
             isOptgroup = parent.tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && parent.disabled,
-            isDisabled = this.disabled || isOptgroupDisabled,
+            isDisabled = option.disabled || isOptgroupDisabled,
             prevHiddenIndex,
-            showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP',
+            showDivider = option.previousElementSibling && option.previousElementSibling.tagName === 'OPTGROUP',
             textElement,
             labelElement,
             prevHidden;
@@ -1241,7 +1242,7 @@
 
         if (
           (
-            (thisData.hidden === true || this.hidden) ||
+            (thisData.hidden === true || option.hidden) ||
             (isOptgroup && (parentData.hidden === true || parent.hidden))
           ) ||
           (that.options.hideDisabled && (isDisabled || isOptgroupDisabled))
@@ -1286,7 +1287,7 @@
             });
           }
 
-          return;
+          continue;
         } else {
           $this.next().removeData('prevHiddenIndex');
         }
@@ -1300,12 +1301,12 @@
 
             if ($parent.data('allOptionsDisabled')) {
               liIndex--;
-              return;
+              continue;
             }
           }
 
           var optGroupClass = ' ' + parent.className || '',
-              previousOption = this.previousElementSibling;
+              previousOption = option.previousElementSibling;
 
           prevHiddenIndex = thisData.prevHiddenIndex;
 
@@ -1459,7 +1460,7 @@
           // not perfect, but it's fast, and the width will be updating accordingly when scrolling
           widestOption = mainElements[mainElements.length - 1];
         }
-      });
+      }
 
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
