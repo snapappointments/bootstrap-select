@@ -1215,7 +1215,7 @@
 
         liIndex++;
 
-        if ($this.hasClass('bs-title-option')) continue;
+        if (option.classList.contains('bs-title-option')) continue;
 
         var thisData = $this.data();
 
