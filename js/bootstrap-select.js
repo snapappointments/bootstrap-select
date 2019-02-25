@@ -505,11 +505,119 @@
     classNames.POPOVERHEADER = 'popover-header';
   }
 
+  var elementTemplates = {
+    span: document.createElement('span'),
+    subtext: document.createElement('small'),
+    a: document.createElement('a'),
+    li: document.createElement('li'),
+    whitespace: document.createTextNode('\u00A0'),
+    fragment: document.createDocumentFragment()
+  }
+
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
 
+  var selectpicker = {};
+
+  var generateOption = {
+    li: function (content, classes, optgroup) {
+      var li = elementTemplates.li.cloneNode(false);
+
+      if (content) {
+        if (content.nodeType === 1 || content.nodeType === 11) {
+          li.appendChild(content);
+        } else {
+          li.innerHTML = content;
+        }
+      }
+
+      if (typeof classes !== 'undefined' && classes !== '') li.className = classes;
+      if (typeof optgroup !== 'undefined' && optgroup !== null) li.classList.add('optgroup-' + optgroup);
+
+      return li;
+    },
+
+    a: function (text, classes, inline) {
+      var a = elementTemplates.a.cloneNode(true);
+
+      if (text) {
+        if (text.nodeType === 11) {
+          a.appendChild(text);
+        } else {
+          a.insertAdjacentHTML('beforeend', text);
+        }
+      }
+
+      if (typeof classes !== 'undefined' && classes !== '') a.className = classes;
+      if (version.major === '4') a.classList.add('dropdown-item');
+      if (inline) a.setAttribute('style', inline);
+
+      return a;
+    },
+
+    text: function (options) {
+      var textElement = elementTemplates.text.cloneNode(false),
+          optionSubtextElement,
+          optionIconElement;
+
+      if (options.optionContent) {
+        textElement.innerHTML = options.optionContent;
+      } else {
+        textElement.textContent = options.text;
+
+        if (options.optionIcon) {
+          var whitespace = elementTemplates.whitespace.cloneNode(false);
+
+          optionIconElement = elementTemplates.span.cloneNode(false);
+          optionIconElement.className = selectpicker.options.iconBase + ' ' + options.optionIcon;
+
+          elementTemplates.fragment.appendChild(optionIconElement);
+          elementTemplates.fragment.appendChild(whitespace);
+        }
+
+        if (options.optionSubtext) {
+          optionSubtextElement = elementTemplates.subtext.cloneNode(false);
+          optionSubtextElement.innerHTML = options.optionSubtext;
+          textElement.appendChild(optionSubtextElement);
+        }
+      }
+
+      elementTemplates.fragment.appendChild(textElement);
+
+      return elementTemplates.fragment;
+    },
+
+    label: function (options) {
+      var labelTextElement = elementTemplates.text.cloneNode(false),
+          labelSubtextElement,
+          labelIconElement;
+
+      labelTextElement.innerHTML = options.labelEscaped;
+
+      if (options.labelIcon) {
+        var whitespace = elementTemplates.whitespace.cloneNode(false);
+
+        labelIconElement = elementTemplates.span.cloneNode(false);
+        labelIconElement.className = selectpicker.options.iconBase + ' ' + options.labelIcon;
+
+        elementTemplates.fragment.appendChild(labelIconElement);
+        elementTemplates.fragment.appendChild(whitespace);
+      }
+
+      if (options.labelSubtext) {
+        labelSubtextElement = elementTemplates.subtext.cloneNode(false);
+        labelSubtextElement.textContent = options.labelSubtext;
+        labelTextElement.appendChild(labelSubtextElement);
+      }
+
+      elementTemplates.fragment.appendChild(labelTextElement);
+
+      return elementTemplates.fragment;
+    }
+  }
+
   var Selectpicker = function (element, options) {
-    var that = this;
+    var that = selectpicker = this;
 
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
@@ -1053,15 +1161,7 @@
 
       if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
-      var elementTemplates = {
-            span: document.createElement('span'),
-            subtext: document.createElement('small'),
-            a: document.createElement('a'),
-            li: document.createElement('li'),
-            whitespace: document.createTextNode('\u00A0')
-          },
-          checkMark,
-          fragment = document.createDocumentFragment();
+      var checkMark;
 
       if (that.options.showTick || that.multiple) {
         checkMark = elementTemplates.span.cloneNode(false);
@@ -1075,114 +1175,6 @@
 
       elementTemplates.text = elementTemplates.span.cloneNode(false);
       elementTemplates.text.className = 'text';
-
-      // Helper functions
-      /**
-       * @param content
-       * @param [classes]
-       * @param [optgroup]
-       * @returns {HTMLElement}
-       */
-      var generateLI = function (content, classes, optgroup) {
-        var li = elementTemplates.li.cloneNode(false);
-
-        if (content) {
-          if (content.nodeType === 1 || content.nodeType === 11) {
-            li.appendChild(content);
-          } else {
-            li.innerHTML = content;
-          }
-        }
-
-        if (typeof classes !== 'undefined' && classes !== '') li.className = classes;
-        if (typeof optgroup !== 'undefined' && optgroup !== null) li.classList.add('optgroup-' + optgroup);
-
-        return li;
-      };
-
-      /**
-       * @param text
-       * @param [classes]
-       * @param [inline]
-       * @returns {string}
-       */
-      var generateA = function (text, classes, inline) {
-        var a = elementTemplates.a.cloneNode(true);
-
-        if (text) {
-          if (text.nodeType === 11) {
-            a.appendChild(text);
-          } else {
-            a.insertAdjacentHTML('beforeend', text);
-          }
-        }
-
-        if (typeof classes !== 'undefined' && classes !== '') a.className = classes;
-        if (version.major === '4') a.classList.add('dropdown-item');
-        if (inline) a.setAttribute('style', inline);
-
-        return a;
-      };
-
-      var generateText = function (options) {
-        var textElement = elementTemplates.text.cloneNode(false),
-            optionSubtextElement,
-            optionIconElement;
-
-        if (options.optionContent) {
-          textElement.innerHTML = options.optionContent;
-        } else {
-          textElement.textContent = options.text;
-
-          if (options.optionIcon) {
-            var whitespace = elementTemplates.whitespace.cloneNode(false);
-
-            optionIconElement = elementTemplates.span.cloneNode(false);
-            optionIconElement.className = that.options.iconBase + ' ' + options.optionIcon;
-
-            fragment.appendChild(optionIconElement);
-            fragment.appendChild(whitespace);
-          }
-
-          if (options.optionSubtext) {
-            optionSubtextElement = elementTemplates.subtext.cloneNode(false);
-            optionSubtextElement.innerHTML = options.optionSubtext;
-            textElement.appendChild(optionSubtextElement);
-          }
-        }
-
-        fragment.appendChild(textElement);
-
-        return fragment;
-      };
-
-      var generateLabel = function (options) {
-        var labelTextElement = elementTemplates.text.cloneNode(false),
-            labelSubtextElement,
-            labelIconElement;
-
-        labelTextElement.innerHTML = options.labelEscaped;
-
-        if (options.labelIcon) {
-          var whitespace = elementTemplates.whitespace.cloneNode(false);
-
-          labelIconElement = elementTemplates.span.cloneNode(false);
-          labelIconElement.className = that.options.iconBase + ' ' + options.labelIcon;
-
-          fragment.appendChild(labelIconElement);
-          fragment.appendChild(whitespace);
-        }
-
-        if (options.labelSubtext) {
-          labelSubtextElement = elementTemplates.subtext.cloneNode(false);
-          labelSubtextElement.textContent = options.labelSubtext;
-          labelTextElement.appendChild(labelSubtextElement);
-        }
-
-        fragment.appendChild(labelTextElement);
-
-        return fragment;
-      }
 
       if (this.options.title && !this.multiple) {
         // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
@@ -1282,7 +1274,7 @@
           if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
             mainElements.push(
-              generateLI(
+              generateOption.li(
                 false,
                 classNames.DIVIDER,
                 optID + 'div'
@@ -1335,7 +1327,7 @@
             if (index !== 0 && mainElements.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
               mainElements.push(
-                generateLI(
+                generateOption.li(
                   false,
                   classNames.DIVIDER,
                   optID + 'div'
@@ -1348,13 +1340,13 @@
             }
             liIndex++;
 
-            labelElement = generateLabel({
+            labelElement = generateOption.label({
               labelEscaped: labelEscaped,
               labelSubtext: labelSubtext,
               labelIcon: labelIcon
             });
 
-            mainElements.push(generateLI(labelElement, 'dropdown-header' + optGroupClass, optID));
+            mainElements.push(generateOption.li(labelElement, 'dropdown-header' + optGroupClass, optID));
             mainData.push({
               content: labelEscaped,
               subtext: labelSubtext,
@@ -1365,14 +1357,14 @@
             headerIndex = liIndex - 1;
           }
 
-          textElement = generateText({
+          textElement = generateOption.text({
             text: text,
             optionContent: optionContent,
             optionSubtext: subtext,
             optionIcon: icon
           });
 
-          mainElements.push(generateLI(generateA(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
+          mainElements.push(generateOption.li(generateOption.a(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
           mainData.push({
             content: optionContent || text,
             subtext: subtext,
@@ -1387,7 +1379,7 @@
 
           availableOptionsCount++;
         } else if (thisData.divider === true) {
-          mainElements.push(generateLI(false, classNames.DIVIDER));
+          mainElements.push(generateOption.li(false, classNames.DIVIDER));
           mainData.push({
             type: 'divider',
             originalIndex: index,
@@ -1411,7 +1403,7 @@
           if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
             mainElements.push(
-              generateLI(
+              generateOption.li(
                 false,
                 classNames.DIVIDER,
                 optID + 'div'
@@ -1423,14 +1415,14 @@
             });
           }
 
-          textElement = generateText({
+          textElement = generateOption.text({
             text: text,
             optionContent: optionContent,
             optionSubtext: subtext,
             optionIcon: icon
           });
 
-          mainElements.push(generateLI(generateA(textElement, optionClass, inline)));
+          mainElements.push(generateOption.li(generateOption.a(textElement, optionClass, inline)));
           mainData.push({
             content: optionContent || text,
             subtext: subtext,
