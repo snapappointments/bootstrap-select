@@ -366,15 +366,6 @@
     '`': '&#x60;'
   };
 
-  var unescapeMap = {
-    '&amp;': '&',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&quot;': '"',
-    '&#x27;': "'",
-    '&#x60;': '`'
-  };
-
   // Functions for escaping and unescaping strings to/from HTML interpolation.
   var createEscaper = function (map) {
     var escaper = function (match) {
@@ -391,7 +382,6 @@
   };
 
   var htmlEscape = createEscaper(escapeMap);
-  var htmlUnescape = createEscaper(unescapeMap);
 
   /**
    * ------------------------------------------------------------------------
@@ -507,6 +497,7 @@
 
   var elementTemplates = {
     span: document.createElement('span'),
+    i: document.createElement('i'),
     subtext: document.createElement('small'),
     a: document.createElement('a'),
     li: document.createElement('li'),
@@ -515,6 +506,10 @@
   }
 
   elementTemplates.a.setAttribute('role', 'option');
+  elementTemplates.subtext.className = 'text-muted';
+
+  elementTemplates.text = elementTemplates.span.cloneNode(false);
+  elementTemplates.text.className = 'text';
 
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
@@ -557,7 +552,7 @@
       return a;
     },
 
-    text: function (options) {
+    text: function (options, useFragment) {
       var textElement = elementTemplates.text.cloneNode(false),
           optionSubtextElement,
           optionIconElement;
@@ -570,7 +565,9 @@
         if (options.optionIcon) {
           var whitespace = elementTemplates.whitespace.cloneNode(false);
 
-          optionIconElement = elementTemplates.span.cloneNode(false);
+          // need to use <i> for icons in the button to prevent a breaking change
+          // note: switch to span in next major release
+          optionIconElement = (useFragment === true ? elementTemplates.i : elementTemplates.span).cloneNode(false);
           optionIconElement.className = selectpicker.options.iconBase + ' ' + options.optionIcon;
 
           elementTemplates.fragment.appendChild(optionIconElement);
@@ -579,12 +576,18 @@
 
         if (options.optionSubtext) {
           optionSubtextElement = elementTemplates.subtext.cloneNode(false);
-          optionSubtextElement.innerHTML = options.optionSubtext;
+          optionSubtextElement.textContent = options.optionSubtext;
           textElement.appendChild(optionSubtextElement);
         }
       }
 
-      elementTemplates.fragment.appendChild(textElement);
+      if (useFragment === true) {
+        while (textElement.childNodes.length > 0) {
+          elementTemplates.fragment.appendChild(textElement.childNodes[0]);
+        }
+      } else {
+        elementTemplates.fragment.appendChild(textElement);
+      }
 
       return elementTemplates.fragment;
     },
@@ -1171,11 +1174,6 @@
         elementTemplates.a.appendChild(checkMark);
       }
 
-      elementTemplates.subtext.className = 'text-muted';
-
-      elementTemplates.text = elementTemplates.span.cloneNode(false);
-      elementTemplates.text.className = 'text';
-
       if (this.options.title && !this.multiple) {
         // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
         // since newIndex is recalculated on every refresh, liIndex needs to be decreased even if the titleOption is already appended
@@ -1480,7 +1478,9 @@
       var that = this,
           $selectOptions = this.$element.find('option'),
           selectedItems = [],
-          selectedItemsInTitle = [];
+          buttonInner = this.$button.find('.filter-option-inner-inner')[0],
+          multipleSeparator = document.createTextNode(this.options.multipleSeparator),
+          titleFragment = elementTemplates.fragment.cloneNode(false);
 
       this.togglePlaceholder();
 
@@ -1488,43 +1488,39 @@
 
       for (var index = 0, len = $selectOptions.length; index < len; index++) {
         var i = that.selectpicker.main.map.newIndex[index],
+            titleOptions = {},
             option = $selectOptions[index],
             optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
         if (option && option.selected && optionData) {
           selectedItems.push(option);
 
-          if ((selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
-            var thisData = optionData.data,
-                icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
-                subtext,
-                titleItem;
+          if ((selectedItems.length < 51 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
+            var thisData = optionData.data;
 
-            if (that.options.showSubtext && thisData.subtext && !that.multiple) {
-              subtext = ' <small class="text-muted">' + thisData.subtext + '</small>';
-            } else {
-              subtext = '';
+            if (this.multiple && selectedItems.length > 1) {
+              titleFragment.appendChild(multipleSeparator.cloneNode(false));
             }
 
             if (option.title) {
-              titleItem = option.title;
+              titleOptions.text = option.title;
             } else if (thisData.content && that.options.showContent) {
-              titleItem = thisData.content.toString();
+              titleOptions.optionContent = thisData.content.toString();
             } else {
-              titleItem = icon + option.innerHTML.trim() + subtext;
+              if (that.options.showIcon) titleOptions.optionIcon = thisData.icon;
+              if (that.options.showSubtext && !that.multiple) titleOptions.optionSubtext = ' ' + thisData.subtext;
+              titleOptions.text = option.innerHTML.trim();
             }
 
-            selectedItemsInTitle.push(titleItem);
+            titleFragment.appendChild(generateOption.text(titleOptions, true));
           }
         }
       }
 
-      // Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
-      // Convert all the values into a comma delimited string
-      var title = !this.multiple ? selectedItemsInTitle[0] : selectedItemsInTitle.join(this.options.multipleSeparator);
-
       // add ellipsis
-      if (selectedItems.length > 50) title += '...';
+      if (selectedItems.length > 49) {
+        titleFragment.appendChild(document.createTextNode('...'));
+      }
 
       // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1) {
@@ -1534,7 +1530,9 @@
           var totalCount = this.selectpicker.view.availableOptionsCount,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
 
-          title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
+          titleFragment = generateOption.text({
+            text: tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString())
+          }, true);
         }
       }
 
@@ -1544,17 +1542,21 @@
       }
 
       if (this.options.selectedTextFormat == 'static') {
-        title = this.options.title;
+        titleFragment = generateOption.text({ text: this.options.title }, true);
       }
 
       // If the select doesn't have a title, then use the default, or if nothing is set at all, use noneSelectedText
-      if (!title) {
-        title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
+      if (!titleFragment.childNodes.length) {
+        titleFragment = generateOption.text({
+          text: typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText
+        }, true);
       }
 
       // strip all HTML tags and trim the result, then unescape any escaped tags
-      this.$button[0].title = htmlUnescape(title.replace(/<[^>]*>?/g, '').trim());
-      this.$button.find('.filter-option-inner-inner')[0].innerHTML = title;
+      this.$button[0].title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
+
+      buttonInner.innerHTML = '';
+      buttonInner.appendChild(titleFragment);
 
       this.$element.trigger('rendered' + EVENT_KEY);
     },
