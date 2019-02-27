@@ -1508,7 +1508,7 @@
               titleOptions.optionContent = thisData.content.toString();
             } else {
               if (that.options.showIcon) titleOptions.optionIcon = thisData.icon;
-              if (that.options.showSubtext && !that.multiple) titleOptions.optionSubtext = ' ' + thisData.subtext;
+              if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
               titleOptions.text = option.textContent.trim();
             }
 
