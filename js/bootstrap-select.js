@@ -1816,20 +1816,21 @@
 
       this.setMenuSize();
 
-      if (this.options.size === 'auto') {
+      if (this.options.liveSearch) {
         this.$searchbox
           .off('input.setMenuSize propertychange.setMenuSize')
           .on('input.setMenuSize propertychange.setMenuSize', function () {
             return that.setMenuSize();
           });
+      }
 
+      if (this.options.size === 'auto') {
         $window
           .off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize')
           .on('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize', function () {
             return that.setMenuSize();
           });
       } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
-        this.$searchbox.off('input.setMenuSize propertychange.setMenuSize');
         $window.off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize');
       }
 
