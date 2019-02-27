@@ -594,6 +594,10 @@ Add an icon to an option or optgroup with the `data-icon` attribute:
 
 Insert custom HTML into the option with the `data-content` attribute:
 
+<span class="alert alert-danger d-block" role="alert">
+  <strong>Note:</strong> This feature inserts HTML into the DOM. Do not use if you're worried about XSS attacks.
+</span>
+
 <div class="bs-docs-example">
   <select class="selectpicker">
     <option data-content="<span class='badge badge-warning'>Mustard</span>">Mustard</option>
