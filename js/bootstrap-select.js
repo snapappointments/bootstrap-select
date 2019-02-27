@@ -1509,7 +1509,7 @@
             } else {
               if (that.options.showIcon) titleOptions.optionIcon = thisData.icon;
               if (that.options.showSubtext && !that.multiple) titleOptions.optionSubtext = ' ' + thisData.subtext;
-              titleOptions.text = option.innerHTML.trim();
+              titleOptions.text = option.textContent.trim();
             }
 
             titleFragment.appendChild(generateOption.text(titleOptions, true));
