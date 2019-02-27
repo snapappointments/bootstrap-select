@@ -522,7 +522,6 @@
   var elementTemplates = {
     span: document.createElement('span'),
     i: document.createElement('i'),
-    template: document.createElement('template'),
     subtext: document.createElement('small'),
     a: document.createElement('a'),
     li: document.createElement('li'),
@@ -1534,7 +1533,7 @@
             } else {
               if (that.options.showIcon) titleOptions.optionIcon = thisData.icon;
               if (that.options.showSubtext && !that.multiple) titleOptions.optionSubtext = ' ' + thisData.subtext;
-              titleOptions.text = option.innerHTML.trim();
+              titleOptions.text = option.textContent.trim();
             }
 
             titleFragment.appendChild(generateOption.text(titleOptions, true));
