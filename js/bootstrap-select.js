@@ -2547,6 +2547,7 @@
         that.$button.trigger('click.bs.dropdown.data-api');
 
         if (that.options.liveSearch) {
+          that.$searchbox.trigger('focus');
           return;
         }
       }
