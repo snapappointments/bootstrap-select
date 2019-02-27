@@ -390,15 +390,6 @@
     '`': '&#x60;'
   };
 
-  var unescapeMap = {
-    '&amp;': '&',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&quot;': '"',
-    '&#x27;': "'",
-    '&#x60;': '`'
-  };
-
   // Functions for escaping and unescaping strings to/from HTML interpolation.
   var createEscaper = function (map) {
     var escaper = function (match) {
@@ -415,7 +406,6 @@
   };
 
   var htmlEscape = createEscaper(escapeMap);
-  var htmlUnescape = createEscaper(unescapeMap);
 
   /**
    * ------------------------------------------------------------------------
@@ -529,11 +519,135 @@
     classNames.POPOVERHEADER = 'popover-header';
   }
 
+  var elementTemplates = {
+    span: document.createElement('span'),
+    i: document.createElement('i'),
+    template: document.createElement('template'),
+    subtext: document.createElement('small'),
+    a: document.createElement('a'),
+    li: document.createElement('li'),
+    whitespace: document.createTextNode('\u00A0'),
+    fragment: document.createDocumentFragment()
+  }
+
+  elementTemplates.a.setAttribute('role', 'option');
+  elementTemplates.subtext.className = 'text-muted';
+
+  elementTemplates.text = elementTemplates.span.cloneNode(false);
+  elementTemplates.text.className = 'text';
+
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
 
+  var selectpicker = {};
+
+  var generateOption = {
+    li: function (content, classes, optgroup) {
+      var li = elementTemplates.li.cloneNode(false);
+
+      if (content) {
+        if (content.nodeType === 1 || content.nodeType === 11) {
+          li.appendChild(content);
+        } else {
+          li.innerHTML = content;
+        }
+      }
+
+      if (typeof classes !== 'undefined' && classes !== '') li.className = classes;
+      if (typeof optgroup !== 'undefined' && optgroup !== null) li.classList.add('optgroup-' + optgroup);
+
+      return li;
+    },
+
+    a: function (text, classes, inline) {
+      var a = elementTemplates.a.cloneNode(true);
+
+      if (text) {
+        if (text.nodeType === 11) {
+          a.appendChild(text);
+        } else {
+          a.insertAdjacentHTML('beforeend', text);
+        }
+      }
+
+      if (typeof classes !== 'undefined' && classes !== '') a.className = classes;
+      if (version.major === '4') a.classList.add('dropdown-item');
+      if (inline) a.setAttribute('style', inline);
+
+      return a;
+    },
+
+    text: function (options, useFragment) {
+      var textElement = elementTemplates.text.cloneNode(false),
+          optionSubtextElement,
+          optionIconElement;
+
+      if (options.optionContent) {
+        textElement.innerHTML = options.optionContent;
+      } else {
+        textElement.textContent = options.text;
+
+        if (options.optionIcon) {
+          var whitespace = elementTemplates.whitespace.cloneNode(false);
+
+          // need to use <i> for icons in the button to prevent a breaking change
+          // note: switch to span in next major release
+          optionIconElement = (useFragment === true ? elementTemplates.i : elementTemplates.span).cloneNode(false);
+          optionIconElement.className = selectpicker.options.iconBase + ' ' + options.optionIcon;
+
+          elementTemplates.fragment.appendChild(optionIconElement);
+          elementTemplates.fragment.appendChild(whitespace);
+        }
+
+        if (options.optionSubtext) {
+          optionSubtextElement = elementTemplates.subtext.cloneNode(false);
+          optionSubtextElement.textContent = options.optionSubtext;
+          textElement.appendChild(optionSubtextElement);
+        }
+      }
+
+      if (useFragment === true) {
+        while (textElement.childNodes.length > 0) {
+          elementTemplates.fragment.appendChild(textElement.childNodes[0]);
+        }
+      } else {
+        elementTemplates.fragment.appendChild(textElement);
+      }
+
+      return elementTemplates.fragment;
+    },
+
+    label: function (options) {
+      var labelTextElement = elementTemplates.text.cloneNode(false),
+          labelSubtextElement,
+          labelIconElement;
+
+      labelTextElement.innerHTML = options.labelEscaped;
+
+      if (options.labelIcon) {
+        var whitespace = elementTemplates.whitespace.cloneNode(false);
+
+        labelIconElement = elementTemplates.span.cloneNode(false);
+        labelIconElement.className = selectpicker.options.iconBase + ' ' + options.labelIcon;
+
+        elementTemplates.fragment.appendChild(labelIconElement);
+        elementTemplates.fragment.appendChild(whitespace);
+      }
+
+      if (options.labelSubtext) {
+        labelSubtextElement = elementTemplates.subtext.cloneNode(false);
+        labelSubtextElement.textContent = options.labelSubtext;
+        labelTextElement.appendChild(labelSubtextElement);
+      }
+
+      elementTemplates.fragment.appendChild(labelTextElement);
+
+      return elementTemplates.fragment;
+    }
+  }
+
   var Selectpicker = function (element, options) {
-    var that = this;
+    var that = selectpicker = this;
 
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
@@ -968,7 +1082,7 @@
           selected = that.selectpicker.current.elements[that.selectpicker.current.map.newIndex[that.selectedIndex]];
 
           if (init) {
-            if (that.activeIndex !== that.selectedIndex) {
+            if (that.activeIndex !== that.selectedIndex && active && active.length) {
               active.classList.remove('active');
               if (active.firstChild) active.firstChild.classList.remove('active');
             }
@@ -1077,135 +1191,12 @@
 
       if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
-      var elementTemplates = {
-            span: document.createElement('span'),
-            subtext: document.createElement('small'),
-            a: document.createElement('a'),
-            li: document.createElement('li'),
-            whitespace: document.createTextNode('\u00A0')
-          },
-          checkMark,
-          fragment = document.createDocumentFragment();
+      var checkMark;
 
       if (that.options.showTick || that.multiple) {
         checkMark = elementTemplates.span.cloneNode(false);
         checkMark.className = that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
         elementTemplates.a.appendChild(checkMark);
-      }
-
-      elementTemplates.a.setAttribute('role', 'option');
-
-      elementTemplates.subtext.className = 'text-muted';
-
-      elementTemplates.text = elementTemplates.span.cloneNode(false);
-      elementTemplates.text.className = 'text';
-
-      // Helper functions
-      /**
-       * @param content
-       * @param [classes]
-       * @param [optgroup]
-       * @returns {HTMLElement}
-       */
-      var generateLI = function (content, classes, optgroup) {
-        var li = elementTemplates.li.cloneNode(false);
-
-        if (content) {
-          if (content.nodeType === 1 || content.nodeType === 11) {
-            li.appendChild(content);
-          } else {
-            li.innerHTML = content;
-          }
-        }
-
-        if (typeof classes !== 'undefined' && classes !== '') li.className = classes;
-        if (typeof optgroup !== 'undefined' && optgroup !== null) li.classList.add('optgroup-' + optgroup);
-
-        return li;
-      };
-
-      /**
-       * @param text
-       * @param [classes]
-       * @param [inline]
-       * @returns {string}
-       */
-      var generateA = function (text, classes, inline) {
-        var a = elementTemplates.a.cloneNode(true);
-
-        if (text) {
-          if (text.nodeType === 11) {
-            a.appendChild(text);
-          } else {
-            a.insertAdjacentHTML('beforeend', text);
-          }
-        }
-
-        if (typeof classes !== 'undefined' && classes !== '') a.className = classes;
-        if (version.major === '4') a.classList.add('dropdown-item');
-        if (inline) a.setAttribute('style', inline);
-
-        return a;
-      };
-
-      var generateText = function (options) {
-        var textElement = elementTemplates.text.cloneNode(false),
-            optionSubtextElement,
-            optionIconElement;
-
-        if (options.optionContent) {
-          textElement.innerHTML = options.optionContent;
-        } else {
-          textElement.textContent = options.text;
-
-          if (options.optionIcon) {
-            var whitespace = elementTemplates.whitespace.cloneNode(false);
-
-            optionIconElement = elementTemplates.span.cloneNode(false);
-            optionIconElement.className = that.options.iconBase + ' ' + options.optionIcon;
-
-            fragment.appendChild(optionIconElement);
-            fragment.appendChild(whitespace);
-          }
-
-          if (options.optionSubtext) {
-            optionSubtextElement = elementTemplates.subtext.cloneNode(false);
-            optionSubtextElement.innerHTML = options.optionSubtext;
-            textElement.appendChild(optionSubtextElement);
-          }
-        }
-
-        fragment.appendChild(textElement);
-
-        return fragment;
-      };
-
-      var generateLabel = function (options) {
-        var labelTextElement = elementTemplates.text.cloneNode(false),
-            labelSubtextElement,
-            labelIconElement;
-
-        labelTextElement.innerHTML = options.labelEscaped;
-
-        if (options.labelIcon) {
-          var whitespace = elementTemplates.whitespace.cloneNode(false);
-
-          labelIconElement = elementTemplates.span.cloneNode(false);
-          labelIconElement.className = that.options.iconBase + ' ' + options.labelIcon;
-
-          fragment.appendChild(labelIconElement);
-          fragment.appendChild(whitespace);
-        }
-
-        if (options.labelSubtext) {
-          labelSubtextElement = elementTemplates.subtext.cloneNode(false);
-          labelSubtextElement.textContent = options.labelSubtext;
-          labelTextElement.appendChild(labelSubtextElement);
-        }
-
-        fragment.appendChild(labelTextElement);
-
-        return fragment;
       }
 
       if (this.options.title && !this.multiple) {
@@ -1241,20 +1232,21 @@
 
       var $selectOptions = this.$element.find('option');
 
-      $selectOptions.each(function (index) {
-        var $this = $(this);
+      for (var index = 0, len = $selectOptions.length; index < len; index++) {
+        var option = $selectOptions[index],
+            $this = $(option);
 
         liIndex++;
 
-        if ($this.hasClass('bs-title-option')) return;
+        if (option.classList.contains('bs-title-option')) continue;
 
         var thisData = $this.data();
 
         // Get the class and text for the option
-        var optionClass = this.className || '',
-            inline = htmlEscape(this.style.cssText),
+        var optionClass = option.className || '',
+            inline = htmlEscape(option.style.cssText),
             optionContent = thisData.content,
-            text = this.textContent,
+            text = option.textContent,
             tokens = thisData.tokens,
             subtext = thisData.subtext,
             icon = thisData.icon,
@@ -1262,9 +1254,9 @@
             parent = $parent[0],
             isOptgroup = parent.tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && parent.disabled,
-            isDisabled = this.disabled || isOptgroupDisabled,
+            isDisabled = option.disabled || isOptgroupDisabled,
             prevHiddenIndex,
-            showDivider = this.previousElementSibling && this.previousElementSibling.tagName === 'OPTGROUP',
+            showDivider = option.previousElementSibling && option.previousElementSibling.tagName === 'OPTGROUP',
             textElement,
             labelElement,
             prevHidden;
@@ -1273,7 +1265,7 @@
 
         if (
           (
-            (thisData.hidden === true || this.hidden) ||
+            (thisData.hidden === true || option.hidden) ||
             (isOptgroup && (parentData.hidden === true || parent.hidden))
           ) ||
           (that.options.hideDisabled && (isDisabled || isOptgroupDisabled))
@@ -1306,7 +1298,7 @@
           if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
             mainElements.push(
-              generateLI(
+              generateOption.li(
                 false,
                 classNames.DIVIDER,
                 optID + 'div'
@@ -1318,7 +1310,7 @@
             });
           }
 
-          return;
+          continue;
         } else {
           $this.next().removeData('prevHiddenIndex');
         }
@@ -1332,12 +1324,12 @@
 
             if ($parent.data('allOptionsDisabled')) {
               liIndex--;
-              return;
+              continue;
             }
           }
 
           var optGroupClass = ' ' + parent.className || '',
-              previousOption = this.previousElementSibling;
+              previousOption = option.previousElementSibling;
 
           prevHiddenIndex = thisData.prevHiddenIndex;
 
@@ -1359,7 +1351,7 @@
             if (index !== 0 && mainElements.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
               mainElements.push(
-                generateLI(
+                generateOption.li(
                   false,
                   classNames.DIVIDER,
                   optID + 'div'
@@ -1372,13 +1364,13 @@
             }
             liIndex++;
 
-            labelElement = generateLabel({
+            labelElement = generateOption.label({
               labelEscaped: labelEscaped,
               labelSubtext: labelSubtext,
               labelIcon: labelIcon
             });
 
-            mainElements.push(generateLI(labelElement, 'dropdown-header' + optGroupClass, optID));
+            mainElements.push(generateOption.li(labelElement, 'dropdown-header' + optGroupClass, optID));
             mainData.push({
               content: labelEscaped,
               subtext: labelSubtext,
@@ -1389,14 +1381,14 @@
             headerIndex = liIndex - 1;
           }
 
-          textElement = generateText({
+          textElement = generateOption.text({
             text: text,
             optionContent: optionContent,
             optionSubtext: subtext,
             optionIcon: icon
           });
 
-          mainElements.push(generateLI(generateA(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
+          mainElements.push(generateOption.li(generateOption.a(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
           mainData.push({
             content: optionContent || text,
             subtext: subtext,
@@ -1411,7 +1403,7 @@
 
           availableOptionsCount++;
         } else if (thisData.divider === true) {
-          mainElements.push(generateLI(false, classNames.DIVIDER));
+          mainElements.push(generateOption.li(false, classNames.DIVIDER));
           mainData.push({
             type: 'divider',
             originalIndex: index,
@@ -1435,7 +1427,7 @@
           if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
             mainElements.push(
-              generateLI(
+              generateOption.li(
                 false,
                 classNames.DIVIDER,
                 optID + 'div'
@@ -1447,14 +1439,14 @@
             });
           }
 
-          textElement = generateText({
+          textElement = generateOption.text({
             text: text,
             optionContent: optionContent,
             optionSubtext: subtext,
             optionIcon: icon
           });
 
-          mainElements.push(generateLI(generateA(textElement, optionClass, inline)));
+          mainElements.push(generateOption.li(generateOption.a(textElement, optionClass, inline)));
           mainData.push({
             content: optionContent || text,
             subtext: subtext,
@@ -1491,7 +1483,7 @@
           // not perfect, but it's fast, and the width will be updating accordingly when scrolling
           widestOption = mainElements[mainElements.length - 1];
         }
-      });
+      }
 
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
@@ -1511,7 +1503,9 @@
       var that = this,
           $selectOptions = this.$element.find('option'),
           selectedItems = [],
-          selectedItemsInTitle = [];
+          buttonInner = this.$button.find('.filter-option-inner-inner')[0],
+          multipleSeparator = document.createTextNode(this.options.multipleSeparator),
+          titleFragment = elementTemplates.fragment.cloneNode(false);
 
       this.togglePlaceholder();
 
@@ -1519,43 +1513,39 @@
 
       for (var index = 0, len = $selectOptions.length; index < len; index++) {
         var i = that.selectpicker.main.map.newIndex[index],
+            titleOptions = {},
             option = $selectOptions[index],
             optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
         if (option && option.selected && optionData) {
           selectedItems.push(option);
 
-          if ((selectedItemsInTitle.length < 100 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
-            var thisData = optionData.data,
-                icon = thisData.icon && that.options.showIcon ? '<i class="' + that.options.iconBase + ' ' + thisData.icon + '"></i> ' : '',
-                subtext,
-                titleItem;
+          if ((selectedItems.length < 51 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
+            var thisData = optionData.data;
 
-            if (that.options.showSubtext && thisData.subtext && !that.multiple) {
-              subtext = ' <small class="text-muted">' + thisData.subtext + '</small>';
-            } else {
-              subtext = '';
+            if (this.multiple && selectedItems.length > 1) {
+              titleFragment.appendChild(multipleSeparator.cloneNode(false));
             }
 
             if (option.title) {
-              titleItem = option.title;
+              titleOptions.text = option.title;
             } else if (thisData.content && that.options.showContent) {
-              titleItem = thisData.content.toString();
+              titleOptions.optionContent = thisData.content.toString();
             } else {
-              titleItem = icon + option.innerHTML.trim() + subtext;
+              if (that.options.showIcon) titleOptions.optionIcon = thisData.icon;
+              if (that.options.showSubtext && !that.multiple) titleOptions.optionSubtext = ' ' + thisData.subtext;
+              titleOptions.text = option.innerHTML.trim();
             }
 
-            selectedItemsInTitle.push(titleItem);
+            titleFragment.appendChild(generateOption.text(titleOptions, true));
           }
         }
       }
 
-      // Fixes issue in IE10 occurring when no default option is selected and at least one option is disabled
-      // Convert all the values into a comma delimited string
-      var title = !this.multiple ? selectedItemsInTitle[0] : selectedItemsInTitle.join(this.options.multipleSeparator);
-
       // add ellipsis
-      if (selectedItems.length > 50) title += '...';
+      if (selectedItems.length > 49) {
+        titleFragment.appendChild(document.createTextNode('...'));
+      }
 
       // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected etc..
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1) {
@@ -1565,7 +1555,9 @@
           var totalCount = this.selectpicker.view.availableOptionsCount,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
 
-          title = tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString());
+          titleFragment = generateOption.text({
+            text: tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString())
+          }, true);
         }
       }
 
@@ -1575,17 +1567,21 @@
       }
 
       if (this.options.selectedTextFormat == 'static') {
-        title = this.options.title;
+        titleFragment = generateOption.text({ text: this.options.title }, true);
       }
 
       // If the select doesn't have a title, then use the default, or if nothing is set at all, use noneSelectedText
-      if (!title) {
-        title = typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText;
+      if (!titleFragment.childNodes.length) {
+        titleFragment = generateOption.text({
+          text: typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText
+        }, true);
       }
 
       // strip all HTML tags and trim the result, then unescape any escaped tags
-      this.$button[0].title = htmlUnescape(title.replace(/<[^>]*>?/g, '').trim());
-      this.$button.find('.filter-option-inner-inner')[0].innerHTML = title;
+      this.$button[0].title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
+
+      buttonInner.innerHTML = '';
+      buttonInner.appendChild(titleFragment);
 
       this.$element.trigger('rendered' + EVENT_KEY);
     },
@@ -1733,7 +1729,7 @@
           $container = $(that.options.container),
           containerPos;
 
-      if (that.options.container && !$container.is('body')) {
+      if (that.options.container && $container.length && !$container.is('body')) {
         containerPos = $container.offset();
         containerPos.top += parseInt($container.css('borderTopWidth'));
         containerPos.left += parseInt($container.css('borderLeftWidth'));
@@ -1819,7 +1815,8 @@
         'min-height': menuInnerMinHeight + 'px'
       });
 
-      this.sizeInfo.menuInnerHeight = menuInnerHeight;
+      // ensure menuInnerHeight is always a positive number to prevent issues calculating chunkSize in createView
+      this.sizeInfo.menuInnerHeight = Math.max(menuInnerHeight, 1);
 
       if (this.selectpicker.current.data.length && this.selectpicker.current.data[this.selectpicker.current.data.length - 1].position > this.sizeInfo.menuInnerHeight) {
         this.sizeInfo.hasScrollBar = true;
