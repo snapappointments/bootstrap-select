@@ -27,6 +27,9 @@
 	<a href="https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies" target="_blank">
 		<img src="https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg" alt="devDependency Status">
 	</a>
+	<a href="https://snyk.io/test/npm/bootstrap-select">
+		<img src="https://snyk.io/test/npm/bootstrap-select/badge.svg" alt="Known Vulnerabilities" data-canonical src="https://snyk.io/test/npm/bootstrap-select" style="max-width:100%;">
+	</a>
 </p>
 
 <p align="center">
