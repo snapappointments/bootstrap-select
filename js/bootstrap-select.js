@@ -568,7 +568,7 @@
           // need to use <i> for icons in the button to prevent a breaking change
           // note: switch to span in next major release
           optionIconElement = (useFragment === true ? elementTemplates.i : elementTemplates.span).cloneNode(false);
-          optionIconElement.className = selectpicker.options.iconBase + ' ' + options.optionIcon;
+          optionIconElement.className = options.iconBase + ' ' + options.optionIcon;
 
           elementTemplates.fragment.appendChild(optionIconElement);
           elementTemplates.fragment.appendChild(whitespace);
@@ -603,7 +603,7 @@
         var whitespace = elementTemplates.whitespace.cloneNode(false);
 
         labelIconElement = elementTemplates.span.cloneNode(false);
-        labelIconElement.className = selectpicker.options.iconBase + ' ' + options.labelIcon;
+        labelIconElement.className = options.iconBase + ' ' + options.labelIcon;
 
         elementTemplates.fragment.appendChild(labelIconElement);
         elementTemplates.fragment.appendChild(whitespace);
@@ -622,7 +622,7 @@
   }
 
   var Selectpicker = function (element, options) {
-    var that = selectpicker = this;
+    var that = this;
 
     // bootstrap-select has been initialized - revert valHooks.select.set back to its original function
     if (!valHooks.useDefault) {
@@ -1224,6 +1224,7 @@
             text = option.textContent,
             tokens = thisData.tokens,
             subtext = thisData.subtext,
+            iconBase = that.options.iconBase,
             icon = thisData.icon,
             $parent = $this.parent(),
             parent = $parent[0],
@@ -1342,7 +1343,8 @@
             labelElement = generateOption.label({
               labelEscaped: labelEscaped,
               labelSubtext: labelSubtext,
-              labelIcon: labelIcon
+              labelIcon: labelIcon,
+              iconBase: iconBase
             });
 
             mainElements.push(generateOption.li(labelElement, 'dropdown-header' + optGroupClass, optID));
@@ -1360,7 +1362,8 @@
             text: text,
             optionContent: optionContent,
             optionSubtext: subtext,
-            optionIcon: icon
+            optionIcon: icon,
+            iconBase: iconBase
           });
 
           mainElements.push(generateOption.li(generateOption.a(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
@@ -1418,7 +1421,8 @@
             text: text,
             optionContent: optionContent,
             optionSubtext: subtext,
-            optionIcon: icon
+            optionIcon: icon,
+            iconBase: iconBase
           });
 
           mainElements.push(generateOption.li(generateOption.a(textElement, optionClass, inline)));
@@ -1507,7 +1511,10 @@
             } else if (thisData.content && that.options.showContent) {
               titleOptions.optionContent = thisData.content.toString();
             } else {
-              if (that.options.showIcon) titleOptions.optionIcon = thisData.icon;
+              if (that.options.showIcon) {
+                titleOptions.optionIcon = thisData.icon;
+                titleOptions.iconBase = this.options.iconBase;
+              }
               if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
               titleOptions.text = option.textContent.trim();
             }
