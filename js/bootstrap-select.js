@@ -1181,6 +1181,7 @@
 
     createLi: function () {
       var that = this,
+          iconBase = that.options.iconBase,
           mainElements = [],
           hiddenOptions = {},
           widestOption,
@@ -1197,7 +1198,7 @@
 
       if (that.options.showTick || that.multiple) {
         checkMark = elementTemplates.span.cloneNode(false);
-        checkMark.className = that.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
+        checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
         elementTemplates.a.appendChild(checkMark);
       }
 
@@ -1257,7 +1258,6 @@
             text = option.textContent,
             tokens = thisData.tokens,
             subtext = thisData.subtext,
-            iconBase = that.options.iconBase,
             icon = thisData.icon,
             parent = option.parentNode,
             next = option.nextElementSibling,
