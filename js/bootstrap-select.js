@@ -1219,7 +1219,7 @@
 
         // Get the class and text for the option
         var optionClass = option.className || '',
-            inline = htmlEscape(option.style.cssText),
+            inline = option.style.cssText ? htmlEscape(option.style.cssText) : '',
             optionContent = thisData.content,
             text = option.textContent,
             tokens = thisData.tokens,
