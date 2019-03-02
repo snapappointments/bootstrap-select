@@ -516,6 +516,33 @@
 
   var selectpicker = {};
 
+  var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/;
+
+  function getData( data ) {
+    if ( data === "true" ) {
+      return true;
+    }
+
+    if ( data === "false" ) {
+      return false;
+    }
+
+    if ( data === "null" ) {
+      return null;
+    }
+
+    // Only convert to a number if it doesn't change the string
+    if ( data === +data + "" ) {
+      return +data;
+    }
+
+    if ( rbrace.test( data ) ) {
+      return JSON.parse( data );
+    }
+
+    return data;
+  }
+
   var generateOption = {
     li: function (content, classes, optgroup) {
       var li = elementTemplates.li.cloneNode(false);
@@ -1208,14 +1235,20 @@
       var $selectOptions = this.$element.find('option');
 
       for (var index = 0, len = $selectOptions.length; index < len; index++) {
-        var option = $selectOptions[index],
-            $this = $(option);
+        var option = $selectOptions[index];
 
         liIndex++;
 
         if (option.classList.contains('bs-title-option')) continue;
 
-        var thisData = $this.data();
+        var thisData = {
+          content: getData(option.getAttribute('data-content')),
+          tokens: getData(option.getAttribute('data-tokens')),
+          subtext: getData(option.getAttribute('data-subtext')),
+          icon: getData(option.getAttribute('data-icon')),
+          hidden: getData(option.getAttribute('data-hidden')),
+          divider: getData(option.getAttribute('data-divider'))
+        };
 
         // Get the class and text for the option
         var optionClass = option.className || '',
@@ -1227,6 +1260,7 @@
             iconBase = that.options.iconBase,
             icon = thisData.icon,
             parent = option.parentNode,
+            next = option.nextElementSibling,
             isOptgroup = parent.tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && parent.disabled,
             isDisabled = option.disabled || isOptgroupDisabled,
@@ -1250,8 +1284,8 @@
           // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
           // used to determine whether or not a divider should be placed after an optgroup if there are
           // hidden options between the optgroup and the first visible option
-          prevHiddenIndex = thisData.prevHiddenIndex;
-          $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
+          prevHiddenIndex = option.prevHiddenIndex;
+          if (next) next.prevHiddenIndex = (prevHiddenIndex !== undefined ? prevHiddenIndex : index);
 
           liIndex--;
 
@@ -1262,14 +1296,14 @@
 
           continue;
         } else {
-          $this.next().removeData('prevHiddenIndex');
+          if (next && next.prevHiddenIndex !== undefined) next.prevHiddenIndex = undefined;
         }
 
         if (isOptgroup && thisData.divider !== true) {
           var optGroupClass = ' ' + parent.className || '',
               previousOption = option.previousElementSibling;
 
-          prevHiddenIndex = thisData.prevHiddenIndex;
+          prevHiddenIndex = option.prevHiddenIndex;
 
           // Get the first visible option before the first hidden option in the group.
           // Ensures a divider is shown if, for example, the first option in the optgroup is hidden.
@@ -1355,7 +1389,7 @@
         } else {
           // if previous element is not an optgroup and hideDisabled is true
           if (!showDivider && that.options.hideDisabled) {
-            prevHiddenIndex = thisData.prevHiddenIndex;
+            prevHiddenIndex = option.prevHiddenIndex;
 
             if (prevHiddenIndex !== undefined) {
               // select the element **before** the first hidden element in the group
