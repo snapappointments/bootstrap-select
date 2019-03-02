@@ -1226,8 +1226,7 @@
             subtext = thisData.subtext,
             iconBase = that.options.iconBase,
             icon = thisData.icon,
-            $parent = $this.parent(),
-            parent = $parent[0],
+            parent = option.parentNode,
             isOptgroup = parent.tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && parent.disabled,
             isDisabled = option.disabled || isOptgroupDisabled,
@@ -1237,7 +1236,9 @@
             labelElement,
             prevHidden;
 
-        var parentData = $parent.data();
+        var parentData = {
+          hidden: getData(parent.getAttribute('data-hidden'))
+        };
 
         if (
           (
@@ -1265,18 +1266,6 @@
         }
 
         if (isOptgroup && thisData.divider !== true) {
-          if (that.options.hideDisabled && isDisabled) {
-            if (parentData.allOptionsDisabled === undefined) {
-              var $options = $parent.children();
-              $parent.data('allOptionsDisabled', $options.filter(':disabled').length === $options.length);
-            }
-
-            if ($parent.data('allOptionsDisabled')) {
-              liIndex--;
-              continue;
-            }
-          }
-
           var optGroupClass = ' ' + parent.className || '',
               previousOption = option.previousElementSibling;
 
@@ -1290,6 +1279,9 @@
 
           if (!previousOption) { // Is it the first option of the optgroup?
             optID += 1;
+
+            parentData.subtext = getData(parent.getAttribute('data-subtext'));
+            parentData.icon = getData(parent.getAttribute('data-icon'));
 
             // Get the opt group label
             var label = parent.label,
@@ -1370,7 +1362,14 @@
               prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
 
               if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
-                showDivider = true;
+                var disabledOptions = 0,
+                    prevHiddenOptions = prevHidden.childNodes.length;
+
+                for (var i = 0; i < prevHiddenOptions; i++) {
+                  if (prevHidden.childNodes[i].disabled) disabledOptions++;
+                }
+
+                if (disabledOptions < prevHiddenOptions) showDivider = true;
               }
             }
           }
