@@ -758,7 +758,7 @@
 
       this.selectId = selectId++;
 
-      this.$element.addClass('bs-select-hidden');
+      this.$element[0].classList.add('bs-select-hidden');
 
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
@@ -772,9 +772,9 @@
       this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
 
-      this.$element.removeClass('bs-select-hidden');
+      this.$element[0].classList.remove('bs-select-hidden');
 
-      if (this.options.dropdownAlignRight === true) this.$menu.addClass(classNames.MENURIGHT);
+      if (this.options.dropdownAlignRight === true) this.$menu[0].classList.add(classNames.MENURIGHT);
 
       if (typeof id !== 'undefined') {
         this.$button.attr('data-id', id);
@@ -824,7 +824,7 @@
 
       if (that.$element[0].hasAttribute('required')) {
         this.$element.on('invalid', function () {
-          that.$button.addClass('bs-invalid');
+          that.$button[0].classList.add('bs-invalid');
 
           that.$element
             .on('shown' + EVENT_KEY + '.invalid', function () {
@@ -834,7 +834,7 @@
             })
             .on('rendered' + EVENT_KEY, function () {
               // if select is no longer invalid, remove the bs-invalid class
-              if (this.validity.valid) that.$button.removeClass('bs-invalid');
+              if (this.validity.valid) that.$button[0].classList.remove('bs-invalid');
               that.$element.off('rendered' + EVENT_KEY);
             });
 
@@ -1550,6 +1550,7 @@
      * @param [status]
      */
     setStyle: function (style, status) {
+      var button = this.$button[0];
       if (this.$element.attr('class')) {
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
       }
@@ -1557,12 +1558,12 @@
       var buttonClass = style || this.options.style;
 
       if (status == 'add') {
-        this.$button.addClass(buttonClass);
+        button.classList.add(buttonClass);
       } else if (status == 'remove') {
-        this.$button.removeClass(buttonClass);
+        button.classList.remove(buttonClass);
       } else {
-        this.$button.removeClass(this.options.style);
-        this.$button.addClass(buttonClass);
+        button.classList.remove(this.options.style);
+        button.classList.add(buttonClass);
       }
     },
 
@@ -1866,7 +1867,7 @@
       }
       // Remove fit-width class if width is changed programmatically
       if (this.$newElement.hasClass('fit-width') && this.options.width !== 'fit') {
-        this.$newElement.removeClass('fit-width');
+        this.$newElement[0].classList.remove('fit-width');
       }
     },
 
@@ -2061,11 +2062,11 @@
       var that = this;
 
       if (this.isDisabled()) {
-        this.$newElement.addClass(classNames.DISABLED);
+        this.$newElement[0].classList.add(classNames.DISABLED);
         this.$button.addClass(classNames.DISABLED).attr('tabindex', -1).attr('aria-disabled', true);
       } else {
-        if (this.$button.hasClass(classNames.DISABLED)) {
-          this.$newElement.removeClass(classNames.DISABLED);
+        if (this.$button[0].classList.contains(classNames.DISABLED)) {
+          this.$newElement[0].classList.remove(classNames.DISABLED);
           this.$button.removeClass(classNames.DISABLED).attr('aria-disabled', false);
         }
 
@@ -2455,7 +2456,7 @@
           currentSelected = 0,
           prevValue = getSelectValues(this.$element[0]);
 
-      this.$element.addClass('bs-select-hidden');
+      this.$element[0].classList.add('bs-select-hidden');
 
       for (var i = 0; i < this.selectpicker.current.elements.length; i++) {
         var liData = this.selectpicker.current.data[i],
@@ -2469,7 +2470,7 @@
         }
       }
 
-      this.$element.removeClass('bs-select-hidden');
+      this.$element[0].classList.remove('bs-select-hidden');
 
       if (previousSelected === currentSelected) return;
 
@@ -2723,7 +2724,7 @@
     },
 
     mobile: function () {
-      this.$element.addClass('mobile-device');
+      this.$element[0].classList.add('mobile-device');
     },
 
     refresh: function () {
