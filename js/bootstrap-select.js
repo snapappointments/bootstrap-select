@@ -1204,10 +1204,10 @@
         if (isSelected) element.selectedIndex = 0;
       }
 
-      var $selectOptions = this.$element.find('option');
+      var selectOptions = this.$element[0].options;
 
-      for (var index = 0, len = $selectOptions.length; index < len; index++) {
-        var option = $selectOptions[index];
+      for (var index = 0, len = selectOptions.length; index < len; index++) {
+        var option = selectOptions[index];
 
         liIndex++;
 
@@ -1280,7 +1280,7 @@
           // Get the first visible option before the first hidden option in the group.
           // Ensures a divider is shown if, for example, the first option in the optgroup is hidden.
           if (prevHiddenIndex !== undefined) {
-            previousOption = $selectOptions[prevHiddenIndex].previousElementSibling;
+            previousOption = selectOptions[prevHiddenIndex].previousElementSibling;
           }
 
           if (!previousOption) { // Is it the first option of the optgroup?
@@ -1458,7 +1458,7 @@
 
     render: function () {
       var that = this,
-          $selectOptions = this.$element.find('option'),
+          selectOptions = this.$element[0].options,
           selectedItems = [],
           buttonInner = this.$button.find('.filter-option-inner-inner')[0],
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
@@ -1468,10 +1468,10 @@
 
       this.tabIndex();
 
-      for (var index = 0, len = $selectOptions.length; index < len; index++) {
+      for (var index = 0, len = selectOptions.length; index < len; index++) {
         var i = that.selectpicker.main.map.newIndex[index],
             titleOptions = {},
-            option = $selectOptions[index],
+            option = selectOptions[index],
             optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
         if (option && option.selected && optionData) {
