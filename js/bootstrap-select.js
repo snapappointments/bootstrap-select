@@ -154,19 +154,25 @@
     };
   }
 
+  if (!HTMLSelectElement.prototype.hasOwnProperty('selectedOptions')) {
+    Object.defineProperty(HTMLSelectElement.prototype, 'selectedOptions', {
+        get: function() {
+          return this.querySelectorAll(':checked');
+        }
+    });
+  }
+
   // much faster than $.val()
   function getSelectValues (select) {
     var result = [];
-    var options = select && select.options;
+    var options = select.selectedOptions;
     var opt;
 
     if (select.multiple) {
       for (var i = 0, len = options.length; i < len; i++) {
         opt = options[i];
 
-        if (opt.selected) {
-          result.push(opt.value || opt.text);
-        }
+        result.push(opt.value || opt.text);
       }
     } else {
       result = select.value;
@@ -1456,8 +1462,7 @@
 
     render: function () {
       var that = this,
-          selectOptions = this.$element[0].options,
-          selectedItems = [],
+          selectedOptions = this.$element[0].selectedOptions,
           buttonInner = this.$button.find('.filter-option-inner-inner')[0],
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
           titleFragment = elementTemplates.fragment.cloneNode(false);
@@ -1466,19 +1471,18 @@
 
       this.tabIndex();
 
-      for (var index = 0, len = selectOptions.length; index < len; index++) {
-        var i = that.selectpicker.main.map.newIndex[index],
+      for (var selectedIndex = 0, len = selectedOptions.length; selectedIndex < len; selectedIndex++) {
+        var option = selectedOptions[selectedIndex],
+            index = option.index,
+            i = that.selectpicker.main.map.newIndex[index],
             titleOptions = {},
-            option = selectOptions[index],
             optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
-        if (option && option.selected && optionData) {
-          selectedItems.push(option);
-
-          if ((selectedItems.length < 51 && that.options.selectedTextFormat !== 'count') || selectedItems.length === 1) {
+        if (optionData) {
+          if ((selectedIndex < 50 && that.options.selectedTextFormat !== 'count') || len === 1) {
             var thisData = optionData.data;
 
-            if (this.multiple && selectedItems.length > 1) {
+            if (this.multiple && selectedIndex > 0) {
               titleFragment.appendChild(multipleSeparator.cloneNode(false));
             }
 
@@ -1501,7 +1505,7 @@
       }
 
       // add ellipsis
-      if (selectedItems.length > 49) {
+      if (selectedOptions.length > 49) {
         titleFragment.appendChild(document.createTextNode('...'));
       }
 
@@ -1509,12 +1513,12 @@
       if (this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1) {
         var max = this.options.selectedTextFormat.split('>');
 
-        if ((max.length > 1 && selectedItems.length > max[1]) || (max.length === 1 && selectedItems.length >= 2)) {
+        if ((max.length > 1 && selectedOptions.length > max[1]) || (max.length === 1 && selectedOptions.length >= 2)) {
           var totalCount = this.selectpicker.view.availableOptionsCount,
-              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedItems.length, totalCount) : this.options.countSelectedText;
+              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedOptions.length, totalCount) : this.options.countSelectedText;
 
           titleFragment = generateOption.text({
-            text: tr8nText.replace('{0}', selectedItems.length.toString()).replace('{1}', totalCount.toString())
+            text: tr8nText.replace('{0}', selectedOptions.length.toString()).replace('{1}', totalCount.toString())
           }, true);
         }
       }
