@@ -1233,11 +1233,12 @@
             icon = thisData.icon,
             parent = option.parentNode,
             next = option.nextElementSibling,
+            previous = option.previousElementSibling,
             isOptgroup = parent.tagName === 'OPTGROUP',
             isOptgroupDisabled = isOptgroup && parent.disabled,
             isDisabled = option.disabled || isOptgroupDisabled,
             prevHiddenIndex,
-            showDivider = option.previousElementSibling && option.previousElementSibling.tagName === 'OPTGROUP',
+            showDivider = previous && previous.tagName === 'OPTGROUP',
             textElement,
             labelElement,
             prevHidden;
@@ -1359,28 +1360,28 @@
             data: thisData
           });
         } else {
-          // if previous element is not an optgroup and hideDisabled is true
-          if (!showDivider && that.options.hideDisabled) {
-            prevHiddenIndex = option.prevHiddenIndex;
+          if (that.options.hideDisabled) {
+            if (showDivider) {
+              var disabledOptions = previous.querySelectorAll('option:disabled');
 
-            if (prevHiddenIndex !== undefined) {
-              // select the element **before** the first hidden element in the group
-              prevHidden = $selectOptions[prevHiddenIndex].previousElementSibling;
+              if (disabledOptions.length === previous.children.length) showDivider = false;
+            } else {
+              prevHiddenIndex = option.prevHiddenIndex;
 
-              if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
-                var disabledOptions = 0,
-                    prevHiddenOptions = prevHidden.childNodes.length;
+              if (prevHiddenIndex !== undefined) {
+                // select the element **before** the first hidden element in the group
+                prevHidden = selectOptions[prevHiddenIndex].previousElementSibling;
 
-                for (var i = 0; i < prevHiddenOptions; i++) {
-                  if (prevHidden.childNodes[i].disabled) disabledOptions++;
+                if (prevHidden && prevHidden.tagName === 'OPTGROUP' && !prevHidden.disabled) {
+                  var disabledOptions = prevHidden.querySelectorAll('option:disabled');
+
+                  if (disabledOptions.length < prevHidden.children.length) showDivider = true;
                 }
-
-                if (disabledOptions < prevHiddenOptions) showDivider = true;
               }
             }
           }
 
-          if (showDivider && mainData[mainData.length - 1].type !== 'divider') {
+          if (showDivider && mainData.length && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
             mainElements.push(
               generateOption.li(
