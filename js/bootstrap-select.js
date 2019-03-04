@@ -514,35 +514,6 @@
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
 
-  var selectpicker = {};
-
-  var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/;
-
-  function getData( data ) {
-    if ( data === "true" ) {
-      return true;
-    }
-
-    if ( data === "false" ) {
-      return false;
-    }
-
-    if ( data === "null" ) {
-      return null;
-    }
-
-    // Only convert to a number if it doesn't change the string
-    if ( data === +data + "" ) {
-      return +data;
-    }
-
-    if ( rbrace.test( data ) ) {
-      return JSON.parse( data );
-    }
-
-    return data;
-  }
-
   var generateOption = {
     li: function (content, classes, optgroup) {
       var li = elementTemplates.li.cloneNode(false);
@@ -1243,12 +1214,12 @@
         if (option.classList.contains('bs-title-option')) continue;
 
         var thisData = {
-          content: getData(option.getAttribute('data-content')),
-          tokens: getData(option.getAttribute('data-tokens')),
-          subtext: getData(option.getAttribute('data-subtext')),
-          icon: getData(option.getAttribute('data-icon')),
-          hidden: getData(option.getAttribute('data-hidden')),
-          divider: getData(option.getAttribute('data-divider'))
+          content: option.getAttribute('data-content'),
+          tokens: option.getAttribute('data-tokens'),
+          subtext: option.getAttribute('data-subtext'),
+          icon: option.getAttribute('data-icon'),
+          hidden: option.getAttribute('data-hidden') === 'true',
+          divider: option.getAttribute('data-divider') === 'true'
         };
 
         // Get the class and text for the option
@@ -1271,7 +1242,7 @@
             prevHidden;
 
         var parentData = {
-          hidden: getData(parent.getAttribute('data-hidden'))
+          hidden: parent.getAttribute('data-hidden') === 'true'
         };
 
         if (
@@ -1314,8 +1285,8 @@
           if (!previousOption) { // Is it the first option of the optgroup?
             optID += 1;
 
-            parentData.subtext = getData(parent.getAttribute('data-subtext'));
-            parentData.icon = getData(parent.getAttribute('data-icon'));
+            parentData.subtext = parent.getAttribute('data-subtext');
+            parentData.icon = parent.getAttribute('data-icon');
 
             // Get the opt group label
             var label = parent.label,
