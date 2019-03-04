@@ -1228,9 +1228,6 @@
             inline = cssText ? htmlEscape(cssText) : '',
             optionContent = thisData.content,
             text = option.textContent,
-            tokens = thisData.tokens,
-            subtext = thisData.subtext,
-            icon = thisData.icon,
             parent = option.parentNode,
             next = option.nextElementSibling,
             previous = option.previousElementSibling,
@@ -1333,16 +1330,16 @@
           textElement = generateOption.text({
             text: text,
             optionContent: optionContent,
-            optionSubtext: subtext,
-            optionIcon: icon,
+            optionSubtext: thisData.subtext,
+            optionIcon: thisData.icon,
             iconBase: iconBase
           });
 
           mainElements.push(generateOption.li(generateOption.a(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
           mainData.push({
             content: optionContent || text,
-            subtext: subtext,
-            tokens: tokens,
+            subtext: thisData.subtext,
+            tokens: thisData.tokens,
             type: 'option',
             optID: optID,
             headerIndex: headerIndex,
@@ -1399,16 +1396,16 @@
           textElement = generateOption.text({
             text: text,
             optionContent: optionContent,
-            optionSubtext: subtext,
-            optionIcon: icon,
+            optionSubtext: thisData.subtext,
+            optionIcon: thisData.icon,
             iconBase: iconBase
           });
 
           mainElements.push(generateOption.li(generateOption.a(textElement, optionClass, inline)));
           mainData.push({
             content: optionContent || text,
-            subtext: subtext,
-            tokens: tokens,
+            subtext: thisData.subtext,
+            tokens: thisData.tokens,
             type: 'option',
             originalIndex: index,
             data: thisData
@@ -1431,7 +1428,7 @@
         if (_mainDataLast.content) combinedLength += _mainDataLast.content.length;
         if (_mainDataLast.subtext) combinedLength += _mainDataLast.subtext.length;
         // if there is an icon, ensure this option's width is checked
-        if (icon) combinedLength += 1;
+        if (thisData.icon) combinedLength += 1;
 
         if (combinedLength > widestOptionLength) {
           widestOptionLength = combinedLength;
