@@ -42,7 +42,7 @@ Several quick start options are available:
 </div>
 
 ### Via `selectpicker` class
-Add the `selectpicker` class to your select element to use the data-api.
+Add the `selectpicker` class to your select elements to auto-initialize bootstrap-select.
 ```html
 <select class="selectpicker">
   <option>Mustard</option>
@@ -53,8 +53,8 @@ Add the `selectpicker` class to your select element to use the data-api.
 
 ### Via JavaScript
 ```js
-// To style only selects with the selectpicker class
-$('.selectpicker').selectpicker();
+// To style only selects with the my-select class
+$('.my-select').selectpicker();
 ```
 or
 ```js
@@ -62,4 +62,10 @@ or
 $('select').selectpicker();
 ```
 
-If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`$(document).ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
+If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`.ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
+
+```js
+$(function () {
+	$('select').selectpicker();
+});
+```

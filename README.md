@@ -69,7 +69,7 @@ Several quick start options are available:
 > Bootstrap 4 only works with bootstrap-select v1.13.0+. By default, bootstrap-select automatically detects the version of Bootstrap being used. However, there are some instances where the version detection won't work. See the [documentation](https://developer.snapappointments.com/bootstrap-select/options/#bootstrap-version) for more information.
 
 ### Via `selectpicker` class
-Add the `selectpicker` class to your select element to use the data-api.
+Add the `selectpicker` class to your select elements to auto-initialize bootstrap-select.
 ```html
 <select class="selectpicker">
   <option>Mustard</option>
@@ -80,8 +80,8 @@ Add the `selectpicker` class to your select element to use the data-api.
 
 ### Via JavaScript
 ```js
-// To style only selects with the selectpicker class
-$('.selectpicker').selectpicker();
+// To style only selects with the my-select class
+$('.my-select').selectpicker();
 ```
 or
 ```js
@@ -89,7 +89,13 @@ or
 $('select').selectpicker();
 ```
 
-If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`$(document).ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
+If calling bootstrap-select via JavaScript, you will need to wrap your code in a [`.ready()`](https://api.jquery.com/ready/) block or place it at the bottom of the page (after the last instance of bootstrap-select).
+
+```js
+$(function () {
+	$('select').selectpicker();
+});
+```
 
 
 Check out the [documentation](https://developer.snapappointments.com/bootstrap-select) for further information.
