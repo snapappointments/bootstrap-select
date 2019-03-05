@@ -1463,62 +1463,76 @@
     render: function () {
       var that = this,
           selectedOptions = this.$element[0].selectedOptions,
+          selectedCount = selectedOptions.length,
           buttonInner = this.$button.find('.filter-option-inner-inner')[0],
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
-          titleFragment = elementTemplates.fragment.cloneNode(false);
+          titleFragment = elementTemplates.fragment.cloneNode(false),
+          showCount,
+          countMax;
 
       this.togglePlaceholder();
 
       this.tabIndex();
 
-      for (var selectedIndex = 0, len = selectedOptions.length; selectedIndex < len; selectedIndex++) {
-        var option = selectedOptions[selectedIndex],
-            index = option.index,
-            i = that.selectpicker.main.map.newIndex[index],
-            titleOptions = {},
-            optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
+      if (this.options.selectedTextFormat === 'static') {
+        titleFragment = generateOption.text({ text: this.options.title }, true);
+      } else {
+        showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 1;
 
-        if (optionData) {
-          if ((selectedIndex < 50 && that.options.selectedTextFormat !== 'count') || len === 1) {
-            var thisData = optionData.data;
+        // determine if the number of selected options will be shown (showCount === true)
+        if (showCount) {
+          countMax = this.options.selectedTextFormat.split('>');
+          showCount = (countMax.length > 1 && selectedCount > countMax[1]) || (countMax.length === 1 && selectedCount >= 2);
+        }        
 
-            if (this.multiple && selectedIndex > 0) {
-              titleFragment.appendChild(multipleSeparator.cloneNode(false));
-            }
+        // only loop through all selected options if the count won't be shown
+        if (showCount === false) {
+          for (var selectedIndex = 0; selectedIndex < selectedCount; selectedIndex++) {
+            var option = selectedOptions[selectedIndex],
+                index = option.index,
+                i = that.selectpicker.main.map.newIndex[index],
+                titleOptions = {},
+                optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
 
-            if (option.title) {
-              titleOptions.text = option.title;
-            } else if (thisData.content && that.options.showContent) {
-              titleOptions.optionContent = thisData.content.toString();
-            } else {
-              if (that.options.showIcon) {
-                titleOptions.optionIcon = thisData.icon;
-                titleOptions.iconBase = this.options.iconBase;
+            if (optionData) {
+              if (selectedIndex < 50) {
+                var thisData = optionData.data;
+
+                if (this.multiple && selectedIndex > 0) {
+                  titleFragment.appendChild(multipleSeparator.cloneNode(false));
+                }
+
+                if (option.title) {
+                  titleOptions.text = option.title;
+                } else if (thisData.content && that.options.showContent) {
+                  titleOptions.optionContent = thisData.content.toString();
+                } else {
+                  if (that.options.showIcon) {
+                    titleOptions.optionIcon = thisData.icon;
+                    titleOptions.iconBase = this.options.iconBase;
+                  }
+                  if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
+                  titleOptions.text = option.textContent.trim();
+                }
+
+                titleFragment.appendChild(generateOption.text(titleOptions, true));
+              } else {
+                break;
               }
-              if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
-              titleOptions.text = option.textContent.trim();
             }
-
-            titleFragment.appendChild(generateOption.text(titleOptions, true));
           }
-        }
-      }
 
-      // add ellipsis
-      if (selectedOptions.length > 49) {
-        titleFragment.appendChild(document.createTextNode('...'));
-      }
-
-      // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected etc..
-      if (this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1) {
-        var max = this.options.selectedTextFormat.split('>');
-
-        if ((max.length > 1 && selectedOptions.length > max[1]) || (max.length === 1 && selectedOptions.length >= 2)) {
+          // add ellipsis
+          if (selectedCount > 49) {
+            titleFragment.appendChild(document.createTextNode('...'));
+          }
+        } else {
+          // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected, etc.
           var totalCount = this.selectpicker.view.availableOptionsCount,
-              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedOptions.length, totalCount) : this.options.countSelectedText;
+              tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedCount, totalCount) : this.options.countSelectedText;
 
           titleFragment = generateOption.text({
-            text: tr8nText.replace('{0}', selectedOptions.length.toString()).replace('{1}', totalCount.toString())
+            text: tr8nText.replace('{0}', selectedCount.toString()).replace('{1}', totalCount.toString())
           }, true);
         }
       }
@@ -1526,10 +1540,6 @@
       if (this.options.title == undefined) {
         // use .attr to ensure undefined is returned if title attribute is not set
         this.options.title = this.$element.attr('title');
-      }
-
-      if (this.options.selectedTextFormat == 'static') {
-        titleFragment = generateOption.text({ text: this.options.title }, true);
       }
 
       // If the select doesn't have a title, then use the default, or if nothing is set at all, use noneSelectedText
