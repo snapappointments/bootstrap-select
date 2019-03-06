@@ -1160,7 +1160,6 @@
       var that = this,
           iconBase = that.options.iconBase,
           mainElements = [],
-          hiddenOptions = {},
           widestOption,
           widestOptionLength = 0,
           mainData = [],
@@ -1263,11 +1262,6 @@
           if (next) next.prevHiddenIndex = (prevHiddenIndex !== undefined ? prevHiddenIndex : index);
 
           liIndex--;
-
-          hiddenOptions[index] = {
-            type: 'hidden',
-            data: thisData
-          }
 
           continue;
         } else {
@@ -1443,7 +1437,6 @@
 
       this.selectpicker.main.elements = mainElements;
       this.selectpicker.main.data = mainData;
-      this.selectpicker.main.hidden = hiddenOptions;
 
       this.selectpicker.current = this.selectpicker.main;
 
@@ -1477,42 +1470,40 @@
         if (showCount) {
           countMax = this.options.selectedTextFormat.split('>');
           showCount = (countMax.length > 1 && selectedCount > countMax[1]) || (countMax.length === 1 && selectedCount >= 2);
-        }        
+        }
 
         // only loop through all selected options if the count won't be shown
         if (showCount === false) {
           for (var selectedIndex = 0; selectedIndex < selectedCount; selectedIndex++) {
-            var option = selectedOptions[selectedIndex],
-                index = option.index,
-                i = that.selectpicker.main.map.newIndex[index],
-                titleOptions = {},
-                optionData = that.selectpicker.main.data[i] || that.selectpicker.main.hidden[index];
+            if (selectedIndex < 50) {
+              var option = selectedOptions[selectedIndex],
+                  titleOptions = {},
+                  thisData = {
+                    content: option.getAttribute('data-content'),
+                    subtext: option.getAttribute('data-subtext'),
+                    icon: option.getAttribute('data-icon'),
+                  };
 
-            if (optionData) {
-              if (selectedIndex < 50) {
-                var thisData = optionData.data;
-
-                if (this.multiple && selectedIndex > 0) {
-                  titleFragment.appendChild(multipleSeparator.cloneNode(false));
-                }
-
-                if (option.title) {
-                  titleOptions.text = option.title;
-                } else if (thisData.content && that.options.showContent) {
-                  titleOptions.optionContent = thisData.content.toString();
-                } else {
-                  if (that.options.showIcon) {
-                    titleOptions.optionIcon = thisData.icon;
-                    titleOptions.iconBase = this.options.iconBase;
-                  }
-                  if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
-                  titleOptions.text = option.textContent.trim();
-                }
-
-                titleFragment.appendChild(generateOption.text(titleOptions, true));
-              } else {
-                break;
+              if (this.multiple && selectedIndex > 0) {
+                titleFragment.appendChild(multipleSeparator.cloneNode(false));
               }
+
+              if (option.title) {
+                titleOptions.text = option.title;
+              } else if (thisData.content && that.options.showContent) {
+                titleOptions.optionContent = thisData.content.toString();
+              } else {
+                if (that.options.showIcon) {
+                  titleOptions.optionIcon = thisData.icon;
+                  titleOptions.iconBase = this.options.iconBase;
+                }
+                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
+                titleOptions.text = option.textContent.trim();
+              }
+
+              titleFragment.appendChild(generateOption.text(titleOptions, true));
+            } else {
+              break;
             }
           }
 
