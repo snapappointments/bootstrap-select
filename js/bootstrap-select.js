@@ -1162,7 +1162,6 @@
           mainElements = [],
           hiddenOptions = {},
           widestOption,
-          availableOptionsCount = 0,
           widestOptionLength = 0,
           mainData = [],
           optID = 0,
@@ -1353,8 +1352,6 @@
             originalIndex: index,
             data: thisData
           });
-
-          availableOptionsCount++;
         } else if (thisData.divider === true) {
           mainElements.push(generateOption.li(false, classNames.DIVIDER));
           mainData.push({
@@ -1416,8 +1413,6 @@
             originalIndex: index,
             data: thisData
           });
-
-          availableOptionsCount++;
         }
 
         that.selectpicker.main.map.newIndex[index] = liIndex;
@@ -1453,7 +1448,6 @@
       this.selectpicker.current = this.selectpicker.main;
 
       this.selectpicker.view.widestOption = widestOption;
-      this.selectpicker.view.availableOptionsCount = availableOptionsCount; // faster way to get # of available options without filter
     },
 
     findLis: function () {
@@ -1527,8 +1521,11 @@
             titleFragment.appendChild(document.createTextNode('...'));
           }
         } else {
+          var optionSelector = ':not([hidden]):not([data-hidden="true"])';
+          if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
+
           // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected, etc.
-          var totalCount = this.selectpicker.view.availableOptionsCount,
+          var totalCount = this.$element[0].querySelectorAll('select > option' + optionSelector + ', optgroup' + optionSelector + ' option' + optionSelector).length,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedCount, totalCount) : this.options.countSelectedText;
 
           titleFragment = generateOption.text({
