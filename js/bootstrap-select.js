@@ -768,11 +768,12 @@
 
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
+
       this.$newElement = this.createDropdown();
-      this.createLi();
       this.$element
         .after(this.$newElement)
         .prependTo(this.$newElement);
+
       this.$button = this.$newElement.children('button');
       this.$menu = this.$newElement.children(Selector.MENU);
       this.$menuInner = this.$menu.children('.inner');
@@ -852,6 +853,7 @@
       }
 
       setTimeout(function () {
+        that.createLi();
         that.$element.trigger('loaded' + EVENT_KEY);
       });
     },
@@ -1156,31 +1158,15 @@
         });
     },
 
-    createLi: function () {
-      var that = this,
-          iconBase = that.options.iconBase,
-          mainElements = [],
-          widestOption,
-          widestOptionLength = 0,
-          mainData = [],
-          optID = 0,
-          headerIndex = 0,
-          liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure newIndex is correct
-
-      if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
-
-      var checkMark;
-
-      if (that.options.showTick || that.multiple) {
-        checkMark = elementTemplates.span.cloneNode(false);
-        checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
-        elementTemplates.a.appendChild(checkMark);
-      }
+    setPlaceholder: function () {
+      var updateIndex = false;
 
       if (this.options.title && !this.multiple) {
+        if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
+
         // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
         // since newIndex is recalculated on every refresh, liIndex needs to be decreased even if the titleOption is already appended
-        liIndex--;
+        updateIndex = true;
 
         var element = this.$element[0],
             isSelected = false,
@@ -1207,6 +1193,30 @@
         // set using selectedIndex, as setting the selected attr to true here doesn't work in IE11
         if (isSelected) element.selectedIndex = 0;
       }
+
+      return updateIndex;
+    },
+
+    createLi: function () {
+      var that = this,
+          iconBase = that.options.iconBase,
+          mainElements = [],
+          widestOption,
+          widestOptionLength = 0,
+          mainData = [],
+          optID = 0,
+          headerIndex = 0,
+          liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure newIndex is correct
+
+      var checkMark;
+
+      if (that.options.showTick || that.multiple) {
+        checkMark = elementTemplates.span.cloneNode(false);
+        checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
+        elementTemplates.a.appendChild(checkMark);
+      }
+
+      if (this.setPlaceholder()) liIndex--;
 
       var selectOptions = this.$element[0].options;
 
@@ -1449,6 +1459,9 @@
     },
 
     render: function () {
+      // ensure titleOption is appended and selected (if necessary) before getting selectedOptions
+      this.setPlaceholder();
+
       var that = this,
           selectedOptions = this.$element[0].selectedOptions,
           selectedCount = selectedOptions.length,
