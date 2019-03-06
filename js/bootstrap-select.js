@@ -2749,9 +2749,9 @@
 
       this.selectpicker.main.map.newIndex = {};
       this.selectpicker.main.map.originalIndex = {};
-      this.createLi();
       this.checkDisabled();
       this.render();
+      this.createLi();
       this.setStyle();
       this.setWidth();
 
