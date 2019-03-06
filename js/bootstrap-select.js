@@ -1512,7 +1512,7 @@
             titleFragment.appendChild(document.createTextNode('...'));
           }
         } else {
-          var optionSelector = ':not([hidden]):not([data-hidden="true"])';
+          var optionSelector = ':not([hidden]):not([data-hidden="true"]):not([data-divider="true"])';
           if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
           // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected, etc.
