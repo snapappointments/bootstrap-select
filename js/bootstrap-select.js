@@ -1280,7 +1280,8 @@
             previousOption = selectOptions[prevHiddenIndex].previousElementSibling;
           }
 
-          if (!previousOption) { // Is it the first option of the optgroup?
+          // if there is no previous option, this option is the first visible option in the optgroup
+          if (!previousOption) {
             optID += 1;
 
             parentData.subtext = parent.getAttribute('data-subtext');
