@@ -156,9 +156,9 @@
 
   if (!HTMLSelectElement.prototype.hasOwnProperty('selectedOptions')) {
     Object.defineProperty(HTMLSelectElement.prototype, 'selectedOptions', {
-        get: function() {
-          return this.querySelectorAll(':checked');
-        }
+      get: function () {
+        return this.querySelectorAll(':checked');
+      }
     });
   }
 
@@ -1495,7 +1495,7 @@
                   thisData = {
                     content: option.getAttribute('data-content'),
                     subtext: option.getAttribute('data-subtext'),
-                    icon: option.getAttribute('data-icon'),
+                    icon: option.getAttribute('data-icon')
                   };
 
               if (this.multiple && selectedIndex > 0) {
