@@ -17,6 +17,10 @@ $.fn.selectpicker.Constructor.BootstrapVersion = '4';
 Options can be passed via data attributes or JavaScript. For data attributes, append the option name to `data-`, as in 
 `data-style=""` or `data-selected-text-format="count"`.
 
+<span class="alert alert-warning d-block" role="alert">
+  <strong>Note:</strong> For security reasons, the <code>sanitize</code>, <code>sanitizeFn</code> and <code>whiteList</code> options cannot be supplied using data attributes.
+</span>
+
 <table class="table table-bordered table-striped">
   <thead>
   <tr>
@@ -315,6 +319,30 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
       <p>This is useful in cases where the window has areas that the dropdown menu should not cover - for instance a fixed header. When set to an integer, the same padding will be added to all sides. Alternatively, an array of integers can be used in the format <code>[top, right, bottom, left]</code>.</p>
     </td>
   </tr>
+  <tr>
+    <td>sanitize</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>
+      <p>Enable or disable the sanitization. If activated, <code>'data-content'</code> on individual options will be sanitized.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>whiteList</td>
+    <td>object</td>
+    <td><a href="#sanitizer">Default value</a></td>
+    <td>
+      <p>Object which contains allowed attributes and tags</p>
+    </td>
+  </tr>
+  <tr>
+    <td>sanitizeFn</td>
+    <td>null | function</td>
+    <td>null</td>
+    <td>
+      <p>Here you can supply your own sanitize function. This can be useful if you prefer to use a dedicated library to perform sanitization.</p>
+    </td>
+  </tr>
   </tbody>
 </table>
 
@@ -384,3 +412,77 @@ $('#mySelect').on('changed.bs.select', function (e, clickedIndex, isSelected, pr
   // do something...
 });
 ```
+
+# Sanitizer
+
+---
+
+HTML added via the `data-content` attribute on individual options is sanitized using our built-in sanitizer.
+
+The default `whiteList` value is the following:
+
+```js
+var ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
+var DefaultWhitelist = {
+  // Global attributes allowed on any supplied element below.
+  '*': ['class', 'dir', 'id', 'lang', 'role', 'tabindex', 'style', ARIA_ATTRIBUTE_PATTERN],
+  a: ['target', 'href', 'title', 'rel'],
+  area: [],
+  b: [],
+  br: [],
+  col: [],
+  code: [],
+  div: [],
+  em: [],
+  hr: [],
+  h1: [],
+  h2: [],
+  h3: [],
+  h4: [],
+  h5: [],
+  h6: [],
+  i: [],
+  img: ['src', 'alt', 'title', 'width', 'height'],
+  li: [],
+  ol: [],
+  p: [],
+  pre: [],
+  s: [],
+  small: [],
+  span: [],
+  sub: [],
+  sup: [],
+  strong: [],
+  u: [],
+  ul: []
+}
+```
+
+If you want to add new values to this default `whiteList` you can do the following:
+
+```js
+var myDefaultWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
+
+// To allow table elements
+myDefaultWhiteList.table = [];
+
+// To allow td elements and data-option attributes on td elements
+myDefaultWhiteList.td = ['data-option'];
+
+// You can push your custom regex to validate your attributes.
+// Be careful about your regular expressions being too lax
+var myCustomRegex = /^data-my-app-[\w-]+/;
+myDefaultWhiteList['*'].push(myCustomRegex);
+```
+
+If you want to bypass our sanitizer because you prefer to use a dedicated library, you should do the following:
+
+```js
+$('#yourSelect').selectpicker({
+  sanitizeFn: function (domNodes) {
+    return DOMPurify.sanitize(domNodes)
+  }
+});
+```
+
+For performance reasons, our built-in sanitizer accepts an array of DOM nodes as its first argument, rather than an HTML string. Keep that in mind if deciding to use your own `sanitizeFn`.
