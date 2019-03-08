@@ -1371,6 +1371,8 @@
     createLi: function () {
       var that = this,
           iconBase = that.options.iconBase,
+          optionSelector = ':not([hidden]):not([data-hidden="true"])',
+          checkMark,
           mainElements = [],
           widestOption,
           widestOptionLength = 0,
@@ -1379,7 +1381,7 @@
           headerIndex = 0,
           liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure newIndex is correct
 
-      var checkMark;
+      if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
       if (that.options.showTick || that.multiple) {
         checkMark = elementTemplates.span.cloneNode(false);
@@ -1524,7 +1526,7 @@
             type: 'option',
             optID: optID,
             headerIndex: headerIndex,
-            lastIndex: headerIndex + parent.childElementCount,
+            lastIndex: headerIndex + parent.querySelectorAll('option' + optionSelector).length,
             originalIndex: index,
             data: thisData
           });
@@ -3077,3 +3079,4 @@
 
 
 }));
+//# sourceMappingURL=bootstrap-select.js.map
