@@ -46,42 +46,25 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        stripBanners: true
+        stripBanners: true,
+        sourceMap: true
       },
       main: {
-        src: '<%= eslint.main.src %>',
-        dest: 'dist/js/<%= pkg.name %>.js'
+        src: 'js/<%= pkg.name %>.js',
+        dest: 'dist/js/<%= pkg.name %>.js',
+        options: {
+          banner: grunt.file.read('js/umd-intro.js'),
+          footer: grunt.file.read('js/umd-outro.js')
+        }
       },
       i18n: {
         expand: true,
         src: '<%= eslint.i18n.src %>',
-        dest: 'dist/'
-      }
-    },
-
-    umd: {
-      main: {
+        dest: 'dist/',
         options: {
-          deps: {
-            'default': ['jQuery'],
-            amd: ['jquery'],
-            cjs: ['jquery'],
-            global: ['jQuery']
-          }
-        },
-        src: '<%= concat.main.dest %>'
-      },
-      i18n: {
-        options: {
-          deps: {
-            'default': ['jQuery'],
-            amd: ['jquery'],
-            cjs: ['jquery'],
-            global: ['jQuery']
-          }
-        },
-        src: 'dist/<%= eslint.i18n.src %>',
-        dest: '.'
+          banner: grunt.file.read('js/umd-intro.js'),
+          footer: grunt.file.read('js/umd-outro.js')
+        }
       }
     },
 
@@ -99,7 +82,8 @@ module.exports = function (grunt) {
         dest: 'dist/js/<%= pkg.name %>.min.js',
         options: {
           sourceMap: true,
-          sourceMapName: 'dist/js/<%= pkg.name %>.js.map'
+          sourceMapIncludeSources: true,
+          sourceMapIn: 'dist/js/<%= pkg.name %>.js.map'
         }
       },
       i18n: {
@@ -307,7 +291,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('build-js', ['clean:js', 'eslint', 'concat', 'umd', 'uglify', 'usebanner:js']);
+  grunt.registerTask('build-js', ['clean:js', 'eslint', 'concat', 'uglify', 'usebanner:js']);
 
   // Copy dist to docs
   grunt.registerTask('docs', ['clean:docs', 'copy:docs']);
