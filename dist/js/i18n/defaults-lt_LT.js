@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2018 SnapAppointments, LLC
+ * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -27,7 +27,7 @@
     noneSelectedText: 'Niekas nepasirinkta',
     noneResultsText: 'Niekas nesutapo su {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} elementas pasirinktas" : "{0} elementai(-ų) pasirinkta";
+      return (numSelected == 1) ? '{0} elementas pasirinktas' : '{0} elementai(-ų) pasirinkta';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -43,3 +43,4 @@
 
 
 }));
+//# sourceMappingURL=defaults-lt_LT.js.map

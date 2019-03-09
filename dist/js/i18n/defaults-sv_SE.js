@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2018 SnapAppointments, LLC
+ * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -27,7 +27,7 @@
     noneSelectedText: 'Inget valt',
     noneResultsText: 'Inget sökresultat matchar {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected === 1) ? "{0} alternativ valt" : "{0} alternativ valda";
+      return (numSelected === 1) ? '{0} alternativ valt' : '{0} alternativ valda';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -43,3 +43,4 @@
 
 
 }));
+//# sourceMappingURL=defaults-sv_SE.js.map

@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2018 SnapAppointments, LLC
+ * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -27,7 +27,7 @@
     noneSelectedText: '항목을 선택해주세요',
     noneResultsText: '{0} 검색 결과가 없습니다',
     countSelectedText: function (numSelected, numTotal) {
-      return "{0}개를 선택하였습니다";
+      return '{0}개를 선택하였습니다';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -43,3 +43,4 @@
 
 
 }));
+//# sourceMappingURL=defaults-ko_KR.js.map

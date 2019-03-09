@@ -100,9 +100,16 @@
 </header>
 
 
-<section class="jumbotron jumbotron-fluid">
-  <div class="container-fluid">
+<section class="jumbotron jumbotron-fluid bs-docs-header">
+  <div class="container-fluid d-flex flex-column flex-md-row align-items-md-center">
     <h1>Examples</h1>
+     
+    <div class="carbonad carbonad-header mr-md-3">
+      <div class="carbonad-inner">
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
+      </div>
+    </div>
+    
   </div>
 </section>
 <div class="container-fluid">
@@ -767,6 +774,9 @@ Using the <code>title</code> attribute will set the default placeholder text whe
 
 <h2 id="custom-content">Custom content</h2>
 <p>Insert custom HTML into the option with the <code>data-content</code> attribute:</p>
+<p><span class="alert alert-warning d-block" role="alert">
+  <strong>Note:</strong> This feature inserts HTML into the DOM. By default, it is sanitized using our built-in <a href="/options/#sanitizer">sanitizer</a>.
+</span></p>
 <div class="bs-docs-example">
   <select class="selectpicker">
     <option data-content="<span class='badge badge-warning'>Mustard</span>">Mustard</option>

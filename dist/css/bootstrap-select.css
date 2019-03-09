@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2018 SnapAppointments, LLC
+ * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -13,11 +13,11 @@ select.selectpicker {
 .bootstrap-select {
   width: 220px \0;
   /*IE9 and below*/
+  vertical-align: middle;
 }
 .bootstrap-select > .dropdown-toggle {
   position: relative;
   width: 100%;
-  z-index: 1;
   text-align: right;
   white-space: nowrap;
 }
@@ -101,11 +101,9 @@ select.selectpicker {
 :not(.input-group) > .bootstrap-select.form-control:not([class*="col-"]) {
   width: 100%;
 }
+.input-group .bootstrap-select.form-control,
 .bootstrap-select.form-control.input-group-btn {
   z-index: auto;
-}
-.bootstrap-select.form-control.input-group-btn:not(:first-child):not(:last-child) > .btn {
-  border-radius: 0;
 }
 .bootstrap-select:not(.input-group-btn),
 .bootstrap-select[class*="col-"] {

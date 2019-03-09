@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2018 SnapAppointments, LLC
+ * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -27,7 +27,7 @@
     noneSelectedText: 'មិនមានអ្វីបានជ្រើសរើស',
     noneResultsText: 'មិនមានលទ្ធផល {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} ធាតុដែលបានជ្រើស" : "{0} ធាតុដែលបានជ្រើស";
+      return (numSelected == 1) ? '{0} ធាតុដែលបានជ្រើស' : '{0} ធាតុដែលបានជ្រើស';
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
@@ -43,3 +43,4 @@
 
 
 }));
+//# sourceMappingURL=defaults-kh_KM.js.map

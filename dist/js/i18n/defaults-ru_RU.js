@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.3 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2018 SnapAppointments, LLC
+ * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -30,10 +30,11 @@
     maxOptionsText: ['Достигнут предел ({n} {var} максимум)', 'Достигнут предел в группе ({n} {var} максимум)', ['шт.', 'шт.']],
     doneButtonText: 'Закрыть',
     selectAllText: 'Выбрать все',
-    deselectAllText: 'Отменить все',    
+    deselectAllText: 'Отменить все',
     multipleSeparator: ', '
   };
 })(jQuery);
 
 
 }));
+//# sourceMappingURL=defaults-ru_RU.js.map
