@@ -196,7 +196,7 @@ module.exports = function (grunt) {
       },
       cdn: {
         options: {
-          prefix: 'ajax/libs/<%= pkg.name %>/'
+          prefix: 'npm/<%= pkg.name %>@'
         },
         src: [
           'README.md',
