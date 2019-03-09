@@ -21,7 +21,7 @@
 		<img src="https://data.jsdelivr.com/v1/package/npm/bootstrap-select/badge?style=rounded" alt="jsDelivr">
 	</a>
 	<br>
-	<a href="https://cdnjs.com/libraries/bootstrap-select" target="_blank">
+	<a href="https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE" target="_blank">
 		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
 	</a>
 	<a href="https://david-dm.org/snapappointments/bootstrap-select?type=peer" target="_blank">
