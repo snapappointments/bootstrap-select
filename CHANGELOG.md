@@ -1,5 +1,6 @@
 # v1.13.6 (2019-03-08)
 ### Bug Fixes
+- [#1321]: remove extra files from bower release
 - [#1665]: performance improvements
 - [#1832]: use `on` and `trigger` event handlers instead of `click` and `change` shorthand
 - [#2078]: Elements in an input group below a selectpicker have a higher z-index, causing them to appear above the opened menu
@@ -18,6 +19,7 @@
 ### Security
 - [#2199]: Fixed an XSS vulnerability with data-content, data-subtext, and title options. Implemented a new HTML sanitizer for data-content.
 
+[#1321]: https://github.com/snapappointments/bootstrap-select/issues/1321
 [#1665]: https://github.com/snapappointments/bootstrap-select/issues/1665
 [#1832]: https://github.com/snapappointments/bootstrap-select/issues/1832
 [#2078]: https://github.com/snapappointments/bootstrap-select/issues/2078
