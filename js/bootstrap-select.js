@@ -138,9 +138,11 @@
 
             return {
               add: function (classes) {
+                classes = Array.prototype.slice.call(arguments).join(' ');
                 return $elem.addClass(classes);
               },
               remove: function (classes) {
+                classes = Array.prototype.slice.call(arguments).join(' ');
                 return $elem.removeClass(classes);
               },
               toggle: function (classes, force) {
@@ -175,6 +177,21 @@
   }
 
   var testElement = document.createElement('_');
+
+  testElement.classList.add.apply(testElement.classList, ['c1', 'c2']);
+
+  if (!testElement.classList.contains('c2')) {
+    var _add = DOMTokenList.prototype.add,
+        _remove = DOMTokenList.prototype.remove;
+
+    DOMTokenList.prototype.add = function () {
+      Array.prototype.forEach.call(arguments, _add.bind(this));
+    }
+
+    DOMTokenList.prototype.remove = function () {
+      Array.prototype.forEach.call(arguments, _remove.bind(this));
+    }
+  }
 
   testElement.classList.toggle('c3', false);
 
@@ -1719,21 +1736,28 @@
      * @param [style]
      * @param [status]
      */
-    setStyle: function (style, status) {
-      var button = this.$button[0];
+    setStyle: function (newStyle, status) {
+      var button = this.$button[0],
+          style = this.options.style.split(' '),
+          buttonClass;
+
       if (this.$element.attr('class')) {
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
       }
 
-      var buttonClass = style || this.options.style;
+      if (newStyle) {
+        buttonClass = newStyle.split(' ');
+      } else {
+        buttonClass = style;
+      }
 
       if (status == 'add') {
-        button.classList.add(buttonClass);
+        button.classList.add.apply(button.classList, buttonClass);
       } else if (status == 'remove') {
-        button.classList.remove(buttonClass);
+        button.classList.remove.apply(button.classList, buttonClass);
       } else {
-        button.classList.remove(this.options.style);
-        button.classList.add(buttonClass);
+        button.classList.remove.apply(button.classList, style);
+        button.classList.add.apply(button.classList, buttonClass);
       }
     },
 
