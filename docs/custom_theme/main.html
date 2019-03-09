@@ -57,12 +57,11 @@
     <iframe src="https://ghbtns.com/github-btn.html?user=snapappointments&repo=bootstrap-select&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
     <iframe src="https://ghbtns.com/github-btn.html?user=snapappointments&repo=bootstrap-select&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
   </div>
-  <div class="carbonad">
-    <div class="carbonad-inner">
-      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
-    </div>
-    <div class="charity">
-      Ad revenue is donated to the charity <a href="http://www.projetocana.org/" target="_blank" rel="nofollow">Projeto Cana</a>. <br> Donate directly via <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FSC9BZ4WTN57Y" title="Donate to this project using PayPal" target="_blank">PayPal</a>.
+  <div class="container-fluid">
+    <div class="carbonad">
+      <div class="carbonad-inner">
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
+      </div>
     </div>
   </div>
 </div>
@@ -70,9 +69,16 @@
 {% include "content.html" %}
 </div>
 {% else %}
-<section class="jumbotron jumbotron-fluid">
-  <div class="container-fluid">
+<section class="jumbotron jumbotron-fluid bs-docs-header">
+  <div class="container-fluid d-flex flex-column flex-md-row align-items-md-center">
     <h1>{{ page.title }}</h1>
+    {% if page and page.title == 'Examples' %} 
+    <div class="carbonad carbonad-header mr-md-3">
+      <div class="carbonad-inner">
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=silviomoretogithubiobootstrapsel" id="_carbonads_js"></script>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </section>
 <div class="container-fluid">
