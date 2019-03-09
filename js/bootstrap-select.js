@@ -815,7 +815,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.5';
+  Selectpicker.VERSION = '1.13.6';
 
   Selectpicker.BootstrapVersion = version.major;
 
