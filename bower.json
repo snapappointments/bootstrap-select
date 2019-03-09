@@ -48,6 +48,7 @@
     ".github",
     "docs",
     "js",
+    "!dist/js",
     "nuget",
     "tests"
   ]
