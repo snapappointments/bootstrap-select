@@ -2033,18 +2033,21 @@
       if (this.options.width === 'auto') {
         requestAnimationFrame(function () {
           that.$menu.css('min-width', '0');
-          that.liHeight();
-          that.setMenuSize();
 
-          // Get correct width if element is hidden
-          var $selectClone = that.$newElement.clone().appendTo('body'),
-              btnWidth = $selectClone.css('width', 'auto').children('button').outerWidth();
+          that.$element.on('loaded' + EVENT_KEY, function () {
+            that.liHeight();
+            that.setMenuSize();
 
-          $selectClone.remove();
+            // Get correct width if element is hidden
+            var $selectClone = that.$newElement.clone().appendTo('body'),
+                btnWidth = $selectClone.css('width', 'auto').children('button').outerWidth();
 
-          // Set width to whatever's larger, button title or longest option
-          that.sizeInfo.selectWidth = Math.max(that.sizeInfo.totalMenuWidth, btnWidth);
-          that.$newElement.css('width', that.sizeInfo.selectWidth + 'px');
+            $selectClone.remove();
+
+            // Set width to whatever's larger, button title or longest option
+            that.sizeInfo.selectWidth = Math.max(that.sizeInfo.totalMenuWidth, btnWidth);
+            that.$newElement.css('width', that.sizeInfo.selectWidth + 'px');
+          });
         });
       } else if (this.options.width === 'fit') {
         // Remove inline min-width so width can be changed from 'auto'
