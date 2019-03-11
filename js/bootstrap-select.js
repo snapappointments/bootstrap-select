@@ -178,7 +178,7 @@
 
   var testElement = document.createElement('_');
 
-  testElement.classList.add.apply(testElement.classList, ['c1', 'c2']);
+  testElement.classList.add('c1', 'c2');
 
   if (!testElement.classList.contains('c2')) {
     var _add = DOMTokenList.prototype.add,
