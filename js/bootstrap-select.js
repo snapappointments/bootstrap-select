@@ -2888,7 +2888,7 @@
           if (liActive.firstChild) liActive.firstChild.classList.add('active');
           that.activeIndex = matches[matchIndex];
 
-          liActive.firstChild.trigger('focus');
+          liActive.firstChild.focus();
 
           if (updateScroll) that.$menuInner[0].scrollTop = offset;
 
