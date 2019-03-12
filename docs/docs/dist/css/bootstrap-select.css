@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.7 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -20,6 +20,18 @@ select.selectpicker {
   width: 100%;
   text-align: right;
   white-space: nowrap;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.bootstrap-select > .dropdown-toggle:after {
+  margin-top: -1px;
+  margin-left: auto;
 }
 .bootstrap-select > .dropdown-toggle.bs-placeholder,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
@@ -63,6 +75,7 @@ select.selectpicker {
   padding: 0 !important;
   opacity: 0 !important;
   border: none;
+  z-index: 0 !important;
 }
 .bootstrap-select > select.mobile-device {
   top: 0;
@@ -103,6 +116,7 @@ select.selectpicker {
 }
 .input-group .bootstrap-select.form-control,
 .bootstrap-select.form-control.input-group-btn {
+  display: table-cell;
   z-index: auto;
 }
 .bootstrap-select:not(.input-group-btn),
@@ -170,21 +184,33 @@ select.selectpicker {
   display: inline-block;
 }
 .bootstrap-select .dropdown-toggle .filter-option {
-  position: absolute;
+  position: static;
   top: 0;
   left: 0;
-  padding-top: inherit;
+  float: left;
   padding-right: inherit;
-  padding-bottom: inherit;
-  padding-left: inherit;
   height: 100%;
   width: 100%;
   text-align: left;
+  margin-right: -100%;
 }
-.bootstrap-select .dropdown-toggle .filter-option-inner {
+.input-group .bs3.bootstrap-select .dropdown-toggle .filter-option {
+  position: absolute;
+  padding-top: inherit;
+  padding-bottom: inherit;
+  padding-left: inherit;
+  float: none;
+}
+.input-group .bs3.bootstrap-select .dropdown-toggle .filter-option .filter-option-inner {
   padding-right: inherit;
 }
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  overflow: hidden;
+}
+.bootstrap-select .dropdown-toggle .filter-expand {
+  width: 0.5px !important;
+  float: left;
+  opacity: 0 !important;
   overflow: hidden;
 }
 .bootstrap-select .dropdown-toggle .caret {

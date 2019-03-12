@@ -1,3 +1,23 @@
+# v1.13.7 (2019-03-12)
+### Bug Fixes
+- [#2046]: val() method incorrectly fires a native change event
+- [#2109]: The height of the select doesn't auto-size with multi-line options
+- [#2213]: button height wrong if using an older doctype
+- [#2220]: js folder missing in bower_components/bootstrap-select/dist
+- [#2221]: style option can no longer include multiple styles
+- [#2224]: auto width (data-width="auto") not working
+- [#2226]: Selecting option by typing is not working correctly
+
+[#2046]: https://github.com/snapappointments/bootstrap-select/issues/2046
+[#2109]: https://github.com/snapappointments/bootstrap-select/issues/2109
+[#2213]: https://github.com/snapappointments/bootstrap-select/issues/2213
+[#2220]: https://github.com/snapappointments/bootstrap-select/issues/2220
+[#2221]: https://github.com/snapappointments/bootstrap-select/issues/2221
+[#2224]: https://github.com/snapappointments/bootstrap-select/issues/2224
+[#2226]: https://github.com/snapappointments/bootstrap-select/issues/2226
+
+-------------------
+
 # v1.13.6 (2019-03-08)
 ### Bug Fixes
 - [#1321]: remove extra files from bower release

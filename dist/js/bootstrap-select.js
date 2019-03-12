@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.6 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.7 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -162,9 +162,11 @@
 
             return {
               add: function (classes) {
+                classes = Array.prototype.slice.call(arguments).join(' ');
                 return $elem.addClass(classes);
               },
               remove: function (classes) {
+                classes = Array.prototype.slice.call(arguments).join(' ');
                 return $elem.removeClass(classes);
               },
               toggle: function (classes, force) {
@@ -199,6 +201,21 @@
   }
 
   var testElement = document.createElement('_');
+
+  testElement.classList.add('c1', 'c2');
+
+  if (!testElement.classList.contains('c2')) {
+    var _add = DOMTokenList.prototype.add,
+        _remove = DOMTokenList.prototype.remove;
+
+    DOMTokenList.prototype.add = function () {
+      Array.prototype.forEach.call(arguments, _add.bind(this));
+    }
+
+    DOMTokenList.prototype.remove = function () {
+      Array.prototype.forEach.call(arguments, _remove.bind(this));
+    }
+  }
 
   testElement.classList.toggle('c3', false);
 
@@ -839,7 +856,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.6';
+  Selectpicker.VERSION = '1.13.7';
 
   Selectpicker.BootstrapVersion = version.major;
 
@@ -939,8 +956,8 @@
       this.checkDisabled();
       this.clickListener();
       if (this.options.liveSearch) this.liveSearchListener();
-      this.render();
       this.setStyle();
+      this.render();
       this.setWidth();
       if (this.options.container) {
         this.selectPosition();
@@ -1638,7 +1655,8 @@
       var that = this,
           selectedOptions = this.$element[0].selectedOptions,
           selectedCount = selectedOptions.length,
-          buttonInner = this.$button.find('.filter-option-inner-inner')[0],
+          button = this.$button[0],
+          buttonInner = button.querySelector('.filter-option-inner-inner'),
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
           titleFragment = elementTemplates.fragment.cloneNode(false),
           showCount,
@@ -1727,7 +1745,7 @@
       }
 
       // strip all HTML tags and trim the result, then unescape any escaped tags
-      this.$button[0].title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
+      button.title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
 
       if (this.options.sanitize && hasContent) {
         sanitizeHtml([titleFragment], that.options.whiteList, that.options.sanitizeFn);
@@ -1736,6 +1754,19 @@
       buttonInner.innerHTML = '';
       buttonInner.appendChild(titleFragment);
 
+      if (version.major < 4 && this.$newElement[0].parentNode.classList.contains('input-group')) {
+        var filterExpand = button.querySelector('.filter-expand'),
+            clone = buttonInner.cloneNode(true);
+
+        clone.className = 'filter-expand';
+
+        if (filterExpand) {
+          button.replaceChild(clone, filterExpand);
+        } else {
+          button.appendChild(clone);
+        }
+      }
+
       this.$element.trigger('rendered' + EVENT_KEY);
     },
 
@@ -1743,21 +1774,32 @@
      * @param [style]
      * @param [status]
      */
-    setStyle: function (style, status) {
-      var button = this.$button[0];
+    setStyle: function (newStyle, status) {
+      var button = this.$button[0],
+          style = this.options.style.split(' '),
+          buttonClass;
+
       if (this.$element.attr('class')) {
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
       }
 
-      var buttonClass = style || this.options.style;
+      if (version.major < 4) {
+        this.$newElement[0].classList.add('bs3');
+      }
+
+      if (newStyle) {
+        buttonClass = newStyle.split(' ');
+      } else {
+        buttonClass = style;
+      }
 
       if (status == 'add') {
-        button.classList.add(buttonClass);
+        button.classList.add.apply(button.classList, buttonClass);
       } else if (status == 'remove') {
-        button.classList.remove(buttonClass);
+        button.classList.remove.apply(button.classList, buttonClass);
       } else {
-        button.classList.remove(this.options.style);
-        button.classList.add(buttonClass);
+        button.classList.remove.apply(button.classList, style);
+        button.classList.add.apply(button.classList, buttonClass);
       }
     },
 
@@ -2033,18 +2075,21 @@
       if (this.options.width === 'auto') {
         requestAnimationFrame(function () {
           that.$menu.css('min-width', '0');
-          that.liHeight();
-          that.setMenuSize();
 
-          // Get correct width if element is hidden
-          var $selectClone = that.$newElement.clone().appendTo('body'),
-              btnWidth = $selectClone.css('width', 'auto').children('button').outerWidth();
+          that.$element.on('loaded' + EVENT_KEY, function () {
+            that.liHeight();
+            that.setMenuSize();
 
-          $selectClone.remove();
+            // Get correct width if element is hidden
+            var $selectClone = that.$newElement.clone().appendTo('body'),
+                btnWidth = $selectClone.css('width', 'auto').children('button').outerWidth();
 
-          // Set width to whatever's larger, button title or longest option
-          that.sizeInfo.selectWidth = Math.max(that.sizeInfo.totalMenuWidth, btnWidth);
-          that.$newElement.css('width', that.sizeInfo.selectWidth + 'px');
+            $selectClone.remove();
+
+            // Set width to whatever's larger, button title or longest option
+            that.sizeInfo.selectWidth = Math.max(that.sizeInfo.totalMenuWidth, btnWidth);
+            that.$newElement.css('width', that.sizeInfo.selectWidth + 'px');
+          });
         });
       } else if (this.options.width === 'fit') {
         // Remove inline min-width so width can be changed from 'auto'
@@ -2633,7 +2678,11 @@
       if (typeof value !== 'undefined') {
         this.$element
           .val(value)
-          .triggerNative('change');
+          .trigger('changed' + EVENT_KEY, changedArguments);
+
+        this.render();
+
+        changedArguments = null;
 
         return this.$element;
       } else {
@@ -2885,7 +2934,7 @@
           if (liActive.firstChild) liActive.firstChild.classList.add('active');
           that.activeIndex = matches[matchIndex];
 
-          liActive.firstChild.trigger('focus');
+          liActive.firstChild.focus();
 
           if (updateScroll) that.$menuInner[0].scrollTop = offset;
 
@@ -2930,9 +2979,9 @@
       this.selectpicker.main.map.newIndex = {};
       this.selectpicker.main.map.originalIndex = {};
       this.checkDisabled();
+      this.setStyle();
       this.render();
       this.createLi();
-      this.setStyle();
       this.setWidth();
 
       this.setSize(true);
