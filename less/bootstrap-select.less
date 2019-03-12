@@ -23,6 +23,14 @@ select.selectpicker {
     // necessary for proper positioning of caret in Bootstrap 4 (pushes caret to the right)
     text-align: right;
     white-space: nowrap;
+    // vertically center the caret for Bootstrap 4
+    display: inline-flex;
+    align-items: center;
+
+    &:after {
+      margin-top: -1px;
+      margin-left: auto;
+    }
 
     &.bs-placeholder {
       &,
@@ -201,23 +209,38 @@ select.selectpicker {
     }
 
     .filter-option {
-      position: absolute;
+      position: static;
       top: 0;
       left: 0;
-      padding-top: inherit;
+      float: left;
       padding-right: inherit;
-      padding-bottom: inherit; // needed for proper alignment of show-menu-arrow (deprecated)
-      padding-left: inherit;
       height: 100%;
       width: 100%;
       text-align: left;
-    }
+      margin-right: -100%;
 
-    .filter-option-inner {
-      padding-right: inherit;
+      .input-group .bs3& {
+        position: absolute;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        padding-left: inherit;
+        float: none;
+
+        .filter-option-inner {
+          padding-right: inherit;
+        }
+      }
     }
 
     .filter-option-inner-inner {
+      overflow: hidden;
+    }
+
+    // used to expand the height of the button when inside an input group
+    .filter-expand {
+      width: 0.5px !important;
+      float: left;
+      opacity: 0 !important;
       overflow: hidden;
     }
 

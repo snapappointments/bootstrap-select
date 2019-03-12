@@ -932,8 +932,8 @@
       this.checkDisabled();
       this.clickListener();
       if (this.options.liveSearch) this.liveSearchListener();
-      this.render();
       this.setStyle();
+      this.render();
       this.setWidth();
       if (this.options.container) {
         this.selectPosition();
@@ -1631,7 +1631,8 @@
       var that = this,
           selectedOptions = this.$element[0].selectedOptions,
           selectedCount = selectedOptions.length,
-          buttonInner = this.$button.find('.filter-option-inner-inner')[0],
+          button = this.$button[0],
+          buttonInner = button.querySelector('.filter-option-inner-inner'),
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
           titleFragment = elementTemplates.fragment.cloneNode(false),
           showCount,
@@ -1720,7 +1721,7 @@
       }
 
       // strip all HTML tags and trim the result, then unescape any escaped tags
-      this.$button[0].title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
+      button.title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
 
       if (this.options.sanitize && hasContent) {
         sanitizeHtml([titleFragment], that.options.whiteList, that.options.sanitizeFn);
@@ -1728,6 +1729,19 @@
 
       buttonInner.innerHTML = '';
       buttonInner.appendChild(titleFragment);
+
+      if (version.major < 4 && this.$newElement[0].parentNode.classList.contains('input-group')) {
+        var filterExpand = button.querySelector('.filter-expand'),
+            clone = buttonInner.cloneNode(true);
+
+        clone.className = 'filter-expand';
+
+        if (filterExpand) {
+          button.replaceChild(clone, filterExpand);
+        } else {
+          button.appendChild(clone);
+        }
+      }
 
       this.$element.trigger('rendered' + EVENT_KEY);
     },
@@ -1743,6 +1757,10 @@
 
       if (this.$element.attr('class')) {
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
+      }
+
+      if (version.major < 4) {
+        this.$newElement[0].classList.add('bs3');
       }
 
       if (newStyle) {
@@ -2933,9 +2951,9 @@
       this.selectpicker.main.map.newIndex = {};
       this.selectpicker.main.map.originalIndex = {};
       this.checkDisabled();
+      this.setStyle();
       this.render();
       this.createLi();
-      this.setStyle();
       this.setWidth();
 
       this.setSize(true);
