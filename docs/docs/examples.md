@@ -595,7 +595,7 @@ Add an icon to an option or optgroup with the `data-icon` attribute:
 Insert custom HTML into the option with the `data-content` attribute:
 
 <span class="alert alert-warning d-block" role="alert">
-  <strong>Note:</strong> This feature inserts HTML into the DOM. By default, it is sanitized using our built-in <a href="/options/#sanitizer">sanitizer</a>.
+  <strong>Note:</strong> This feature inserts HTML into the DOM. By default, it is sanitized using our built-in [sanitizer](options.md#sanitizer).
 </span>
 
 <div class="bs-docs-example">

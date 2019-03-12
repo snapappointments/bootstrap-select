@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-md navbar-light fixed-top bg-light" role="navigation">
   <!-- Main title -->
-  <a class="navbar-brand" href="{{ nav.homepage.url }}">{{ config.site_name }}</a>
+  <a class="navbar-brand" href="{{ nav.homepage.url|url }}">{{ config.site_name }}</a>
 
   <!-- Collapsed navigation -->
   {% if nav|length>1 or (page.next_page or page.previous_page) or config.repo_url %}
@@ -27,7 +27,7 @@
       </li>
       {% else %}
       <li class="nav-item{% if nav_item.active %} active{% endif %}">
-        <a class="nav-link" href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+        <a class="nav-link" href="{{ nav_item.url|url }}">{{ nav_item.title }}</a>
       </li>
       {% endif %}
       {% endfor %}
@@ -37,7 +37,7 @@
     <ul class="navbar-nav ml-auto">
       {% if config.repo_url %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ config.repo_url }}">
+        <a class="nav-link" href="{{ config.repo_url|url }}">
           {% if config.repo_name == 'GitHub' %}
           <i class="fa fa-github"></i>
           {% elif config.repo_name == 'Bitbucket' %}

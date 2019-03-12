@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% if config.site_description %}<meta name="description" content="{{ config.site_description }}">{% endif %}
   {% if config.site_author %}<meta name="author" content="{{ config.site_author }}">{% endif %}
-  {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
+  {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url|url }}">{% endif %}
   <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -25,10 +25,12 @@
 
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="{{ base_url }}/css/highlight.css" rel="stylesheet">
+  {%- if config.theme.highlightjs %}
+  <link href="{{ base_url }}/ajax/libs/highlight.js/9.15.6/css/{{ config.theme.hljs_style }}.min.css" rel="stylesheet">
+  {%- endif %}
   <link href="{{ base_url }}/css/base.css" rel="stylesheet">
   {%- for path in extra_css %}
-  <link href="{{ path }}" rel="stylesheet">
+  <link href="{{ path|url }}" rel="stylesheet">
   {%- endfor %}
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -98,10 +100,13 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
-<script src="{{ base_url }}/js/highlight.pack.js"></script>
+{%- if config.theme.highlightjs %}
+<script src="{{ base_url }}/ajax/libs/highlight.js/9.15.6/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{%- endif %}
 <script src="{{ base_url }}/js/base.js"></script>
 {%- for path in extra_javascript %}
-<script src="{{ path }}"></script>
+<script src="{{ path|url }}"></script>
 {%- endfor %}
 <script>
   $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
