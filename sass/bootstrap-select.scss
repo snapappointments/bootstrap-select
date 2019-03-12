@@ -127,6 +127,7 @@ select.selectpicker {
 
   .input-group &,
   &.input-group-btn {
+    display: table-cell;
     z-index: auto;
   }
 }
