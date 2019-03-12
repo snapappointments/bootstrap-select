@@ -25,10 +25,10 @@
 
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="../css/highlight.css" rel="stylesheet">
+  <link href="../ajax/libs/highlight.js/9.15.6/css/github.min.css" rel="stylesheet">
   <link href="../css/base.css" rel="stylesheet">
-  <link href="../css/custom.css" rel="stylesheet">
-  <link href="../dist/css/bootstrap-select.min.css" rel="stylesheet">
+  <link href="../../css/custom.css" rel="stylesheet">
+  <link href="../../dist/css/bootstrap-select.min.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -775,7 +775,7 @@ Using the <code>title</code> attribute will set the default placeholder text whe
 <h2 id="custom-content">Custom content</h2>
 <p>Insert custom HTML into the option with the <code>data-content</code> attribute:</p>
 <p><span class="alert alert-warning d-block" role="alert">
-  <strong>Note:</strong> This feature inserts HTML into the DOM. By default, it is sanitized using our built-in <a href="/options/#sanitizer">sanitizer</a>.
+  <strong>Note:</strong> This feature inserts HTML into the DOM. By default, it is sanitized using our built-in <a href="../options/#sanitizer">sanitizer</a>.
 </span></p>
 <div class="bs-docs-example">
   <select class="selectpicker">
@@ -1080,9 +1080,10 @@ Using the <code>title</code> attribute will set the default placeholder text whe
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
-<script src="../js/highlight.pack.js"></script>
+<script src="../ajax/libs/highlight.js/9.15.6/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <script src="../js/base.js"></script>
-<script src="../dist/js/bootstrap-select.min.js"></script>
+<script src="../../dist/js/bootstrap-select.js"></script>
 <script>
   $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
 </script>
