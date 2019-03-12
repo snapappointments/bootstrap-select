@@ -2654,7 +2654,11 @@
       if (typeof value !== 'undefined') {
         this.$element
           .val(value)
-          .triggerNative('change');
+          .trigger('changed' + EVENT_KEY, changedArguments);
+
+        this.render();
+
+        changedArguments = null;
 
         return this.$element;
       } else {
