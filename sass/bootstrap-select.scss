@@ -124,24 +124,29 @@ select.selectpicker {
   }
 }
 
-.bootstrap-select.form-control {
-  margin-bottom: 0;
-  padding: 0;
-  border: none;
-
-  :not(.input-group) > &:not([class*="col-"]) {
-    width: 100%;
-  }
-
-  .input-group &,
-  &.input-group-btn {
-    display: table-cell;
-    z-index: auto;
-  }
-}
-
 // The selectpicker components
 .bootstrap-select {
+  &.form-control {
+    margin-bottom: 0;
+    padding: 0;
+    border: none;
+
+    :not(.input-group) > &:not([class*="col-"]) {
+      width: 100%;
+    }
+
+    .input-group &,
+    &.input-group-btn {
+      display: table-cell;
+      z-index: auto;
+    }
+  }
+
+  .form-inline &,
+  .form-inline &.form-control:not([class*="col-"]) {
+    width: auto;
+  }
+
   &:not(.input-group-btn),
   &[class*="col-"] {
     float: none;
