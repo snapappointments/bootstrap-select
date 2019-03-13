@@ -113,16 +113,7 @@ review the [guidelines for contributing](CONTRIBUTING.md)**. Make sure you're us
 
 ## Documentation
 
-Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be run locally.
-
-### Running documentation locally
-
-1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
-2. Install [mkdocs-bootstrap](https://mkdocs.github.io/mkdocs-bootstrap/) using `pip install mkdocs-bootstrap`.
-3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
-4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
-
-Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
+Bootstrap-select's documentation, included in this repo in the root directory, is built with MkDocs and hosted at https://developer.snapappointments.com/bootstrap-select. The documentation may also be [run locally](CONTRIBUTING.md#running-documentation-locally).
 
 ## Copyright and license
 

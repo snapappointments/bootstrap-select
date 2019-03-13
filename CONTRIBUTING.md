@@ -110,3 +110,11 @@ This means that you must setup a local development environment:
    - `grunt dev-watch`: watch for changes in the source files and build the
      distribution files as needed
 
+## Running documentation locally
+
+1. If necessary, [install MkDocs](https://www.mkdocs.org/#installation).
+2. Install [mkdocs-bootstrap](https://mkdocs.github.io/mkdocs-bootstrap/) using `pip install mkdocs-bootstrap`.
+3. From the `/bootstrap-select/docs` directory, run `mkdocs serve` in the command line.
+4. Open `http://127.0.0.1:8000/` in your browser, and voilà.
+
+Learn more about using MkDocs by reading its [documentation](https://www.mkdocs.org/).
