@@ -10,7 +10,7 @@ extra_css:
 - css/custom.css
 - dist/css/bootstrap-select.min.css
 extra_javascript:
-- dist/js/bootstrap-select.js
+- dist/js/bootstrap-select.min.js
 nav:
 - Getting Started: index.md
 - Examples: examples.md

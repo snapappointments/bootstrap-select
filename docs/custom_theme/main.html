@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% if config.site_description %}<meta name="description" content="{{ config.site_description }}">{% endif %}
   {% if config.site_author %}<meta name="author" content="{{ config.site_author }}">{% endif %}
-  {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url|url }}">{% endif %}
+  {% if page.canonical_url %}<link rel="canonical" href="{{ page.canonical_url }}">{% endif %}
   <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -30,7 +30,7 @@
   {%- endif %}
   <link href="{{ base_url }}/css/base.css" rel="stylesheet">
   {%- for path in extra_css %}
-  <link href="{{ path|url }}" rel="stylesheet">
+  <link href="{{ path }}" rel="stylesheet">
   {%- endfor %}
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -106,7 +106,7 @@
 {%- endif %}
 <script src="{{ base_url }}/js/base.js"></script>
 {%- for path in extra_javascript %}
-<script src="{{ path|url }}"></script>
+<script src="{{ path }}"></script>
 {%- endfor %}
 <script>
   $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'fa';
