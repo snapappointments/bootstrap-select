@@ -1840,7 +1840,7 @@
 
       document.body.appendChild(newElement);
 
-      var liHeight = a.offsetHeight,
+      var liHeight = li.offsetHeight,
           dropdownHeaderHeight = dropdownHeader ? dropdownHeader.offsetHeight : 0,
           headerHeight = header ? header.offsetHeight : 0,
           searchHeight = search ? search.offsetHeight : 0,
