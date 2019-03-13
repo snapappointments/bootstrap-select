@@ -119,6 +119,10 @@ select.selectpicker {
   display: table-cell;
   z-index: auto;
 }
+.form-inline .bootstrap-select,
+.form-inline .bootstrap-select.form-control:not([class*="col-"]) {
+  width: auto;
+}
 .bootstrap-select:not(.input-group-btn),
 .bootstrap-select[class*="col-"] {
   float: none;
