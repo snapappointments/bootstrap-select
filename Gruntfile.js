@@ -285,7 +285,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-js', ['clean:js', 'eslint', 'concat', 'uglify']);
 
   // Copy dist to docs
-  grunt.registerTask('docs', ['clean:docs', 'copy:docs']);
+  grunt.registerTask('copy-docs', ['clean:docs', 'copy:docs']);
 
   // Development watch
   grunt.registerTask('dev-watch', ['build-css', 'build-js', 'watch']);

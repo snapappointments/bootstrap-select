@@ -105,8 +105,8 @@ This means that you must setup a local development environment:
    - `grunt`: clean the distribution files and re-build them
    - `grunt dist`: build the distribution files
    - `grunt clean`: clean the distribution files
-   - `grunt dist-css`: build the css distribution files
-   - `grunt dist-js`: build the javascript distribution files
-   - `grunt watch`: watch for changes in the source files and build the
+   - `grunt build-css`: build the css distribution files
+   - `grunt build-js`: build the javascript distribution files
+   - `grunt dev-watch`: watch for changes in the source files and build the
      distribution files as needed
 
