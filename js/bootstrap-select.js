@@ -1243,6 +1243,7 @@
                 marginTop,
                 marginBottom,
                 elements = isVirtual === true ? that.selectpicker.view.visibleElements : that.selectpicker.current.elements,
+                position0 = isVirtual === true ? that.selectpicker.view.position0 : 0,
                 toSanitize = [];
 
             // replace the existing UL with an empty one - this is faster than $.empty()
@@ -1257,7 +1258,7 @@
                 elText = element.lastChild;
 
                 if (elText) {
-                  elementData = that.selectpicker.current.data[i + that.selectpicker.view.position0].data;
+                  elementData = that.selectpicker.current.data[i + position0].data;
 
                   if (elementData && elementData.content && !elementData.sanitized) {
                     toSanitize.push(elText);
