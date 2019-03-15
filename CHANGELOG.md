@@ -1,3 +1,15 @@
+# v1.13.8 (2019-03-15)
+### Bug Fixes
+- [#1969]: Does not work with form-inline from bootstrap
+- [#2229]: The height of menu is calculated incorrectly with extra css
+- [#2231]: Sanitizer error on large single selects without virtualScroll and one option selected
+
+[#1969]: https://github.com/snapappointments/bootstrap-select/issues/1969
+[#2229]: https://github.com/snapappointments/bootstrap-select/issues/2229
+[#2231]: https://github.com/snapappointments/bootstrap-select/issues/2231
+
+-------------------
+
 # v1.13.7 (2019-03-12)
 ### Bug Fixes
 - [#2046]: val() method incorrectly fires a native change event

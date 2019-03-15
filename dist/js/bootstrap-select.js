@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.7 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.8 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -856,7 +856,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.7';
+  Selectpicker.VERSION = '1.13.8';
 
   Selectpicker.BootstrapVersion = version.major;
 
@@ -1267,6 +1267,7 @@
                 marginTop,
                 marginBottom,
                 elements = isVirtual === true ? that.selectpicker.view.visibleElements : that.selectpicker.current.elements,
+                position0 = isVirtual === true ? that.selectpicker.view.position0 : 0,
                 toSanitize = [];
 
             // replace the existing UL with an empty one - this is faster than $.empty()
@@ -1281,7 +1282,7 @@
                 elText = element.lastChild;
 
                 if (elText) {
-                  elementData = that.selectpicker.current.data[i + that.selectpicker.view.position0].data;
+                  elementData = that.selectpicker.current.data[i + position0].data;
 
                   if (elementData && elementData.content && !elementData.sanitized) {
                     toSanitize.push(elText);
@@ -1864,7 +1865,7 @@
 
       document.body.appendChild(newElement);
 
-      var liHeight = a.offsetHeight,
+      var liHeight = li.offsetHeight,
           dropdownHeaderHeight = dropdownHeader ? dropdownHeader.offsetHeight : 0,
           headerHeight = header ? header.offsetHeight : 0,
           searchHeight = search ? search.offsetHeight : 0,
