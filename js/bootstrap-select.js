@@ -656,6 +656,8 @@
   elementTemplates.text = elementTemplates.span.cloneNode(false);
   elementTemplates.text.className = 'text';
 
+  elementTemplates.checkMark = elementTemplates.span.cloneNode(false);
+
   var REGEXP_ARROW = new RegExp(keyCodes.ARROW_UP + '|' + keyCodes.ARROW_DOWN);
   var REGEXP_TAB_OR_ESCAPE = new RegExp('^' + keyCodes.TAB + '$|' + keyCodes.ESCAPE);
 
@@ -1364,9 +1366,8 @@
 
     createLi: function () {
       var that = this,
-          iconBase = that.options.iconBase,
+          iconBase = this.options.iconBase,
           optionSelector = ':not([hidden]):not([data-hidden="true"])',
-          checkMark,
           mainElements = [],
           widestOption,
           widestOptionLength = 0,
@@ -1377,10 +1378,9 @@
 
       if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
-      if (that.options.showTick || that.multiple) {
-        checkMark = elementTemplates.span.cloneNode(false);
-        checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
-        elementTemplates.a.appendChild(checkMark);
+      if ((that.options.showTick || that.multiple) && !elementTemplates.checkMark.parentNode) {
+        elementTemplates.checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
+        elementTemplates.a.appendChild(elementTemplates.checkMark);
       }
 
       if (this.setPlaceholder()) liIndex--;
