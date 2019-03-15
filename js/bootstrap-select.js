@@ -697,30 +697,30 @@
 
     text: function (options, useFragment) {
       var textElement = elementTemplates.text.cloneNode(false),
-          optionSubtextElement,
-          optionIconElement;
+          subtextElement,
+          iconElement;
 
-      if (options.optionContent) {
-        textElement.innerHTML = options.optionContent;
+      if (options.content) {
+        textElement.innerHTML = options.content;
       } else {
         textElement.textContent = options.text;
 
-        if (options.optionIcon) {
+        if (options.icon) {
           var whitespace = elementTemplates.whitespace.cloneNode(false);
 
           // need to use <i> for icons in the button to prevent a breaking change
           // note: switch to span in next major release
-          optionIconElement = (useFragment === true ? elementTemplates.i : elementTemplates.span).cloneNode(false);
-          optionIconElement.className = options.iconBase + ' ' + options.optionIcon;
+          iconElement = (useFragment === true ? elementTemplates.i : elementTemplates.span).cloneNode(false);
+          iconElement.className = options.iconBase + ' ' + options.icon;
 
-          elementTemplates.fragment.appendChild(optionIconElement);
+          elementTemplates.fragment.appendChild(iconElement);
           elementTemplates.fragment.appendChild(whitespace);
         }
 
-        if (options.optionSubtext) {
-          optionSubtextElement = elementTemplates.subtext.cloneNode(false);
-          optionSubtextElement.textContent = options.optionSubtext;
-          textElement.appendChild(optionSubtextElement);
+        if (options.subtext) {
+          subtextElement = elementTemplates.subtext.cloneNode(false);
+          subtextElement.textContent = options.subtext;
+          textElement.appendChild(subtextElement);
         }
       }
 
@@ -736,29 +736,29 @@
     },
 
     label: function (options) {
-      var labelTextElement = elementTemplates.text.cloneNode(false),
-          labelSubtextElement,
-          labelIconElement;
+      var textElement = elementTemplates.text.cloneNode(false),
+          subtextElement,
+          iconElement;
 
-      labelTextElement.innerHTML = options.labelEscaped;
+      textElement.innerHTML = options.label;
 
-      if (options.labelIcon) {
+      if (options.icon) {
         var whitespace = elementTemplates.whitespace.cloneNode(false);
 
-        labelIconElement = elementTemplates.span.cloneNode(false);
-        labelIconElement.className = options.iconBase + ' ' + options.labelIcon;
+        iconElement = elementTemplates.span.cloneNode(false);
+        iconElement.className = options.iconBase + ' ' + options.icon;
 
-        elementTemplates.fragment.appendChild(labelIconElement);
+        elementTemplates.fragment.appendChild(iconElement);
         elementTemplates.fragment.appendChild(whitespace);
       }
 
-      if (options.labelSubtext) {
-        labelSubtextElement = elementTemplates.subtext.cloneNode(false);
-        labelSubtextElement.textContent = options.labelSubtext;
-        labelTextElement.appendChild(labelSubtextElement);
+      if (options.subtext) {
+        subtextElement = elementTemplates.subtext.cloneNode(false);
+        subtextElement.textContent = options.subtext;
+        textElement.appendChild(subtextElement);
       }
 
-      elementTemplates.fragment.appendChild(labelTextElement);
+      elementTemplates.fragment.appendChild(textElement);
 
       return elementTemplates.fragment;
     }
@@ -1387,6 +1387,77 @@
 
       var selectOptions = this.$element[0].options;
 
+      function addDivider (config) {
+        config = config || {};
+        config.type = 'divider';
+
+        mainElements.push(
+          generateOption.li(
+            false,
+            classNames.DIVIDER,
+            (config.optID ? config.optID + 'div' : undefined)
+          )
+        );
+
+        mainData.push(config);
+      }
+
+      function addOption (config) {
+        var textElement = generateOption.text({
+          text: config.text,
+          content: config.data.content,
+          subtext: config.data.subtext,
+          icon: config.data.icon,
+          iconBase: iconBase
+        });
+
+        mainElements.push(
+          generateOption.li(
+            generateOption.a(
+              textElement,
+              'opt ' + config.optionClass + config.optGroupClass,
+              config.inline
+            ),
+            '',
+            config.optID
+          )
+        );
+
+        mainData.push({
+          content: config.data.content || config.text,
+          subtext: config.data.subtext,
+          tokens: config.data.tokens,
+          type: 'option',
+          optID: config.optID,
+          headerIndex: config.headerIndex,
+          lastIndex: config.lastIndex,
+          originalIndex: config.originalIndex,
+          data: config.data
+        });
+      }
+
+      function addOptgroup (config) {
+        config.label = htmlEscape(config.label);
+
+        var labelElement = generateOption.label({
+          label: config.label,
+          subtext: config.data.subtext,
+          icon: config.data.icon,
+          iconBase: iconBase
+        });
+
+        mainElements.push(
+          generateOption.li(labelElement, 'dropdown-header' + config.optGroupClass, config.optID)
+        );
+
+        mainData.push({
+          content: config.label,
+          subtext: config.data.subtext,
+          type: 'optgroup-label',
+          optID: config.optID
+        });
+      }
+
       for (var index = 0, len = selectOptions.length; index < len; index++) {
         var option = selectOptions[index];
 
@@ -1407,7 +1478,6 @@
         var optionClass = option.className || '',
             cssText = option.style.cssText,
             inline = cssText ? htmlEscape(cssText) : '',
-            optionContent = thisData.content,
             text = option.textContent,
             parent = option.parentNode,
             next = option.nextElementSibling,
@@ -1417,8 +1487,6 @@
             isDisabled = option.disabled || isOptgroupDisabled,
             prevHiddenIndex,
             showDivider = previous && previous.tagName === 'OPTGROUP',
-            textElement,
-            labelElement,
             prevHidden;
 
         var parentData = {
@@ -1464,70 +1532,37 @@
             parentData.subtext = parent.getAttribute('data-subtext');
             parentData.icon = parent.getAttribute('data-icon');
 
-            // Get the opt group label
-            var label = parent.label,
-                labelEscaped = htmlEscape(label),
-                labelSubtext = parentData.subtext,
-                labelIcon = parentData.icon;
-
             if (index !== 0 && mainElements.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
               liIndex++;
-              mainElements.push(
-                generateOption.li(
-                  false,
-                  classNames.DIVIDER,
-                  optID + 'div'
-                )
-              );
-              mainData.push({
-                type: 'divider',
+              addDivider({
                 optID: optID
               });
             }
             liIndex++;
 
-            labelElement = generateOption.label({
-              labelEscaped: labelEscaped,
-              labelSubtext: labelSubtext,
-              labelIcon: labelIcon,
-              iconBase: iconBase
-            });
-
-            mainElements.push(generateOption.li(labelElement, 'dropdown-header' + optGroupClass, optID));
-            mainData.push({
-              content: labelEscaped,
-              subtext: labelSubtext,
-              type: 'optgroup-label',
-              optID: optID
+            addOptgroup({
+              label: parent.label,
+              optGroupClass: optGroupClass,
+              optID: optID,
+              data: parentData
             });
 
             headerIndex = liIndex - 1;
           }
 
-          textElement = generateOption.text({
+          addOption({
             text: text,
-            optionContent: optionContent,
-            optionSubtext: thisData.subtext,
-            optionIcon: thisData.icon,
-            iconBase: iconBase
-          });
-
-          mainElements.push(generateOption.li(generateOption.a(textElement, 'opt ' + optionClass + optGroupClass, inline), '', optID));
-          mainData.push({
-            content: optionContent || text,
-            subtext: thisData.subtext,
-            tokens: thisData.tokens,
-            type: 'option',
+            data: thisData,
+            optionClass: optionClass,
+            optGroupClass: optGroupClass,
+            inline: inline,
             optID: optID,
             headerIndex: headerIndex,
             lastIndex: headerIndex + parent.querySelectorAll('option' + optionSelector).length,
-            originalIndex: index,
-            data: thisData
+            originalIndex: index
           });
         } else if (thisData.divider === true) {
-          mainElements.push(generateOption.li(false, classNames.DIVIDER));
-          mainData.push({
-            type: 'divider',
+          addDivider({
             originalIndex: index,
             data: thisData
           });
@@ -1555,35 +1590,17 @@
 
           if (showDivider && mainData.length && mainData[mainData.length - 1].type !== 'divider') {
             liIndex++;
-            mainElements.push(
-              generateOption.li(
-                false,
-                classNames.DIVIDER,
-                optID + 'div'
-              )
-            );
-            mainData.push({
-              type: 'divider',
+            addDivider({
               optID: optID
             });
           }
 
-          textElement = generateOption.text({
+          addOption({
             text: text,
-            optionContent: optionContent,
-            optionSubtext: thisData.subtext,
-            optionIcon: thisData.icon,
-            iconBase: iconBase
-          });
-
-          mainElements.push(generateOption.li(generateOption.a(textElement, optionClass, inline)));
-          mainData.push({
-            content: optionContent || text,
-            subtext: thisData.subtext,
-            tokens: thisData.tokens,
-            type: 'option',
-            originalIndex: index,
-            data: thisData
+            data: thisData,
+            optionClass: optionClass,
+            inline: inline,
+            originalIndex: index
           });
         }
 
