@@ -242,7 +242,7 @@ select.selectpicker {
       text-align: left;
       margin-right: -100%;
 
-      @at-root .input-group .bs3#{&} {
+      @at-root .input-group .bs3-has-addon#{&} {
         position: absolute;
         padding-top: inherit;
         padding-bottom: inherit;

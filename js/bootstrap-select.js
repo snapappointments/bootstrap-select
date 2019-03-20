@@ -995,7 +995,12 @@
       // Options
       // If we are multiple or showTick option is set, then add the show-tick class
       var showTick = (this.multiple || this.options.showTick) ? ' show-tick' : '',
+          inputGroup = '',
           autofocus = this.autofocus ? ' autofocus' : '';
+
+      if (version.major < 4 && this.$element.parent().hasClass('input-group')) {
+        inputGroup = ' input-group-btn';
+      }
 
       // Elements
       var drop,
@@ -1051,7 +1056,7 @@
       }
 
       drop =
-        '<div class="dropdown bootstrap-select' + showTick + '">' +
+        '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="button">' +
             '<div class="filter-option">' +
               '<div class="filter-option-inner">' +
@@ -1727,7 +1732,7 @@
       buttonInner.innerHTML = '';
       buttonInner.appendChild(titleFragment);
 
-      if (version.major < 4 && this.$newElement[0].parentNode.classList.contains('input-group')) {
+      if (version.major < 4 && this.$newElement[0].classList.contains('bs3-has-addon')) {
         var filterExpand = button.querySelector('.filter-expand'),
             clone = buttonInner.cloneNode(true);
 
@@ -1749,6 +1754,7 @@
      */
     setStyle: function (newStyle, status) {
       var button = this.$button[0],
+          newElement = this.$newElement[0],
           style = this.options.style.split(' '),
           buttonClass;
 
@@ -1756,8 +1762,12 @@
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
       }
 
-      if (version.major < 4) {
-        this.$newElement[0].classList.add('bs3');
+      if (version.major < 4 &&
+          newElement.parentNode.classList.contains('input-group') &&
+          (newElement.previousElementSibling || newElement.nextElementSibling) &&
+          (newElement.previousElementSibling || newElement.nextElementSibling).classList.contains('input-group-addon')
+        ) {
+        newElement.classList.add('bs3-has-addon');
       }
 
       if (newStyle) {
