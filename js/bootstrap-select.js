@@ -781,20 +781,9 @@
     this.$menu = null;
     this.options = options;
     this.selectpicker = {
-      main: {
-        // store originalIndex (key) and newIndex (value) in this.selectpicker.main.map.newIndex for fast accessibility
-        // allows us to do this.main.elements[this.selectpicker.main.map.newIndex[index]] to select an element based on the originalIndex
-        map: {
-          newIndex: {},
-          originalIndex: {}
-        }
-      },
-      current: {
-        map: {}
-      }, // current changes if a search is in progress
-      search: {
-        map: {}
-      },
+      main: {},
+      current: {}, // current changes if a search is in progress
+      search: {},
       view: {},
       keydown: {
         keyHistory: '',
@@ -1202,9 +1191,9 @@
         positionIsDifferent = prevPositions[0] !== that.selectpicker.view.position0 || prevPositions[1] !== that.selectpicker.view.position1;
 
         if (that.activeIndex !== undefined) {
-          prevActive = that.selectpicker.current.elements[that.selectpicker.current.map.newIndex[that.prevActiveIndex]];
-          active = that.selectpicker.current.elements[that.selectpicker.current.map.newIndex[that.activeIndex]];
-          selected = that.selectpicker.current.elements[that.selectpicker.current.map.newIndex[that.selectedIndex]];
+          prevActive = that.selectpicker.main.elements[that.prevActiveIndex];
+          active = that.selectpicker.main.elements[that.activeIndex];
+          selected = that.selectpicker.main.elements[that.selectedIndex];
 
           if (init) {
             if (that.activeIndex !== that.selectedIndex && active && active.length) {
@@ -1312,7 +1301,7 @@
             if (newActive.firstChild) newActive.firstChild.classList.add('active');
           }
 
-          that.activeIndex = that.selectpicker.current.map.originalIndex[index];
+          that.activeIndex = (that.selectpicker.current.data[index] || {}).index;
         }
       }
 
@@ -1331,8 +1320,8 @@
       if (this.options.title && !this.multiple) {
         if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
-        // this option doesn't create a new <li> element, but does add a new option, so liIndex is decreased
-        // since newIndex is recalculated on every refresh, liIndex needs to be decreased even if the titleOption is already appended
+        // this option doesn't create a new <li> element, but does add a new option at the start,
+        // so startIndex should increase to prevent having to check every option for the bs-title-option class
         updateIndex = true;
 
         var element = this.$element[0],
@@ -1374,7 +1363,7 @@
           mainData = [],
           optID = 0,
           headerIndex = 0,
-          liIndex = -1; // increment liIndex whenever a new <li> element is created to ensure newIndex is correct
+          startIndex = this.setPlaceholder() ? 1 : 0; // append the titleOption if necessary and skip the first option in the loop
 
       if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
@@ -1382,8 +1371,6 @@
         elementTemplates.checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
         elementTemplates.a.appendChild(elementTemplates.checkMark);
       }
-
-      if (this.setPlaceholder()) liIndex--;
 
       var selectOptions = this.$element[0].options;
 
@@ -1403,6 +1390,8 @@
       }
 
       function addOption (config) {
+        var liIndex = mainData.length;
+
         var textElement = generateOption.text({
           text: config.text,
           content: config.data.content,
@@ -1423,6 +1412,8 @@
           )
         );
 
+        config.option.liIndex = liIndex;
+
         mainData.push({
           content: config.data.content || config.text,
           subtext: config.data.subtext,
@@ -1431,8 +1422,9 @@
           optID: config.optID,
           headerIndex: config.headerIndex,
           lastIndex: config.lastIndex,
-          originalIndex: config.originalIndex,
-          data: config.data
+          data: config.data,
+          index: liIndex,
+          option: config.option
         });
       }
 
@@ -1458,12 +1450,8 @@
         });
       }
 
-      for (var index = 0, len = selectOptions.length; index < len; index++) {
+      for (var index = startIndex, len = selectOptions.length; index < len; index++) {
         var option = selectOptions[index];
-
-        liIndex++;
-
-        if (option.classList.contains('bs-title-option')) continue;
 
         var thisData = {
           content: option.getAttribute('data-content'),
@@ -1506,8 +1494,6 @@
           prevHiddenIndex = option.prevHiddenIndex;
           if (next) next.prevHiddenIndex = (prevHiddenIndex !== undefined ? prevHiddenIndex : index);
 
-          liIndex--;
-
           continue;
         } else {
           if (next && next.prevHiddenIndex !== undefined) next.prevHiddenIndex = undefined;
@@ -1533,12 +1519,10 @@
             parentData.icon = parent.getAttribute('data-icon');
 
             if (index !== 0 && mainElements.length > 0) { // Is it NOT the first option of the select && are there elements in the dropdown?
-              liIndex++;
               addDivider({
                 optID: optID
               });
             }
-            liIndex++;
 
             addOptgroup({
               label: parent.label,
@@ -1547,7 +1531,7 @@
               data: parentData
             });
 
-            headerIndex = liIndex - 1;
+            headerIndex = mainData.length - 1;
           }
 
           addOption({
@@ -1559,11 +1543,10 @@
             optID: optID,
             headerIndex: headerIndex,
             lastIndex: headerIndex + parent.querySelectorAll('option' + optionSelector).length,
-            originalIndex: index
+            option: option
           });
         } else if (thisData.divider === true) {
           addDivider({
-            originalIndex: index,
             data: thisData
           });
         } else {
@@ -1589,7 +1572,6 @@
           }
 
           if (showDivider && mainData.length && mainData[mainData.length - 1].type !== 'divider') {
-            liIndex++;
             addDivider({
               optID: optID
             });
@@ -1600,12 +1582,9 @@
             data: thisData,
             optionClass: optionClass,
             inline: inline,
-            originalIndex: index
+            option: option
           });
         }
-
-        that.selectpicker.main.map.newIndex[index] = liIndex;
-        that.selectpicker.main.map.originalIndex[liIndex] = index;
 
         // get the most recent option info added to mainData
         var _mainDataLast = mainData[mainData.length - 1];
@@ -2052,7 +2031,8 @@
       if (refresh) {
         offset = this.$menuInner[0].scrollTop;
       } else if (!that.multiple) {
-        selectedIndex = that.selectpicker.main.map.newIndex[that.$element[0].selectedIndex];
+        var element = that.$element[0];
+        selectedIndex = element.options[element.selectedIndex].liIndex;
 
         if (typeof selectedIndex === 'number' && that.options.size !== false) {
           offset = that.sizeInfo.liHeight * selectedIndex;
@@ -2180,25 +2160,18 @@
 
       if (that.selectpicker.view.visibleElements && that.selectpicker.view.visibleElements.length) {
         for (var i = 0; i < that.selectpicker.view.visibleElements.length; i++) {
-          var index = that.selectpicker.current.map.originalIndex[i + that.selectpicker.view.position0], // faster than $(li).data('originalIndex')
-              option = selectOptions[index];
+          var liData = that.selectpicker.current.data[i + that.selectpicker.view.position0],
+              option = liData.option;
 
           if (option) {
-            var liIndex = this.selectpicker.main.map.newIndex[index],
-                li = this.selectpicker.main.elements[liIndex];
-
             that.setDisabled(
-              index,
-              option.disabled || (option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled),
-              liIndex,
-              li
+              liData.index,
+              option.disabled || (option.parentNode.tagName === 'OPTGROUP' && option.parentNode.disabled)
             );
 
             that.setSelected(
-              index,
-              option.selected,
-              liIndex,
-              li
+              liData.index,
+              option.selected
             );
           }
         }
@@ -2209,8 +2182,9 @@
      * @param {number} index - the index of the option that is being changed
      * @param {boolean} selected - true if the option is being selected, false if being deselected
      */
-    setSelected: function (index, selected, liIndex, li) {
-      var activeIndexIsSet = this.activeIndex !== undefined,
+    setSelected: function (index, selected) {
+      var li = this.selectpicker.main.elements[index],
+          activeIndexIsSet = this.activeIndex !== undefined,
           thisIsActive = this.activeIndex === index,
           prevActiveIndex,
           prevActive,
@@ -2224,8 +2198,7 @@
           //  - when retainActive is false when selecting a new option (i.e. index of the newly selected option is not the same as the current activeIndex)
           keepActive = thisIsActive || (selected && !this.multiple && !activeIndexIsSet);
 
-      if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
-      if (!li) li = this.selectpicker.main.elements[liIndex];
+      this.selectpicker.main.data[index].selected = selected;
 
       a = li.firstChild;
 
@@ -2249,8 +2222,7 @@
 
       if (!keepActive) {
         if (!activeIndexIsSet && selected && this.prevActiveIndex !== undefined) {
-          prevActiveIndex = this.selectpicker.main.map.newIndex[this.prevActiveIndex];
-          prevActive = this.selectpicker.main.elements[prevActiveIndex];
+          prevActive = this.selectpicker.main.elements[this.prevActiveIndex];
 
           prevActive.classList.remove('active');
           if (prevActive.firstChild) {
@@ -2264,11 +2236,11 @@
      * @param {number} index - the index of the option that is being disabled
      * @param {boolean} disabled - true if the option is being disabled, false if being enabled
      */
-    setDisabled: function (index, disabled, liIndex, li) {
-      var a;
+    setDisabled: function (index, disabled) {
+      var li = this.selectpicker.main.elements[index],
+          a;
 
-      if (!liIndex) liIndex = this.selectpicker.main.map.newIndex[index];
-      if (!li) li = this.selectpicker.main.elements[liIndex];
+      this.selectpicker.main.data[index].disabled = disabled;
 
       a = li.firstChild;
 
@@ -2391,7 +2363,8 @@
       this.$menuInner.on('click', 'li a', function (e, retainActive) {
         var $this = $(this),
             position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
-            clickedIndex = that.selectpicker.current.map.originalIndex[$this.parent().index() + position0],
+            clickedData = that.selectpicker.current.data[$this.parent().index() + position0],
+            clickedIndex = clickedData.index,
             prevValue = getSelectValues(that.$element[0]),
             prevIndex = that.$element.prop('selectedIndex'),
             triggerChange = true;
@@ -2406,7 +2379,8 @@
         // Don't run if the select is disabled
         if (!that.isDisabled() && !$this.parent().hasClass(classNames.DISABLED)) {
           var $options = that.$element.find('option'),
-              $option = $options.eq(clickedIndex),
+              option = clickedData.option,
+              $option = $(option),
               state = $option.prop('selected'),
               $optgroup = $option.parent('optgroup'),
               $optgroupOptions = $optgroup.find('option'),
@@ -2505,7 +2479,7 @@
           if (triggerChange) {
             if ((prevValue != getSelectValues(that.$element[0]) && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
               // $option.prop('selected') is current option state (selected/unselected). prevValue is the value of the select prior to being changed.
-              changedArguments = [clickedIndex, $option.prop('selected'), prevValue];
+              changedArguments = [option.index, $option.prop('selected'), prevValue];
               that.$element
                 .triggerNative('change');
             }
@@ -2589,8 +2563,6 @@
       this.$searchbox.on('input propertychange', function () {
         var searchValue = that.$searchbox.val();
 
-        that.selectpicker.search.map.newIndex = {};
-        that.selectpicker.search.map.originalIndex = {};
         that.selectpicker.search.elements = [];
         that.selectpicker.search.data = [];
 
@@ -2638,11 +2610,6 @@
             if (li.type !== 'divider' || (li.type === 'divider' && liPrev && liPrev.type !== 'divider' && cacheLen - 1 !== i)) {
               that.selectpicker.search.data.push(li);
               searchMatch.push(that.selectpicker.main.elements[index]);
-
-              if (li.hasOwnProperty('originalIndex')) {
-                that.selectpicker.search.map.newIndex[li.originalIndex] = searchMatch.length - 1;
-                that.selectpicker.search.map.originalIndex[searchMatch.length - 1] = li.originalIndex;
-              }
             }
           }
 
@@ -2698,8 +2665,7 @@
 
       for (var i = 0, len = this.selectpicker.current.elements.length; i < len; i++) {
         var liData = this.selectpicker.current.data[i],
-            index = this.selectpicker.current.map.originalIndex[i], // faster than $(li).data('originalIndex')
-            option = selectOptions[index];
+            option = liData.option;
 
         if (option && !option.disabled && liData.type !== 'divider') {
           if (option.selected) previousSelected++;
@@ -2784,7 +2750,7 @@
         if (!$items.length) return;
 
         // $items.index/.filter is too slow with a large list and no virtual scroll
-        index = isVirtual === true ? $items.index($items.filter('.active')) : that.selectpicker.current.map.newIndex[that.activeIndex];
+        index = isVirtual === true ? $items.index($items.filter('.active')) : that.activeIndex;
 
         if (index === undefined) index = -1;
 
@@ -2848,7 +2814,7 @@
           if (liActive.firstChild) liActive.firstChild.classList.add('active');
         }
 
-        that.activeIndex = that.selectpicker.current.map.originalIndex[liActiveIndex];
+        that.activeIndex = that.selectpicker.current.data[liActiveIndex].index;
 
         that.selectpicker.view.currentActive = liActive;
 
@@ -2889,8 +2855,7 @@
           hasMatch = stringSearch(li, keyHistory, 'startsWith', true);
 
           if (hasMatch && that.selectpicker.view.canHighlight[i]) {
-            li.index = i;
-            matches.push(li.originalIndex);
+            matches.push(li.index);
           }
         }
 
@@ -2910,9 +2875,9 @@
             }
           }
 
-          searchMatch = that.selectpicker.current.map.newIndex[matches[matchIndex]];
+          searchMatch = matches[matchIndex];
 
-          activeLi = that.selectpicker.current.data[searchMatch];
+          activeLi = that.selectpicker.main.data[searchMatch];
 
           if (scrollTop - activeLi.position > 0) {
             offset = activeLi.position - activeLi.height;
@@ -2923,7 +2888,7 @@
             updateScroll = activeLi.position > scrollTop + that.sizeInfo.menuInnerHeight;
           }
 
-          liActive = that.selectpicker.current.elements[searchMatch];
+          liActive = that.selectpicker.main.elements[searchMatch];
           liActive.classList.add('active');
           if (liActive.firstChild) liActive.firstChild.classList.add('active');
           that.activeIndex = matches[matchIndex];
@@ -2970,8 +2935,6 @@
       var config = $.extend({}, this.options, this.$element.data());
       this.options = config;
 
-      this.selectpicker.main.map.newIndex = {};
-      this.selectpicker.main.map.originalIndex = {};
       this.checkDisabled();
       this.setStyle();
       this.render();
