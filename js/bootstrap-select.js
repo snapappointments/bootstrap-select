@@ -1766,7 +1766,7 @@
           newElement.parentNode.classList.contains('input-group') &&
           (newElement.previousElementSibling || newElement.nextElementSibling) &&
           (newElement.previousElementSibling || newElement.nextElementSibling).classList.contains('input-group-addon')
-        ) {
+      ) {
         newElement.classList.add('bs3-has-addon');
       }
 
@@ -2163,8 +2163,7 @@
     },
 
     setOptionStatus: function () {
-      var that = this,
-          selectOptions = this.$element[0].options;
+      var that = this;
 
       that.noScroll = false;
 
@@ -2196,7 +2195,6 @@
       var li = this.selectpicker.main.elements[index],
           activeIndexIsSet = this.activeIndex !== undefined,
           thisIsActive = this.activeIndex === index,
-          prevActiveIndex,
           prevActive,
           a,
           // if current option is already active
@@ -2666,7 +2664,6 @@
       if (typeof status === 'undefined') status = true;
 
       var element = this.$element[0],
-          selectOptions = element.options,
           previousSelected = 0,
           currentSelected = 0,
           prevValue = getSelectValues(element);
