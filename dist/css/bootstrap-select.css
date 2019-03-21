@@ -82,7 +82,7 @@ select.selectpicker {
   left: 0;
   display: block !important;
   width: 100% !important;
-  z-index: 2;
+  z-index: 2 !important;
 }
 .has-error .bootstrap-select .dropdown-toggle,
 .error .bootstrap-select .dropdown-toggle,
@@ -198,14 +198,14 @@ select.selectpicker {
   text-align: left;
   margin-right: -100%;
 }
-.input-group .bs3.bootstrap-select .dropdown-toggle .filter-option {
+.input-group .bs3-has-addon.bootstrap-select .dropdown-toggle .filter-option {
   position: absolute;
   padding-top: inherit;
   padding-bottom: inherit;
   padding-left: inherit;
   float: none;
 }
-.input-group .bs3.bootstrap-select .dropdown-toggle .filter-option .filter-option-inner {
+.input-group .bs3-has-addon.bootstrap-select .dropdown-toggle .filter-option .filter-option-inner {
   padding-right: inherit;
 }
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
