@@ -293,7 +293,7 @@
     };
   }
 
-  if (!HTMLSelectElement.prototype.hasOwnProperty('selectedOptions')) {
+  if (HTMLSelectElement && !HTMLSelectElement.prototype.hasOwnProperty('selectedOptions')) {
     Object.defineProperty(HTMLSelectElement.prototype, 'selectedOptions', {
       get: function () {
         return this.querySelectorAll(':checked');
