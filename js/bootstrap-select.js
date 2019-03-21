@@ -2042,7 +2042,7 @@
         offset = this.$menuInner[0].scrollTop;
       } else if (!that.multiple) {
         var element = that.$element[0];
-        selectedIndex = element.options[element.selectedIndex].liIndex;
+        selectedIndex = (element.options[element.selectedIndex] || {}).liIndex;
 
         if (typeof selectedIndex === 'number' && that.options.size !== false) {
           offset = that.sizeInfo.liHeight * selectedIndex;
