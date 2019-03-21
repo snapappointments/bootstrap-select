@@ -1755,7 +1755,7 @@
     setStyle: function (newStyle, status) {
       var button = this.$button[0],
           newElement = this.$newElement[0],
-          style = this.options.style.split(' '),
+          style = this.options.style.trim(),
           buttonClass;
 
       if (this.$element.attr('class')) {
@@ -1771,18 +1771,18 @@
       }
 
       if (newStyle) {
-        buttonClass = newStyle.split(' ');
+        buttonClass = newStyle.trim();
       } else {
         buttonClass = style;
       }
 
       if (status == 'add') {
-        button.classList.add.apply(button.classList, buttonClass);
+        if (buttonClass) button.classList.add.apply(button.classList, buttonClass.split(' '));
       } else if (status == 'remove') {
-        button.classList.remove.apply(button.classList, buttonClass);
+        if (buttonClass) button.classList.remove.apply(button.classList, buttonClass.split(' '));
       } else {
-        button.classList.remove.apply(button.classList, style);
-        button.classList.add.apply(button.classList, buttonClass);
+        if (style) button.classList.remove.apply(button.classList, style.split(' '));
+        if (buttonClass) button.classList.add.apply(button.classList, buttonClass.split(' '));
       }
     },
 
