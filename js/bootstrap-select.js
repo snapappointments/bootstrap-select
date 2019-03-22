@@ -901,6 +901,7 @@
 
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
+      this.options.showTick = this.$element[0].classList.contains('show-tick');
 
       this.$newElement = this.createDropdown();
       this.$element
