@@ -1021,7 +1021,7 @@
       if (this.options.liveSearch) {
         searchbox =
           '<div class="bs-searchbox">' +
-            '<input type="text" class="form-control" autocomplete="off"' +
+            '<input type="search" class="form-control" autocomplete="off"' +
               (
                 this.options.liveSearchPlaceholder === null ? ''
                 :
