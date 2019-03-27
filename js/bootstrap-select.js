@@ -2568,6 +2568,10 @@
 
     val: function (value) {
       if (typeof value !== 'undefined') {
+        var prevValue = getSelectValues(this.$element[0]);
+
+        changedArguments = [null, null, prevValue];
+
         this.$element
           .val(value)
           .trigger('changed' + EVENT_KEY, changedArguments);
