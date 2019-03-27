@@ -964,7 +964,7 @@
       });
 
       if (that.$element[0].hasAttribute('required')) {
-        this.$element.on('invalid', function () {
+        this.$element.on('invalid' + EVENT_KEY, function () {
           that.$button[0].classList.add('bs-invalid');
 
           that.$element
@@ -2466,16 +2466,15 @@
         }
       });
 
-      this.$element.on({
-        'change': function () {
+      this.$element
+        .on('change' + EVENT_KEY, function () {
           that.render();
           that.$element.trigger('changed' + EVENT_KEY, changedArguments);
           changedArguments = null;
-        },
-        'focus': function () {
+        })
+        .on('focus' + EVENT_KEY, function () {
           if (!that.options.mobile) that.$button.trigger('focus');
-        }
-      });
+        });
     },
 
     liveSearchListener: function () {
