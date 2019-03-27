@@ -322,7 +322,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>sanitize</td>
     <td>boolean</td>
-    <td>true</td>
+    <td><code>true</code></td>
     <td>
       <p>Enable or disable the sanitization. If activated, <code>'data-content'</code> on individual options will be sanitized.</p>
     </td>
@@ -338,7 +338,7 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   <tr>
     <td>sanitizeFn</td>
     <td>null | function</td>
-    <td>null</td>
+    <td><code>null</code></td>
     <td>
       <p>Here you can supply your own sanitize function. This can be useful if you prefer to use a dedicated library to perform sanitization.</p>
     </td>
@@ -402,7 +402,10 @@ hide.bs.select, hidden.bs.select, show.bs.select, and shown.bs.select all have a
     </tr>
     <tr>
       <td>changed.bs.select</td>
-      <td>This event fires after the select's value has been changed. It passes through event, clickedIndex, isSelected, previousValue. previousValue is the value of the select prior to being changed.</td>
+      <td>
+        <p>This event fires after the select's value has been changed. It passes through <code>event</code>, <code>clickedIndex</code>, <code>isSelected</code>, <code>previousValue</code>.</p>
+        <p><code>previousValue</code> is the value of the select prior to being changed. If the select's value has been changed either via the <code>.selectpicker('val')</code>, <code>.selectpicker('selectAll')</code>, or <code>.selectpicker('deselectAll')</code> methods, clickedIndex and isSelected will be <code>null</code>.</p>
+      </td>
     </tr>
   </tbody>
 </table>
