@@ -26,10 +26,10 @@ select.selectpicker {
     // vertically center the caret for Bootstrap 4
     display: inline-flex;
     align-items: center;
+    justify-content: space-between;
 
     &:after {
       margin-top: -1px;
-      margin-left: auto;
     }
 
     &.bs-placeholder {
@@ -207,12 +207,6 @@ select.selectpicker {
 
   // The selectpicker button
   .dropdown-toggle {
-    // necessary to maintain proper button height with Bootstrap 3
-    &:before {
-      content: '';
-      display: inline-block;
-    }
-
     .filter-option {
       position: static;
       top: 0;
@@ -352,6 +346,10 @@ select.selectpicker {
     .filter-option-inner,
     .filter-option-inner-inner {
       display: inline;
+    }
+
+    .bs-caret:before {
+      content: '\00a0';
     }
 
     .caret {
