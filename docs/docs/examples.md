@@ -496,7 +496,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   <div class="row">
     <div class="col-sm-12">
       <div class="form-group">
-        <label>width: 'auto'</label>
+        <label><code>width: 'auto'</code></label>
         <select class="selectpicker form-control" data-width="auto">
           <option>Mustard</option>
           <option>Ketchup</option>
@@ -509,7 +509,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   <div class="row">
     <div class="col-sm-12">
       <div class="form-group">
-        <label>width: 'fit'</label>
+        <label><code>width: 'fit'</code></label>
         <select class="selectpicker form-control" data-width="fit">
           <option>Mustard</option>
           <option>Ketchup</option>
@@ -522,8 +522,8 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   <div class="row">
     <div class="col-sm-12">
       <div class="form-group">
-        <label>width: '100px'</label>
-        <select class="selectpicker form-control" data-width="100px">
+        <label><code>width: '150px'</code></label>
+        <select class="selectpicker form-control" data-width="150px">
           <option>Mustard</option>
           <option>Ketchup</option>
           <option>Relish</option>
@@ -535,7 +535,7 @@ Alternatively, use the `data-width` attribute to set the width of the select. Se
   <div class="row">
     <div class="col-sm-12">
       <div class="form-group">
-        <label>width: '75%'</label>
+        <label><code>width: '75%'</code></label>
         <select class="selectpicker form-control" data-width="75%">
           <option>Mustard</option>
           <option>Ketchup</option>
@@ -786,11 +786,12 @@ Add a header to the dropdown menu, e.g. `header: 'Select a condiment'` or `data-
 
 ## Container
 
-Append the select to a specific element, e.g. `container: 'body'` or `data-container=".main-content"`
+Append the select menu to a specific element, e.g. `container: 'body'` or `data-container=".main-content"`. This is useful if the select element is inside an element with `overflow: hidden`.
 
-<div class="bs-docs-example" style="overflow:hidden;">
+<div class="bs-docs-example" style="overflow: hidden;">
   <div class="row">
     <div class="col-md-3">
+      <label><code>container: false</code></label>
       <select class="selectpicker form-control">
         <option data-subtext="French's">Mustard</option>
         <option data-subtext="Heinz">Ketchup</option>
@@ -804,6 +805,7 @@ Append the select to a specific element, e.g. `container: 'body'` or `data-conta
       </select>
     </div>
     <div class="col-md-3">
+    <label><code>container: 'body'</code></label>
       <select class="selectpicker form-control" data-container="body">
         <option data-subtext="French's">Mustard</option>
         <option data-subtext="Heinz">Ketchup</option>
@@ -835,7 +837,7 @@ Append the select to a specific element, e.g. `container: 'body'` or `data-conta
 `dropupAuto` is set to true by default, which automatically determines whether or not the menu should display above or below the select box. If `dropupAuto` is set to false, manually make the select a dropup menu by adding the `.dropup` class to the select.
 
 <div class="bs-docs-example">
-  <select class="selectpicker dropup">
+  <select class="selectpicker dropup" data-dropup-auto="false">
     <option>Mustard</option>
     <option>Ketchup</option>
     <option>Relish</option>
@@ -843,7 +845,7 @@ Append the select to a specific element, e.g. `container: 'body'` or `data-conta
 </div>
 
 ```html
-<select class="selectpicker dropup">
+<select class="selectpicker dropup" data-dropup-auto="false">
   ...
 </select>
 ```
