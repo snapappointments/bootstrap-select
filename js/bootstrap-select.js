@@ -1401,6 +1401,8 @@
               inlineStyle = cssText ? htmlEscape(cssText) : '',
               optionClass = (option.className || '') + (config.optgroupClass || '');
 
+          if (config.optID) optionClass = 'opt ' + optionClass;
+
           config.text = option.textContent;
 
           config.content = option.getAttribute('data-content');
@@ -1415,7 +1417,7 @@
             generateOption.li(
               generateOption.a(
                 textElement,
-                'opt ' + optionClass,
+                optionClass,
                 inlineStyle
               ),
               '',
