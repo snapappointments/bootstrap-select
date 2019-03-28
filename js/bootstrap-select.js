@@ -1582,14 +1582,14 @@
               if (option.title) {
                 titleOptions.text = option.title;
               } else if (thisData.content && that.options.showContent) {
-                titleOptions.optionContent = thisData.content.toString();
+                titleOptions.content = thisData.content.toString();
                 hasContent = true;
               } else {
                 if (that.options.showIcon) {
-                  titleOptions.optionIcon = thisData.icon;
+                  titleOptions.icon = thisData.icon;
                   titleOptions.iconBase = this.options.iconBase;
                 }
-                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
+                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
                 titleOptions.text = option.textContent.trim();
               }
 
