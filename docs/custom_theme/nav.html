@@ -32,9 +32,16 @@
       {% endif %}
       {% endfor %}
     </ul>
-    {% endif %}
-
-    <ul class="navbar-nav ml-auto">
+    {%- if 'search' in config['plugins'] %}
+    <form class="form-inline nav-item">
+      <div class="dropdown">
+        <input class="form-control mr-sm-2 dropdown-toggle" data-toggle="dropdown" type="search" placeholder="Search..." aria-label="Search" id="mkdocs-search-query" autocomplete="off">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="mkdocs-search-query" id="mkdocs-search-results">
+        </div>
+      </div>
+    </form>
+    {%- endif %}
+    <ul class="navbar-nav">
       {% if config.repo_url %}
       <li class="nav-item">
         <a class="nav-link" href="{{ config.repo_url|url }}">
@@ -48,5 +55,6 @@
       </li>
       {% endif %}
     </ul>
+    {% endif %}
   </div>
 </header>

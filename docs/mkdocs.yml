@@ -2,7 +2,8 @@ site_name: bootstrap-select
 site_description: The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.
 site_url: https://developer.snapappointments.com/bootstrap-select
 repo_url: https://github.com/snapappointments/bootstrap-select
-plugins: []
+plugins: 
+  - search
 theme:
   name: bootstrap
   custom_dir: custom_theme
