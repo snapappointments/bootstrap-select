@@ -23,7 +23,7 @@ select.selectpicker {
     // necessary for proper positioning of caret in Bootstrap 4 (pushes caret to the right)
     text-align: right;
     white-space: nowrap;
-    // vertically center the caret for Bootstrap 4
+    // force caret to be vertically centered for Bootstrap 4 multi-line buttons
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -117,9 +117,8 @@ select.selectpicker {
       width: 100%;
     }
 
-    .input-group &,
     &.input-group-btn {
-      display: table-cell;
+      float: none;
       z-index: auto;
     }
   }
@@ -212,11 +211,15 @@ select.selectpicker {
       top: 0;
       left: 0;
       float: left;
-      padding-right: inherit;
       height: 100%;
       width: 100%;
       text-align: left;
-      margin-right: -100%;
+      overflow: hidden;
+      flex: 0 1 auto; // for IE10
+
+      .bs3& {
+        padding-right: inherit;
+      }
 
       .input-group .bs3-has-addon& {
         position: absolute;
@@ -237,7 +240,7 @@ select.selectpicker {
 
     // used to expand the height of the button when inside an input group
     .filter-expand {
-      width: 0.5px !important;
+      width: 0 !important;
       float: left;
       opacity: 0 !important;
       overflow: hidden;
@@ -341,6 +344,7 @@ select.selectpicker {
       position: static;
       display: inline;
       padding: 0;
+      width: auto;
     }
 
     .filter-option-inner,
