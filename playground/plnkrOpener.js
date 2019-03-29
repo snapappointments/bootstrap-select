@@ -1,4 +1,22 @@
+function QueryStringToJSON() {            
+  var pairs = location.search.slice(1).split('&');
+  
+  var result = {};
+  pairs.forEach(function(pair) {
+      pair = pair.split('=');
+      result[pair[0]] = decodeURIComponent(pair[1] || '');
+  });
+
+  return JSON.parse(JSON.stringify(result));
+}
+
 $(document).ready(function() {
+  var query;
+
+  if (window.location.search) query = QueryStringToJSON(window.location.search);
+
+  console.log(query)
+
   function formPostData(url, fields) {
     var form = $('<form style="display: none;" method="post" action="' + url + '"></form>');
     $.each(fields, function(name, value) {
@@ -15,10 +33,19 @@ $(document).ready(function() {
 
     form.remove();
   }
-  
+
   function plnkrOpener() {
     var ctrl = {},
-        bootstrapVersion = $('#plnkrOpener').data('bootstrapVersion');
+        bootstrapVersion = 'latest',
+        suffix = '';
+
+    if (query) {
+      if (query.bootstrap) bootstrapVersion = query.bootstrap;
+    }
+
+    if (bootstrapVersion[0] > 3 || bootstrapVersion === 'latest') {
+      suffix = '.bundle';
+    }
   
     ctrl.example = {
       path: ctrl.examplePath,
@@ -31,13 +58,15 @@ $(document).ready(function() {
       var postData = {
         'tags[0]': 'jquery',
         'tags[1]': 'bootstrap-select',
+        'tags[2]': 'bootstrap',
         'private': true
       };
   
       ctrl.example.files = [
         {
           name: 'index.html',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/tests/bootstrap' + bootstrapVersion + '.html',
+          url: 'playground-template.html',
+          //url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.13.0-dev/tests/bootstrap' + bootstrapVersion + '.html',
           content: ''
         },
         {
@@ -61,7 +90,10 @@ $(document).ready(function() {
           file.content = data;
 
           if (file.name === 'index.html') {
-            file.content = file.content.replace(new RegExp('../dist/', 'g'), '');
+            file.content = file.content.replace('{{ bootstrap-css }}', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@' + bootstrapVersion + '/dist/css/bootstrap.min.css">');
+            file.content = file.content.replace('{{ bootstrap-js }}', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@' + bootstrapVersion + '/dist/js/bootstrap' + suffix + '.min.js"></script>');
+
+            //file.content = file.content.replace(new RegExp('../dist/', 'g'), '');
           }
 
           postData['files[' + file.name + ']'] = file.content;
