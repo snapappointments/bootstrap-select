@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.8 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.9 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -628,12 +628,7 @@
     version.major = version.full[0];
     version.success = true;
   } catch (err) {
-    console.warn(
-      'There was an issue retrieving Bootstrap\'s version. ' +
-      'Ensure Bootstrap is being loaded before bootstrap-select and there is no namespace collision. ' +
-      'If loading Bootstrap asynchronously, the version may need to be manually specified via $.fn.selectpicker.Constructor.BootstrapVersion.',
-      err
-    );
+    // do nothing
   }
 
   var selectId = 0;
@@ -650,18 +645,13 @@
     MENULEFT: 'dropdown-menu-left',
     // to-do: replace with more advanced template/customization options
     BUTTONCLASS: 'btn-default',
-    POPOVERHEADER: 'popover-title'
+    POPOVERHEADER: 'popover-title',
+    ICONBASE: 'glyphicon',
+    TICKICON: 'glyphicon-ok'
   }
 
   var Selector = {
     MENU: '.' + classNames.MENU
-  }
-
-  if (version.major === '4') {
-    classNames.DIVIDER = 'dropdown-divider';
-    classNames.SHOW = 'show';
-    classNames.BUTTONCLASS = 'btn-light';
-    classNames.POPOVERHEADER = 'popover-header';
   }
 
   var elementTemplates = {
@@ -847,9 +837,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.8';
-
-  Selectpicker.BootstrapVersion = version.major;
+  Selectpicker.VERSION = '1.13.9';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -887,8 +875,8 @@
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
     actionsBox: false,
-    iconBase: 'glyphicon',
-    tickIcon: 'glyphicon-ok',
+    iconBase: classNames.ICONBASE,
+    tickIcon: classNames.TICKICON,
     showTick: false,
     template: {
       caret: '<span class="caret"></span>'
@@ -904,12 +892,6 @@
     sanitizeFn: null,
     whiteList: DefaultWhitelist
   };
-
-  if (version.major === '4') {
-    Selectpicker.DEFAULTS.style = 'btn-light';
-    Selectpicker.DEFAULTS.iconBase = '';
-    Selectpicker.DEFAULTS.tickIcon = 'bs-ok-default';
-  }
 
   Selectpicker.prototype = {
 
@@ -1215,8 +1197,8 @@
         firstChunk = Math.max(0, currentChunk - 1);
         lastChunk = Math.min(chunkCount - 1, currentChunk + 1);
 
-        that.selectpicker.view.position0 = Math.max(0, chunks[firstChunk][0]) || 0;
-        that.selectpicker.view.position1 = Math.min(size, chunks[lastChunk][1]) || 0;
+        that.selectpicker.view.position0 = isVirtual === false ? 0 : (Math.max(0, chunks[firstChunk][0]) || 0);
+        that.selectpicker.view.position1 = isVirtual === false ? size : (Math.min(size, chunks[lastChunk][1]) || 0);
 
         positionIsDifferent = prevPositions[0] !== that.selectpicker.view.position0 || prevPositions[1] !== that.selectpicker.view.position1;
 
@@ -1247,7 +1229,11 @@
         if (init || positionIsDifferent) {
           previousElements = that.selectpicker.view.visibleElements ? that.selectpicker.view.visibleElements.slice() : [];
 
-          that.selectpicker.view.visibleElements = that.selectpicker.current.elements.slice(that.selectpicker.view.position0, that.selectpicker.view.position1);
+          if (isVirtual === false) {
+            that.selectpicker.view.visibleElements = that.selectpicker.current.elements;
+          } else {
+            that.selectpicker.view.visibleElements = that.selectpicker.current.elements.slice(that.selectpicker.view.position0, that.selectpicker.view.position1);
+          }
 
           that.setOptionStatus();
 
@@ -1263,8 +1249,7 @@
                 emptyMenu = menuInner.firstChild.cloneNode(false),
                 marginTop,
                 marginBottom,
-                elements = isVirtual === true ? that.selectpicker.view.visibleElements : that.selectpicker.current.elements,
-                position0 = isVirtual === true ? that.selectpicker.view.position0 : 0,
+                elements = that.selectpicker.view.visibleElements,
                 toSanitize = [];
 
             // replace the existing UL with an empty one - this is faster than $.empty()
@@ -1279,7 +1264,7 @@
                 elText = element.lastChild;
 
                 if (elText) {
-                  elementData = that.selectpicker.current.data[i + position0];
+                  elementData = that.selectpicker.current.data[i + that.selectpicker.view.position0];
 
                   if (elementData && elementData.content && !elementData.sanitized) {
                     toSanitize.push(elText);
@@ -1443,6 +1428,8 @@
               inlineStyle = cssText ? htmlEscape(cssText) : '',
               optionClass = (option.className || '') + (config.optgroupClass || '');
 
+          if (config.optID) optionClass = 'opt ' + optionClass;
+
           config.text = option.textContent;
 
           config.content = option.getAttribute('data-content');
@@ -1457,7 +1444,7 @@
             generateOption.li(
               generateOption.a(
                 textElement,
-                'opt ' + optionClass,
+                optionClass,
                 inlineStyle
               ),
               '',
@@ -1622,14 +1609,14 @@
               if (option.title) {
                 titleOptions.text = option.title;
               } else if (thisData.content && that.options.showContent) {
-                titleOptions.optionContent = thisData.content.toString();
+                titleOptions.content = thisData.content.toString();
                 hasContent = true;
               } else {
                 if (that.options.showIcon) {
-                  titleOptions.optionIcon = thisData.icon;
+                  titleOptions.icon = thisData.icon;
                   titleOptions.iconBase = this.options.iconBase;
                 }
-                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.optionSubtext = ' ' + thisData.subtext;
+                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
                 titleOptions.text = option.textContent.trim();
               }
 
@@ -1709,12 +1696,15 @@
         this.$newElement.addClass(this.$element.attr('class').replace(/selectpicker|mobile-device|bs-select-hidden|validate\[.*\]/gi, ''));
       }
 
-      if (version.major < 4 &&
-          newElement.parentNode.classList.contains('input-group') &&
-          (newElement.previousElementSibling || newElement.nextElementSibling) &&
-          (newElement.previousElementSibling || newElement.nextElementSibling).classList.contains('input-group-addon')
-      ) {
-        newElement.classList.add('bs3-has-addon');
+      if (version.major < 4) {
+        newElement.classList.add('bs3');
+
+        if (newElement.parentNode.classList.contains('input-group') &&
+            (newElement.previousElementSibling || newElement.nextElementSibling) &&
+            (newElement.previousElementSibling || newElement.nextElementSibling).classList.contains('input-group-addon')
+        ) {
+          newElement.classList.add('bs3-has-addon');
+        }
       }
 
       if (newStyle) {
@@ -2952,19 +2942,44 @@
       try {
         version.full = ($.fn.dropdown.Constructor.VERSION || '').split(' ')[0].split('.');
       } catch (err) {
-        // fall back to use BootstrapVersion
-        version.full = Selectpicker.BootstrapVersion.split(' ')[0].split('.');
+        // fall back to use BootstrapVersion if set
+        if (Selectpicker.BootstrapVersion) {
+          version.full = Selectpicker.BootstrapVersion.split(' ')[0].split('.');
+        } else {
+          version.full = [version.major, '0', '0'];
+
+          console.warn(
+            'There was an issue retrieving Bootstrap\'s version. ' +
+            'Ensure Bootstrap is being loaded before bootstrap-select and there is no namespace collision. ' +
+            'If loading Bootstrap asynchronously, the version may need to be manually specified via $.fn.selectpicker.Constructor.BootstrapVersion.',
+            err
+          );
+        }
       }
 
       version.major = version.full[0];
       version.success = true;
+    }
 
-      if (version.major === '4') {
-        classNames.DIVIDER = 'dropdown-divider';
-        classNames.SHOW = 'show';
-        classNames.BUTTONCLASS = 'btn-light';
-        Selectpicker.DEFAULTS.style = classNames.BUTTONCLASS = 'btn-light';
-        classNames.POPOVERHEADER = 'popover-header';
+    if (version.major === '4') {
+      // some defaults need to be changed if using Bootstrap 4
+      // check to see if they have already been manually changed before forcing them to update
+      var toUpdate = [];
+
+      if (Selectpicker.DEFAULTS.style === classNames.BUTTONCLASS) toUpdate.push({ name: 'style', className: 'BUTTONCLASS' });
+      if (Selectpicker.DEFAULTS.iconBase === classNames.ICONBASE) toUpdate.push({ name: 'iconBase', className: 'ICONBASE' });
+      if (Selectpicker.DEFAULTS.tickIcon === classNames.TICKICON) toUpdate.push({ name: 'tickIcon', className: 'TICKICON' });
+
+      classNames.DIVIDER = 'dropdown-divider';
+      classNames.SHOW = 'show';
+      classNames.BUTTONCLASS = 'btn-light';
+      classNames.POPOVERHEADER = 'popover-header';
+      classNames.ICONBASE = '';
+      classNames.TICKICON = 'bs-ok-default';
+
+      for (var i = 0; i < toUpdate.length; i++) {
+        var option = toUpdate[i];
+        Selectpicker.DEFAULTS[option.name] = classNames[option.className];
       }
     }
 

@@ -1,3 +1,33 @@
+# v1.13.9 (2019-03-29)
+### Bug Fixes
+- [#2022]: selected class is not removed properly when virtualScroll is disabled and choosing options at the bottom of the select
+- [#2106]: setting BootstrapVersion option still shows console warning
+- [#2126]: setting show-tick class doesn't work
+- [#2232]: Every 'refresh' appends a new span.check-mark
+- [#2233]: server-side error: HTMLSelectElement is not defined
+- [#2234]: position bootstrap-select behind input field
+- [#2235]: Mobile native menu not accessible
+- [#2236]: JS errors are thrown when using bootstrap select on js-generated select (after calling destroy())
+- [#2239]: Setting styleBase and empty style result in exception
+- [#2244]: val() method fires changed.bs.select, but the select's previousValue is not passed through
+- [#2245]: some default Bootstrap 4 styles are not being set when using BootstrapVersion
+- [#2248]: width: fit in IE collapses button with text overflowing
+
+[#2022]: https://github.com/snapappointments/bootstrap-select/issues/2022
+[#2106]: https://github.com/snapappointments/bootstrap-select/issues/2106
+[#2126]: https://github.com/snapappointments/bootstrap-select/issues/2126
+[#2232]: https://github.com/snapappointments/bootstrap-select/issues/2232
+[#2233]: https://github.com/snapappointments/bootstrap-select/issues/2233
+[#2234]: https://github.com/snapappointments/bootstrap-select/issues/2234
+[#2235]: https://github.com/snapappointments/bootstrap-select/issues/2235
+[#2236]: https://github.com/snapappointments/bootstrap-select/issues/2236
+[#2239]: https://github.com/snapappointments/bootstrap-select/issues/2239
+[#2244]: https://github.com/snapappointments/bootstrap-select/issues/2244
+[#2245]: https://github.com/snapappointments/bootstrap-select/issues/2245
+[#2248]: https://github.com/snapappointments/bootstrap-select/issues/2248
+
+-------------------
+
 # v1.13.8 (2019-03-15)
 ### Bug Fixes
 - [#1969]: Does not work with form-inline from bootstrap
