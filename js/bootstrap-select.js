@@ -1961,8 +1961,10 @@
         selectedIndex = (element.options[element.selectedIndex] || {}).liIndex;
 
         if (typeof selectedIndex === 'number' && that.options.size !== false) {
-          offset = that.sizeInfo.liHeight * selectedIndex;
-          offset = offset - (that.sizeInfo.menuInnerHeight / 2) + (that.sizeInfo.liHeight / 2);
+          var selectedData = that.selectpicker.main.data[selectedIndex],
+              position = selectedData && selectedData.position;
+
+          offset = position ? position - ((that.sizeInfo.menuInnerHeight + that.sizeInfo.liHeight) / 2) : 0;
         }
       }
 
