@@ -1584,7 +1584,7 @@
           countMax,
           hasContent = false;
 
-      this.togglePlaceholder();
+      button.classList.toggle('bs-placeholder', !selectedCount);
 
       this.tabIndex();
 
@@ -2224,17 +2224,6 @@
       this.$button.on('click', function () {
         return !that.isDisabled();
       });
-    },
-
-    togglePlaceholder: function () {
-      // much faster than calling $.val()
-      var element = this.$element[0],
-          selectedIndex = element.selectedIndex,
-          nothingSelected = selectedIndex === -1;
-
-      if (!nothingSelected && !element.options[selectedIndex].value) nothingSelected = true;
-
-      this.$button.toggleClass('bs-placeholder', nothingSelected);
     },
 
     tabIndex: function () {
