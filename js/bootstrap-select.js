@@ -2752,7 +2752,7 @@
         if (that.options.liveSearch) {
           that.$searchbox.trigger('focus');
         } else {
-          $this.trigger('focus');
+            liActive.children[0].focus();
         }
       } else if (
         (!$this.is('input') && !REGEXP_TAB_OR_ESCAPE.test(e.which)) ||
