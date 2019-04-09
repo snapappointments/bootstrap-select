@@ -302,22 +302,36 @@
   }
 
   // much faster than $.val()
-  function getSelectValues (select) {
-    var result = [];
-    var options = select.selectedOptions;
-    var opt;
+  function getSelected (select) {
+    var value = [],
+        options = [],
+        selectedOptions = select.selectedOptions,
+        opt;
 
     if (select.multiple) {
-      for (var i = 0, len = options.length; i < len; i++) {
-        opt = options[i];
+      for (var i = 0, len = selectedOptions.length; i < len; i++) {
+        opt = selectedOptions[i];
 
-        result.push(opt.value || opt.text);
+        if (!opt.disabled) {
+          options.push(opt);
+          value.push(opt.value || opt.text);
+        }
       }
     } else {
-      result = select.value;
+      opt = selectedOptions[0];
+
+      if (!opt.disabled) {
+        options.push(opt);
+        value = select.value;
+      } else {
+        value = null;
+      }
     }
 
-    return result;
+    return {
+      value: value,
+      options: options
+    };
   }
 
   // set data-selected on select element if the value has been programmatically selected
@@ -1560,7 +1574,7 @@
       this.setPlaceholder();
 
       var that = this,
-          selectedOptions = this.$element[0].selectedOptions,
+          selectedOptions = getSelected(this.$element[0]).options,
           selectedCount = selectedOptions.length,
           button = this.$button[0],
           buttonInner = button.querySelector('.filter-option-inner-inner'),
@@ -2293,7 +2307,7 @@
             position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
             clickedData = that.selectpicker.current.data[$this.parent().index() + position0],
             clickedIndex = clickedData.index,
-            prevValue = getSelectValues(element),
+            prevValue = getSelected(element).value,
             prevIndex = element.selectedIndex,
             triggerChange = true;
 
@@ -2564,7 +2578,7 @@
 
     val: function (value) {
       if (typeof value !== 'undefined') {
-        var prevValue = getSelectValues(this.$element[0]);
+        var prevValue = getSelected(this.$element[0]).value;
 
         changedArguments = [null, null, prevValue];
 
@@ -2589,7 +2603,7 @@
       var element = this.$element[0],
           previousSelected = 0,
           currentSelected = 0,
-          prevValue = getSelectValues(element);
+          prevValue = getSelected(element).value;
 
       element.classList.add('bs-select-hidden');
 
