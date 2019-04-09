@@ -2567,6 +2567,16 @@
 
         changedArguments = [null, null, prevValue];
 
+        if (typeof value === Array) {
+          value.forEach(val => {
+            var index = $(this.$element[0]).children().toArray().findIndex(o => o.value == val);
+            this.setSelected(index, true);
+          });
+        } else {
+          var index = $(this.$element[0]).children().toArray().findIndex(o => o.value == value);
+          this.setSelected(index, true);
+        }
+
         this.$element
           .val(value)
           .trigger('changed' + EVENT_KEY, changedArguments);
