@@ -2609,8 +2609,6 @@
 
       this.setOptionStatus();
 
-      this.togglePlaceholder();
-
       changedArguments = [null, null, prevValue];
 
       this.$element
