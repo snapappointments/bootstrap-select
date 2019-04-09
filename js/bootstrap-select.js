@@ -772,8 +772,8 @@
     this.options = options;
     this.selectpicker = {
       main: {},
-      current: {}, // current changes if a search is in progress
       search: {},
+      current: {}, // current changes if a search is in progress
       view: {},
       keydown: {
         keyHistory: '',
@@ -2678,13 +2678,10 @@
       if (isArrowKey) { // if up or down
         if (!$items.length) return;
 
-        // $items.index/.filter is too slow with a large list and no virtual scroll
-        index = isVirtual === true ? $items.index($items.filter('.active')) : that.activeIndex;
-
-        if (index === undefined) index = -1;
+        liActive = that.selectpicker.main.elements[that.activeIndex];
+        index = liActive ? Array.prototype.indexOf.call(liActive.parentElement.children, liActive) : -1;
 
         if (index !== -1) {
-          liActive = that.selectpicker.current.elements[index + position0];
           liActive.classList.remove('active');
           if (liActive.firstChild) liActive.firstChild.classList.remove('active');
         }
