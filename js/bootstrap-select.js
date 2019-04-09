@@ -2289,11 +2289,12 @@
 
       this.$menuInner.on('click', 'li a', function (e, retainActive) {
         var $this = $(this),
+            element = that.$element[0],
             position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
             clickedData = that.selectpicker.current.data[$this.parent().index() + position0],
             clickedIndex = clickedData.index,
-            prevValue = getSelectValues(that.$element[0]),
-            prevIndex = that.$element.prop('selectedIndex'),
+            prevValue = getSelectValues(element),
+            prevIndex = element.selectedIndex,
             triggerChange = true;
 
         // Don't close on multi choice menu
@@ -2404,7 +2405,7 @@
 
           // Trigger select 'change'
           if (triggerChange) {
-            if ((prevValue != getSelectValues(that.$element[0]) && that.multiple) || (prevIndex != that.$element.prop('selectedIndex') && !that.multiple)) {
+            if (that.multiple || prevIndex !== element.selectedIndex) {
               // $option.prop('selected') is current option state (selected/unselected). prevValue is the value of the select prior to being changed.
               changedArguments = [option.index, $option.prop('selected'), prevValue];
               that.$element
