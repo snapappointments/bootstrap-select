@@ -2103,7 +2103,7 @@
       });
     },
 
-    setOptionStatus: function () {
+    setOptionStatus: function (selectedOnly) {
       var that = this;
 
       that.noScroll = false;
@@ -2114,10 +2114,12 @@
               option = liData.option;
 
           if (option) {
-            that.setDisabled(
-              liData.index,
-              liData.disabled
-            );
+            if (selectedOnly !== true) {
+              that.setDisabled(
+                liData.index,
+                liData.disabled
+              );
+            }
 
             that.setSelected(
               liData.index,
@@ -2170,14 +2172,12 @@
         a.setAttribute('aria-selected', selected);
       }
 
-      if (!keepActive) {
-        if (!activeIndexIsSet && selected && this.prevActiveIndex !== undefined) {
-          prevActive = this.selectpicker.main.elements[this.prevActiveIndex];
+      if (!keepActive && !activeIndexIsSet && selected && this.prevActiveIndex !== undefined) {
+        prevActive = this.selectpicker.main.elements[this.prevActiveIndex];
 
-          prevActive.classList.remove('active');
-          if (prevActive.firstChild) {
-            prevActive.firstChild.classList.remove('active');
-          }
+        prevActive.classList.remove('active');
+        if (prevActive.firstChild) {
+          prevActive.firstChild.classList.remove('active');
         }
       }
     },
@@ -2307,6 +2307,7 @@
             clickedIndex = clickedData.index,
             prevValue = getSelectValues(element),
             prevIndex = element.selectedIndex,
+            prevOption = element.options[prevIndex],
             triggerChange = true;
 
         // Don't close on multi choice menu
@@ -2335,7 +2336,7 @@
           }
 
           if (!that.multiple) { // Deselect all others if not multi select box
-            $options.prop('selected', false);
+            prevOption.selected = false;
             option.selected = true;
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
@@ -2575,14 +2576,29 @@
     },
 
     val: function (value) {
+      var element = this.$element[0];
+
       if (typeof value !== 'undefined') {
-        var prevValue = getSelectValues(this.$element[0]);
+        var prevValue = getSelectValues(element);
 
         changedArguments = [null, null, prevValue];
 
         this.$element
           .val(value)
           .trigger('changed' + EVENT_KEY, changedArguments);
+
+        if (this.$newElement.hasClass(classNames.SHOW)) {
+          if (this.multiple) {
+            this.setOptionStatus(true);
+          } else {
+            var liSelectedIndex = (element.options[element.selectedIndex] || {}).liIndex;
+
+            if (typeof liSelectedIndex === 'number') {
+              this.setSelected(this.selectedIndex, false);
+              this.setSelected(liSelectedIndex, true);
+            }
+          }
+        }
 
         this.render();
 
