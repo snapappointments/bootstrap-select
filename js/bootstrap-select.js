@@ -301,37 +301,45 @@
     });
   }
 
-  // much faster than $.val()
-  function getSelected (select) {
-    var value = [],
+  function getSelectedOptions (select, ignoreDisabled) {
+    var selectedOptions = select.selectedOptions,
         options = [],
-        selectedOptions = select.selectedOptions,
         opt;
 
-    if (select.multiple) {
+    if (ignoreDisabled) {
       for (var i = 0, len = selectedOptions.length; i < len; i++) {
         opt = selectedOptions[i];
 
-        if (!opt.disabled) {
+        if (!(opt.disabled || opt.parentNode.tagName === 'OPTGROUP' && opt.parentNode.disabled)) {
           options.push(opt);
-          value.push(opt.value || opt.text);
         }
       }
-    } else {
-      opt = selectedOptions[0];
 
-      if (!opt.disabled) {
-        options.push(opt);
-        value = select.value;
-      } else {
-        value = null;
+      return options;
+    }
+
+    return selectedOptions;
+  }
+
+  // much faster than $.val()
+  function getSelectValues (select, selectedOptions) {
+    var value = [],
+        options = selectedOptions || select.selectedOptions,
+        opt;
+
+    for (var i = 0, len = options.length; i < len; i++) {
+      opt = options[i];
+
+      if (!(opt.disabled || opt.parentNode.tagName === 'OPTGROUP' && opt.parentNode.disabled)) {
+        value.push(opt.value || opt.text);
       }
     }
 
-    return {
-      value: value,
-      options: options
-    };
+    if (!select.multiple) {
+      return !value.length ? null : value[0];
+    }
+
+    return value;
   }
 
   // set data-selected on select element if the value has been programmatically selected
@@ -1574,7 +1582,8 @@
       this.setPlaceholder();
 
       var that = this,
-          selectedOptions = getSelected(this.$element[0]).options,
+          element = this.$element[0],
+          selectedOptions = getSelectedOptions(element, this.options.hideDisabled),
           selectedCount = selectedOptions.length,
           button = this.$button[0],
           buttonInner = button.querySelector('.filter-option-inner-inner'),
@@ -1584,7 +1593,7 @@
           countMax,
           hasContent = false;
 
-      button.classList.toggle('bs-placeholder', !selectedCount);
+      button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !getSelectValues(element, selectedOptions));
 
       this.tabIndex();
 
@@ -2296,7 +2305,7 @@
             position0 = that.isVirtual() ? that.selectpicker.view.position0 : 0,
             clickedData = that.selectpicker.current.data[$this.parent().index() + position0],
             clickedIndex = clickedData.index,
-            prevValue = getSelected(element).value,
+            prevValue = getSelectValues(element),
             prevIndex = element.selectedIndex,
             triggerChange = true;
 
@@ -2567,7 +2576,7 @@
 
     val: function (value) {
       if (typeof value !== 'undefined') {
-        var prevValue = getSelected(this.$element[0]).value;
+        var prevValue = getSelectValues(this.$element[0]);
 
         changedArguments = [null, null, prevValue];
 
@@ -2592,7 +2601,7 @@
       var element = this.$element[0],
           previousSelected = 0,
           currentSelected = 0,
-          prevValue = getSelected(element).value;
+          prevValue = getSelectValues(element);
 
       element.classList.add('bs-select-hidden');
 
