@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.9 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.10 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -113,6 +113,7 @@ select.selectpicker {
   margin-bottom: 0;
   padding: 0;
   border: none;
+  height: auto;
 }
 :not(.input-group) > .bootstrap-select.form-control:not([class*="col-"]) {
   width: 100%;
@@ -309,7 +310,6 @@ select.selectpicker {
   position: static;
   display: inline;
   padding: 0;
-  width: auto;
 }
 .bootstrap-select.fit-width .dropdown-toggle .filter-option-inner,
 .bootstrap-select.fit-width .dropdown-toggle .filter-option-inner-inner {

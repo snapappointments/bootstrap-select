@@ -1,3 +1,25 @@
+# v1.13.10 (2019-04-19)
+### Bug Fixes
+- [#1219]: Keyboard navigation not working when searching and virtualScroll is false
+- [#2109]: elements with .form-control class don't adjust height properly since Bootstrap 4.1.3
+- [#2126]: showTick option not working as expected
+- [#2153]: Screen reader doesn't read elements in expanded list (NVDA and JAWS)
+- [#2251]: A standard select with a selected option doesn't scroll to the selected option if inside an optgroup
+- [#2253]: hideDisabled and selectedTextFormat: count not working correctly if disabled options are selected
+- [#2256]: selected option styling is not updated if .selectpicker('val', x) is called while dropdown menu is open
+- [#2258]: menu size doesn't update when virtualScroll is disabled while the menu is open
+
+[#1219]: https://github.com/snapappointments/bootstrap-select/issues/1219
+[#2109]: https://github.com/snapappointments/bootstrap-select/issues/2109
+[#2126]: https://github.com/snapappointments/bootstrap-select/issues/2126
+[#2153]: https://github.com/snapappointments/bootstrap-select/issues/2153
+[#2251]: https://github.com/snapappointments/bootstrap-select/issues/2251
+[#2253]: https://github.com/snapappointments/bootstrap-select/issues/2253
+[#2256]: https://github.com/snapappointments/bootstrap-select/issues/2256
+[#2258]: https://github.com/snapappointments/bootstrap-select/issues/2258
+
+-------------------
+
 # v1.13.9 (2019-03-29)
 ### Bug Fixes
 - [#2022]: selected class is not removed properly when virtualScroll is disabled and choosing options at the bottom of the select
