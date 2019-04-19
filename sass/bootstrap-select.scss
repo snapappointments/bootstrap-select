@@ -130,6 +130,7 @@ select.selectpicker {
     margin-bottom: 0;
     padding: 0;
     border: none;
+    height: auto;
 
     :not(.input-group) > &:not([class*="col-"]) {
       width: 100%;
