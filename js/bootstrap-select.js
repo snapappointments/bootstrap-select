@@ -2388,7 +2388,7 @@
           }
 
           if (!that.multiple) { // Deselect all others if not multi select box
-            prevOption.selected = false;
+            if (prevOption) prevOption.selected = false;
             option.selected = true;
             that.setSelected(clickedIndex, true);
           } else { // Toggle the one we have chosen if we are multi select.
