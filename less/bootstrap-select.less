@@ -1,5 +1,10 @@
 @import "variables";
 
+@keyframes bs-notify-fadeOut {
+  0% {opacity: 0.9;}
+  100% {opacity: 0;}
+}
+
 // Mixins
 .cursor-disabled() {
   cursor: not-allowed;
@@ -330,6 +335,10 @@ select.selectpicker {
       pointer-events: none;
       opacity: 0.9;
       box-sizing: border-box;
+
+      &.fadeOut {
+        animation: 300ms linear 750ms forwards bs-notify-fadeOut;
+      }
     }
   }
 
