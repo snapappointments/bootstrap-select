@@ -213,23 +213,14 @@ module.exports = function (grunt) {
       }
     },
 
-    autoprefixer: {
+    postcss: {
       options: {
-        browsers: [
-          'Android 2.3',
-          'Android >= 4',
-          'Chrome >= 20',
-          'Firefox >= 24', // Firefox 24 is the latest ESR
-          'Explorer >= 8',
-          'iOS >= 6',
-          'Opera >= 12',
-          'Safari >= 6'
+        map: true,
+        processors: [
+          require('autoprefixer')()
         ]
       },
       css: {
-        options: {
-          map: true
-        },
         src: '<%= less.css.dest %>'
       }
     },
@@ -279,7 +270,7 @@ module.exports = function (grunt) {
   // to update version number, use grunt version::x.y.z
 
   // CSS distribution
-  grunt.registerTask('build-css', ['clean:css', 'less', 'autoprefixer', 'usebanner:css', 'cssmin']);
+  grunt.registerTask('build-css', ['clean:css', 'less', 'postcss', 'usebanner:css', 'cssmin']);
 
   // JS distribution
   grunt.registerTask('build-js', ['clean:js', 'eslint', 'concat', 'uglify']);
