@@ -1991,7 +1991,9 @@
         this.sizeInfo.hasScrollBar = true;
         this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth + this.sizeInfo.scrollBarWidth;
 
-        this.$menu.css('min-width', this.sizeInfo.totalMenuWidth);
+        if (this.isVirtual()) {
+          this.$menu.css('min-width', this.sizeInfo.totalMenuWidth);
+        }
       }
 
       if (this.dropdown && this.dropdown._popper) this.dropdown._popper.update();
