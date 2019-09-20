@@ -1,10 +1,34 @@
 /*!
- * Bootstrap-select v1.13.10 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.11 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2019 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
+@-webkit-keyframes bs-notify-fadeOut {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes bs-notify-fadeOut {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes bs-notify-fadeOut {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 select.bs-select-hidden,
 .bootstrap-select > select.bs-select-hidden,
 select.selectpicker {
@@ -299,6 +323,11 @@ select.selectpicker {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+}
+.bootstrap-select .dropdown-menu .notify.fadeOut {
+  -webkit-animation: 300ms linear 750ms forwards bs-notify-fadeOut;
+       -o-animation: 300ms linear 750ms forwards bs-notify-fadeOut;
+          animation: 300ms linear 750ms forwards bs-notify-fadeOut;
 }
 .bootstrap-select .no-results {
   padding: 3px;

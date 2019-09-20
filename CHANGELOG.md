@@ -1,3 +1,19 @@
+# v1.13.11 (2019-09-19)
+### Bug Fixes
+- [#2263]: Selecting non-existent option throws error in v1.13.10
+- [#2266]: Desired width of dropdown menu breaks after resizing window
+- [#2285]: bootstrap-select throws javascript error with jquery slim
+- [#2289]: Multiple ticks in optgroup with data-max-options defined as "1"
+- [#2326]: In IE11, options aren't visible when moving to bottom via "up" arrow key if select has an optgroup
+
+[#2263]: https://github.com/snapappointments/bootstrap-select/issues/2263
+[#2266]: https://github.com/snapappointments/bootstrap-select/issues/2266
+[#2285]: https://github.com/snapappointments/bootstrap-select/issues/2285
+[#2289]: https://github.com/snapappointments/bootstrap-select/issues/2289
+[#2326]: https://github.com/snapappointments/bootstrap-select/issues/2326
+
+-------------------
+
 # v1.13.10 (2019-04-19)
 ### Bug Fixes
 - [#1219]: Keyboard navigation not working when searching and virtualScroll is false
