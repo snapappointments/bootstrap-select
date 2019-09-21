@@ -2737,6 +2737,9 @@
           isVirtual = that.isVirtual(),
           position0 = isVirtual === true ? that.selectpicker.view.position0 : 0;
 
+      // do nothing if a function key is pressed
+      if (e.which >= 112 && e.which <= 123) return;
+
       isActive = that.$newElement.hasClass(classNames.SHOW);
 
       if (
