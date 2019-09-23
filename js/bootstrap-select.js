@@ -1024,6 +1024,14 @@
         });
       }
 
+      if (form) {
+        $(form).on('reset' + EVENT_KEY, function () {
+          requestAnimationFrame(function () {
+            that.render();
+          });
+        });
+      }
+
       setTimeout(function () {
         that.buildList();
         that.$element.trigger('loaded' + EVENT_KEY);
