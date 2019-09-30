@@ -2284,10 +2284,6 @@
           this.$button.removeAttr('tabindex');
         }
       }
-
-      this.$button.on('click', function () {
-        return !that.isDisabled();
-      });
     },
 
     tabIndex: function () {
