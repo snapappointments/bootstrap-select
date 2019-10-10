@@ -278,11 +278,14 @@ module.exports = function (grunt) {
   // Copy dist to docs
   grunt.registerTask('copy-docs', ['clean:docs', 'copy:docs']);
 
+  // Build CSS & JS
+  grunt.registerTask('build', ['build-css', 'build-js']);
+
   // Development watch
-  grunt.registerTask('dev-watch', ['build-css', 'build-js', 'watch']);
+  grunt.registerTask('dev-watch', ['build', 'watch']);
 
   // Full distribution
-  grunt.registerTask('dist', ['build-css', 'build-js', 'compress']);
+  grunt.registerTask('dist', ['build', 'compress', 'copy-docs']);
 
   // Default task.
   grunt.registerTask('default', ['build-css', 'build-js']);
