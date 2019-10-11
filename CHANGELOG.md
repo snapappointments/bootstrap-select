@@ -1,3 +1,23 @@
+# v1.13.12 (2019-10-10)
+### Bug Fixes
+- [#2176]: allow was-validated class to work on select elements without selectpicker class
+- [#2321]: CTRL + F5 not working while dropdown is open
+- [#2308]: Keyboard control over Bootstrap Dropdown components stops working
+- [#2275]: Bug: Event duplication on refresh
+- [#2273]: "precompiled bootstrap" link is broken in README
+
+### Improvements
+- [#2243]: change liveSearch input type from "text" to "search"
+
+[#2176]: https://github.com/snapappointments/bootstrap-select/pull/2176
+[#2243]: https://github.com/snapappointments/bootstrap-select/pull/2243
+[#2321]: https://github.com/snapappointments/bootstrap-select/issues/2321
+[#2308]: https://github.com/snapappointments/bootstrap-select/issues/2308
+[#2275]: https://github.com/snapappointments/bootstrap-select/issues/2275
+[#2273]: https://github.com/snapappointments/bootstrap-select/issues/2273
+
+-------------------
+
 # v1.13.11 (2019-09-19)
 ### Bug Fixes
 - [#2263]: Selecting non-existent option throws error in v1.13.10
