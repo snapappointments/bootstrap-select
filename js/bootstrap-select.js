@@ -798,6 +798,7 @@
       search: {},
       current: {}, // current changes if a search is in progress
       view: {},
+      isSearching: false,
       keydown: {
         keyHistory: '',
         resetKeyHistory: {
@@ -1145,6 +1146,7 @@
           selected,
           prevActive;
 
+      this.selectpicker.isSearching = isSearching;
       this.selectpicker.current = isSearching ? this.selectpicker.search : this.selectpicker.main;
 
       this.setPositionData();
@@ -1968,7 +1970,8 @@
           _minHeight,
           maxHeight,
           menuInnerMinHeight,
-          estimate;
+          estimate,
+          isDropup;
 
       if (this.options.dropupAuto) {
         // Get the estimated height of the menu without scrollbars.
@@ -1976,7 +1979,16 @@
         // below the button without setting dropup, but we can't know
         // the exact height of the menu until createView is called later
         estimate = liHeight * this.selectpicker.current.elements.length + menuPadding.vert;
-        this.$newElement.toggleClass(classNames.DROPUP, this.sizeInfo.selectOffsetTop - this.sizeInfo.selectOffsetBot > this.sizeInfo.menuExtras.vert && estimate + this.sizeInfo.menuExtras.vert + 50 > this.sizeInfo.selectOffsetBot);
+
+        isDropup = this.sizeInfo.selectOffsetTop - this.sizeInfo.selectOffsetBot > this.sizeInfo.menuExtras.vert && estimate + this.sizeInfo.menuExtras.vert + 50 > this.sizeInfo.selectOffsetBot;
+
+        // ensure dropup doesn't change while searching (so menu doesn't bounce back and forth)
+        if (this.selectpicker.isSearching === true) {
+          isDropup = this.selectpicker.dropup;
+        }
+
+        this.$newElement.toggleClass(classNames.DROPUP, isDropup);
+        this.selectpicker.dropup = isDropup;
       }
 
       if (this.options.size === 'auto') {
