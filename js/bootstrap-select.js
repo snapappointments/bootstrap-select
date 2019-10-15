@@ -663,6 +663,8 @@
   }
 
   elementTemplates.a.setAttribute('role', 'option');
+  if (version.major === '4') elementTemplates.a.className = 'dropdown-item';
+
   elementTemplates.subtext.className = 'text-muted';
 
   elementTemplates.text = elementTemplates.span.cloneNode(false);
@@ -702,8 +704,7 @@
         }
       }
 
-      if (typeof classes !== 'undefined' && classes !== '') a.className = classes;
-      if (version.major === '4') a.classList.add('dropdown-item');
+      if (typeof classes !== 'undefined' && classes !== '') a.classList.add.apply(a.classList, classes.split(' '));
       if (inline) a.setAttribute('style', inline);
 
       return a;
