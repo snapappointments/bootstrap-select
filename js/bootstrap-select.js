@@ -1485,7 +1485,7 @@
 
           if (config.optID) optionClass = 'opt ' + optionClass;
 
-          config.optionClass = optionClass;
+          config.optionClass = optionClass.trim();
           config.inlineStyle = inlineStyle;
           config.text = option.textContent;
 
