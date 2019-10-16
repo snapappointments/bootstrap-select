@@ -1445,11 +1445,6 @@
 
       if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
-      if ((that.options.showTick || that.multiple) && !elementTemplates.checkMark.parentNode) {
-        elementTemplates.checkMark.className = iconBase + ' ' + that.options.tickIcon + ' check-mark';
-        elementTemplates.a.appendChild(elementTemplates.checkMark);
-      }
-
       var selectOptions = this.$element[0].querySelectorAll('select > *' + optionSelector);
 
       function addDivider (config) {
@@ -1579,6 +1574,11 @@
           selectData = this.selectpicker.main.data,
           mainElements = [],
           widestOptionLength = 0;
+
+      if ((that.options.showTick || that.multiple) && !elementTemplates.checkMark.parentNode) {
+        elementTemplates.checkMark.className = this.options.iconBase + ' ' + that.options.tickIcon + ' check-mark';
+        elementTemplates.a.appendChild(elementTemplates.checkMark);
+      }
 
       function buildElement (item) {
         var liElement,
