@@ -726,7 +726,7 @@
           // need to use <i> for icons in the button to prevent a breaking change
           // note: switch to span in next major release
           iconElement = (useFragment === true ? elementTemplates.i : elementTemplates.span).cloneNode(false);
-          iconElement.className = options.iconBase + ' ' + options.icon;
+          iconElement.className = this.options.iconBase + ' ' + options.icon;
 
           elementTemplates.fragment.appendChild(iconElement);
           elementTemplates.fragment.appendChild(whitespace);
@@ -761,7 +761,7 @@
         var whitespace = elementTemplates.whitespace.cloneNode(false);
 
         iconElement = elementTemplates.span.cloneNode(false);
-        iconElement.className = options.iconBase + ' ' + options.icon;
+        iconElement.className = this.options.iconBase + ' ' + options.icon;
 
         elementTemplates.fragment.appendChild(iconElement);
         elementTemplates.fragment.appendChild(whitespace);
@@ -1436,9 +1436,7 @@
     },
 
     buildData: function () {
-      var that = this,
-          iconBase = this.options.iconBase,
-          optionSelector = ':not([hidden]):not([data-hidden="true"])',
+      var optionSelector = ':not([hidden]):not([data-hidden="true"])',
           mainData = [],
           optID = 0,
           startIndex = this.setPlaceholder() ? 1 : 0; // append the titleOption if necessary and skip the first option in the loop
@@ -1490,7 +1488,6 @@
           config.tokens = option.getAttribute('data-tokens');
           config.subtext = option.getAttribute('data-subtext');
           config.icon = option.getAttribute('data-icon');
-          config.iconBase = iconBase;
 
           option.liIndex = liIndex;
 
@@ -1518,7 +1515,6 @@
               subtext: optgroup.getAttribute('data-subtext'),
               icon: optgroup.getAttribute('data-icon'),
               type: 'optgroup-label',
-              iconBase: iconBase,
               optgroupClass: ' ' + (optgroup.className || '')
             },
             headerIndex,
@@ -1597,7 +1593,7 @@
           case 'option':
             liElement = generateOption.li(
               generateOption.a(
-                generateOption.text(item),
+                generateOption.text.call(that, item),
                 item.optionClass,
                 item.inlineStyle
               ),
@@ -1613,7 +1609,7 @@
 
           case 'optgroup-label':
             liElement = generateOption.li(
-              generateOption.label(item),
+              generateOption.label.call(that, item),
               'dropdown-header' + item.optgroupClass,
               item.optID
             );
@@ -1672,7 +1668,7 @@
       this.tabIndex();
 
       if (this.options.selectedTextFormat === 'static') {
-        titleFragment = generateOption.text({ text: this.options.title }, true);
+        titleFragment = generateOption.text.call(this, { text: this.options.title }, true);
       } else {
         showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 1;
 
@@ -1708,7 +1704,7 @@
                 titleOptions.text = option.textContent.trim();
               }
 
-              titleFragment.appendChild(generateOption.text(titleOptions, true));
+              titleFragment.appendChild(generateOption.text.call(this, titleOptions, true));
             } else {
               break;
             }
@@ -1726,7 +1722,7 @@
           var totalCount = this.$element[0].querySelectorAll('select > option' + optionSelector + ', optgroup' + optionSelector + ' option' + optionSelector).length,
               tr8nText = (typeof this.options.countSelectedText === 'function') ? this.options.countSelectedText(selectedCount, totalCount) : this.options.countSelectedText;
 
-          titleFragment = generateOption.text({
+          titleFragment = generateOption.text.call(this, {
             text: tr8nText.replace('{0}', selectedCount.toString()).replace('{1}', totalCount.toString())
           }, true);
         }
@@ -1739,7 +1735,7 @@
 
       // If the select doesn't have a title, then use the default, or if nothing is set at all, use noneSelectedText
       if (!titleFragment.childNodes.length) {
-        titleFragment = generateOption.text({
+        titleFragment = generateOption.text.call(this, {
           text: typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText
         }, true);
       }
