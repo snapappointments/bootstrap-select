@@ -1698,7 +1698,6 @@
               } else {
                 if (that.options.showIcon) {
                   titleOptions.icon = thisData.icon;
-                  titleOptions.iconBase = this.options.iconBase;
                 }
                 if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
                 titleOptions.text = option.textContent.trim();
