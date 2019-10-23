@@ -2728,7 +2728,7 @@
     selectAll: function () {
       return this.changeAll(true);
     },
-    // Please add x button "clear selection"
+    //  Please add x button "clear selection"
     deselectAll: function () {
       return this.changeAll(false);
     },
