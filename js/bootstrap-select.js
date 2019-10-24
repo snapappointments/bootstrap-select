@@ -810,6 +810,9 @@
         }
       }
     };
+
+    this.sizeInfo = {};
+
     // If we have no title yet, try to pull it from the html title attribute (jQuery doesnt' pick it up as it's not a
     // data-attribute)
     if (this.options.title === null) {
@@ -1807,9 +1810,7 @@
     },
 
     liHeight: function (refresh) {
-      if (!refresh && (this.options.size === false || this.sizeInfo)) return;
-
-      if (!this.sizeInfo) this.sizeInfo = {};
+      if (!refresh && (this.options.size === false || Object.keys(this.sizeInfo).length)) return;
 
       var newElement = document.createElement('div'),
           menu = document.createElement('div'),
@@ -2040,32 +2041,33 @@
       this.liHeight(refresh);
 
       if (this.options.header) this.$menu.css('padding-top', 0);
-      if (this.options.size === false) return;
 
-      var that = this,
-          $window = $(window);
+      if (this.options.size !== false) {
+        var that = this,
+            $window = $(window);
 
-      this.setMenuSize();
+        this.setMenuSize();
 
-      if (this.options.liveSearch) {
-        this.$searchbox
-          .off('input.setMenuSize propertychange.setMenuSize')
-          .on('input.setMenuSize propertychange.setMenuSize', function () {
-            return that.setMenuSize();
-          });
+        if (this.options.liveSearch) {
+          this.$searchbox
+            .off('input.setMenuSize propertychange.setMenuSize')
+            .on('input.setMenuSize propertychange.setMenuSize', function () {
+              return that.setMenuSize();
+            });
+        }
+
+        if (this.options.size === 'auto') {
+          $window
+            .off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize')
+            .on('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize', function () {
+              return that.setMenuSize();
+            });
+        } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
+          $window.off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize');
+        }
       }
 
-      if (this.options.size === 'auto') {
-        $window
-          .off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize')
-          .on('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize', function () {
-            return that.setMenuSize();
-          });
-      } else if (this.options.size && this.options.size != 'auto' && this.selectpicker.current.elements.length > this.options.size) {
-        $window.off('resize' + EVENT_KEY + '.' + this.selectId + '.setMenuSize' + ' scroll' + EVENT_KEY + '.' + this.selectId + '.setMenuSize');
-      }
-
-      that.createView(false, true, refresh);
+      this.createView(false, true, refresh);
     },
 
     setWidth: function () {
@@ -2596,8 +2598,6 @@
               normalizeSearch = that.options.liveSearchNormalize;
 
           if (normalizeSearch) q = normalizeToBase(q);
-
-          that._$lisSelected = that.$menuInner.find('.selected');
 
           for (var i = 0; i < that.selectpicker.main.data.length; i++) {
             var li = that.selectpicker.main.data[i];
