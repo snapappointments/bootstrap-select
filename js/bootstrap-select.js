@@ -331,7 +331,7 @@
       opt = options[i];
 
       if (!(opt.disabled || opt.parentNode.tagName === 'OPTGROUP' && opt.parentNode.disabled)) {
-        value.push(opt.value || opt.text);
+        value.push(opt.value);
       }
     }
 
