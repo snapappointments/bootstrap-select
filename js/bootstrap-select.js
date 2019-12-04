@@ -2745,22 +2745,29 @@
           isToggle = $this.hasClass('dropdown-toggle'),
           $parent = isToggle ? $this.closest('.dropdown') : $this.closest(Selector.MENU),
           that = $parent.data('this'),
-          $items = that.findLis(),
+          $items,
           index,
           isActive,
           liActive,
           activeLi,
           offset,
           updateScroll = false,
-          downOnTab = e.which === keyCodes.TAB && !isToggle && !that.options.selectOnTab,
+          downOnTab,
           isArrowKey = REGEXP_ARROW.test(e.which) || downOnTab,
-          scrollTop = that.$menuInner[0].scrollTop,
-          isVirtual = that.isVirtual(),
-          position0 = isVirtual === true ? that.selectpicker.view.position0 : 0;
+          scrollTop,
+          isVirtual,
+          position0;
 
       // do nothing if a function key is pressed
       if (e.which >= 112 && e.which <= 123) return;
+      // 'that' was removed dynamically from DOM
+      if(!that) return;
 
+      $items = that.findLis();
+      downOnTab = e.which === keyCodes.TAB && !isToggle && !that.options.selectOnTab;
+      scrollTop = that.$menuInner[0].scrollTop;
+      isVirtual = that.isVirtual();
+      position0 = isVirtual === true ? that.selectpicker.view.position0 : 0;
       isActive = that.$newElement.hasClass(classNames.SHOW);
 
       if (
