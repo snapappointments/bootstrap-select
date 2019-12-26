@@ -6,12 +6,12 @@
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: '何もが選択した',
-    noneResultsText: '\'{0}\'が結果を返さない',
-    countSelectedText: '{0}/{1}が選択した',
-    maxOptionsText: ['限界は達した({n}{var}最大)', '限界をグループは達した({n}{var}最大)', ['アイテム', 'アイテム']],
-    selectAllText: '全部を選択する',
-    deselectAllText: '何も選択しない',
+    noneSelectedText: '指定なし',
+    noneResultsText: '\'{0}\'は存在しません',
+    countSelectedText: '{0}個選択しています',
+    maxOptionsText: ['選択可能な上限数を超えています(最大:{n})', 'グループの上限数を超えています(最大:{n})'],
+    selectAllText: 'すべて選択',
+    deselectAllText: 'すべて選択解除',
     multipleSeparator: ', '
   };
 })(jQuery);
