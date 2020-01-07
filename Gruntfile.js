@@ -47,7 +47,7 @@ module.exports = function (grunt) {
     concat: {
       options: {
         stripBanners: true,
-        sourceMap: true
+        sourceMap: false
       },
       main: {
         src: 'js/<%= pkg.name %>.js',
@@ -83,8 +83,7 @@ module.exports = function (grunt) {
         dest: 'dist/js/<%= pkg.name %>.min.js',
         options: {
           sourceMap: true,
-          sourceMapIncludeSources: true,
-          sourceMapIn: 'dist/js/<%= pkg.name %>.js.map'
+          sourceMapIncludeSources: true
         }
       },
       i18n: {
