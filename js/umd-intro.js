@@ -5,7 +5,7 @@
     define(["jquery"], function (a0) {
       return (factory(a0));
     });
-  } else if (typeof module === 'object' && module.exports) {
+  } else if (typeof window === 'undefined' && typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
