@@ -2969,9 +2969,9 @@
       this.options = config;
 
       this.checkDisabled();
+      this.buildData();
       this.setStyle();
       this.render();
-      this.buildData();
       this.buildList();
       this.setWidth();
 
