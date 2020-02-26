@@ -1673,12 +1673,12 @@
       if (this.options.selectedTextFormat === 'static') {
         titleFragment = generateOption.text.call(this, { text: this.options.title }, true);
       } else {
-        showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 1;
+        showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 0;
 
         // determine if the number of selected options will be shown (showCount === true)
         if (showCount) {
           countMax = this.options.selectedTextFormat.split('>');
-          showCount = (countMax.length > 1 && selectedCount > countMax[1]) || (countMax.length === 1 && selectedCount >= 2);
+          showCount = (countMax.length > 1 && selectedCount > countMax[1]) || (countMax.length === 1 && selectedCount > 0);
         }
 
         // only loop through all selected options if the count won't be shown
