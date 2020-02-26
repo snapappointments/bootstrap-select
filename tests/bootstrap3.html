@@ -309,6 +309,20 @@
       </select>
     </div>
   </form>
+  <hr>
+  <form>
+    <div class="form-group row">
+      <label class="col-lg-2 control-label" for="lunchBegins">Display count selected</label>
+      <div class="col-lg-10">
+        <select id="licorice" class="selectpicker" multiple="multiple">
+          <option>Allsorts</option>
+          <option>Anise gumdrops</option>
+          <option>Australian</option>
+          <option>Salmiak</option>
+          <option>Turkish Pepper</option>
+        </select>
+      </div>
+  </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -351,6 +365,13 @@ $('#special2').on('click', function () {
 $('#basic2').selectpicker({
   liveSearch: true,
   maxOptions: 1
+});
+
+$('#licorice').selectpicker({
+  countSelectedText: function(count){ 
+    return "Licorices (" + count + ")";
+  },
+  selectedTextFormat: 'count'
 });
 </script>
 </body>
