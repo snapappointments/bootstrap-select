@@ -225,6 +225,7 @@ select.selectpicker {
 
     .dropdown-menu {
       z-index: $zindex-select-dropdown;
+      max-width: 100vw;
     }
   }
 
