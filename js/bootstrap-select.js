@@ -416,7 +416,7 @@
         }
 
         if (normalize) string = normalizeToBase(string);
-        string = string.toUpperCase();
+        string = string.toUpperCase().trim();
 
         if (method === 'contains') {
           searchSuccess = string.indexOf(searchString) >= 0;
