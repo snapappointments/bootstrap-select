@@ -1,3 +1,19 @@
+# v1.13.13 (2020-04-16)
+### Bug Fixes
+- [#2339]: data-size="false" not working
+- [#2337]: calling deselectAll/selectAll immediately after page load throws error
+- [#2320]: Dropup becomes a dropdown upon search
+- [#2308]: Keyboard control over Bootstrap Dropdown components stops working
+- [#2272]: Class bs-placeholder is no longer set on "default" values in 1.13.10
+
+[#2339]: https://github.com/snapappointments/bootstrap-select/issues/2339
+[#2337]: https://github.com/snapappointments/bootstrap-select/issues/2337
+[#2320]: https://github.com/snapappointments/bootstrap-select/issues/2320
+[#2308]: https://github.com/snapappointments/bootstrap-select/issues/2308
+[#2272]: https://github.com/snapappointments/bootstrap-select/issues/2272
+
+-------------------
+
 # v1.13.12 (2019-10-10)
 ### Bug Fixes
 - [#2176]: allow was-validated class to work on select elements without selectpicker class
