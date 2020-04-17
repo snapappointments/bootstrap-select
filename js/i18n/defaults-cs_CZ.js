@@ -5,12 +5,12 @@
  */
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Nic není vybráno',
-    noneResultsText: 'Žádné výsledky {0}',
-    countSelectedText: 'Označeno {0} z {1}',
+    noneSelectedText: 'Vyberte ze seznamu',
+    noneResultsText: 'Pro hledání {0} nebyly nalezeny žádné výsledky',
+    countSelectedText: 'Vybrané {0} z {1}',
     maxOptionsText: ['Limit překročen ({n} {var} max)', 'Limit skupiny překročen ({n} {var} max)', ['položek', 'položka']],
     multipleSeparator: ', ',
-    selectAllText: 'Vybrat Vše',
-    deselectAllText: 'Odznačit Vše'
+    selectAllText: 'Vybrat vše',
+    deselectAllText: 'Zrušit výběr'
   };
 })(jQuery);
