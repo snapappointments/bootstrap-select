@@ -1695,15 +1695,17 @@
 
               if (option.title) {
                 titleOptions.text = option.title;
-              } else if (thisData.content && that.options.showContent) {
-                titleOptions.content = thisData.content.toString();
-                hasContent = true;
-              } else {
-                if (that.options.showIcon) {
-                  titleOptions.icon = thisData.icon;
+              } else if (thisData) {
+                if (thisData.content && that.options.showContent) {
+                  titleOptions.content = thisData.content.toString();
+                  hasContent = true;
+                } else {
+                  if (that.options.showIcon) {
+                    titleOptions.icon = thisData.icon;
+                  }
+                  if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
+                  titleOptions.text = option.textContent.trim();
                 }
-                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
-                titleOptions.text = option.textContent.trim();
               }
 
               titleFragment.appendChild(generateOption.text.call(this, titleOptions, true));
