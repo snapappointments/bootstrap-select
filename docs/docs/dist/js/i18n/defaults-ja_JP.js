@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.13 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.14 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2020 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -24,12 +24,12 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: '何もが選択した',
-    noneResultsText: '\'{0}\'が結果を返さない',
-    countSelectedText: '{0}/{1}が選択した',
-    maxOptionsText: ['限界は達した({n}{var}最大)', '限界をグループは達した({n}{var}最大)', ['アイテム', 'アイテム']],
-    selectAllText: '全部を選択する',
-    deselectAllText: '何も選択しない',
+    noneSelectedText: '選択されていません',
+    noneResultsText: '\'{0}\'は見つかりません',
+    countSelectedText: '{0}/{1} 選択中',
+    maxOptionsText: ['選択上限数を超えています(最大{n}{var})', 'グループの選択上限数を超えています(最大{n}{var})', ['アイテム', 'アイテム']],
+    selectAllText: '全て選択',
+    deselectAllText: '選択をクリア',
     multipleSeparator: ', '
   };
 })(jQuery);
