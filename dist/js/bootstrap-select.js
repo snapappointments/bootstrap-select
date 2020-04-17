@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.13 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.14 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2020 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -864,7 +864,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.13';
+  Selectpicker.VERSION = '1.13.14';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -1677,9 +1677,9 @@
 
     render: function () {
       var that = this,
-          // ensure titleOption is appended and selected (if necessary) before getting selectedOptions
-          startIndex = this.setPlaceholder() ? 1 : 0,
           element = this.$element[0],
+          // ensure titleOption is appended and selected (if necessary) before getting selectedOptions
+          placeholderSelected = this.setPlaceholder() && element.selectedIndex === 0,
           selectedOptions = getSelectedOptions(element, this.options.hideDisabled),
           selectedCount = selectedOptions.length,
           button = this.$button[0],
@@ -1707,38 +1707,42 @@
 
         // only loop through all selected options if the count won't be shown
         if (showCount === false) {
-          for (var selectedIndex = startIndex; selectedIndex < selectedCount; selectedIndex++) {
-            if (selectedIndex < 50) {
-              var option = selectedOptions[selectedIndex],
-                  thisData = this.selectpicker.main.data[option.liIndex],
-                  titleOptions = {};
+          if (!placeholderSelected) {
+            for (var selectedIndex = 0; selectedIndex < selectedCount; selectedIndex++) {
+              if (selectedIndex < 50) {
+                var option = selectedOptions[selectedIndex],
+                    thisData = this.selectpicker.main.data[option.liIndex],
+                    titleOptions = {};
 
-              if (this.multiple && selectedIndex > 0) {
-                titleFragment.appendChild(multipleSeparator.cloneNode(false));
-              }
-
-              if (option.title) {
-                titleOptions.text = option.title;
-              } else if (thisData.content && that.options.showContent) {
-                titleOptions.content = thisData.content.toString();
-                hasContent = true;
-              } else {
-                if (that.options.showIcon) {
-                  titleOptions.icon = thisData.icon;
+                if (this.multiple && selectedIndex > 0) {
+                  titleFragment.appendChild(multipleSeparator.cloneNode(false));
                 }
-                if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
-                titleOptions.text = option.textContent.trim();
+
+                if (option.title) {
+                  titleOptions.text = option.title;
+                } else if (thisData) {
+                  if (thisData.content && that.options.showContent) {
+                    titleOptions.content = thisData.content.toString();
+                    hasContent = true;
+                  } else {
+                    if (that.options.showIcon) {
+                      titleOptions.icon = thisData.icon;
+                    }
+                    if (that.options.showSubtext && !that.multiple && thisData.subtext) titleOptions.subtext = ' ' + thisData.subtext;
+                    titleOptions.text = option.textContent.trim();
+                  }
+                }
+
+                titleFragment.appendChild(generateOption.text.call(this, titleOptions, true));
+              } else {
+                break;
               }
-
-              titleFragment.appendChild(generateOption.text.call(this, titleOptions, true));
-            } else {
-              break;
             }
-          }
 
-          // add ellipsis
-          if (selectedCount > 49) {
-            titleFragment.appendChild(document.createTextNode('...'));
+            // add ellipsis
+            if (selectedCount > 49) {
+              titleFragment.appendChild(document.createTextNode('...'));
+            }
           }
         } else {
           var optionSelector = ':not([hidden]):not([data-hidden="true"]):not([data-divider="true"])';

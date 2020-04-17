@@ -24,16 +24,16 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Niets geselecteerd',
-    noneResultsText: 'Geen resultaten gevonden voor {0}',
-    countSelectedText: '{0} van {1} geselecteerd',
-    maxOptionsText: ['Limiet bereikt ({n} {var} max)', 'Groep limiet bereikt ({n} {var} max)', ['items', 'item']],
-    selectAllText: 'Alles selecteren',
-    deselectAllText: 'Alles deselecteren',
+    noneSelectedText: 'ไม่ได้เลือกอะไรเลย',
+    noneResultsText: 'ไม่มีผลลัพธ์ที่ตรงกัน {0}',
+    countSelectedText: '{0} รายการที่เลือก',
+    maxOptionsText: ['เกินจำนวนที่กำหนด (สูงสุด {n} รายการ)', 'เกินจำนวนที่กำหนด (สูงสุด {n} กลุ่ม)'],
+    selectAllText: 'เลือกทั้งหมด',
+    deselectAllText: 'ไม่เลือกทั้งหมด',
     multipleSeparator: ', '
   };
 })(jQuery);
 
 
 }));
-//# sourceMappingURL=defaults-nl_NL.js.map
+//# sourceMappingURL=defaults-th_TH.js.map
