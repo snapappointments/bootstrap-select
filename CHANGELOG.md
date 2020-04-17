@@ -1,3 +1,24 @@
+# v1.13.14 (2020-04-17)
+### Bug Fixes
+- [#2436]: TypeError: Cannot read property 'content' of undefined
+- [#2437]: If a select has the title attribute set (and is not a multiple select), selecting an option doesn't update the value in the button
+
+### Translations
+- [#2195]: Improve CZ translations
+- [#2274]: Improve JP translations
+- [#2196]: Add Serbian translations
+- [#2340]: Add Thai translations
+
+[#2436]: https://github.com/snapappointments/bootstrap-select/issues/2436
+[#2437]: https://github.com/snapappointments/bootstrap-select/issues/2437
+
+[#2195]: https://github.com/snapappointments/bootstrap-select/pull/2195
+[#2274]: https://github.com/snapappointments/bootstrap-select/pull/2274
+[#2196]: https://github.com/snapappointments/bootstrap-select/pull/2196
+[#2340]: https://github.com/snapappointments/bootstrap-select/pull/2340
+
+-------------------
+
 # v1.13.13 (2020-04-16)
 ### Bug Fixes
 - [#2339]: data-size="false" not working
