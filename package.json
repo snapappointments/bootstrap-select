@@ -3,7 +3,7 @@
   "title": "bootstrap-select",
   "main": "dist/js/bootstrap-select.js",
   "description": "The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.",
-  "version": "1.13.14",
+  "version": "1.13.15",
   "homepage": "https://developer.snapappointments.com/bootstrap-select",
   "author": {
     "name": "Casey Holzer",

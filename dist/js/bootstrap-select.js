@@ -1,5 +1,5 @@
 /*!
- * Bootstrap-select v1.13.14 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.13.15 (https://developer.snapappointments.com/bootstrap-select)
  *
  * Copyright 2012-2020 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
@@ -864,7 +864,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.13.14';
+  Selectpicker.VERSION = '1.13.15';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -3108,7 +3108,7 @@
           var dataAttributes = $this.data();
 
           for (var dataAttr in dataAttributes) {
-            if (dataAttributes.hasOwnProperty(dataAttr) && $.inArray(dataAttr, DISALLOWED_ATTRIBUTES) !== -1) {
+            if (Object.prototype.hasOwnProperty.call(dataAttributes, dataAttr) && $.inArray(dataAttr, DISALLOWED_ATTRIBUTES) !== -1) {
               delete dataAttributes[dataAttr];
             }
           }
@@ -3118,7 +3118,7 @@
           $this.data('selectpicker', (data = new Selectpicker(this, config)));
         } else if (options) {
           for (var i in options) {
-            if (options.hasOwnProperty(i)) {
+            if (Object.prototype.hasOwnProperty.call(options, i)) {
               data.options[i] = options[i];
             }
           }
@@ -3153,8 +3153,8 @@
     return this;
   };
 
-  // get Bootstrap's keydown event handler for either Bootstrap 4 or Bootstrap 3
-  var bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
+  // wait until whole page has loaded to set function in case Bootstrap isn't available yet
+  var bootstrapKeydown = function () {};
 
   $(document)
     .off('keydown.bs.dropdown.data-api')
@@ -3168,6 +3168,9 @@
   // SELECTPICKER DATA-API
   // =====================
   $(window).on('load' + EVENT_KEY + '.data-api', function () {
+    // get Bootstrap's keydown event handler for either Bootstrap 4 or Bootstrap 3
+    bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
+
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
