@@ -1,3 +1,13 @@
+# v1.13.15 (2020-04-20)
+### Bug Fixes
+- [#2430]: hasOwnProperty error with jQuery 3.5.0
+- [#2439]: error setting bootstrapKeydown if Bootstrap not yet loaded
+
+[#2430]: https://github.com/snapappointments/bootstrap-select/issues/2430
+[#2439]: https://github.com/snapappointments/bootstrap-select/issues/2439
+
+-------------------
+
 # v1.13.14 (2020-04-17)
 ### Bug Fixes
 - [#2436]: TypeError: Cannot read property 'content' of undefined
@@ -26,12 +36,14 @@
 - [#2320]: Dropup becomes a dropdown upon search
 - [#2308]: Keyboard control over Bootstrap Dropdown components stops working
 - [#2272]: Class bs-placeholder is no longer set on "default" values in 1.13.10
+- [#2352]: "Deselect All" doesn't consistently work with virtual scroll
 
 [#2339]: https://github.com/snapappointments/bootstrap-select/issues/2339
 [#2337]: https://github.com/snapappointments/bootstrap-select/issues/2337
 [#2320]: https://github.com/snapappointments/bootstrap-select/issues/2320
 [#2308]: https://github.com/snapappointments/bootstrap-select/issues/2308
 [#2272]: https://github.com/snapappointments/bootstrap-select/issues/2272
+[#2352]: https://github.com/snapappointments/bootstrap-select/issues/2352
 
 -------------------
 
