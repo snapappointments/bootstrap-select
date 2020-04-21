@@ -3129,10 +3129,10 @@
     return this;
   };
 
-  // wait until whole page has loaded to set function in case Bootstrap isn't available yet
-  var bootstrapKeydown = function () {};
-
+  // get Bootstrap's keydown event handler for either Bootstrap 4 or Bootstrap 3
   function keydownHandler () {
+    // wait to define until function is called in case Bootstrap isn't loaded yet
+    var bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
     return bootstrapKeydown.apply(this, arguments);
   }
 
@@ -3148,9 +3148,6 @@
   // SELECTPICKER DATA-API
   // =====================
   $(window).on('load' + EVENT_KEY + '.data-api', function () {
-    // get Bootstrap's keydown event handler for either Bootstrap 4 or Bootstrap 3
-    bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
-
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
