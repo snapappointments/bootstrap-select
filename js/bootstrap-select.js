@@ -1791,6 +1791,8 @@
       if (this.options.data && init) {
         selectedOptions.map(createSelected);
         element.appendChild(this.selectpicker.main.optionQueue);
+
+        if (placeholderSelected) placeholderSelected = element.selectedIndex === 0;
       }
 
       button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !getSelectValues.call(this, selectedOptions));
