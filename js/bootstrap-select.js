@@ -64,6 +64,8 @@
    */
   var DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;
 
+  var ParseableAttributes = ['title', 'placeholder']; // attributes to use as settings, can add others in the future
+
   function allowedAttribute (attr, allowedAttributeList) {
     var attrName = attr.nodeName.toLowerCase()
 
@@ -121,6 +123,15 @@
         }
       }
     }
+  }
+  function getAttributesObject($select) {
+    var attributesObject = {},
+        attrVal;
+    ParseableAttributes.forEach(function (item, index) {
+      if(attrVal = $select.attr(item)) attributesObject[item] = attrVal;
+    });
+    if(!attributesObject.placeholder && attributesObject.title) attributesObject.placeholder = attributesObject.title; // for backwards compat.
+    return attributesObject;
   }
 
   // Polyfill for browsers with no classList support
@@ -872,12 +883,6 @@
 
     this.sizeInfo = {};
 
-    // If we have no title yet, try to pull it from the html title attribute (jQuery doesnt' pick it up as it's not a
-    // data-attribute)
-    if (this.options.title === null) {
-      this.options.title = this.$element.attr('title');
-    }
-
     // Format window padding
     var winPad = this.options.windowPadding;
     if (typeof winPad === 'number') {
@@ -924,6 +929,7 @@
     style: classNames.BUTTONCLASS,
     size: 'auto',
     title: null,
+    placeholder: null,
     selectedTextFormat: 'values',
     width: false,
     container: false,
@@ -1471,7 +1477,7 @@
       var that = this,
           updateIndex = false;
 
-      if (this.options.title && !this.multiple) {
+      if (this.options.placeholder && !this.multiple) {
         if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
         // this option doesn't create a new <li> element, but does add a new option at the start,
@@ -1802,7 +1808,7 @@
       }
 
       if (this.options.selectedTextFormat === 'static') {
-        titleFragment = generateOption.text.call(this, { text: this.options.title }, true);
+        titleFragment = generateOption.text.call(this, { text: this.options.placeholder }, true);
       } else {
         showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 1;
 
@@ -1864,20 +1870,16 @@
         }
       }
 
-      if (this.options.title == undefined) {
-        // use .attr to ensure undefined is returned if title attribute is not set
-        this.options.title = this.$element.attr('title');
-      }
-
       // If the select doesn't have a title, then use the default, or if nothing is set at all, use noneSelectedText
       if (!titleFragment.childNodes.length) {
         titleFragment = generateOption.text.call(this, {
-          text: typeof this.options.title !== 'undefined' ? this.options.title : this.options.noneSelectedText
+          text: this.options.placeholder ? this.options.placeholder : this.options.noneSelectedText
         }, true);
       }
 
+      // if the select has a title, apply it to the button, and if not, apply titleFragment text
       // strip all HTML tags and trim the result, then unescape any escaped tags
-      button.title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
+      button.title = (this.options.title ? this.options.title : titleFragment.textContent).replace(/<[^>]*>?/g, '').trim();
 
       if (this.options.sanitize && hasContent) {
         sanitizeHtml([titleFragment], that.options.whiteList, that.options.sanitizeFn);
@@ -3151,7 +3153,7 @@
     refresh: function () {
       var that = this;
       // update options if data attributes have been changed
-      var config = $.extend({}, this.options, this.$element.data());
+      var config = $.extend({}, this.options, getAttributesObject(this.$element), this.$element.data()); // in this order on refresh, as user may change attributes on select, and options object is not passed on refresh
       this.options = config;
 
       this.fetchData(function () {
@@ -3273,7 +3275,7 @@
             }
           }
 
-          var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, dataAttributes, options);
+          var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, getAttributesObject($this), dataAttributes, options); // this is correct order on initial render
           config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), dataAttributes.template, options.template);
           $this.data('selectpicker', (data = new Selectpicker(this, config)));
         } else if (options) {
