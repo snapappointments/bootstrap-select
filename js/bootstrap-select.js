@@ -124,13 +124,19 @@
       }
     }
   }
+
   function getAttributesObject($select) {
     var attributesObject = {},
         attrVal;
+
     ParseableAttributes.forEach(function (item, index) {
       if(attrVal = $select.attr(item)) attributesObject[item] = attrVal;
     });
-    if(!attributesObject.placeholder && attributesObject.title) attributesObject.placeholder = attributesObject.title; // for backwards compat.
+
+    // for backwards compatibility
+    // (using title as placeholder is deprecated - remove in v2.0.0)
+    if (attributesObject.title) attributesObject.placeholder = attributesObject.title;
+
     return attributesObject;
   }
 
@@ -1879,7 +1885,7 @@
 
       // if the select has a title, apply it to the button, and if not, apply titleFragment text
       // strip all HTML tags and trim the result, then unescape any escaped tags
-      button.title = (this.options.title ? this.options.title : titleFragment.textContent).replace(/<[^>]*>?/g, '').trim();
+      button.title = titleFragment.textContent.replace(/<[^>]*>?/g, '').trim();
 
       if (this.options.sanitize && hasContent) {
         sanitizeHtml([titleFragment], that.options.whiteList, that.options.sanitizeFn);
@@ -3265,6 +3271,10 @@
       if ($this.is('select')) {
         var data = $this.data('selectpicker'),
             options = typeof _option == 'object' && _option;
+
+        // for backwards compatibility
+        // (using title as placeholder is deprecated - remove in v2.0.0)
+        if (options.title) options.placeholder = options.title;
 
         if (!data) {
           var dataAttributes = $this.data();
