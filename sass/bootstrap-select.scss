@@ -411,6 +411,7 @@ select.selectpicker {
     height: 1em;
     border-style: solid;
     border-width: 0 0.26em 0.26em 0;
+    transform-style: preserve-3d;
     transform: rotate(45deg);
   }
 }
