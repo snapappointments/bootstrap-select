@@ -2042,27 +2042,25 @@
           actionsHeight = actions ? actions.offsetHeight : 0,
           doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
           dividerHeight = $(divider).outerHeight(true),
-          // fall back to jQuery if getComputedStyle is not supported
-          menuStyle = window.getComputedStyle ? window.getComputedStyle(menu) : false,
+          menuStyle = window.getComputedStyle(menu),
           menuWidth = menu.offsetWidth,
-          $menu = menuStyle ? null : $(menu),
           menuPadding = {
-            vert: toInteger(menuStyle ? menuStyle.paddingTop : $menu.css('paddingTop')) +
-                  toInteger(menuStyle ? menuStyle.paddingBottom : $menu.css('paddingBottom')) +
-                  toInteger(menuStyle ? menuStyle.borderTopWidth : $menu.css('borderTopWidth')) +
-                  toInteger(menuStyle ? menuStyle.borderBottomWidth : $menu.css('borderBottomWidth')),
-            horiz: toInteger(menuStyle ? menuStyle.paddingLeft : $menu.css('paddingLeft')) +
-                  toInteger(menuStyle ? menuStyle.paddingRight : $menu.css('paddingRight')) +
-                  toInteger(menuStyle ? menuStyle.borderLeftWidth : $menu.css('borderLeftWidth')) +
-                  toInteger(menuStyle ? menuStyle.borderRightWidth : $menu.css('borderRightWidth'))
+            vert: toInteger(menuStyle.paddingTop) +
+                  toInteger(menuStyle.paddingBottom) +
+                  toInteger(menuStyle.borderTopWidth) +
+                  toInteger(menuStyle.borderBottomWidth),
+            horiz: toInteger(menuStyle.paddingLeft) +
+                  toInteger(menuStyle.paddingRight) +
+                  toInteger(menuStyle.borderLeftWidth) +
+                  toInteger(menuStyle.borderRightWidth)
           },
           menuExtras = {
             vert: menuPadding.vert +
-                  toInteger(menuStyle ? menuStyle.marginTop : $menu.css('marginTop')) +
-                  toInteger(menuStyle ? menuStyle.marginBottom : $menu.css('marginBottom')) + 2,
+                  toInteger(menuStyle.marginTop) +
+                  toInteger(menuStyle.marginBottom) + 2,
             horiz: menuPadding.horiz +
-                  toInteger(menuStyle ? menuStyle.marginLeft : $menu.css('marginLeft')) +
-                  toInteger(menuStyle ? menuStyle.marginRight : $menu.css('marginRight')) + 2
+                  toInteger(menuStyle.marginLeft) +
+                  toInteger(menuStyle.marginRight) + 2
           },
           scrollBarWidth;
 
