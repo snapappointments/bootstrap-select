@@ -1,3 +1,23 @@
+# v1.13.16 (2020-04-24)
+### Bug Fixes
+- [#2380]: Specifying a Title and OptGroups creates a redundant divider
+- [#2381]: Tick/check mark rendering in Firefox
+- [#2391]: setStyle fails if newElement.parentNode is a document fragment
+- [#2393]: liHeight does not consider custom option content when computing li height
+- [#2442]: Using a class in optgroup results in an error on refresh in chrome
+- [#2445]: Problem with refresh and selected item
+- [#2446]: Bootstrap select property dataApiKeydownHandler error
+
+[#2380]: https://github.com/snapappointments/bootstrap-select/issues/2380
+[#2381]: https://github.com/snapappointments/bootstrap-select/issues/2381
+[#2391]: https://github.com/snapappointments/bootstrap-select/issues/2391
+[#2393]: https://github.com/snapappointments/bootstrap-select/issues/2393
+[#2442]: https://github.com/snapappointments/bootstrap-select/issues/2442
+[#2445]: https://github.com/snapappointments/bootstrap-select/issues/2445
+[#2446]: https://github.com/snapappointments/bootstrap-select/issues/2446
+
+-------------------
+
 # v1.13.15 (2020-04-20)
 ### Bug Fixes
 - [#2430]: hasOwnProperty error with jQuery 3.5.0
