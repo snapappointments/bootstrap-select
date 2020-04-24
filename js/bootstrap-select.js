@@ -653,6 +653,7 @@
   }
 
   var elementTemplates = {
+    div: document.createElement('div'),
     span: document.createElement('span'),
     i: document.createElement('i'),
     subtext: document.createElement('small'),
@@ -1631,6 +1632,7 @@
             break;
         }
 
+        item.element = liElement;
         mainElements.push(liElement);
 
         // count the number of characters in the option - not perfect, but should work in most cases
@@ -1827,17 +1829,17 @@
     liHeight: function (refresh) {
       if (!refresh && (this.options.size === false || Object.keys(this.sizeInfo).length)) return;
 
-      var newElement = document.createElement('div'),
-          menu = document.createElement('div'),
-          menuInner = document.createElement('div'),
+      var newElement = elementTemplates.div.cloneNode(false),
+          menu = elementTemplates.div.cloneNode(false),
+          menuInner = elementTemplates.div.cloneNode(false),
           menuInnerInner = document.createElement('ul'),
-          divider = document.createElement('li'),
-          dropdownHeader = document.createElement('li'),
-          li = document.createElement('li'),
-          a = document.createElement('a'),
-          text = document.createElement('span'),
+          divider = elementTemplates.li.cloneNode(false),
+          dropdownHeader = elementTemplates.li.cloneNode(false),
+          li,
+          a = elementTemplates.a.cloneNode(false),
+          text = elementTemplates.span.cloneNode(false),
           header = this.options.header && this.$menu.find('.' + classNames.POPOVERHEADER).length > 0 ? this.$menu.find('.' + classNames.POPOVERHEADER)[0].cloneNode(true) : null,
-          search = this.options.liveSearch ? document.createElement('div') : null,
+          search = this.options.liveSearch ? elementTemplates.div.cloneNode(false) : null,
           actions = this.options.actionsBox && this.multiple && this.$menu.find('.bs-actionsbox').length > 0 ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null,
           firstOption = this.$element.find('option')[0];
@@ -1856,8 +1858,21 @@
       dropdownHeader.className = 'dropdown-header';
 
       text.appendChild(document.createTextNode('\u200b'));
-      a.appendChild(text);
-      li.appendChild(a);
+
+      if (this.selectpicker.current.data.length) {
+        for (var i = 0; i < this.selectpicker.current.data.length; i++) {
+          var data = this.selectpicker.current.data[i];
+          if (data.type === 'option') {
+            li = data.element;
+            break;
+          }
+        }
+      } else {
+        li = elementTemplates.li.cloneNode(false);
+        a.appendChild(text);
+        li.appendChild(a);
+      }
+
       dropdownHeader.appendChild(text.cloneNode(true));
 
       if (this.selectpicker.view.widestOption) {
