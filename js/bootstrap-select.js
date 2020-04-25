@@ -936,6 +936,7 @@
     size: 'auto',
     title: null,
     placeholder: null,
+    allowClear: false,
     selectedTextFormat: 'values',
     width: false,
     container: false,
@@ -1002,6 +1003,7 @@
       }
 
       this.$button = this.$newElement.children('button');
+      if (this.options.allowClear) this.$clearButton = this.$button.children('.bs-select-clear-selected');
       this.$menu = this.$newElement.children(Selector.MENU);
       this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
@@ -1115,7 +1117,8 @@
           header = '',
           searchbox = '',
           actionsbox = '',
-          donebutton = '';
+          donebutton = '',
+          clearButton = '';
 
       if (this.options.header) {
         header =
@@ -1163,14 +1166,20 @@
           '</div>';
       }
 
+      if (this.options.allowClear) {
+        clearButton = '<span class="close bs-select-clear-selected" title="' + this.options.deselectAllText + '"><span>&times;</span>';
+      }
+
       drop =
         '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
           '<button type="button" tabindex="-1" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="combobox" aria-owns="' + this.selectId + '" aria-haspopup="listbox" aria-expanded="false">' +
             '<div class="filter-option">' +
               '<div class="filter-option-inner">' +
-                '<div class="filter-option-inner-inner"></div>' +
+                '<div class="filter-option-inner-inner">&nbsp;</div>' +
               '</div> ' +
             '</div>' +
+            clearButton +
+            '</span>' +
             (
               version.major === '4' ? ''
               :
@@ -1492,7 +1501,7 @@
       var that = this,
           updateIndex = false;
 
-      if (this.options.placeholder && !this.multiple) {
+      if ( (this.options.placeholder || this.options.allowClear) && !this.multiple ) {
         if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
         // this option doesn't create a new <li> element, but does add a new option at the start,
@@ -2522,7 +2531,53 @@
         }
       });
 
-      this.$button.on('click.bs.dropdown.data-api', function () {
+      function clearSelection (e) {
+        if (that.multiple) {
+          that.deselectAll();
+        } else {
+          var element = that.$element[0],
+              prevIndex = element.selectedIndex,
+              prevOption = element.options[prevIndex],
+              prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false;
+
+          if (prevData) {
+            prevData.selected = false;
+            if (prevData.source) prevData.source.selected = false;
+          }
+
+          if (prevOption) prevOption.selected = false;
+
+          element.selectedIndex = 0;
+
+          that.render();
+        }
+
+        // remove selected styling if menu is open
+        if (that.$newElement.hasClass(classNames.SHOW)) {
+          if (that.options.liveSearch) {
+            that.$searchbox.trigger('focus');
+          }
+
+          that.createView(false);
+        }
+      }
+
+      this.$button.on('click.bs.dropdown.data-api', function (e) {
+        if (that.options.allowClear) {
+          var target = e.target,
+              clearButton = that.$clearButton[0];
+
+          // IE doesn't support event listeners on child elements of buttons
+          if (/MSIE|Trident/.test(window.navigator.userAgent)) {
+            target = document.elementFromPoint(e.clientX, e.clientY);
+          }
+
+          if (target === clearButton || target.parentElement === clearButton) {
+            e.stopImmediatePropagation();
+            clearSelection(e);
+          }
+        }
+
         if (!that.$newElement.hasClass(classNames.SHOW)) {
           that.setSize();
         }

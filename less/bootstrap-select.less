@@ -259,6 +259,23 @@ select.selectpicker {
       margin-top: -2px;
       vertical-align: middle;
     }
+
+    .bs-select-clear-selected {
+      position: relative;
+      display: block;
+      margin-right: 5px;
+      text-align: center;
+
+      span {
+        position: relative;
+        top: calc(((-1em / 1.5) + 1ex) / 2);
+        pointer-events: none;
+      }
+    }
+
+    &.bs-placeholder .bs-select-clear-selected {
+      display: none;
+    }
   }
 
   .input-group &.form-control .dropdown-toggle {
