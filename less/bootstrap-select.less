@@ -266,10 +266,18 @@ select.selectpicker {
       margin-right: 5px;
       text-align: center;
 
+      .bs3& {
+        padding-right: inherit;
+      }
+
       span {
         position: relative;
         top: calc(((-1em / 1.5) + 1ex) / 2);
         pointer-events: none;
+
+        .bs3& {
+          top: auto;
+        }
       }
     }
 
