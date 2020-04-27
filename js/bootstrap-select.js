@@ -667,7 +667,7 @@
   elementTemplates.noResults.className = 'no-results';
 
   elementTemplates.a.setAttribute('role', 'option');
-  if (version.major === '4') elementTemplates.a.className = 'dropdown-item';
+  elementTemplates.a.className = 'dropdown-item';
 
   elementTemplates.subtext.className = 'text-muted';
 
