@@ -2984,6 +2984,8 @@
     },
 
     mobile: function () {
+      // ensure mobile is set to true if mobile function is called after init
+      this.options.mobile = true;
       this.$element[0].classList.add('mobile-device');
     },
 
