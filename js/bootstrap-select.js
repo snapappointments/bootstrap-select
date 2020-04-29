@@ -282,14 +282,6 @@
     }());
   }
 
-  if (HTMLSelectElement && !HTMLSelectElement.prototype.hasOwnProperty('selectedOptions')) {
-    Object.defineProperty(HTMLSelectElement.prototype, 'selectedOptions', {
-      get: function () {
-        return this.querySelectorAll(':checked');
-      }
-    });
-  }
-
   function getSelectedOptions () {
     var selectedOptions = this.selectpicker.main.data.filter(function (item) {
           if (item.selected) {
