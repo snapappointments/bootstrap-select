@@ -1089,7 +1089,7 @@
 
       drop =
         '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
-          '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="combobox" aria-owns="' + this.selectId + '" aria-haspopup="listbox" aria-expanded="false">' +
+          '<button type="button" tabindex="-1" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="combobox" aria-owns="' + this.selectId + '" aria-haspopup="listbox" aria-expanded="false">' +
             '<div class="filter-option">' +
               '<div class="filter-option-inner">' +
                 '<div class="filter-option-inner-inner"></div>' +
@@ -1680,8 +1680,6 @@
           hasContent = false;
 
       button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !getSelectValues(element, selectedOptions));
-
-      this.tabIndex();
 
       if (this.options.selectedTextFormat === 'static') {
         titleFragment = generateOption.text.call(this, { text: this.options.title }, true);
@@ -2329,27 +2327,13 @@
     checkDisabled: function () {
       if (this.isDisabled()) {
         this.$newElement[0].classList.add(classNames.DISABLED);
-        this.$button.addClass(classNames.DISABLED).attr('tabindex', -1).attr('aria-disabled', true);
+        this.$button.addClass(classNames.DISABLED).attr('aria-disabled', true);
       } else {
         if (this.$button[0].classList.contains(classNames.DISABLED)) {
           this.$newElement[0].classList.remove(classNames.DISABLED);
           this.$button.removeClass(classNames.DISABLED).attr('aria-disabled', false);
         }
-
-        if (this.$button.attr('tabindex') == -1 && !this.$element.data('tabindex')) {
-          this.$button.removeAttr('tabindex');
-        }
       }
-    },
-
-    tabIndex: function () {
-      if (this.$element.data('tabindex') !== this.$element.attr('tabindex') &&
-        (this.$element.attr('tabindex') !== -98 && this.$element.attr('tabindex') !== '-98')) {
-        this.$element.data('tabindex', this.$element.attr('tabindex'));
-        this.$button.attr('tabindex', this.$element.data('tabindex'));
-      }
-
-      this.$element.attr('tabindex', -98);
     },
 
     clickListener: function () {
@@ -2586,6 +2570,28 @@
           that.deselectAll();
         }
       });
+
+      this.$button
+        .on('focus' + EVENT_KEY, function (e) {
+          var tabindex = that.$element[0].getAttribute('tabindex');
+
+          // only change when button is actually focused
+          if (tabindex !== undefined && e.originalEvent && e.originalEvent.isTrusted) {
+            // apply select element's tabindex to ensure correct order is followed when tabbing to the next element
+            this.setAttribute('tabindex', tabindex);
+            // set element's tabindex to -1 to allow for reverse tabbing
+            that.$element[0].setAttribute('tabindex', -1);
+            that.selectpicker.view.tabindex = tabindex;
+          }
+        })
+        .on('blur' + EVENT_KEY, function (e) {
+          // revert everything to original tabindex
+          if (that.selectpicker.view.tabindex !== undefined && e.originalEvent && e.originalEvent.isTrusted) {
+            that.$element[0].setAttribute('tabindex', that.selectpicker.view.tabindex);
+            this.setAttribute('tabindex', -1);
+            that.selectpicker.view.tabindex = undefined;
+          }
+        });
 
       this.$element
         .on('change' + EVENT_KEY, function () {
