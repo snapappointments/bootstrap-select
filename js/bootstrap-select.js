@@ -1411,7 +1411,8 @@
     },
 
     setPlaceholder: function () {
-      var updateIndex = false;
+      var that = this,
+          updateIndex = false;
 
       if (this.options.title && !this.multiple) {
         if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
@@ -1421,8 +1422,11 @@
         updateIndex = true;
 
         var element = this.$element[0],
-            isSelected = false,
-            titleNotAppended = !this.selectpicker.view.titleOption.parentNode;
+            selectTitleOption = false,
+            titleNotAppended = !this.selectpicker.view.titleOption.parentNode,
+            selectedIndex = element.selectedIndex,
+            selectedOption = element.options[selectedIndex],
+            navigation = window.performance && window.performance.getEntriesByType('navigation');
 
         if (titleNotAppended) {
           // Use native JS to prepend option (faster)
@@ -1432,8 +1436,7 @@
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
           // if so, the select will have the data-selected attribute
-          var $opt = $(element.options[element.selectedIndex]);
-          isSelected = $opt.attr('selected') === undefined && this.$element.data('selected') === undefined;
+          selectTitleOption = !selectedOption || (selectedIndex === 0 && selectedOption.defaultSelected === false && this.$element.data('selected') === undefined);
         }
 
         if (titleNotAppended || this.selectpicker.view.titleOption.index !== 0) {
@@ -1443,7 +1446,15 @@
         // Set selected *after* appending to select,
         // otherwise the option doesn't get selected in IE
         // set using selectedIndex, as setting the selected attr to true here doesn't work in IE11
-        if (isSelected) element.selectedIndex = 0;
+        if (selectTitleOption && navigation.length && navigation[0].type !== 'back_forward') {
+          element.selectedIndex = 0;
+        } else if (document.readyState !== 'complete') {
+          // if navigation type is back_forward, there's a chance the select will have its value set by BFCache
+          // wait for that value to be set, then run render again
+          window.addEventListener('pageshow', function () {
+            if (that.selectpicker.view.displayedValue !== element.value) that.render();
+          });
+        }
       }
 
       return updateIndex;
@@ -1680,6 +1691,10 @@
           hasContent = false;
 
       button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !getSelectValues(element, selectedOptions));
+
+      if (!that.multiple && selectedOptions.length === 1) {
+        that.selectpicker.view.displayedValue = getSelectValues(element, selectedOptions);
+      }
 
       if (this.options.selectedTextFormat === 'static') {
         titleFragment = generateOption.text.call(this, { text: this.options.title }, true);
