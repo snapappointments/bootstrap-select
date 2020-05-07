@@ -1,3 +1,17 @@
+# v1.13.17 (2020-05-07)
+### Bug Fixes
+- [#478]: tab key skips selectpicker inputs on Mac (Safari)
+- [#1023]: if title/placeholder enabled, select value changes when pressing back in browser
+- [#1828]: selectpicker('mobile') not working on iOS
+- [#2448]: Incorrect dropdown style when Bootstrap 4 version is not auto detected since 1.13.13
+
+[#478]: https://github.com/snapappointments/bootstrap-select/issues/478
+[#1023]: https://github.com/snapappointments/bootstrap-select/issues/1023
+[#1828]: https://github.com/snapappointments/bootstrap-select/issues/1828
+[#2448]: https://github.com/snapappointments/bootstrap-select/issues/2448
+
+-------------------
+
 # v1.13.16 (2020-04-24)
 ### Bug Fixes
 - [#2380]: Specifying a Title and OptGroups creates a redundant divider
