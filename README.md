@@ -49,8 +49,8 @@ Several quick start options are available:
 - [Download the latest release.](https://github.com/snapappointments/bootstrap-select/archive/v1.13.17.zip)
 - Clone the repo: `git clone https://github.com/snapappointments/bootstrap-select.git`
 - Install with [npm](https://www.npmjs.com/package/bootstrap-select): `npm install bootstrap-select`
-- Install with [yarn](https://yarn.pm/bootstrap-select): `yarn add bootstrap-select`
-- Install with [Composer](https://getcomposer.org): `composer require snapappointments/bootstrap-select`
+- Install with [yarn](https://yarnpkg.com/package/bootstrap-select): `yarn add bootstrap-select`
+- Install with [Composer](https://packagist.org/packages/snapappointments/bootstrap-select): `composer require snapappointments/bootstrap-select`
 - Install with [NuGet](https://www.nuget.org/packages/bootstrap-select): `Install-Package bootstrap-select`
 - Install with [Bower](https://bower.io): `bower install bootstrap-select`
 - Install via CDN ([cdnjs](https://cdnjs.com/libraries/bootstrap-select) or [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap-select)):
