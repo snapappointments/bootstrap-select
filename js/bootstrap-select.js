@@ -2951,12 +2951,28 @@
       return this.changeAll(false);
     },
 
-    toggle: function (e) {
+    toggle: function (e, state) {
+      var isActive,
+          triggerClick = state === undefined;
+
       e = e || window.event;
 
       if (e) e.stopPropagation();
 
-      this.$button.trigger('click.bs.dropdown.data-api');
+      if (triggerClick === false) {
+        isActive = this.$newElement[0].classList.contains(classNames.SHOW);
+        triggerClick = state === true && isActive === false || state === false && isActive === true;
+      }
+
+      if (triggerClick) this.$button.trigger('click.bs.dropdown.data-api');
+    },
+
+    open: function (e) {
+      this.toggle(e, true);
+    },
+
+    close: function (e) {
+      this.toggle(e, false);
     },
 
     keydown: function (e) {
