@@ -3408,7 +3408,7 @@
 
   // SELECTPICKER DATA-API
   // =====================
-  $(function () {
+  document.addEventListener('DOMContentLoaded', function () {
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
