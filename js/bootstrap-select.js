@@ -981,7 +981,10 @@
       this.fetchData(function () {
         that.render(true);
         that.buildList();
-        that.$element.trigger('loaded' + EVENT_KEY);
+
+        requestAnimationFrame(function () {
+          that.$element.trigger('loaded' + EVENT_KEY);
+        });
       });
 
       if (this.options.dropdownAlignRight === true) this.$menu[0].classList.add(classNames.MENURIGHT);
