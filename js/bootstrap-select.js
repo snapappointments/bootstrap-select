@@ -2386,7 +2386,10 @@
 
       if (!li) return;
 
-      if (selected !== undefined) liData.selected = selected;
+      if (selected !== undefined) {
+        liData.selected = selected;
+        if (liData.option) liData.option.selected = selected;
+      }
 
       if (selected && this.options.data) {
         this.createOption(liData, false);
@@ -2504,11 +2507,8 @@
               prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false;
 
           if (prevData) {
-            prevData.selected = false;
-            if (prevData.source) prevData.source.selected = false;
+            that.setSelected(prevData, false);
           }
-
-          if (prevOption) prevOption.selected = false;
 
           element.selectedIndex = 0;
 
@@ -2621,13 +2621,9 @@
           }
 
           if (!that.multiple) { // Deselect previous option if not multi select
-            if (prevData) prevData.selected = false;
-            if (prevOption) prevOption.selected = false;
-            option.selected = true;
+            if (prevData) that.setSelected(prevData, false);
             that.setSelected(clickedData, true);
           } else { // Toggle the clicked option if multi select.
-            option.selected = !state;
-
             that.setSelected(clickedData, !state);
             $this.trigger('blur');
 
@@ -2877,13 +2873,35 @@
       var element = this.$element[0];
 
       if (typeof value !== 'undefined') {
-        var prevValue = getSelectValues.call(this);
+        var selectedOptions = getSelectedOptions.call(this),
+            prevValue = getSelectValues.call(this, selectedOptions);
 
         changedArguments = [null, null, prevValue];
 
-        this.$element
-          .val(value)
-          .trigger('changed' + EVENT_KEY, changedArguments);
+        if (!Array.isArray(value)) value = [ value ];
+
+        value.map(String);
+
+        for (var i = 0; i < selectedOptions.length; i++) {
+          var item = selectedOptions[i];
+
+          if (item && value.indexOf(String(item.value)) === -1) {
+            this.setSelected(item, false);
+          }
+        }
+
+        this.selectpicker.main.data.filter(function (item) {
+          if (value.indexOf(String(item.value)) !== -1) {
+            this.setSelected(item, true);
+            return true;
+          }
+
+          return false;
+        }, this);
+
+        if (this.options.data) element.appendChild(this.selectpicker.main.optionQueue);
+
+        this.$element.trigger('changed' + EVENT_KEY, changedArguments);
 
         if (this.$newElement.hasClass(classNames.SHOW)) {
           if (this.multiple) {
