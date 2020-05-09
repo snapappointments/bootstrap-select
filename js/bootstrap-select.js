@@ -1809,7 +1809,7 @@
       button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !getSelectValues.call(this, selectedOptions));
 
       if (!that.multiple && selectedOptions.length === 1) {
-        that.selectpicker.view.displayedValue = getSelectValues(element, selectedOptions);
+        that.selectpicker.view.displayedValue = getSelectValues.call(this, selectedOptions);
       }
 
       if (this.options.selectedTextFormat === 'static') {
