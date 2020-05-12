@@ -1784,6 +1784,7 @@
           placeholderSelected = this.setPlaceholder() && element.selectedIndex === 0,
           selectedOptions = getSelectedOptions.call(this),
           selectedCount = selectedOptions.length,
+          selectedValues = getSelectValues.call(this, selectedOptions),
           button = this.$button[0],
           buttonInner = button.querySelector('.filter-option-inner-inner'),
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
@@ -1808,10 +1809,10 @@
         if (placeholderSelected) placeholderSelected = element.selectedIndex === 0;
       }
 
-      button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !getSelectValues.call(this, selectedOptions));
+      button.classList.toggle('bs-placeholder', that.multiple ? !selectedCount : !selectedValues && selectedValues !== 0);
 
       if (!that.multiple && selectedOptions.length === 1) {
-        that.selectpicker.view.displayedValue = getSelectValues.call(this, selectedOptions);
+        that.selectpicker.view.displayedValue = selectedValues;
       }
 
       if (this.options.selectedTextFormat === 'static') {
