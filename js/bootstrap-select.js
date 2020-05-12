@@ -394,7 +394,9 @@
         if (normalize) string = normalizeToBase(string);
         string = string.toUpperCase();
 
-        if (method === 'contains') {
+        if (typeof method === 'function') {
+            searchSuccess = method(string, searchString);
+        } else if (method === 'contains') {
           searchSuccess = string.indexOf(searchString) >= 0;
         } else {
           searchSuccess = string.startsWith(searchString);

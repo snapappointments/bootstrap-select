@@ -133,10 +133,10 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
   </tr>
   <tr>
     <td>liveSearchStyle</td>
-    <td>string</td>
+    <td>string | function</td>
     <td><code>'contains'</code></td>
     <td>
-      <p>When set to <code>'contains'</code>, searching will reveal options that contain the searched text. For example, searching for pl with return both Ap<b>pl</b>e, <b>Pl</b>um, and <b>Pl</b>antain. When set to <code>'startsWith'</code>, searching for pl will return only <b>Pl</b>um and <b>Pl</b>antain.</p>
+      <p>When set to <code>'contains'</code>, searching will reveal options that contain the searched text. For example, searching for pl with return both Ap<b>pl</b>e, <b>Pl</b>um, and <b>Pl</b>antain. When set to <code>'startsWith'</code>, searching for pl will return only <b>Pl</b>um and <b>Pl</b>antain. If a function is used, the arguments are the option string and the searched text and it must return <code>true</code> if the option matches or <code>false<code>.</p>
     </td>
   </tr>
   <tr>
