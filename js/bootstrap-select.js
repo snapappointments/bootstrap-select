@@ -48,7 +48,7 @@
     strong: [],
     u: [],
     ul: []
-  }
+  };
 
   /**
    * A pattern that recognizes a commonly useful subset of URLs that are safe.
@@ -65,28 +65,28 @@
   var DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;
 
   function allowedAttribute (attr, allowedAttributeList) {
-    var attrName = attr.nodeName.toLowerCase()
+    var attrName = attr.nodeName.toLowerCase();
 
     if ($.inArray(attrName, allowedAttributeList) !== -1) {
       if ($.inArray(attrName, uriAttrs) !== -1) {
-        return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN))
+        return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN));
       }
 
-      return true
+      return true;
     }
 
     var regExp = $(allowedAttributeList).filter(function (index, value) {
-      return value instanceof RegExp
-    })
+      return value instanceof RegExp;
+    });
 
     // Check if a regular expression validates the attribute.
     for (var i = 0, l = regExp.length; i < l; i++) {
       if (attrName.match(regExp[i])) {
-        return true
+        return true;
       }
     }
 
-    return false
+    return false;
   }
 
   function sanitizeHtml (unsafeElements, whiteList, sanitizeFn) {
@@ -151,7 +151,7 @@
               contains: function (classes) {
                 return $elem.hasClass(classes);
               }
-            }
+            };
           };
 
       if (objCtr.defineProperty) {
@@ -186,11 +186,11 @@
 
     DOMTokenList.prototype.add = function () {
       Array.prototype.forEach.call(arguments, _add.bind(this));
-    }
+    };
 
     DOMTokenList.prototype.remove = function () {
       Array.prototype.forEach.call(arguments, _remove.bind(this));
-    }
+    };
   }
 
   testElement.classList.toggle('c3', false);
@@ -216,7 +216,7 @@
     return array1.length === array2.length && array1.every(function (element, index) {
       return element === array2[index];
     });
-  };
+  }
 
   // <editor-fold desc="Shims">
   if (!String.prototype.startsWith) {
@@ -516,7 +516,7 @@
 
   function deburrLetter (key) {
     return deburredLetters[key];
-  };
+  }
 
   function normalizeToBase (string) {
     string = string.toString();
@@ -614,7 +614,7 @@
     TAB: 9, // KeyboardEvent.which value for tab key
     ARROW_UP: 38, // KeyboardEvent.which value for up arrow key
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
-  }
+  };
 
   var version = {
     success: false,
@@ -646,11 +646,11 @@
     POPOVERHEADER: 'popover-title',
     ICONBASE: 'glyphicon',
     TICKICON: 'glyphicon-ok'
-  }
+  };
 
   var Selector = {
     MENU: '.' + classNames.MENU
-  }
+  };
 
   var elementTemplates = {
     div: document.createElement('div'),
@@ -661,7 +661,7 @@
     li: document.createElement('li'),
     whitespace: document.createTextNode('\u00A0'),
     fragment: document.createDocumentFragment()
-  }
+  };
 
   elementTemplates.noResults = elementTemplates.li.cloneNode(false);
   elementTemplates.noResults.className = 'no-results';
@@ -3196,6 +3196,6 @@
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
-    })
+    });
   });
 })(jQuery);
