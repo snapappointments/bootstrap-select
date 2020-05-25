@@ -893,7 +893,8 @@
     tickIcon: classNames.TICKICON,
     showTick: false,
     template: {
-      caret: '<span class="caret"></span>'
+      caret: '<span class="caret"></span>',
+      searchIcon: ''
     },
     maxOptions: false,
     mobile: false,
@@ -1060,6 +1061,7 @@
       if (this.options.liveSearch) {
         searchbox =
           '<div class="bs-searchbox">' +
+          this.options.template.searchIcon
             '<input type="search" class="form-control" autocomplete="off"' +
               (
                 this.options.liveSearchPlaceholder === null ? ''
