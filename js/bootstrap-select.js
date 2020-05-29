@@ -420,6 +420,18 @@
 
         if (method === 'contains') {
           searchSuccess = string.indexOf(searchString) >= 0;
+        } else if(method === 'containsAll') {
+          //Contains all parts of the strings seperated by blanks (like Datatable Search)
+          var searchArray = searchString.split(" ");
+          var notAllMatched = false;
+          searchSuccess = false;
+          
+          for(var searchSubString in searchArray) {
+              searchSuccess = string.indexOf(searchArray[searchSubString]) >= 0;
+              if (!searchSuccess) notAllMatched = true;
+          }
+          
+          if(notAllMatched) searchSuccess = false;
         } else {
           searchSuccess = string.startsWith(searchString);
         }
