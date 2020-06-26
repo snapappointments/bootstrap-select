@@ -1,3 +1,23 @@
+# v1.13.18 (2020-06-26)
+### Bug Fixes
+- [#1342]: Bootstrap select doesn't send field data on form submit (set form attribute on select element to fix)
+- [#2402]: In Internet Explorer, with liveSearchPlaceholder enabled, can't select option while searchBox is focused. Also, selected option doesn't get scrolled to when opening menu
+- [#2464]: title attribute does not work in 1.13.17 (Safari)
+- [#2469]: Shift-Tab key not working in 1.13.17
+- [#2474]: With multiple selects, cannot select options with keyboard after using mouse to select options
+- [#2483]: Dropdown with unselectable index 0 will not scroll to top on arrow_down with last index selected
+- [#2491]: remove placeholder/title option when destroying selectpicker
+
+[#1342]: https://github.com/snapappointments/bootstrap-select/issues/1342
+[#2402]: https://github.com/snapappointments/bootstrap-select/issues/2402
+[#2464]: https://github.com/snapappointments/bootstrap-select/issues/2464
+[#2469]: https://github.com/snapappointments/bootstrap-select/issues/2469
+[#2474]: https://github.com/snapappointments/bootstrap-select/issues/2474
+[#2483]: https://github.com/snapappointments/bootstrap-select/issues/2483
+[#2491]: https://github.com/snapappointments/bootstrap-select/issues/2491
+
+-------------------
+
 # v1.13.17 (2020-05-07)
 ### Bug Fixes
 - [#478]: tab key skips selectpicker inputs on Mac (Safari)
