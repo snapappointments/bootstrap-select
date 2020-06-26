@@ -3064,6 +3064,10 @@
         this.$menu.remove();
       }
 
+      if (this.selectpicker.view.titleOption && this.selectpicker.view.titleOption.parentNode) {
+        this.selectpicker.view.titleOption.parentNode.removeChild(this.selectpicker.view.titleOption);
+      }
+
       this.$element
         .off(EVENT_KEY)
         .removeData('selectpicker')
