@@ -361,6 +361,12 @@ select.selectpicker {
 .bootstrap-select.show-tick .dropdown-menu li a span.text {
   margin-right: 34px;
 }
+.bootstrap-select > .btn {
+  max-height: 37px !important;
+}
+.bootstrap-select > .btn > .filter-option {
+  max-height: 25px !important;
+}
 .bootstrap-select .bs-ok-default:after {
   content: '';
   display: block;
