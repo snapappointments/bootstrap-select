@@ -1550,7 +1550,7 @@
         if (!options.length) return;
 
         var config = {
-              display: htmlEscape(optgroup.label),
+              display: optgroup.getAttribute('data-content') || htmlEscape(optgroup.label),
               subtext: optgroup.getAttribute('data-subtext'),
               icon: optgroup.getAttribute('data-icon'),
               type: 'optgroup-label',

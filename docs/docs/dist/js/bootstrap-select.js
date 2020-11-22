@@ -1460,6 +1460,7 @@
             titleNotAppended = !this.selectpicker.view.titleOption.parentNode,
             selectedIndex = element.selectedIndex,
             selectedOption = element.options[selectedIndex],
+            firstSelectable = element.querySelector('select > *:not(:disabled)').index,
             navigation = window.performance && window.performance.getEntriesByType('navigation'),
             // Safari doesn't support getEntriesByType('navigation') - fall back to performance.navigation
             isNotBackForward = (navigation && navigation.length) ? navigation[0].type !== 'back_forward' : window.performance.navigation.type !== 2;
@@ -1472,7 +1473,7 @@
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
           // if so, the select will have the data-selected attribute
-          selectTitleOption = !selectedOption || (selectedIndex === 0 && selectedOption.defaultSelected === false && this.$element.data('selected') === undefined);
+          selectTitleOption = !selectedOption || (selectedIndex === firstSelectable && selectedOption.defaultSelected === false && this.$element.data('selected') === undefined);
         }
 
         if (titleNotAppended || this.selectpicker.view.titleOption.index !== 0) {
@@ -1573,7 +1574,7 @@
         if (!options.length) return;
 
         var config = {
-              display: htmlEscape(optgroup.label),
+              display: optgroup.getAttribute('data-content') || htmlEscape(optgroup.label),
               subtext: optgroup.getAttribute('data-subtext'),
               icon: optgroup.getAttribute('data-icon'),
               type: 'optgroup-label',
