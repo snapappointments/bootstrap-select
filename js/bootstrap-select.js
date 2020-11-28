@@ -125,17 +125,20 @@
     }
   }
 
-  function getAttributesObject($select) {
+  function getAttributesObject ($select) {
     var attributesObject = {},
         attrVal;
 
-    ParseableAttributes.forEach(function (item, index) {
-      if(attrVal = $select.attr(item)) attributesObject[item] = attrVal;
+    ParseableAttributes.forEach(function (item) {
+      attrVal = $select.attr(item);
+      if (attrVal) attributesObject[item] = attrVal;
     });
 
     // for backwards compatibility
     // (using title as placeholder is deprecated - remove in v2.0.0)
-    if (!attributesObject.placeholder && attributesObject.title) attributesObject.placeholder = attributesObject.title;
+    if (!attributesObject.placeholder && attributesObject.title) {
+      attributesObject.placeholder = attributesObject.title;
+    }
 
     return attributesObject;
   }
@@ -284,17 +287,17 @@
 
   function getSelectedOptions () {
     var selectedOptions = this.selectpicker.main.data.filter(function (item) {
-          if (item.selected) {
-            if (this.options.hideDisabled && item.disabled) return false;
-            return true;
-          }
+      if (item.selected) {
+        if (this.options.hideDisabled && item.disabled) return false;
+        return true;
+      }
 
-          return false;
-        }, this);
+      return false;
+    }, this);
 
     // ensure only 1 option is selected if multiple are set in the data source
     if (this.options.source.data && !this.multiple && selectedOptions.length > 1) {
-      for (var i = 0 ; i < selectedOptions.length - 1; i++) {
+      for (var i = 0; i < selectedOptions.length - 1; i++) {
         selectedOptions[i].selected = false;
       }
 
@@ -940,7 +943,7 @@
     selectOnTab: false,
     dropdownAlignRight: false,
     windowPadding: 0,
-    virtualScroll: true,//600,
+    virtualScroll: 600,
     display: false,
     sanitize: true,
     sanitizeFn: null,
@@ -1500,7 +1503,7 @@
       var that = this,
           updateIndex = false;
 
-      if ( (this.options.placeholder || this.options.allowClear) && !this.multiple ) {
+      if ((this.options.placeholder || this.options.allowClear) && !this.multiple) {
         if (!this.selectpicker.view.titleOption) this.selectpicker.view.titleOption = document.createElement('option');
 
         // this option doesn't create a new <li> element, but does add a new option at the start,
@@ -2401,7 +2404,7 @@
         var option = (init ? elementTemplates.selectedOption : elementTemplates.option).cloneNode(true);
         if (optionData.value !== undefined) option.value = optionData.value;
         option.textContent = optionData.text;
-        
+
         option.selected = true;
 
         if (optionData.liIndex !== undefined) {
@@ -2515,8 +2518,7 @@
      * @param {boolean} disabled - true if the option is being disabled, false if being enabled
      */
     setDisabled: function (liData) {
-      var index = liData.index,
-          disabled = liData.disabled,
+      var disabled = liData.disabled,
           li = liData.element,
           a;
 
