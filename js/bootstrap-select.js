@@ -997,6 +997,15 @@
         });
       });
 
+      this.fetchData(function () {
+        that.render(true);
+        that.buildList();
+
+        requestAnimationFrame(function () {
+          that.$element.trigger('loaded' + EVENT_KEY);
+        });
+      });
+
       if (this.options.dropdownAlignRight === true) this.$menu[0].classList.add(classNames.MENURIGHT);
 
       if (typeof id !== 'undefined') {
