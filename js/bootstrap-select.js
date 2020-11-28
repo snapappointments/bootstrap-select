@@ -293,7 +293,7 @@
         }, this);
 
     // ensure only 1 option is selected if multiple are set in the data source
-    if (this.options.data && !this.multiple && selectedOptions.length > 1) {
+    if (this.options.source.data && !this.multiple && selectedOptions.length > 1) {
       for (var i = 0 ; i < selectedOptions.length - 1; i++) {
         selectedOptions[i].selected = false;
       }
@@ -395,7 +395,7 @@
         string = string.toUpperCase();
 
         if (typeof method === 'function') {
-            searchSuccess = method(string, searchString);
+          searchSuccess = method(string, searchString);
         } else if (method === 'contains') {
           searchSuccess = string.indexOf(searchString) >= 0;
         } else {
@@ -904,7 +904,8 @@
     },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
-    data: null,
+    source: {},
+    chunkSize: 40,
     doneButton: false,
     doneButtonText: 'Close',
     multipleSeparator: ', ',
@@ -939,7 +940,7 @@
     selectOnTab: false,
     dropdownAlignRight: false,
     windowPadding: 0,
-    virtualScroll: 600,
+    virtualScroll: true,//600,
     display: false,
     sanitize: true,
     sanitizeFn: null,
@@ -1273,8 +1274,8 @@
 
         that.selectpicker.view.scrollTop = scrollTop;
 
-        chunkSize = Math.ceil(that.sizeInfo.menuInnerHeight / that.sizeInfo.liHeight * 1.5); // number of options in a chunk
-        chunkCount = Math.round(size / chunkSize) || 1; // number of chunks
+        chunkSize = that.options.chunkSize; // number of options in a chunk
+        chunkCount = Math.ceil(size / chunkSize) || 1; // number of chunks
 
         for (var i = 0; i < chunkCount; i++) {
           var endOfChunk = (i + 1) * chunkSize;
@@ -1419,6 +1420,15 @@
               }
             }
           }
+
+          if ((!isSearching && that.options.source.load || isSearching && that.options.source.search) && currentChunk === chunkCount - 1) {
+            that.fetchData(function () {
+              that.render();
+              that.buildList(size, isSearching);
+              that.setPositionData();
+              scroll(scrollTop);
+            }, isSearching ? 'search' : 'load', currentChunk + 1, isSearching ? that.selectpicker.search.previousValue : undefined);
+          }
         }
 
         that.prevActiveIndex = that.activeIndex;
@@ -1493,7 +1503,8 @@
             titleNotAppended = !this.selectpicker.view.titleOption.parentNode,
             selectedIndex = element.selectedIndex,
             selectedOption = element.options[selectedIndex],
-            firstSelectable = element.querySelector('select > *:not(:disabled)').index,
+            firstSelectable = element.querySelector('select > *:not(:disabled)'),
+            firstSelectableIndex = firstSelectable ? firstSelectable.index : 0,
             navigation = window.performance && window.performance.getEntriesByType('navigation'),
             // Safari doesn't support getEntriesByType('navigation') - fall back to performance.navigation
             isNotBackForward = (navigation && navigation.length) ? navigation[0].type !== 'back_forward' : window.performance.navigation.type !== 2;
@@ -1506,7 +1517,7 @@
           // Check if selected or data-selected attribute is already set on an option. If not, select the titleOption option.
           // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
           // if so, the select will have the data-selected attribute
-          selectTitleOption = !selectedOption || (selectedIndex === firstSelectable && selectedOption.defaultSelected === false && this.$element.data('selected') === undefined);
+          selectTitleOption = !selectedOption || (selectedIndex === firstSelectableIndex && selectedOption.defaultSelected === false && this.$element.data('selected') === undefined);
         }
 
         if (titleNotAppended || this.selectpicker.view.titleOption.index !== 0) {
@@ -1530,9 +1541,11 @@
       return updateIndex;
     },
 
-    fetchData: function (callback) {
+    fetchData: function (callback, type, page, searchValue) {
+      type = type || 'data';
+
       var that = this,
-          data = this.options.data,
+          data = this.options.source[type],
           builtData;
 
       if (data) {
@@ -1542,27 +1555,36 @@
           data.call(
             this,
             function (data) {
-              builtData = that.buildData(data);
+              builtData = that.buildData(data, type);
               callback.call(that, builtData);
-            }
+            },
+            page,
+            searchValue
           );
         } else if (Array.isArray(data)) {
-          builtData = that.buildData(data);
+          builtData = that.buildData(data, type);
           callback.call(that, builtData);
         }
       } else {
-        builtData = this.buildData(false);
+        builtData = this.buildData(false, type);
         callback.call(that, builtData);
       }
     },
 
-    buildData: function (data) {
+    buildData: function (data, type) {
       var dataGetter = data === false ? getOptionData.fromOption : getOptionData.fromDataSource;
 
       var optionSelector = ':not([hidden]):not([data-hidden="true"])',
           mainData = [],
+          startLen = 0,
           optID = 0,
           startIndex = this.setPlaceholder() && !data ? 1 : 0; // append the titleOption if necessary and skip the first option in the loop
+
+      if (type === 'load') {
+        startLen = this.selectpicker.main.data.length;
+      } else if (type === 'search') {
+        startLen = this.selectpicker.search.data.length;
+      }
 
       if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
@@ -1596,7 +1618,7 @@
             optID: config.optID
           });
         } else {
-          var liIndex = mainData.length,
+          var liIndex = mainData.length + startLen,
               cssText = dataGetter(item, 'style'),
               inlineStyle = cssText ? htmlEscape(cssText) : '',
               optionClass = (item.className || '') + (config.optgroupClass || '');
@@ -1688,14 +1710,28 @@
         }
       }
 
-      this.selectpicker.main.data = this.selectpicker.current.data = mainData;
+      switch (type) {
+        case 'data': {
+          this.selectpicker.main.data = this.selectpicker.current.data = mainData;
+          break;
+        }
+        case 'load': {
+          Array.prototype.push.apply(this.selectpicker.main.data, mainData);
+          this.selectpicker.current.data = this.selectpicker.main.data;
+          break;
+        }
+        case 'search': {
+          Array.prototype.push.apply(this.selectpicker.search.data, mainData);
+          break;
+        }
+      }
 
       return mainData;
     },
 
-    buildList: function () {
+    buildList: function (size, searching) {
       var that = this,
-          selectData = this.selectpicker.main.data,
+          selectData = searching ? this.selectpicker.search.data : this.selectpicker.main.data,
           mainElements = [],
           widestOptionLength = 0;
 
@@ -1704,7 +1740,7 @@
         elementTemplates.a.appendChild(elementTemplates.checkMark);
       }
 
-      function buildElement (item) {
+      function buildElement (mainElements, item) {
         var liElement,
             combinedLength = 0;
 
@@ -1764,13 +1800,28 @@
         }
       }
 
-      for (var len = selectData.length, i = 0; i < len; i++) {
+      var startIndex = size || 0;
+
+      for (var len = selectData.length, i = startIndex; i < len; i++) {
         var item = selectData[i];
 
-        buildElement(item);
+        buildElement(mainElements, item);
       }
 
-      this.selectpicker.main.elements = this.selectpicker.current.elements = mainElements;
+      if (size) {
+        if (searching) {
+          Array.prototype.push.apply(this.selectpicker.search.elements, mainElements);
+        } else {
+          Array.prototype.push.apply(this.selectpicker.main.elements, mainElements);
+          this.selectpicker.current.elements = this.selectpicker.main.elements;
+        }
+      } else {
+        if (searching) {
+          this.selectpicker.search.elements = mainElements;
+        } else {
+          this.selectpicker.main.elements = this.selectpicker.current.elements = mainElements;
+        }
+      }
     },
 
     findLis: function () {
@@ -1802,7 +1853,7 @@
       }
 
       // create selected option elements to ensure select value is correct
-      if (this.options.data && init) {
+      if (this.options.source.data && init) {
         selectedOptions.map(createSelected);
         element.appendChild(this.selectpicker.main.optionQueue);
 
@@ -2376,7 +2427,7 @@
         }
 
         // append optionQueue (documentFragment with option elements for select options)
-        if (this.options.data) this.$element[0].appendChild(this.selectpicker.main.optionQueue);
+        if (this.options.source.data) this.$element[0].appendChild(this.selectpicker.main.optionQueue);
       }
     },
 
@@ -2409,7 +2460,7 @@
         if (liData.option) liData.option.selected = selected;
       }
 
-      if (selected && this.options.data) {
+      if (selected && this.options.source.data) {
         this.createOption(liData, false);
       }
 
@@ -2706,7 +2757,7 @@
             }
           }
 
-          if (that.options.data) that.$element[0].appendChild(that.selectpicker.main.optionQueue);
+          if (that.options.source.data) that.$element[0].appendChild(that.selectpicker.main.optionQueue);
 
           if (!that.multiple || (that.multiple && that.options.maxOptions === 1)) {
             that.$button.trigger('focus');
@@ -2827,56 +2878,65 @@
         that.selectpicker.search.data = [];
 
         if (searchValue) {
-          var i,
-              searchMatch = [],
-              q = searchValue.toUpperCase(),
-              cache = {},
-              cacheArr = [],
-              searchStyle = that._searchStyle(),
-              normalizeSearch = that.options.liveSearchNormalize;
+          if (that.options.source.search) {
+            that.fetchData(function (builtData) {
+              that.render();
+              that.buildList(undefined, true);
+              that.createView(true);
+              showNoResults.call(that, builtData, searchValue);
+            }, 'search', 0, searchValue);
+          } else {
+            var i,
+                searchMatch = [],
+                q = searchValue.toUpperCase(),
+                cache = {},
+                cacheArr = [],
+                searchStyle = that._searchStyle(),
+                normalizeSearch = that.options.liveSearchNormalize;
 
-          if (normalizeSearch) q = normalizeToBase(q);
+            if (normalizeSearch) q = normalizeToBase(q);
 
-          for (var i = 0; i < that.selectpicker.main.data.length; i++) {
-            var li = that.selectpicker.main.data[i];
+            for (var i = 0; i < that.selectpicker.main.data.length; i++) {
+              var li = that.selectpicker.main.data[i];
 
-            if (!cache[i]) {
-              cache[i] = stringSearch(li, q, searchStyle, normalizeSearch);
-            }
-
-            if (cache[i] && li.headerIndex !== undefined && cacheArr.indexOf(li.headerIndex) === -1) {
-              if (li.headerIndex > 0) {
-                cache[li.headerIndex - 1] = true;
-                cacheArr.push(li.headerIndex - 1);
+              if (!cache[i]) {
+                cache[i] = stringSearch(li, q, searchStyle, normalizeSearch);
               }
 
-              cache[li.headerIndex] = true;
-              cacheArr.push(li.headerIndex);
+              if (cache[i] && li.headerIndex !== undefined && cacheArr.indexOf(li.headerIndex) === -1) {
+                if (li.headerIndex > 0) {
+                  cache[li.headerIndex - 1] = true;
+                  cacheArr.push(li.headerIndex - 1);
+                }
 
-              cache[li.lastIndex + 1] = true;
+                cache[li.headerIndex] = true;
+                cacheArr.push(li.headerIndex);
+
+                cache[li.lastIndex + 1] = true;
+              }
+
+              if (cache[i] && li.type !== 'optgroup-label') cacheArr.push(i);
             }
 
-            if (cache[i] && li.type !== 'optgroup-label') cacheArr.push(i);
-          }
+            for (var i = 0, cacheLen = cacheArr.length; i < cacheLen; i++) {
+              var index = cacheArr[i],
+                  prevIndex = cacheArr[i - 1],
+                  li = that.selectpicker.main.data[index],
+                  liPrev = that.selectpicker.main.data[prevIndex];
 
-          for (var i = 0, cacheLen = cacheArr.length; i < cacheLen; i++) {
-            var index = cacheArr[i],
-                prevIndex = cacheArr[i - 1],
-                li = that.selectpicker.main.data[index],
-                liPrev = that.selectpicker.main.data[prevIndex];
-
-            if (li.type !== 'divider' || (li.type === 'divider' && liPrev && liPrev.type !== 'divider' && cacheLen - 1 !== i)) {
-              that.selectpicker.search.data.push(li);
-              searchMatch.push(that.selectpicker.main.elements[index]);
+              if (li.type !== 'divider' || (li.type === 'divider' && liPrev && liPrev.type !== 'divider' && cacheLen - 1 !== i)) {
+                that.selectpicker.search.data.push(li);
+                searchMatch.push(that.selectpicker.main.elements[index]);
+              }
             }
-          }
 
-          that.activeIndex = undefined;
-          that.noScroll = true;
-          that.$menuInner.scrollTop(0);
-          that.selectpicker.search.elements = searchMatch;
-          that.createView(true);
-          showNoResults.call(that, searchMatch, searchValue);
+            that.activeIndex = undefined;
+            that.noScroll = true;
+            that.$menuInner.scrollTop(0);
+            that.selectpicker.search.elements = searchMatch;
+            that.createView(true);
+            showNoResults.call(that, searchMatch, searchValue);
+          }
         } else if (that.selectpicker.search.previousValue) { // for IE11 (#2402)
           that.$menuInner.scrollTop(0);
           that.createView(false);
@@ -2911,6 +2971,7 @@
           }
         }
 
+        // only update selected value if it matches an existing option
         this.selectpicker.main.data.filter(function (item) {
           if (value.indexOf(String(item.value)) !== -1) {
             this.setSelected(item, true);
@@ -2920,7 +2981,7 @@
           return false;
         }, this);
 
-        if (this.options.data) element.appendChild(this.selectpicker.main.optionQueue);
+        if (this.options.source.data) element.appendChild(this.selectpicker.main.optionQueue);
 
         this.$element.trigger('changed' + EVENT_KEY, changedArguments);
 
@@ -3245,10 +3306,15 @@
       var config = $.extend({}, this.options, getAttributesObject(this.$element), this.$element.data()); // in this order on refresh, as user may change attributes on select, and options object is not passed on refresh
       this.options = config;
 
-      this.fetchData(function () {
-        that.render();
-        that.buildList();
-      });
+      if (this.options.source.data) {
+        this.render();
+        this.buildList();
+      } else {
+        this.fetchData(function () {
+          that.render();
+          that.buildList();
+        });
+      }
 
       this.checkDisabled();
       this.setStyle();
