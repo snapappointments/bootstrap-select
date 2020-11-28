@@ -135,7 +135,7 @@
 
     // for backwards compatibility
     // (using title as placeholder is deprecated - remove in v2.0.0)
-    if (attributesObject.title) attributesObject.placeholder = attributesObject.title;
+    if (!attributesObject.placeholder && attributesObject.title) attributesObject.placeholder = attributesObject.title;
 
     return attributesObject;
   }
