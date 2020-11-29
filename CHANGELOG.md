@@ -1,3 +1,33 @@
+# v1.14.0-beta (2020-11-28)
+
+### New Features
+- [#899]: Ajax/JSON data source support
+- [#1315]: Reset select element when `form.reset()` is called
+- [#1416], [#2147]: Using `title` to set the select's placeholder has been deprecated. Use `placeholder` instead. `title` will no longer set the placeholder starting in v2.0.0. `title` and `placeholder` can still be used together to support a placeholder and a custom title.
+- [#1449]: Add `allowClear` option to support deselecting the value for single selects
+- [#1893]: Add `open` and `close` methods
+- [#2042]: Support assigning a function to `liveSearchStyle` for custom filtering
+
+### Bug Fixes
+- [#2507]: Placeholder doesn't work when the first option is disabled
+
+### Breaking Changes
+- [#1709]: use DOMContentLoaded event listener to auto-init bootstrap-select (performance boost)
+- [#2259]: Drop IE8 support
+
+[#899]: https://github.com/snapappointments/bootstrap-select/issues/899
+[#1315]: https://github.com/snapappointments/bootstrap-select/issues/1315
+[#1416]: https://github.com/snapappointments/bootstrap-select/issues/1416
+[#2147]: https://github.com/snapappointments/bootstrap-select/issues/2147
+[#1449]: https://github.com/snapappointments/bootstrap-select/issues/1449
+[#1893]: https://github.com/snapappointments/bootstrap-select/issues/1893
+[#2042]: https://github.com/snapappointments/bootstrap-select/issues/2042
+[#2507]: https://github.com/snapappointments/bootstrap-select/issues/2507
+[#1709]: https://github.com/snapappointments/bootstrap-select/issues/1709
+[#2259]: https://github.com/snapappointments/bootstrap-select/issues/2259
+
+-------------------
+
 # v1.13.18 (2020-06-26)
 ### Bug Fixes
 - [#1342]: Bootstrap select doesn't send field data on form submit (set form attribute on select element to fix)
