@@ -2592,7 +2592,7 @@
 
           element.selectedIndex = 0;
 
-          that.render();
+          that.$element.triggerNative('change');
         }
 
         // remove selected styling if menu is open
