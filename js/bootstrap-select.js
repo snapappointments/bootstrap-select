@@ -2582,6 +2582,7 @@
           that.deselectAll();
         } else {
           var element = that.$element[0],
+              prevValue = element.value,
               prevIndex = element.selectedIndex,
               prevOption = element.options[prevIndex],
               prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false;
@@ -2592,7 +2593,8 @@
 
           element.selectedIndex = 0;
 
-          that.render();
+          changedArguments = [prevIndex, false, prevValue];
+          that.$element.triggerNative('change');
         }
 
         // remove selected styling if menu is open
