@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.13.18 (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.14.0-beta (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2020 SnapAppointments, LLC
+ * Copyright 2012-2021 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -252,6 +252,27 @@ select.selectpicker {
   right: 12px;
   margin-top: -2px;
   vertical-align: middle;
+}
+.bootstrap-select .dropdown-toggle .bs-select-clear-selected {
+  position: relative;
+  display: block;
+  margin-right: 5px;
+  text-align: center;
+}
+.bs3.bootstrap-select .dropdown-toggle .bs-select-clear-selected {
+  padding-right: inherit;
+}
+.bootstrap-select .dropdown-toggle .bs-select-clear-selected span {
+  position: relative;
+  top: -webkit-calc(((-1em / 1.5) + 1ex) / 2);
+  top: calc(((-1em / 1.5) + 1ex) / 2);
+  pointer-events: none;
+}
+.bs3.bootstrap-select .dropdown-toggle .bs-select-clear-selected span {
+  top: auto;
+}
+.bootstrap-select .dropdown-toggle.bs-placeholder .bs-select-clear-selected {
+  display: none;
 }
 .input-group .bootstrap-select.form-control .dropdown-toggle {
   border-radius: inherit;
