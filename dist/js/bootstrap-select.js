@@ -1408,7 +1408,6 @@
                 }
               }
 
-              console.log('ELEMENT', element)
               menuFragment.appendChild(element);
             }
 
@@ -2059,7 +2058,6 @@
       text.className = 'text';
       a.className = 'dropdown-item ' + (firstOption ? firstOption.className : '');
       newElement.className = this.$menu[0].parentNode.className + ' ' + classNames.SHOW;
-      console.log('ADDD SHOW', newElement)
       newElement.style.width = 0; // ensure button width doesn't affect natural width of menu when calculating
       if (this.options.width === 'auto') menu.style.minWidth = 0;
       menu.className = classNames.MENU + ' ' + classNames.SHOW;
@@ -2392,7 +2390,6 @@
           };
 
       this.$button.on('click.bs.dropdown.data-api', function () {
-        console.log('HERE4')
         if (that.isDisabled()) {
           return;
         }
@@ -2593,26 +2590,16 @@
       });
 
       this.$newElement.on('show.bs.dropdown', function () {
-        console.log('DROPDOWN', that.dropdown)
-        console.log('THIS', that)
+        if (version.major === '5') {
+          that.toggle(null, undefined);
+          that.open();
 
-        // that.setSize(false)
+          document.body.appendChild(that.$bsContainer[0]);
+        }
 
-        // that.$newElement.addClass(classNames.SHOW);
-
-        that.toggle(null, undefined)
-        // that.setSize(false)
-        that.open()
-
-        that.$bsContainer[0].appendChild(that.$menu[0])
-        console.log('BUTTON', that.$button, that.$bsContainer)
-
-        if (version.major > 3 && !that.dropdown) {
+        if (version.major === '4' && !that.dropdown) {
           that.dropdown = that.$button.data('bs.dropdown');
-          console.log(that, that.$newElement, that.$button, that.$button.data('bs.dropdown'))
-          // that.dropdown._menu = that.$menu[0];
-
-          document.body.appendChild(that.$bsContainer[0])
+          that.dropdown._menu = that.$menu[0];
         }
       });
 
@@ -2647,7 +2634,6 @@
       }
 
       this.$button.on('click.bs.dropdown.data-api', function (e) {
-        console.log('fdjfhgdkfjghskjdfhg')
         if (that.options.allowClear) {
           var target = e.target,
               clearButton = that.$clearButton[0];
@@ -2914,7 +2900,6 @@
       var that = this;
 
       this.$button.on('click.bs.dropdown.data-api', function () {
-        console.log('HERE5')
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
           that.selectpicker.search.previousValue = undefined;
