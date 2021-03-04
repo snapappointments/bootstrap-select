@@ -1,7 +1,7 @@
 /*!
  * Bootstrap-select v1.14.0-beta (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2020 SnapAppointments, LLC
+ * Copyright 2012-2021 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -2606,6 +2606,7 @@
           that.deselectAll();
         } else {
           var element = that.$element[0],
+              prevValue = element.value,
               prevIndex = element.selectedIndex,
               prevOption = element.options[prevIndex],
               prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false;
@@ -2616,7 +2617,8 @@
 
           element.selectedIndex = 0;
 
-          that.render();
+          changedArguments = [prevIndex, false, prevValue];
+          that.$element.triggerNative('change');
         }
 
         // remove selected styling if menu is open
