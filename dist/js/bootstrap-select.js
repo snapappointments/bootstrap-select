@@ -1189,7 +1189,7 @@
 
       drop =
         '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
-          '<button type="button" tabindex="-1" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="combobox" aria-owns="' + this.selectId + '" aria-haspopup="listbox" aria-expanded="false">' +
+          '<button type="button" tabindex="-1" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown" data-bs-toggle="dropdown"' + autofocus + ' role="combobox" aria-owns="' + this.selectId + '" aria-haspopup="listbox" aria-expanded="false">' +
             '<div class="filter-option">' +
               '<div class="filter-option-inner">' +
                 '<div class="filter-option-inner-inner">&nbsp;</div>' +
@@ -1197,20 +1197,15 @@
             '</div>' +
             clearButton +
             '</span>' +
-            (
-              version.major === '4' ? ''
-              :
-              '<span class="bs-caret">' +
-                this.options.template.caret +
-              '</span>'
+            (version.major === '5' || version.major === '4' ? '' : '<span class="bs-caret">' + this.options.template.caret + '</span>'
             ) +
           '</button>' +
-          '<div class="' + classNames.MENU + ' ' + (version.major === '4' ? '' : classNames.SHOW) + '">' +
+          '<div class="' + classNames.MENU + ' ' + ((version.major === '5' || version.major === '4') ? '' : classNames.SHOW) + '">' +
             header +
             searchbox +
             actionsbox +
             '<div class="inner ' + classNames.SHOW + '" role="listbox" id="' + this.selectId + '" tabindex="-1" ' + multiselectable + '>' +
-                '<ul class="' + classNames.MENU + ' inner ' + (version.major === '4' ? classNames.SHOW : '') + '" role="presentation">' +
+                '<ul class="' + classNames.MENU + ' inner ' + (version.major === '5' || version.major === '4' ? classNames.SHOW : '') + '" role="presentation">' +
                 '</ul>' +
             '</div>' +
             donebutton +
@@ -1413,6 +1408,7 @@
                 }
               }
 
+              console.log('ELEMENT', element)
               menuFragment.appendChild(element);
             }
 
@@ -2063,11 +2059,12 @@
       text.className = 'text';
       a.className = 'dropdown-item ' + (firstOption ? firstOption.className : '');
       newElement.className = this.$menu[0].parentNode.className + ' ' + classNames.SHOW;
+      console.log('ADDD SHOW', newElement)
       newElement.style.width = 0; // ensure button width doesn't affect natural width of menu when calculating
       if (this.options.width === 'auto') menu.style.minWidth = 0;
       menu.className = classNames.MENU + ' ' + classNames.SHOW;
       menuInner.className = 'inner ' + classNames.SHOW;
-      menuInnerInner.className = classNames.MENU + ' inner ' + (version.major === '4' ? classNames.SHOW : '');
+      menuInnerInner.className = classNames.MENU + ' inner ' + ((version.major === '5' || version.major === '4') ? classNames.SHOW : '');
       divider.className = classNames.DIVIDER;
       dropdownHeader.className = 'dropdown-header';
 
@@ -2395,6 +2392,7 @@
           };
 
       this.$button.on('click.bs.dropdown.data-api', function () {
+        console.log('HERE4')
         if (that.isDisabled()) {
           return;
         }
@@ -2553,7 +2551,7 @@
       li.classList.toggle(classNames.DISABLED, disabled);
 
       if (a) {
-        if (version.major === '4') a.classList.toggle(classNames.DISABLED, disabled);
+        if (version.major === '5' || version.major === '4') a.classList.toggle(classNames.DISABLED, disabled);
 
         if (disabled) {
           a.setAttribute('aria-disabled', disabled);
@@ -2595,9 +2593,26 @@
       });
 
       this.$newElement.on('show.bs.dropdown', function () {
+        console.log('DROPDOWN', that.dropdown)
+        console.log('THIS', that)
+
+        // that.setSize(false)
+
+        // that.$newElement.addClass(classNames.SHOW);
+
+        that.toggle(null, undefined)
+        // that.setSize(false)
+        that.open()
+
+        that.$bsContainer[0].appendChild(that.$menu[0])
+        console.log('BUTTON', that.$button, that.$bsContainer)
+
         if (version.major > 3 && !that.dropdown) {
           that.dropdown = that.$button.data('bs.dropdown');
-          that.dropdown._menu = that.$menu[0];
+          console.log(that, that.$newElement, that.$button, that.$button.data('bs.dropdown'))
+          // that.dropdown._menu = that.$menu[0];
+
+          document.body.appendChild(that.$bsContainer[0])
         }
       });
 
@@ -2632,6 +2647,7 @@
       }
 
       this.$button.on('click.bs.dropdown.data-api', function (e) {
+        console.log('fdjfhgdkfjghskjdfhg')
         if (that.options.allowClear) {
           var target = e.target,
               clearButton = that.$clearButton[0];
@@ -2898,6 +2914,7 @@
       var that = this;
 
       this.$button.on('click.bs.dropdown.data-api', function () {
+        console.log('HERE5')
         if (!!that.$searchbox.val()) {
           that.$searchbox.val('');
           that.selectpicker.search.previousValue = undefined;
@@ -3433,7 +3450,7 @@
       version.success = true;
     }
 
-    if (version.major === '4') {
+    if (version.major === '4' || version.major === '5') {
       // some defaults need to be changed if using Bootstrap 4
       // check to see if they have already been manually changed before forcing them to update
       var toUpdate = [];
@@ -3526,10 +3543,10 @@
 
   $(document)
     .off('keydown.bs.dropdown.data-api')
-    .on('keydown.bs.dropdown.data-api', ':not(.bootstrap-select) > [data-toggle="dropdown"]', keydownHandler)
+    .on('keydown.bs.dropdown.data-api', ':not(.bootstrap-select) > [data-bs-toggle="dropdown"]', keydownHandler)
     .on('keydown.bs.dropdown.data-api', ':not(.bootstrap-select) > .dropdown-menu', keydownHandler)
-    .on('keydown' + EVENT_KEY, '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
-    .on('focusin.modal', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
+    .on('keydown' + EVENT_KEY, '.bootstrap-select [data-bs-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
+    .on('focusin.modal', '.bootstrap-select [data-bs-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
       e.stopPropagation();
     });
 
