@@ -2913,7 +2913,7 @@
 
         liActive = that.selectpicker.current.elements[liActiveIndex];
 
-        that.activeIndex = that.selectpicker.current.data[liActiveIndex].index;
+        that.activeIndex = (that.selectpicker.current.data[liActiveIndex] || {}).index;
 
         that.focusItem(liActive);
 
