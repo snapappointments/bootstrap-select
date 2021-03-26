@@ -518,8 +518,12 @@ select.selectpicker {
   width: 100%;
   @include box-sizing(border-box);
 
-  & .btn-group button {
-    width: 50%;
+  & .btn-group {
+    display: block;
+
+    & button {
+      width: 50%;
+    }
   }
 }
 
@@ -528,8 +532,12 @@ select.selectpicker {
   width: 100%;
   @include box-sizing(border-box);
 
-  & .btn-group button {
-    width: 100%;
+  & .btn-group {
+    display: block;
+
+    & button {
+      width: 100%;
+    }
   }
 }
 
