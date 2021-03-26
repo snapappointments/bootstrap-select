@@ -1,7 +1,7 @@
 <h1 align="center">bootstrap-select</h1>
 
 <p align="center">
-	<strong>The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 4 support.</strong>
+	<strong>The jQuery plugin that brings select elements into the 21st century with intuitive multiselection, searching, and much more. Now with Bootstrap 5 support.</strong>
 </p>
 
 <p align="center">

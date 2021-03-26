@@ -602,7 +602,7 @@
 
   function getVersion () {
     var version;
-  
+
     try {
       version = $.fn.dropdown.Constructor.VERSION;
     } catch (err) {
@@ -989,7 +989,7 @@
       }
 
       this.$newElement = this.createDropdown();
-      
+
       this.$element
         .after(this.$newElement)
         .prependTo(this.$newElement);

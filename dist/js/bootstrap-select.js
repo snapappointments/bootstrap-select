@@ -1,7 +1,7 @@
 /*!
- * Bootstrap-select v1.14.0-beta (https://developer.snapappointments.com/bootstrap-select)
+ * Bootstrap-select v1.14.0-beta2 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2012-2020 SnapAppointments, LLC
+ * Copyright 2012-2021 SnapAppointments, LLC
  * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
@@ -621,13 +621,28 @@
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
   }
 
+  // eslint-disable-next-line no-undef
+  var Dropdown = window.Dropdown || bootstrap.Dropdown;
+
+  function getVersion () {
+    var version;
+
+    try {
+      version = $.fn.dropdown.Constructor.VERSION;
+    } catch (err) {
+      version = Dropdown.VERSION;
+    }
+
+    return version;
+  }
+
   var version = {
     success: false,
     major: '3'
   };
 
   try {
-    version.full = ($.fn.dropdown.Constructor.VERSION || '').split(' ')[0].split('.');
+    version.full = (getVersion() || '').split(' ')[0].split('.');
     version.major = version.full[0];
     version.success = true;
   } catch (err) {
@@ -654,7 +669,8 @@
   }
 
   var Selector = {
-    MENU: '.' + classNames.MENU
+    MENU: '.' + classNames.MENU,
+    DATA_TOGGLE: 'data-toggle="dropdown"'
   }
 
   var elementTemplates = {
@@ -914,7 +930,7 @@
     this.init();
   };
 
-  Selectpicker.VERSION = '1.14.0-beta';
+  Selectpicker.VERSION = '1.14.0-beta2';
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
@@ -997,6 +1013,7 @@
       }
 
       this.$newElement = this.createDropdown();
+
       this.$element
         .after(this.$newElement)
         .prependTo(this.$newElement);
@@ -1041,6 +1058,8 @@
 
       this.checkDisabled();
       this.clickListener();
+
+      if (version.major > 4) this.dropdown = new Dropdown(this.$button[0]);
 
       if (this.options.liveSearch) {
         this.liveSearchListener();
@@ -1161,7 +1180,7 @@
       if (this.multiple && this.options.actionsBox) {
         actionsbox =
           '<div class="bs-actionsbox">' +
-            '<div class="btn-group btn-group-sm btn-block">' +
+            '<div class="btn-group btn-group-sm">' +
               '<button type="button" class="actions-btn bs-select-all btn ' + classNames.BUTTONCLASS + '">' +
                 this.options.selectAllText +
               '</button>' +
@@ -1175,7 +1194,7 @@
       if (this.multiple && this.options.doneButton) {
         donebutton =
           '<div class="bs-donebutton">' +
-            '<div class="btn-group btn-block">' +
+            '<div class="btn-group">' +
               '<button type="button" class="btn btn-sm ' + classNames.BUTTONCLASS + '">' +
                 this.options.doneButtonText +
               '</button>' +
@@ -1189,7 +1208,15 @@
 
       drop =
         '<div class="dropdown bootstrap-select' + showTick + inputGroup + '">' +
-          '<button type="button" tabindex="-1" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="combobox" aria-owns="' + this.selectId + '" aria-haspopup="listbox" aria-expanded="false">' +
+          '<button type="button" tabindex="-1" class="' +
+            this.options.styleBase +
+            ' dropdown-toggle" ' +
+            (this.options.display === 'static' ? 'data-display="static"' : '') +
+            Selector.DATA_TOGGLE +
+            autofocus +
+            ' role="combobox" aria-owns="' +
+            this.selectId +
+            '" aria-haspopup="listbox" aria-expanded="false">' +
             '<div class="filter-option">' +
               '<div class="filter-option-inner">' +
                 '<div class="filter-option-inner-inner">&nbsp;</div>' +
@@ -1198,19 +1225,19 @@
             clearButton +
             '</span>' +
             (
-              version.major === '4' ? ''
+              version.major >= '4' ? ''
               :
               '<span class="bs-caret">' +
                 this.options.template.caret +
               '</span>'
             ) +
           '</button>' +
-          '<div class="' + classNames.MENU + ' ' + (version.major === '4' ? '' : classNames.SHOW) + '">' +
+          '<div class="' + classNames.MENU + ' ' + (version.major >= '4' ? '' : classNames.SHOW) + '">' +
             header +
             searchbox +
             actionsbox +
             '<div class="inner ' + classNames.SHOW + '" role="listbox" id="' + this.selectId + '" tabindex="-1" ' + multiselectable + '>' +
-                '<ul class="' + classNames.MENU + ' inner ' + (version.major === '4' ? classNames.SHOW : '') + '" role="presentation">' +
+                '<ul class="' + classNames.MENU + ' inner ' + (version.major >= '4' ? classNames.SHOW : '') + '" role="presentation">' +
                 '</ul>' +
             '</div>' +
             donebutton +
@@ -2056,7 +2083,7 @@
           search = this.options.liveSearch ? elementTemplates.div.cloneNode(false) : null,
           actions = this.options.actionsBox && this.multiple && this.$menu.find('.bs-actionsbox').length > 0 ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null,
-          firstOption = this.$element.find('option')[0];
+          firstOption = this.$element[0].options[0];
 
       this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
 
@@ -2067,7 +2094,7 @@
       if (this.options.width === 'auto') menu.style.minWidth = 0;
       menu.className = classNames.MENU + ' ' + classNames.SHOW;
       menuInner.className = 'inner ' + classNames.SHOW;
-      menuInnerInner.className = classNames.MENU + ' inner ' + (version.major === '4' ? classNames.SHOW : '');
+      menuInnerInner.className = classNames.MENU + ' inner ' + (version.major >= '4' ? classNames.SHOW : '');
       divider.className = classNames.DIVIDER;
       dropdownHeader.className = 'dropdown-header';
 
@@ -2553,7 +2580,7 @@
       li.classList.toggle(classNames.DISABLED, disabled);
 
       if (a) {
-        if (version.major === '4') a.classList.toggle(classNames.DISABLED, disabled);
+        if (version.major >= '4') a.classList.toggle(classNames.DISABLED, disabled);
 
         if (disabled) {
           a.setAttribute('aria-disabled', disabled);
@@ -2595,7 +2622,7 @@
       });
 
       this.$newElement.on('show.bs.dropdown', function () {
-        if (version.major > 3 && !that.dropdown) {
+        if (!that.dropdown && version.major === '4') {
           that.dropdown = that.$button.data('bs.dropdown');
           that.dropdown._menu = that.$menu[0];
         }
@@ -2606,6 +2633,7 @@
           that.deselectAll();
         } else {
           var element = that.$element[0],
+              prevValue = element.value,
               prevIndex = element.selectedIndex,
               prevOption = element.options[prevIndex],
               prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false;
@@ -2616,7 +2644,8 @@
 
           element.selectedIndex = 0;
 
-          that.render();
+          changedArguments = [prevIndex, false, prevValue];
+          that.$element.triggerNative('change');
         }
 
         // remove selected styling if menu is open
@@ -2659,7 +2688,7 @@
       }
 
       function checkPopperExists () {
-        if (that.dropdown && that.dropdown._popper && that.dropdown._popper.state.isCreated) {
+        if (that.dropdown && that.dropdown._popper && that.dropdown._popper.state) {
           setFocus();
         } else {
           requestAnimationFrame(checkPopperExists);
@@ -3131,7 +3160,7 @@
       // do nothing if a function key is pressed
       if (e.which >= 112 && e.which <= 123) return;
 
-      isActive = that.$newElement.hasClass(classNames.SHOW);
+      isActive = that.$menu.hasClass(classNames.SHOW);
 
       if (
         !isActive &&
@@ -3410,7 +3439,7 @@
     if (!version.success) {
       // try to retreive it again
       try {
-        version.full = ($.fn.dropdown.Constructor.VERSION || '').split(' ')[0].split('.');
+        version.full = (getVersion() || '').split(' ')[0].split('.');
       } catch (err) {
         // fall back to use BootstrapVersion if set
         if (Selectpicker.BootstrapVersion) {
@@ -3431,7 +3460,7 @@
       version.success = true;
     }
 
-    if (version.major === '4') {
+    if (version.major >= '4') {
       // some defaults need to be changed if using Bootstrap 4
       // check to see if they have already been manually changed before forcing them to update
       var toUpdate = [];
@@ -3451,6 +3480,10 @@
         var option = toUpdate[i];
         Selectpicker.DEFAULTS[option.name] = classNames[option.className];
       }
+    }
+
+    if (version.major > '4') {
+      Selector.DATA_TOGGLE = 'data-bs-toggle="dropdown"'
     }
 
     var value;
@@ -3515,19 +3548,23 @@
 
   // get Bootstrap's keydown event handler for either Bootstrap 4 or Bootstrap 3
   function keydownHandler () {
-    if ($.fn.dropdown) {
-      // wait to define until function is called in case Bootstrap isn't loaded yet
-      var bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
-      return bootstrapKeydown.apply(this, arguments);
+    if (version.major < 5) {
+      if ($.fn.dropdown) {
+        // wait to define until function is called in case Bootstrap isn't loaded yet
+        var bootstrapKeydown = $.fn.dropdown.Constructor._dataApiKeydownHandler || $.fn.dropdown.Constructor.prototype.keydown;
+        return bootstrapKeydown.apply(this, arguments);
+      }
+    } else {
+      return Dropdown.dataApiKeydownHandler;
     }
   }
 
   $(document)
     .off('keydown.bs.dropdown.data-api')
-    .on('keydown.bs.dropdown.data-api', ':not(.bootstrap-select) > [data-toggle="dropdown"]', keydownHandler)
+    .on('keydown.bs.dropdown.data-api', ':not(.bootstrap-select) > [' + Selector.DATA_TOGGLE + ']', keydownHandler)
     .on('keydown.bs.dropdown.data-api', ':not(.bootstrap-select) > .dropdown-menu', keydownHandler)
-    .on('keydown' + EVENT_KEY, '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
-    .on('focusin.modal', '.bootstrap-select [data-toggle="dropdown"], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
+    .on('keydown' + EVENT_KEY, '.bootstrap-select [' + Selector.DATA_TOGGLE + '], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', Selectpicker.prototype.keydown)
+    .on('focusin.modal', '.bootstrap-select [' + Selector.DATA_TOGGLE + '], .bootstrap-select [role="listbox"], .bootstrap-select .bs-searchbox input', function (e) {
       e.stopPropagation();
     });
 
