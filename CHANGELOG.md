@@ -1,3 +1,18 @@
+# v1.14.0-beta2 (2021-03-25)
+
+### New Features
+- [#2505]: Support Bootstrap 5
+
+### Bug Fixes
+- [#2576]: use vanilla JS selector to get first option (performance)
+- [#2578]: Fix allowClear so that it triggers change events
+
+[#2505]: https://github.com/snapappointments/bootstrap-select/issues/2505
+[#2576]: https://github.com/snapappointments/bootstrap-select/pull/2576
+[#2578]: https://github.com/snapappointments/bootstrap-select/issues/2578
+
+-------------------
+
 # v1.14.0-beta (2020-11-28)
 
 ### New Features
