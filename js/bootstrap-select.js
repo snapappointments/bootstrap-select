@@ -2032,7 +2032,7 @@
           search = this.options.liveSearch ? elementTemplates.div.cloneNode(false) : null,
           actions = this.options.actionsBox && this.multiple && this.$menu.find('.bs-actionsbox').length > 0 ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null,
-          firstOption = this.$element[0].children[0]; //faster selector, don't die on 100000 list on Edge
+          firstOption = this.$element[0].options[0];
 
       this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
 
