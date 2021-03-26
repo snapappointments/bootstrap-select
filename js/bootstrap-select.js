@@ -2059,7 +2059,7 @@
           search = this.options.liveSearch ? elementTemplates.div.cloneNode(false) : null,
           actions = this.options.actionsBox && this.multiple && this.$menu.find('.bs-actionsbox').length > 0 ? this.$menu.find('.bs-actionsbox')[0].cloneNode(true) : null,
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null,
-          firstOption = this.$element.find('option')[0];
+          firstOption = this.$element[0].options[0];
 
       this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
 
@@ -2609,6 +2609,7 @@
           that.deselectAll();
         } else {
           var element = that.$element[0],
+              prevValue = element.value,
               prevIndex = element.selectedIndex,
               prevOption = element.options[prevIndex],
               prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false;
@@ -2619,7 +2620,8 @@
 
           element.selectedIndex = 0;
 
-          that.render();
+          changedArguments = [prevIndex, false, prevValue];
+          that.$element.triggerNative('change');
         }
 
         // remove selected styling if menu is open
