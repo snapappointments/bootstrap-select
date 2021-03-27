@@ -1908,7 +1908,7 @@
       if (this.options.selectedTextFormat === 'static') {
         titleFragment = generateOption.text.call(this, { text: this.options.placeholder }, true);
       } else {
-        showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 1;
+        showCount = this.multiple && this.options.selectedTextFormat.indexOf('count') !== -1 && selectedCount > 0;
 
         // determine if the number of selected options will be shown (showCount === true)
         if (showCount) {
