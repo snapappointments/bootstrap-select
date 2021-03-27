@@ -3199,9 +3199,13 @@
             liActiveIndex = that.selectpicker.current.elements.length - 1;
           } else {
             activeLi = that.selectpicker.current.data[liActiveIndex];
-            offset = activeLi.position - activeLi.height;
 
-            updateScroll = offset < scrollTop;
+            // could be undefined if no results exist
+            if (activeLi) {
+              offset = activeLi.position - activeLi.height;
+
+              updateScroll = offset < scrollTop;
+            }
           }
         } else if (e.which === keyCodes.ARROW_DOWN || downOnTab) { // down
           // scroll to top and highlight first option
@@ -3211,15 +3215,19 @@
             liActiveIndex = that.selectpicker.view.firstHighlightIndex;
           } else {
             activeLi = that.selectpicker.current.data[liActiveIndex];
-            offset = activeLi.position - that.sizeInfo.menuInnerHeight;
 
-            updateScroll = offset > scrollTop;
+            // could be undefined if no results exist
+            if (activeLi) {
+              offset = activeLi.position - that.sizeInfo.menuInnerHeight;
+
+              updateScroll = offset > scrollTop;
+            }
           }
         }
 
         liActive = that.selectpicker.current.elements[liActiveIndex];
 
-        that.activeIndex = that.selectpicker.current.data[liActiveIndex].index;
+        that.activeIndex = (that.selectpicker.current.data[liActiveIndex] || {}).index;
 
         that.focusItem(liActive);
 
