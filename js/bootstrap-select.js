@@ -1135,7 +1135,7 @@
       if (this.options.header) {
         header =
           '<div class="' + classNames.POPOVERHEADER + '">' +
-            '<button type="button" class="close" aria-hidden="true">&times;</button>' +
+            '<button type="button" class="btn-close close float-end" aria-hidden="true"></button>' +
               this.options.header +
           '</div>';
       }
