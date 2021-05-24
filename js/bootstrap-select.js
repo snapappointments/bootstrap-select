@@ -1743,7 +1743,7 @@
             children = item.children;
 
         if (children && children.length) {
-          addOptgroup.call(this, startIndex, selectOptions);
+          addOptgroup.call(this, i, selectOptions);
         } else {
           addOption.call(this, item, {});
         }
