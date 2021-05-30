@@ -2263,7 +2263,7 @@
 
       this.$menuInner.css({
         'max-height': menuInnerHeight + 'px',
-        'overflow-y': 'hidden auto',
+        'overflow': 'hidden auto',
         'min-height': menuInnerMinHeight + 'px'
       });
 
