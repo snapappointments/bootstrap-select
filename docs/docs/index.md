@@ -15,7 +15,7 @@ Several quick start options are available:
 - Install with [Composer](https://getcomposer.org): `composer require snapappointments/bootstrap-select`
 - Install with [NuGet](https://www.nuget.org/packages/bootstrap-select): `Install-Package bootstrap-select`
 - Install with [Bower](https://bower.io): `bower install bootstrap-select`
-- Install via CDN ([PageCDN](https://pagecdn.com/lib/bootstrap-select) or [cdnjs](https://cdnjs.com/libraries/bootstrap-select) or [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap-select)):
+- Install via CDN ([cdnjs](https://cdnjs.com/libraries/bootstrap-select), [jsDelivr](https://www.jsdelivr.com/package/npm/bootstrap-select) or [PageCDN](https://pagecdn.com/lib/bootstrap-select)):
 
 ```html
 <!-- Latest compiled and minified CSS -->
