@@ -956,7 +956,7 @@
     },
     maxOptions: false,
     mobile: false,
-    selectOnTab: false,
+    selectOnTab: true,
     dropdownAlignRight: false,
     windowPadding: 0,
     virtualScroll: 600,
