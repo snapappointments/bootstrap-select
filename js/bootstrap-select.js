@@ -3402,7 +3402,7 @@
       this.$element
         .off(EVENT_KEY)
         .removeData('selectpicker')
-        .removeClass('bs-select-hidden selectpicker');
+        .removeClass('bs-select-hidden selectpicker mobile-device');
 
       $(window).off(EVENT_KEY + '.' + this.selectId);
     }
