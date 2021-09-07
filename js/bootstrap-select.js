@@ -2113,13 +2113,11 @@
       if (doneButton) menu.appendChild(doneButton);
       newElement.appendChild(menu);
 
-      var $li = $(li);
-      $("a", $li).show(); // always make sure first item is shown, otherwise offsetHeight = 0
-      var $a = $("a", $li);
-      var itemIsBlank = $a.text() == "";
-      if (itemIsBlank) {
+      var newElementAnchor = $('a', $(li));
+      newElementAnchor.show(); // always make sure first item is shown, otherwise offsetHeight = 0
+      if (newElementAnchor.text() == '') {
         // If blank, set text to non-breaking space otherwise offsetHeight = 8 (or some portion of full height)
-        $a.text = "&nbsp;";
+        newElementAnchor.text = '&nbsp;';
       }
 
       document.body.appendChild(newElement);
