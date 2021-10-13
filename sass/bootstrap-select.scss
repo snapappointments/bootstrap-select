@@ -23,7 +23,7 @@
 
 @function fade($color, $amnt) {
   @if $amnt > 1 {
-    $amnt: $amnt / 100; // convert to percentage if int
+    $amnt: $amnt * 0.01; // convert to percentage if int
   }
   @return rgba($color, $amnt);
 }
