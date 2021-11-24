@@ -48,7 +48,7 @@
     strong: [],
     u: [],
     ul: []
-  }
+  };
 
   /**
    * A pattern that recognizes a commonly useful subset of URLs that are safe.
@@ -67,28 +67,28 @@
   var ParseableAttributes = ['title', 'placeholder']; // attributes to use as settings, can add others in the future
 
   function allowedAttribute (attr, allowedAttributeList) {
-    var attrName = attr.nodeName.toLowerCase()
+    var attrName = attr.nodeName.toLowerCase();
 
     if ($.inArray(attrName, allowedAttributeList) !== -1) {
       if ($.inArray(attrName, uriAttrs) !== -1) {
-        return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN))
+        return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN));
       }
 
-      return true
+      return true;
     }
 
     var regExp = $(allowedAttributeList).filter(function (index, value) {
-      return value instanceof RegExp
-    })
+      return value instanceof RegExp;
+    });
 
     // Check if a regular expression validates the attribute.
     for (var i = 0, l = regExp.length; i < l; i++) {
       if (attrName.match(regExp[i])) {
-        return true
+        return true;
       }
     }
 
-    return false
+    return false;
   }
 
   function sanitizeHtml (unsafeElements, whiteList, sanitizeFn) {
@@ -171,7 +171,7 @@
               contains: function (classes) {
                 return $elem.hasClass(classes);
               }
-            }
+            };
           };
 
       if (objCtr.defineProperty) {
@@ -206,11 +206,11 @@
 
     DOMTokenList.prototype.add = function () {
       Array.prototype.forEach.call(arguments, _add.bind(this));
-    }
+    };
 
     DOMTokenList.prototype.remove = function () {
       Array.prototype.forEach.call(arguments, _remove.bind(this));
-    }
+    };
   }
 
   testElement.classList.toggle('c3', false);
@@ -595,7 +595,7 @@
     TAB: 9, // KeyboardEvent.which value for tab key
     ARROW_UP: 38, // KeyboardEvent.which value for up arrow key
     ARROW_DOWN: 40 // KeyboardEvent.which value for down arrow key
-  }
+  };
 
   // eslint-disable-next-line no-undef
   var Dropdown = window.Dropdown || bootstrap.Dropdown;
@@ -642,12 +642,12 @@
     POPOVERHEADER: 'popover-title',
     ICONBASE: 'glyphicon',
     TICKICON: 'glyphicon-ok'
-  }
+  };
 
   var Selector = {
     MENU: '.' + classNames.MENU,
     DATA_TOGGLE: 'data-toggle="dropdown"'
-  }
+  };
 
   var elementTemplates = {
     div: document.createElement('div'),
@@ -659,7 +659,7 @@
     whitespace: document.createTextNode('\u00A0'),
     fragment: document.createDocumentFragment(),
     option: document.createElement('option')
-  }
+  };
 
   elementTemplates.selectedOption = elementTemplates.option.cloneNode(false);
   elementTemplates.selectedOption.setAttribute('selected', true);
@@ -782,7 +782,7 @@
 
       return elementTemplates.fragment;
     }
-  }
+  };
 
   var getOptionData = {
     fromOption: function (option, type) {
@@ -836,7 +836,7 @@
 
       return value;
     }
-  }
+  };
 
   function showNoResults (searchMatch, searchValue) {
     if (!searchMatch.length) {
@@ -3467,7 +3467,7 @@
     }
 
     if (version.major > '4') {
-      Selector.DATA_TOGGLE = 'data-bs-toggle="dropdown"'
+      Selector.DATA_TOGGLE = 'data-bs-toggle="dropdown"';
     }
 
     var value;
@@ -3558,6 +3558,6 @@
     $('.selectpicker').each(function () {
       var $selectpicker = $(this);
       Plugin.call($selectpicker, $selectpicker.data());
-    })
+    });
   });
 })(jQuery);
