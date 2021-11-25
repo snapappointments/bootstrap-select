@@ -1,0 +1,24 @@
+name: publish
+on:
+ release:
+   types: [created]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish latest release
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build package
+        run: grunt build
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
