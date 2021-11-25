@@ -9,5 +9,6 @@ bower_components
 
 # Dist zip
 bootstrap-select-*.zip
+dist/
 
 docs/site
