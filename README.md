@@ -24,12 +24,6 @@
 	<a href="https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE" target="_blank">
 		<img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="License">
 	</a>
-	<a href="https://david-dm.org/snapappointments/bootstrap-select?type=peer" target="_blank">
-		<img src="https://img.shields.io/david/peer/snapappointments/bootstrap-select.svg" alt="peerDependencies Status">
-	</a>
-	<a href="https://david-dm.org/snapappointments/bootstrap-select#info=devDependencies" target="_blank">
-		<img src="https://david-dm.org/snapappointments/bootstrap-select/dev-status.svg" alt="devDependency Status">
-	</a>
 </p>
 
 <p align="center">
