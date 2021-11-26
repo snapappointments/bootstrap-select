@@ -32,19 +32,13 @@
   {%- for path in extra_css %}
   <link href="{{ path }}" rel="stylesheet">
   {%- endfor %}
-
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-  <![endif]-->
 </head>
 
 <body data-spy="scroll" data-target="#sidebar" data-offset="240">
 
 {% include "nav.html" %}
 
-{% if page and page.is_homepage %} 
+{% if page and page.is_homepage %}
 <div class="jumbotron jumbotron-fluid bs-docs-header text-center">
   <div class="container">
     <h1>bootstrap-select</h1>
@@ -74,7 +68,7 @@
 <section class="jumbotron jumbotron-fluid bs-docs-header">
   <div class="container-fluid d-flex flex-column flex-md-row align-items-md-center">
     <h1>{{ page.title }}</h1>
-    {% if page and page.title == 'Examples' %} 
+    {% if page and page.title == 'Examples' %}
     <div class="carbonad carbonad-header mr-md-3">
       <div class="carbonad-inner">
         <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CKYIKK7I&placement=developersnapappointmentscom" id="_carbonads_js"></script>
