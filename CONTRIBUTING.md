@@ -82,6 +82,7 @@ the authors (and/or leaders) of the project a non-exclusive license to
 re-distribute your code under the current license and possibly re-license the
 code as deemed necessary.
 
+* IMPORTANT: base your PR on the `dev` branch and target the `dev` branch
 * To instantiate a context or use it, use the variable **that** instead of
   **_this**.
 * Please check to make sure that there aren't existing pull requests attempting
