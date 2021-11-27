@@ -27,6 +27,7 @@
 - [#2617] remove dist folder from source tracking
 - add actions for linting code and publishing on npm
 - [#2678] Add missing semi-colons and enforce it with eslint
+- [#2683] Remove polyfills and IE related code
 
 This project is now mainly maintained by @NicolasCARPi.
 
