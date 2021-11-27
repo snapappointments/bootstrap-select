@@ -2480,11 +2480,6 @@
           var target = e.target,
               clearButton = that.$clearButton[0];
 
-          // IE doesn't support event listeners on child elements of buttons
-          if (/MSIE|Trident/.test(window.navigator.userAgent)) {
-            target = document.elementFromPoint(e.clientX, e.clientY);
-          }
-
           if (target === clearButton || target.parentElement === clearButton) {
             e.stopImmediatePropagation();
             clearSelection(e);
