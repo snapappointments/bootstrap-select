@@ -1,3 +1,35 @@
+# v1.14.0-beta3
+
+### Bug fixes
+
+- [#2634] Remove IE hacks in CSS
+- [#2669] Remove deprecated sass division with slash character
+- [#2627] Remove "mobile-device" class on destroy
+- [#2616] Fix line ending in Latvian file
+- [#2600] Fix optgroup
+- [#2367] Support selectedTextFormat of count > 0
+- [#2585] Fixes two `TypeError` exceptions when up/down arrow pressed
+- Fix `Cannot read property 'position' of undefined` error
+- Fix `Cannot read property 'index' of undefined` error
+- Fix several overflow bugs
+
+### i18n
+- [#2625] Add turkmen language
+- [#2621] Update deselectAllText turkish translation
+
+### New features
+- [#2305] Add new CDN: PageCDN
+
+### Dev
+- remove bootstrap 3 test page
+- improve test pages js code
+- [#2680] upgrade npm dependencies and lockfile format
+- [#2617] remove dist folder from source tracking
+- add actions for linting code and publishing on npm
+- [#2678] Add missing semi-colons and enforce it with eslint
+
+This project is now mainly maintained by @NicolasCARPi.
+
 # v1.14.0-beta2 (2021-03-25)
 
 ### New Features
