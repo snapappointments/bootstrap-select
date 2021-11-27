@@ -1,13 +1,17 @@
 {
   "env": {
     "browser": true,
-    "jquery": true
+    "jquery": true,
+    "es6": true
   },
 
   "globals": {
     "document": false,
     "navigator": false,
     "window": false
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017
   },
 
   "rules": {
