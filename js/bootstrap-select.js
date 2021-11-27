@@ -209,35 +209,11 @@
 
   var changedArguments = null;
 
-  var EventIsSupported = (function () {
-    try {
-      new Event('change');
-      return true;
-    } catch (e) {
-      return false;
-    }
-  })();
-
   $.fn.triggerNative = function (eventName) {
-    var el = this[0],
-        event;
-
-    if (el.dispatchEvent) { // for modern browsers & IE9+
-      if (EventIsSupported) {
-        // For modern browsers
-        event = new Event(eventName, {
-          bubbles: true
-        });
-      } else {
-        // For IE since it doesn't support Event constructor
-        event = document.createEvent('Event');
-        event.initEvent(eventName, true, false);
-      }
-
-      el.dispatchEvent(event);
-    }
+    const el = this[0];
+    const event = new Event(eventName, { bubbles: true });
+    el.dispatchEvent(event);
   };
-  // </editor-fold>
 
   function stringSearch (li, searchString, method, normalize) {
     var stringTypes = [
