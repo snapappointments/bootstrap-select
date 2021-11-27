@@ -16,11 +16,15 @@ const createOptions = (elemId, num) => {
   }
 }
 
+// how many options to generate
+const OPTIONS_NUM = 30;
+
 // we need to  include the options before the document is ready and bootstrap select starts working
 document.addEventListener('readystatechange', () => {
   // "interactive" is when all is loaded but bootstrap-select is not yet activated
   if (document.readyState === 'interactive') {
-    ['number', 'number-multiple', 'number2', 'number2-multiple'].forEach(elemId => createOptions(elemId, 30));
+    ['number', 'number-multiple', 'number2', 'number2-multiple']
+      .forEach(elemId => createOptions(elemId, OPTIONS_NUM));
 
     const mySelect = $('#first-disabled2');
 
