@@ -143,12 +143,147 @@
     return attributesObject;
   }
 
+  // Polyfill for browsers with no classList support
+  // Remove in v2
+  if (!('classList' in document.createElement('_'))) {
+    (function (view) {
+      if (!('Element' in view)) return;
+
+      var classListProp = 'classList',
+          protoProp = 'prototype',
+          elemCtrProto = view.Element[protoProp],
+          objCtr = Object,
+          classListGetter = function () {
+            var $elem = $(this);
+
+            return {
+              add: function (classes) {
+                classes = Array.prototype.slice.call(arguments).join(' ');
+                return $elem.addClass(classes);
+              },
+              remove: function (classes) {
+                classes = Array.prototype.slice.call(arguments).join(' ');
+                return $elem.removeClass(classes);
+              },
+              toggle: function (classes, force) {
+                return $elem.toggleClass(classes, force);
+              },
+              contains: function (classes) {
+                return $elem.hasClass(classes);
+              }
+            };
+          };
+
+      if (objCtr.defineProperty) {
+        var classListPropDesc = {
+          get: classListGetter,
+          enumerable: true,
+          configurable: true
+        };
+        try {
+          objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+        } catch (ex) { // IE 8 doesn't support enumerable:true
+          // adding undefined to fight this issue https://github.com/eligrey/classList.js/issues/36
+          // modernie IE8-MSW7 machine has IE8 8.0.6001.18702 and is affected
+          if (ex.number === undefined || ex.number === -0x7FF5EC54) {
+            classListPropDesc.enumerable = false;
+            objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+          }
+        }
+      } else if (objCtr[protoProp].__defineGetter__) {
+        elemCtrProto.__defineGetter__(classListProp, classListGetter);
+      }
+    }(window));
+  }
+
+  var testElement = document.createElement('_');
+
+  testElement.classList.add('c1', 'c2');
+
+  if (!testElement.classList.contains('c2')) {
+    var _add = DOMTokenList.prototype.add,
+        _remove = DOMTokenList.prototype.remove;
+
+    DOMTokenList.prototype.add = function () {
+      Array.prototype.forEach.call(arguments, _add.bind(this));
+    };
+
+    DOMTokenList.prototype.remove = function () {
+      Array.prototype.forEach.call(arguments, _remove.bind(this));
+    };
+  }
+
+  testElement.classList.toggle('c3', false);
+
+  // Polyfill for IE 10 and Firefox <24, where classList.toggle does not
+  // support the second argument.
+  if (testElement.classList.contains('c3')) {
+    var _toggle = DOMTokenList.prototype.toggle;
+
+    DOMTokenList.prototype.toggle = function (token, force) {
+      if (1 in arguments && !this.contains(token) === !force) {
+        return force;
+      } else {
+        return _toggle.call(this, token);
+      }
+    };
+  }
+
+  testElement = null;
+
   // shallow array comparison
   function isEqual (array1, array2) {
     return array1.length === array2.length && array1.every(function (element, index) {
       return element === array2[index];
     });
   };
+
+  // <editor-fold desc="Shims">
+  if (!String.prototype.startsWith) {
+    (function () {
+      'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
+      var toString = {}.toString;
+      var startsWith = function (search) {
+        if (this == null) {
+          throw new TypeError();
+        }
+        var string = String(this);
+        if (search && toString.call(search) == '[object RegExp]') {
+          throw new TypeError();
+        }
+        var stringLength = string.length;
+        var searchString = String(search);
+        var searchLength = searchString.length;
+        var position = arguments.length > 1 ? arguments[1] : undefined;
+        // `ToInteger`
+        var pos = position ? Number(position) : 0;
+        if (pos != pos) { // better `isNaN`
+          pos = 0;
+        }
+        var start = Math.min(Math.max(pos, 0), stringLength);
+        // Avoid the `indexOf` call if no match is possible
+        if (searchLength + start > stringLength) {
+          return false;
+        }
+        var index = -1;
+        while (++index < searchLength) {
+          if (string.charCodeAt(start + index) != searchString.charCodeAt(index)) {
+            return false;
+          }
+        }
+        return true;
+      };
+      if (Object.defineProperty) {
+        Object.defineProperty(String.prototype, 'startsWith', {
+          'value': startsWith,
+          'configurable': true,
+          'writable': true
+        });
+      } else {
+        String.prototype.startsWith = startsWith;
+      }
+    }());
+  }
 
   function getSelectedOptions () {
     var selectedOptions = this.selectpicker.main.data.filter(function (item) {
@@ -209,11 +344,35 @@
 
   var changedArguments = null;
 
+  var EventIsSupported = (function () {
+    try {
+      new Event('change');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
+
   $.fn.triggerNative = function (eventName) {
-    const el = this[0];
-    const event = new Event(eventName, { bubbles: true });
-    el.dispatchEvent(event);
+    var el = this[0],
+        event;
+
+    if (el.dispatchEvent) { // for modern browsers & IE9+
+      if (EventIsSupported) {
+        // For modern browsers
+        event = new Event(eventName, {
+          bubbles: true
+        });
+      } else {
+        // For IE since it doesn't support Event constructor
+        event = document.createEvent('Event');
+        event.initEvent(eventName, true, false);
+      }
+
+      el.dispatchEvent(event);
+    }
   };
+  // </editor-fold>
 
   function stringSearch (li, searchString, method, normalize) {
     var stringTypes = [
@@ -2479,6 +2638,11 @@
         if (that.options.allowClear) {
           var target = e.target,
               clearButton = that.$clearButton[0];
+
+          // IE doesn't support event listeners on child elements of buttons
+          if (/MSIE|Trident/.test(window.navigator.userAgent)) {
+            target = document.elementFromPoint(e.clientX, e.clientY);
+          }
 
           if (target === clearButton || target.parentElement === clearButton) {
             e.stopImmediatePropagation();
