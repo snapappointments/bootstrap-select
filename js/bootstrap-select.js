@@ -805,6 +805,10 @@
           value = option.style.cssText;
           break;
 
+        case 'title':
+          value = option.title;
+          break;
+
         case 'content':
         case 'tokens':
         case 'subtext':
@@ -1668,6 +1672,7 @@
           config.inlineStyle = inlineStyle;
 
           config.text = dataGetter(item, 'text');
+          config.title = dataGetter(item, 'title');
           config.content = dataGetter(item, 'content');
           config.tokens = dataGetter(item, 'tokens');
           config.subtext = dataGetter(item, 'subtext');
