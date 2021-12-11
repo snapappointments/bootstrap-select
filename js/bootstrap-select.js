@@ -1006,6 +1006,15 @@
               '</button>' +
             '</div>' +
           '</div>';
+      } else if (!this.multiple && this.options.actionsBox) {
+        actionsbox =
+          '<div class="bs-actionsbox">' +
+            '<div class="btn-group btn-group-sm btn-block">' +
+              '<button type="button" class="actions-btn bs-deselect-all btn ' + classNames.BUTTONCLASS + '">' +
+                this.options.deselectAllText +
+              '</button>' +
+            '</div>' +
+          '</div>';
       }
 
       if (this.multiple && this.options.doneButton) {
@@ -2885,7 +2894,6 @@
     },
 
     changeAll: function (status) {
-      if (!this.multiple) return;
       if (typeof status === 'undefined') status = true;
 
       var element = this.$element[0],
