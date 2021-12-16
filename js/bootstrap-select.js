@@ -2734,7 +2734,7 @@
             that.activeIndex = undefined;
           }
 
-          if (!that.multiple) { // Deselect previous option if not multi select
+          if (!that.multiple || maxOptions === 1) { // Deselect previous option if not multi select
             if (prevData) that.setSelected(prevData, false);
             that.setSelected(clickedData, true);
           } else { // Toggle the clicked option if multi select.
