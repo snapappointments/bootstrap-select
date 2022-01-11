@@ -3175,6 +3175,8 @@
             $(document).data('spaceSelect', true);
           }
         }
+        // hide dropdown menu
+        that.dropdown.hide();
       }
     },
 
