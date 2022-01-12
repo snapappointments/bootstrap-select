@@ -3175,8 +3175,10 @@
             $(document).data('spaceSelect', true);
           }
         }
-        // hide dropdown menu
-        that.dropdown.hide();
+        if (e.which === keyCodes.ENTER) {
+          // hide dropdown menu
+          that.dropdown.hide();
+        }
       }
     },
 
