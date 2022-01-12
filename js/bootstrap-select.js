@@ -2114,6 +2114,9 @@
       newElement.appendChild(menu);
 
       var newElementAnchor = $('a', $(li));
+      // Get 'visible' css items to restore after calculation is done
+      var newElementAnchorDisplay = newElementAnchor.css("display");
+      var newElementAnchorVisibility = newElementAnchor.css("visibility");
       newElementAnchor.show(); // always make sure first item is shown, otherwise offsetHeight = 0
       if (newElementAnchor.text() === '') {
         // If blank, set text to non-breaking space otherwise offsetHeight = 8 (or some portion of full height)
@@ -2171,6 +2174,9 @@
       this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth;
       this.sizeInfo.scrollBarWidth = scrollBarWidth;
       this.sizeInfo.selectHeight = this.$newElement[0].offsetHeight;
+
+      if (newElementAnchorDisplay !== undefined && newElementAnchorDisplay !== "") newElementAnchor.css("display", newElementAnchorDisplay);
+      if (newElementAnchorVisibility !== undefined && newElementAnchorVisibility !== "") newElementAnchor.css("visibility", newElementAnchorVisibility);
 
       this.setPositionData();
     },
