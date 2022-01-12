@@ -2115,7 +2115,7 @@
 
       var newElementAnchor = $('a', $(li));
       newElementAnchor.show(); // always make sure first item is shown, otherwise offsetHeight = 0
-      if (newElementAnchor.text() == '') {
+      if (newElementAnchor.text() === '') {
         // If blank, set text to non-breaking space otherwise offsetHeight = 8 (or some portion of full height)
         newElementAnchor.text = '&nbsp;';
       }
