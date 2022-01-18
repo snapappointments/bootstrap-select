@@ -2175,8 +2175,8 @@
       this.sizeInfo.scrollBarWidth = scrollBarWidth;
       this.sizeInfo.selectHeight = this.$newElement[0].offsetHeight;
 
-      if (newElementAnchorDisplay !== undefined && newElementAnchorDisplay !== "") newElementAnchor.css('display', newElementAnchorDisplay);
-      if (newElementAnchorVisibility !== undefined && newElementAnchorVisibility !== "") newElementAnchor.css('visibility', newElementAnchorVisibility);
+      if (newElementAnchorDisplay !== undefined && newElementAnchorDisplay !== '') newElementAnchor.css('display', newElementAnchorDisplay);
+      if (newElementAnchorVisibility !== undefined && newElementAnchorVisibility !== '') newElementAnchor.css('visibility', newElementAnchorVisibility);
 
       this.setPositionData();
     },
