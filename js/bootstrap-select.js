@@ -2920,6 +2920,8 @@
             that.fetchData(function (builtData) {
               that.render();
               that.buildList(undefined, true);
+              that.noScroll = true;
+              that.$menuInner.scrollTop(0);
               that.createView(true);
               showNoResults.call(that, builtData, searchValue);
             }, 'search', 0, searchValue);
