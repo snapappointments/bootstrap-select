@@ -1458,7 +1458,7 @@
             }
           }
 
-          if ((!isSearching && that.options.source.load || isSearching && that.options.source.search) && that.selectpicker.current.hasMore && currentChunk === chunkCount - 1) {
+          if ((!isSearching && that.options.source.data || isSearching && that.options.source.search) && that.selectpicker.current.hasMore && currentChunk === chunkCount - 1) {
             that.fetchData(function () {
               that.render();
               that.buildList(size, isSearching);
