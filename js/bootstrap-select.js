@@ -869,10 +869,13 @@
     this.options = options;
     this.selectpicker = {
       main: {
-        optionQueue: elementTemplates.fragment.cloneNode(false)
+        optionQueue: elementTemplates.fragment.cloneNode(false),
+        hasMore: false
       },
-      search: {},
-      current: {}, // current changes if a search is in progress
+      search: {
+        hasMore: false
+      },
+      current: {}, // current is either equal to main or search depending on if a search is in progress
       view: {},
       isSearching: false,
       keydown: {
@@ -1011,15 +1014,6 @@
       this.$searchbox = this.$menu.find('input');
 
       element.classList.remove('bs-select-hidden');
-
-      this.fetchData(function () {
-        that.render(true);
-        that.buildList();
-
-        requestAnimationFrame(function () {
-          that.$element.trigger('loaded' + EVENT_KEY);
-        });
-      });
 
       this.fetchData(function () {
         that.render(true);
@@ -1373,7 +1367,7 @@
           that.defocusItem(prevActive);
         }
 
-        if (init || positionIsDifferent) {
+        if (init || positionIsDifferent || that.selectpicker.current.hasMore) {
           previousElements = that.selectpicker.view.visibleElements ? that.selectpicker.view.visibleElements.slice() : [];
 
           if (isVirtual === false) {
@@ -1464,13 +1458,13 @@
             }
           }
 
-          if ((!isSearching && that.options.source.load || isSearching && that.options.source.search) && currentChunk === chunkCount - 1) {
+          if ((!isSearching && that.options.source.load || isSearching && that.options.source.search) && that.selectpicker.current.hasMore && currentChunk === chunkCount - 1) {
             that.fetchData(function () {
               that.render();
               that.buildList(size, isSearching);
               that.setPositionData();
               scroll(scrollTop);
-            }, isSearching ? 'search' : 'load', currentChunk + 1, isSearching ? that.selectpicker.search.previousValue : undefined);
+            }, isSearching ? 'search' : 'data', currentChunk + 1, isSearching ? that.selectpicker.search.previousValue : undefined);
           }
         }
 
@@ -1585,6 +1579,7 @@
     },
 
     fetchData: function (callback, type, page, searchValue) {
+      page = page || 0;
       type = type || 'data';
 
       var that = this,
@@ -1597,7 +1592,8 @@
         if (typeof data === 'function') {
           data.call(
             this,
-            function (data) {
+            function (data, more) {
+              that.selectpicker[type === 'search' ? 'search' : 'main'].hasMore = more;
               builtData = that.buildData(data, type);
               callback.call(that, builtData);
             },
@@ -1619,13 +1615,11 @@
 
       var optionSelector = ':not([hidden]):not([data-hidden="true"])',
           mainData = [],
-          startLen = 0,
+          startLen = this.selectpicker.main.data ? this.selectpicker.main.data.length : 0,
           optID = 0,
           startIndex = this.setPlaceholder() && !data ? 1 : 0; // append the titleOption if necessary and skip the first option in the loop
 
-      if (type === 'load') {
-        startLen = this.selectpicker.main.data.length;
-      } else if (type === 'search') {
+      if (type === 'search') {
         startLen = this.selectpicker.search.data.length;
       }
 
@@ -1756,10 +1750,9 @@
 
       switch (type) {
         case 'data': {
-          this.selectpicker.main.data = this.selectpicker.current.data = mainData;
-          break;
-        }
-        case 'load': {
+          if (!this.selectpicker.main.data) {
+            this.selectpicker.main.data = [];
+          }
           Array.prototype.push.apply(this.selectpicker.main.data, mainData);
           this.selectpicker.current.data = this.selectpicker.main.data;
           break;
