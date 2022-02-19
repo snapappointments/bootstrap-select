@@ -930,7 +930,9 @@
     },
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
-    source: {},
+    source: {
+      pageSize: 40,
+    },
     chunkSize: 40,
     doneButton: false,
     doneButtonText: 'Close',
@@ -1459,12 +1461,19 @@
           }
 
           if ((!isSearching && that.options.source.data || isSearching && that.options.source.search) && that.selectpicker.current.hasMore && currentChunk === chunkCount - 1) {
-            that.fetchData(function () {
-              that.render();
-              that.buildList(size, isSearching);
-              that.setPositionData();
-              scroll(scrollTop);
-            }, isSearching ? 'search' : 'data', currentChunk + 1, isSearching ? that.selectpicker.search.previousValue : undefined);
+            // Don't load the next chunk until scrolling has started
+            // This prevents unnecessary requests while the user is typing if pageSize is <= chunkSize
+            if (scrollTop > 0) {
+              // Chunks use 0-based indexing, but pages use 1-based. Add 1 to convert and add 1 again to get next page
+              const page = Math.floor((currentChunk * that.options.chunkSize) / that.options.source.pageSize) + 2;
+
+              that.fetchData(function () {
+                that.render();
+                that.buildList(size, isSearching);
+                that.setPositionData();
+                scroll(scrollTop);
+              }, isSearching ? 'search' : 'data', page, isSearching ? that.selectpicker.search.previousValue : undefined);
+            }
           }
         }
 
@@ -1579,7 +1588,7 @@
     },
 
     fetchData: function (callback, type, page, searchValue) {
-      page = page || 0;
+      page = page || 1;
       type = type || 'data';
 
       var that = this,
@@ -1596,6 +1605,7 @@
               that.selectpicker[type === 'search' ? 'search' : 'main'].hasMore = more;
               builtData = that.buildData(data, type);
               callback.call(that, builtData);
+              that.$element.trigger('fetched' + EVENT_KEY);
             },
             page,
             searchValue
@@ -2916,6 +2926,8 @@
         that.selectpicker.search.data = [];
 
         if (searchValue) {
+          that.selectpicker.search.previousValue = searchValue;
+
           if (that.options.source.search) {
             that.fetchData(function (builtData) {
               that.render();
@@ -2981,8 +2993,6 @@
           that.$menuInner.scrollTop(0);
           that.createView(false);
         }
-
-        that.selectpicker.search.previousValue =  searchValue;
       });
     },
 
@@ -3492,6 +3502,7 @@
 
           var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, getAttributesObject($this), dataAttributes, options); // this is correct order on initial render
           config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), dataAttributes.template, options.template);
+          config.source = $.extend({}, Selectpicker.DEFAULTS.source, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.source : {}), options.source);
           $this.data('selectpicker', (data = new Selectpicker(this, config)));
         } else if (options) {
           for (var i in options) {
