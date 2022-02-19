@@ -931,7 +931,7 @@
     selectAllText: 'Select All',
     deselectAllText: 'Deselect All',
     source: {
-      pageSize: 40,
+      pageSize: 40
     },
     chunkSize: 40,
     doneButton: false,
