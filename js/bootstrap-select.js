@@ -1465,7 +1465,7 @@
             // This prevents unnecessary requests while the user is typing if pageSize is <= chunkSize
             if (scrollTop > 0) {
               // Chunks use 0-based indexing, but pages use 1-based. Add 1 to convert and add 1 again to get next page
-              const page = Math.floor((currentChunk * that.options.chunkSize) / that.options.source.pageSize) + 2;
+              var page = Math.floor((currentChunk * that.options.chunkSize) / that.options.source.pageSize) + 2;
 
               that.fetchData(function () {
                 that.render();
