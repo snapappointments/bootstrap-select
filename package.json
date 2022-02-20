@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.7.6",
+    "cypress": "^9.5.0",
     "grunt": "^1.1.0",
     "grunt-banner": "^0.6.0",
     "grunt-contrib-clean": "^2.0.0",
@@ -45,7 +46,11 @@
     "grunt-eslint": "^22.0.0",
     "grunt-postcss": "^0.9.0",
     "grunt-version": "^2.0.0",
-    "load-grunt-tasks": "^5.1.0"
+    "load-grunt-tasks": "^5.1.0",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "cypress:open": "cypress open"
   },
   "browserslist": [
     "Android 2.3",
