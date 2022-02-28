@@ -1920,7 +1920,8 @@
       if (this.selectpicker.current.data.length) {
         for (var i = 0; i < this.selectpicker.current.data.length; i++) {
           var data = this.selectpicker.current.data[i];
-          if (data.type === 'option') {
+          var a = data.element.firstChild;
+          if (data.type === 'option' && $(a).css('display') !== 'none') {
             li = data.element;
             break;
           }
