@@ -1617,7 +1617,7 @@
     buildData: function (data, type) {
       var dataGetter = data === false ? getOptionData.fromOption : getOptionData.fromDataSource;
 
-      var optionSelector = ':not([hidden]):not([data-hidden="true"])',
+      var optionSelector = ':not([hidden]):not([data-hidden="true"]):not([style*="display: none"])',
           mainData = [],
           startLen = 0,
           optID = 0,
@@ -1960,7 +1960,7 @@
             }
           }
         } else {
-          var optionSelector = ':not([hidden]):not([data-hidden="true"]):not([data-divider="true"])';
+          var optionSelector = ':not([hidden]):not([data-hidden="true"]):not([data-divider="true"]):not([style*="display: none"])';
           if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
           // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected, etc.
@@ -2084,7 +2084,7 @@
       if (this.selectpicker.current.data.length) {
         for (var i = 0; i < this.selectpicker.current.data.length; i++) {
           var data = this.selectpicker.current.data[i];
-          if (data.type === 'option') {
+          if (data.type === 'option' && $(data.element.firstChild).css('display') !== 'none') {
             li = data.element;
             break;
           }
