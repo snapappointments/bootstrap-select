@@ -22,7 +22,7 @@ const selectpickerConfigs = [{
     config: {
         html: `
             <select class="selectpicker" data-live-search="true">
-                ${testArr.map((obj) => 
+                ${testArr.map((obj) =>
                     `<option value="${obj.text}">${obj.text}</option>`
                 ).join('')}
             </select>
