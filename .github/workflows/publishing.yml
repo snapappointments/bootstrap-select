@@ -20,6 +20,8 @@ jobs:
         run: grunt build
       - name: Publish npm package
         run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish NuGet package
         id: publish_nuget
         uses: laget-se/publish-nuget@v2
@@ -29,5 +31,3 @@ jobs:
           PACKAGE_NAME: bootstrap-select
           VERSION_FILE_PATH: nuget/bootstrap-select.nuspec
           VERSION_REGEX: ^\s*<version>(.*)<\/version>\s*$
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
