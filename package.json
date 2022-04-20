@@ -50,8 +50,7 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "cypress:open": "cypress open",
-    "build": "grunt build"
+    "cypress:open": "cypress open"
   },
   "browserslist": [
     "Android 2.3",

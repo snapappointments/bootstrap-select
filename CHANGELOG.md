@@ -1,4 +1,4 @@
-# v1.14.0-beta3
+# v1.14.0-beta3 (2021-04-20)
 
 ### Bug fixes
 
@@ -12,6 +12,8 @@
 - Fix `Cannot read property 'position' of undefined` error
 - Fix `Cannot read property 'index' of undefined` error
 - Fix several overflow bugs
+- [#2659] [#2671] Fix broken Ajax search
+- [#2593] Fix maxOptions bugs
 
 ### i18n
 - [#2625] Add turkmen language
@@ -19,6 +21,7 @@
 
 ### New features
 - [#2305] Add new CDN: PageCDN
+- Support passing in a boolean `more` argument as an additional argument to the `source.data`/`source.search` callback functions
 
 ### Dev
 - remove bootstrap 3 test page
@@ -30,6 +33,24 @@
 - [#2683] Remove polyfills and IE related code
 
 This project is now mainly maintained by @NicolasCARPi.
+
+[#2634]: https://github.com/snapappointments/bootstrap-select/issues/2634
+[#2669]: https://github.com/snapappointments/bootstrap-select/issues/2669
+[#2627]: https://github.com/snapappointments/bootstrap-select/issues/2627
+[#2616]: https://github.com/snapappointments/bootstrap-select/issues/2616
+[#2600]: https://github.com/snapappointments/bootstrap-select/issues/2600
+[#2367]: https://github.com/snapappointments/bootstrap-select/issues/2367
+[#2585]: https://github.com/snapappointments/bootstrap-select/issues/2585
+[#2659]: https://github.com/snapappointments/bootstrap-select/issues/2659
+[#2671]: https://github.com/snapappointments/bootstrap-select/issues/2671
+[#2593]: https://github.com/snapappointments/bootstrap-select/issues/2593
+[#2625]: https://github.com/snapappointments/bootstrap-select/issues/2625
+[#2621]: https://github.com/snapappointments/bootstrap-select/issues/2621
+[#2305]: https://github.com/snapappointments/bootstrap-select/issues/2305
+[#2680]: https://github.com/snapappointments/bootstrap-select/issues/2680
+[#2617]: https://github.com/snapappointments/bootstrap-select/issues/2617
+[#2678]: https://github.com/snapappointments/bootstrap-select/issues/2678
+[#2683]: https://github.com/snapappointments/bootstrap-select/issues/2683
 
 # v1.14.0-beta2 (2021-03-25)
 

@@ -15,39 +15,39 @@ $(document).ready(function() {
 
     form.remove();
   }
-  
+
   function plnkrOpener() {
     var ctrl = {},
         bootstrapVersion = $('#plnkrOpener').data('bootstrapVersion');
-  
+
     ctrl.example = {
       path: ctrl.examplePath,
       manifest: undefined,
       files: undefined,
       name: 'bootstrap-select playground (Bootstrap ' + bootstrapVersion + ')'
     };
-  
+
     ctrl.open = function() {
       var postData = {
         'tags[0]': 'jquery',
         'tags[1]': 'bootstrap-select',
         'private': true
       };
-  
+
       ctrl.example.files = [
         {
           name: 'index.html',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.14-dev/tests/bootstrap' + bootstrapVersion + '.html',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/dev/tests/bootstrap' + bootstrapVersion + '.html',
           content: ''
         },
         {
           name: 'js/bootstrap-select.js',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.14-dev/dist/js/bootstrap-select.js',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/dev/docs/docs/dist/js/bootstrap-select.js',
           content: ''
         },
         {
           name: 'css/bootstrap-select.css',
-          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/v1.14-dev/dist/css/bootstrap-select.css',
+          url: 'https://raw.githubusercontent.com/snapappointments/bootstrap-select/dev/docs/docs/dist/css/bootstrap-select.css',
           content: ''
         }
       ]
@@ -84,7 +84,7 @@ $(document).ready(function() {
         sendData();
       });
     };
-    
+
     return ctrl.open()
   }
 
