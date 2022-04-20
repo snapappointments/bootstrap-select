@@ -1,3 +1,4 @@
 {
-  "template": "static"
+  "template": "static",
+  "startScript": "build"
 }
