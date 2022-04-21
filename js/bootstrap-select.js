@@ -855,9 +855,14 @@
 
   function showNoResults (searchMatch, searchValue) {
     if (!searchMatch.length) {
-      elementTemplates.noResults.innerHTML = this.options.noneResultsText.replace('{0}', '"' + htmlEscape(searchValue) + '"');
-      this.$menuInner[0].firstChild.appendChild(elementTemplates.noResults);
+      this.no_results = true;
+      if (!this.options.tags) {
+        elementTemplates.noResults.innerHTML = this.options.noneResultsText.replace('{0}', '"' + htmlEscape(searchValue) + '"');
+        this.$menuInner[0].firstChild.appendChild(elementTemplates.noResults);
+      }
+      return;
     }
+    this.no_results = false;
   }
 
   function filterHidden (item) {
@@ -987,7 +992,8 @@
     display: false,
     sanitize: true,
     sanitizeFn: null,
-    whiteList: DefaultWhitelist
+    whiteList: DefaultWhitelist,
+    tags: false
   };
 
   Selectpicker.prototype = {
@@ -1004,12 +1010,18 @@
       this.selectId = 'bs-select-' + selectId;
 
       element.classList.add('bs-select-hidden');
+      
+      this.no_results = false;
 
       this.multiple = this.$element.prop('multiple');
       this.autofocus = this.$element.prop('autofocus');
 
       if (element.classList.contains('show-tick')) {
         this.options.showTick = true;
+      }
+      
+      if (this.options.tags) {
+        this.options.liveSearch = true;
       }
 
       this.$newElement = this.createDropdown();
@@ -3371,6 +3383,15 @@
           that.$menuInner.find('.active a').trigger('click', true); // retain active class
           $this.trigger('focus');
 
+          if (that.options.tags && e.which === keyCodes.ENTER && that.no_results) {
+            let searchValue = that.$searchbox[0].value;
+            let newOption = new Option(searchValue, searchValue);
+            newOption.selected = true;
+            that.$element[0].appendChild(newOption);
+            that.$searchbox[0].value = '';
+            that.refresh();
+          }
+          
           if (!that.options.liveSearch) {
             // Prevent screen from scrolling if the user hits the spacebar
             e.preventDefault();
