@@ -315,6 +315,7 @@ select.selectpicker {
   // The selectpicker dropdown
   .dropdown-menu {
     min-width: 100%;
+    max-width: 100%;
     @include box-sizing(border-box);
 
     > .inner:focus {
