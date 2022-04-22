@@ -1777,7 +1777,8 @@
           addOption.call(this, item, {});
         }
       }
-
+      //TMP Fix for duplicated data on refresh
+      this.selectpicker.main.data = [];
       switch (type) {
         case 'data': {
           if (!this.selectpicker.main.data) {
@@ -2733,7 +2734,8 @@
             prevValue = getSelectValues.call(that),
             prevIndex = element.selectedIndex,
             prevOption = element.options[prevIndex],
-            prevData = prevOption ? that.selectpicker.main.data[prevOption.liIndex] : false,
+            //Changed Proper Clicked Index as Old was not coming right lidIndex issue
+            prevData = prevOption ? that.selectpicker.main.data[prevIndex] : false,
             triggerChange = true;
 
         // Don't close on multi choice menu
