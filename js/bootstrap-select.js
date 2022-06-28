@@ -617,8 +617,8 @@
   };
 
   // eslint-disable-next-line no-undef
-  var Dropdown = window.Dropdown || bootstrap.Dropdown;
-
+  var Dropdown = window.Dropdown || window.bootstrap && window.bootstrap.Dropdown;
+  
   function getVersion () {
     var version;
 
