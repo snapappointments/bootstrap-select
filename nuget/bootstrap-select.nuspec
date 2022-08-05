@@ -20,5 +20,9 @@
         <file src="dist\js\bootstrap-select*.*" target="content\Scripts" />
         <file src="dist\js\i18n\*.*" target="content\Scripts\i18n" />
         <file src="dist\css\*.*" target="content\Content" />
+
+        <file src="dist\js\bootstrap-select*.*" target="contentFiles\any\any\wwwroot\js" />
+        <file src="dist\js\i18n\*.*" target="contentFiles\any\any\wwwroot\js\i18n" />
+        <file src="dist\css\*.*" target="contentFiles\any\any\wwwroot\css" />
     </files>
 </package>
