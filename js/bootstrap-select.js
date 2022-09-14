@@ -956,6 +956,7 @@
     size: 'auto',
     title: null,
     placeholder: null,
+    titleTip: null,
     allowClear: false,
     selectedTextFormat: 'values',
     width: false,
@@ -1910,6 +1911,7 @@
           buttonInner = button.querySelector('.filter-option-inner-inner'),
           multipleSeparator = document.createTextNode(this.options.multipleSeparator),
           titleFragment = elementTemplates.fragment.cloneNode(false),
+          titleTipFragment = elementTemplates.fragment.cloneNode(false),
           showCount,
           countMax,
           hasContent = false;
@@ -2016,6 +2018,16 @@
 
       buttonInner.innerHTML = '';
       buttonInner.appendChild(titleFragment);
+
+      if (this.options.titleTip && !button.querySelector('.title-tip')) {
+        var titleTip = document.createElement('div');
+        titleTip.setAttribute('class', 'title-tip');
+        titleTipFragment = generateOption.text.call(this, {
+          text: this.options.titleTip ? this.options.titleTip : ''
+        }, true);
+        titleTip.appendChild(titleTipFragment);
+        button.querySelector('.filter-option').prepend(titleTip);
+      }
 
       if (version.major < 4 && this.$newElement[0].classList.contains('bs3-has-addon')) {
         var filterExpand = button.querySelector('.filter-expand'),
