@@ -420,6 +420,17 @@
           searchSuccess = method(string, searchString);
         } else if (method === 'contains') {
           searchSuccess = string.indexOf(searchString) >= 0;
+        } else if (method === 'containsAll') {
+          var searchArray = searchString.split(' ');
+          var notAllMatched = false;
+          searchSuccess = false;
+
+          for (var searchSubString in searchArray) {
+            searchSuccess = string.indexOf(searchArray[searchSubString]) >= 0;
+            if (!searchSuccess) notAllMatched = true;
+          }
+
+          if (notAllMatched) searchSuccess = false;
         } else {
           searchSuccess = string.startsWith(searchString);
         }
