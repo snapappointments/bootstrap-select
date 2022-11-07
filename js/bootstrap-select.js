@@ -872,6 +872,7 @@
       valHooks.useDefault = true;
     }
 
+    this.element = element;
     this.$element = $(element);
     this.$newElement = null;
     this.$button = null;
@@ -996,19 +997,18 @@
 
     init: function () {
       var that = this,
-          id = this.$element.attr('id'),
-          element = this.$element[0],
-          form = element.form;
+          id = this.element.getAttribute('id'),
+          form = this.element.form;
 
       selectId++;
       this.selectId = 'bs-select-' + selectId;
 
-      element.classList.add('bs-select-hidden');
+      this.element.classList.add('bs-select-hidden');
 
-      this.multiple = this.$element.prop('multiple');
-      this.autofocus = this.$element.prop('autofocus');
+      this.multiple = this.element.multiple;
+      this.autofocus = this.element.autofocus;
 
-      if (element.classList.contains('show-tick')) {
+      if (this.element.classList.contains('show-tick')) {
         this.options.showTick = true;
       }
 
@@ -1019,9 +1019,9 @@
         .prependTo(this.$newElement);
 
       // ensure select is associated with form element if it got unlinked after moving it inside newElement
-      if (form && element.form === null) {
+      if (form && this.element.form === null) {
         if (!form.id) form.id = 'form-' + this.selectId;
-        element.setAttribute('form', form.id);
+        this.element.setAttribute('form', form.id);
       }
 
       this.$button = this.$newElement.children('button');
@@ -1030,7 +1030,7 @@
       this.$menuInner = this.$menu.children('.inner');
       this.$searchbox = this.$menu.find('input');
 
-      element.classList.remove('bs-select-hidden');
+      this.element.classList.remove('bs-select-hidden');
 
       this.fetchData(function () {
         that.render(true);
@@ -1095,7 +1095,7 @@
         }
       });
 
-      if (element.hasAttribute('required')) {
+      if (this.element.hasAttribute('required')) {
         this.$element.on('invalid' + EVENT_KEY, function () {
           that.$button[0].classList.add('bs-invalid');
 
