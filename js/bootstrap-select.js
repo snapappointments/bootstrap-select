@@ -3419,6 +3419,8 @@
       var config = $.extend({}, this.options, getAttributesObject(this.$element), this.$element.data()); // in this order on refresh, as user may change attributes on select, and options object is not passed on refresh
       this.options = config;
 
+      this.selectpicker.main.data = [];
+
       if (this.options.source.data) {
         this.render();
         this.buildList();
