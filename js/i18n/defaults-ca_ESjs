@@ -1,0 +1,16 @@
+/*
+ * Translated default messages for bootstrap-select.
+ * Locale: CA (Catalan)
+ * Region: ES (Spain)
+ */
+(function ($) {
+  $.fn.selectpicker.defaults = {
+    noneSelectedText: 'Cap selecció',
+    noneResultsText: 'Cap resultat {0}',
+    countSelectedText: 'Seleccionats {0} de {1}',
+    maxOptionsText: ['Màxim assolit ({n} {var} max)', 'Màxim del grup assolit({n} {var} max)', ['elements', 'element']],
+    multipleSeparator: ', ',
+    selectAllText: 'Marca tots',
+    deselectAllText: 'Desmarca tots'
+  };
+})(jQuery);
