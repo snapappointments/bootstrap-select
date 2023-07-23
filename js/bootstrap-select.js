@@ -1962,7 +1962,7 @@
                   }
 
                   if (option.title) {
-                    titleOptions.text = option.title;
+                    titleOptions.content = option.title.toString();
                   } else if (option.content && that.options.showContent) {
                     titleOptions.content = option.content.toString();
                     hasContent = true;
