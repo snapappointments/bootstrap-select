@@ -2703,6 +2703,8 @@
       }
 
       this.$element.on('shown' + EVENT_KEY, function () {
+        that.createView(false, true);
+        
         if (that.$menuInner[0].scrollTop !== that.selectpicker.view.scrollTop) {
           that.$menuInner[0].scrollTop = that.selectpicker.view.scrollTop;
         }
