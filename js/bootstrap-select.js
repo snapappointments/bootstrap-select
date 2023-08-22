@@ -1962,7 +1962,11 @@
                   }
 
                   if (option.title) {
-                    titleOptions.text = option.title;
+                    if (option.getAttribute('data-type') == 'html-title') {
+                      titleOptions.content = option.title.toString();
+                    } else {
+                      titleOptions.text = option.title;
+                    }
                   } else if (option.content && that.options.showContent) {
                     titleOptions.content = option.content.toString();
                     hasContent = true;

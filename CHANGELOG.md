@@ -1,6 +1,6 @@
 # v1.14.0-beta3 (2021-04-20)
 
-### Bug fixes
+### Bug fixes edited
 
 - [#2634] Remove IE hacks in CSS
 - [#2669] Remove deprecated sass division with slash character
