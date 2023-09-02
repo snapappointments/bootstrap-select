@@ -2951,6 +2951,10 @@
 
       this.$searchbox.on('input propertychange', function () {
         var searchValue = that.$searchbox[0].value;
+        var isWhitespace = /^\s*$/.test(searchValue);
+        if (!isWhitespace) {
+          searchValue = searchValue.replace(/^\s+|\s+$/g, '');
+        }
 
         that.selectpicker.search.elements = [];
         that.selectpicker.search.data = [];
