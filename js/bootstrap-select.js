@@ -3397,6 +3397,7 @@
         this.render();
         this.buildList();
       } else {
+        this.selectpicker.main.data = null; // https://github.com/snapappointments/bootstrap-select/issues/2738#issuecomment-1613781946
         this.fetchData(function () {
           that.render();
           that.buildList();
