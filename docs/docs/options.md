@@ -190,6 +190,14 @@ Options can be passed via data attributes or JavaScript. For data attributes, ap
     </td>
   </tr>
   <tr>
+    <td>searchSubtext</td>
+    <td>boolean</td>
+    <td><code>true</code></td>
+    <td>
+      <p>When set to <code>false</code>, searching will ignore subtext. When set to <code>true</code> searching will include subtext.
+    </td>
+  </tr>
+  <tr>
     <td>selectAllText</td>
     <td>string</td>
     <td><code>'Select All'</code></td>

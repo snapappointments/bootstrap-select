@@ -393,13 +393,17 @@
   };
   // </editor-fold>
 
-  function stringSearch (li, searchString, method, normalize) {
+  function stringSearch (li, searchString, method, normalize, searchSubtext) {
     var stringTypes = [
           'display',
           'subtext',
           'tokens'
         ],
         searchSuccess = false;
+
+    if (!searchSubtext) {
+        stringTypes.splice(1, 1);
+    }
 
     for (var i = 0; i < stringTypes.length; i++) {
       var stringType = stringTypes[i],
@@ -971,6 +975,7 @@
     liveSearchPlaceholder: null,
     liveSearchNormalize: false,
     liveSearchStyle: 'contains',
+    searchSubtext: true,
     actionsBox: false,
     iconBase: classNames.ICONBASE,
     tickIcon: classNames.TICKICON,
@@ -2982,7 +2987,7 @@
               var li = that.selectpicker.main.data[i];
 
               if (!cache[i]) {
-                cache[i] = stringSearch(li, q, searchStyle, normalizeSearch);
+                cache[i] = stringSearch(li, q, searchStyle, normalizeSearch, that.options.searchSubtext);
               }
 
               if (cache[i] && li.headerIndex !== undefined && cacheArr.indexOf(li.headerIndex) === -1) {
@@ -3306,7 +3311,7 @@
           var li = that.selectpicker.current.data[i],
               hasMatch;
 
-          hasMatch = stringSearch(li, keyHistory, 'startsWith', true);
+          hasMatch = stringSearch(li, keyHistory, 'startsWith', true, that.options.searchSubtext);
 
           if (hasMatch && that.selectpicker.view.canHighlight[i]) {
             matches.push(li.element);
