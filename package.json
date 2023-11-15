@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.7.6",
-    "cypress": "^9.5.0",
+    "cypress": "^13.5.1",
     "grunt": "^1.1.0",
     "grunt-banner": "^0.6.0",
     "grunt-contrib-clean": "^2.0.0",
