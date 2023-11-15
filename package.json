@@ -50,6 +50,13 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
+    "lint": "grunt lint",
+    "build": "grunt build",
+    "dev-watch": "grunt dev-watch",
+    "dist": "grunt dist",
+    "test:e2e": "grunt build && cypress run",
+    "cy:run": "cypress run",
+    "cy:run:headed": "cypress run --headed",
     "cypress:open": "cypress open"
   },
   "browserslist": [
