@@ -12,3 +12,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           build: grunt build
+          headed: true
