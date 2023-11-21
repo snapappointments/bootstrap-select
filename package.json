@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.7.6",
-    "cypress": "^9.5.0",
+    "cypress": "^13.5.1",
     "grunt": "^1.1.0",
     "grunt-banner": "^0.6.0",
     "grunt-contrib-clean": "^2.0.0",
@@ -50,6 +50,13 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
+    "lint": "grunt lint",
+    "build": "grunt build",
+    "dev-watch": "grunt dev-watch",
+    "dist": "grunt dist",
+    "test:e2e": "grunt build && cypress run",
+    "cy:run": "cypress run",
+    "cy:run:headed": "cypress run --headed",
     "cypress:open": "cypress open"
   },
   "browserslist": [

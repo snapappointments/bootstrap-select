@@ -143,6 +143,40 @@
     return attributesObject;
   }
 
+  /**
+   * Check if element.getBoundingClientRect() is supported.
+   *
+   * @param {HTMLElement} element
+   * @returns {boolean}
+   */
+  function isGetBoundingClientRectSupported (element) {
+    return typeof element.getBoundingClientRect === 'function';
+  }
+
+  /**
+   * Attempt to get rendered height of the element.
+   *
+   * @param {HTMLElement} element
+   * @returns {number}
+   */
+  function attemptGetRenderedHeight (element) {
+    return isGetBoundingClientRectSupported(element)
+      ? element.getBoundingClientRect().height
+      : element.offsetHeight;
+  }
+
+  /**
+   * Attempt to get rendered width of the element.
+   *
+   * @param {HTMLElement} element
+   * @returns {number}
+   */
+  function attemptGetRenderedWidth (element) {
+    return isGetBoundingClientRectSupported(element)
+      ? element.getBoundingClientRect().width
+      : element.offsetWidth;
+  }
+
   // Polyfill for browsers with no classList support
   // Remove in v2
   if (!('classList' in document.createElement('_'))) {
@@ -1458,7 +1492,7 @@
             // if an option is encountered that is wider than the current menu width, update the menu width accordingly
             // switch to ResizeObserver with increased browser support
             if (isVirtual === true && that.sizeInfo.hasScrollBar) {
-              var menuInnerInnerWidth = menuInner.firstChild.offsetWidth;
+              var menuInnerInnerWidth = attemptGetRenderedWidth(menuInner.firstChild);
 
               if (init && menuInnerInnerWidth < that.sizeInfo.menuInnerInnerWidth && that.sizeInfo.totalMenuWidth > that.sizeInfo.selectWidth) {
                 menuInner.firstChild.style.minWidth = that.sizeInfo.menuInnerInnerWidth + 'px';
@@ -1466,7 +1500,7 @@
                 // set to 0 to get actual width of menu
                 that.$menu[0].style.minWidth = 0;
 
-                var actualMenuWidth = menuInner.firstChild.offsetWidth;
+                var actualMenuWidth = attemptGetRenderedWidth(menuInner.firstChild);
 
                 if (actualMenuWidth > that.sizeInfo.menuInnerInnerWidth) {
                   that.sizeInfo.menuInnerInnerWidth = actualMenuWidth;
@@ -2115,7 +2149,7 @@
           doneButton = this.options.doneButton && this.multiple && this.$menu.find('.bs-donebutton').length > 0 ? this.$menu.find('.bs-donebutton')[0].cloneNode(true) : null,
           firstOption = this.$element[0].options[0];
 
-      this.sizeInfo.selectWidth = this.$newElement[0].offsetWidth;
+      this.sizeInfo.selectWidth = attemptGetRenderedWidth(this.$newElement[0]);
 
       text.className = 'text';
       a.className = 'dropdown-item ' + (firstOption ? firstOption.className : '');
@@ -2169,15 +2203,15 @@
 
       document.body.appendChild(newElement);
 
-      var liHeight = li.offsetHeight,
-          dropdownHeaderHeight = dropdownHeader ? dropdownHeader.offsetHeight : 0,
-          headerHeight = header ? header.offsetHeight : 0,
-          searchHeight = search ? search.offsetHeight : 0,
-          actionsHeight = actions ? actions.offsetHeight : 0,
-          doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
+      var liHeight = attemptGetRenderedHeight(li),
+          dropdownHeaderHeight = dropdownHeader ? attemptGetRenderedHeight(dropdownHeader) : 0,
+          headerHeight = header ? attemptGetRenderedHeight(header) : 0,
+          searchHeight = search ? attemptGetRenderedHeight(search) : 0,
+          actionsHeight = actions ? attemptGetRenderedHeight(actions) : 0,
+          doneButtonHeight = doneButton ? attemptGetRenderedHeight(doneButton) : 0,
           dividerHeight = $(divider).outerHeight(true),
           menuStyle = window.getComputedStyle(menu),
-          menuWidth = menu.offsetWidth,
+          menuWidth = attemptGetRenderedWidth(menu),
           menuPadding = {
             vert: toInteger(menuStyle.paddingTop) +
                   toInteger(menuStyle.paddingBottom) +
@@ -2200,7 +2234,7 @@
 
       menuInner.style.overflowY = 'scroll';
 
-      scrollBarWidth = menu.offsetWidth - menuWidth;
+      scrollBarWidth = attemptGetRenderedWidth(menu) - menuWidth;
 
       document.body.removeChild(newElement);
 
@@ -2217,7 +2251,7 @@
       this.sizeInfo.menuInnerInnerWidth = menuWidth - menuPadding.horiz;
       this.sizeInfo.totalMenuWidth = this.sizeInfo.menuWidth;
       this.sizeInfo.scrollBarWidth = scrollBarWidth;
-      this.sizeInfo.selectHeight = this.$newElement[0].offsetHeight;
+      this.sizeInfo.selectHeight = attemptGetRenderedHeight(this.$newElement[0]);
 
       this.setPositionData();
     },
@@ -2438,7 +2472,7 @@
               containerPos = { top: 0, left: 0 };
             }
 
-            actualHeight = $element.hasClass(classNames.DROPUP) ? 0 : $element[0].offsetHeight;
+            actualHeight = $element.hasClass(classNames.DROPUP) ? 0 : attemptGetRenderedHeight($element[0]);
 
             // Bootstrap 4+ uses Popper for menu positioning
             if (version.major < 4 || display === 'static') {
@@ -2446,7 +2480,7 @@
               containerPosition.left = pos.left - containerPos.left;
             }
 
-            containerPosition.width = $element[0].offsetWidth;
+            containerPosition.width = attemptGetRenderedWidth($element[0]);
 
             that.$bsContainer.css(containerPosition);
           };
