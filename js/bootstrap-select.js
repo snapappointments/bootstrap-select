@@ -2953,6 +2953,7 @@
         var searchValue = that.$searchbox[0].value;
         var isWhitespace = /^\s*$/.test(searchValue);
         if (!isWhitespace) {
+          // trim leading and trailing half-width spaces and full-width spaces.
           searchValue = searchValue.replace(/^\s+|\s+$/g, '');
         }
 
