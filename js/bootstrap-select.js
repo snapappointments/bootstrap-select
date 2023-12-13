@@ -1392,7 +1392,9 @@
           }
         }
 
-        if (currentChunk === undefined) currentChunk = 0;
+        //If the current chunk can't be found based on the scroll position
+        // in the loop above, we need to assume that we are in the final chunk, not the first chunk
+        if (currentChunk === undefined) currentChunk = chunkCount-1;
 
         prevPositions = [that.selectpicker.view.position0, that.selectpicker.view.position1];
 
