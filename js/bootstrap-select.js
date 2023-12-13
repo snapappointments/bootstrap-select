@@ -3102,7 +3102,7 @@
 
         if (!Array.isArray(value)) value = [ value ];
 
-        value.map(String);
+        value = value.map(String);
 
         for (var i = 0; i < selectedOptions.length; i++) {
           var item = selectedOptions[i];
