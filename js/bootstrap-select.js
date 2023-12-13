@@ -1250,7 +1250,7 @@
             (this.options.display === 'static' ? 'data-display="static"' : '') +
             Selector.DATA_TOGGLE +
             autofocus +
-            ' role="combobox" aria-owns="' +
+            ' aria-owns="' +
             this.selectId +
             '" aria-haspopup="listbox" aria-expanded="false">' +
             '<div class="filter-option">' +
