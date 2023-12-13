@@ -2307,7 +2307,8 @@
         // This is useful for smaller menus, where there might be plenty of room
         // below the button without setting dropup, but we can't know
         // the exact height of the menu until createView is called later
-        estimate = liHeight * this.selectpicker.current.data.length + menuPadding.vert;
+        var dropDownLength = this.options.size !== 'auto' ? this.options.size : this.selectpicker.current.data.length;
+        estimate = liHeight * dropDownLength + menuPadding.vert;
 
         isDropup = this.sizeInfo.selectOffsetTop - this.sizeInfo.selectOffsetBot > this.sizeInfo.menuExtras.vert && estimate + this.sizeInfo.menuExtras.vert + 50 > this.sizeInfo.selectOffsetBot;
 
