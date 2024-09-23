@@ -2663,6 +2663,10 @@
 
           that.createView(false);
         }
+        // toggle to close the dropdown if it is currently open
+        if (version.major > 4 && that.$menu.hasClass(classNames.SHOW)) {
+          that.$menu.removeClass(classNames.SHOW);
+        }
       }
 
       this.$button.on('click.bs.dropdown.data-api', function (e) {
