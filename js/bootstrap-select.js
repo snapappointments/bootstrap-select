@@ -1158,7 +1158,7 @@
       if (this.options.liveSearch) {
         searchbox =
           '<div class="bs-searchbox">' +
-            '<input type="search" class="form-control" autocomplete="off"' +
+            '<input type="search" class="form-select" autocomplete="off"' +
               (
                 this.options.liveSearchPlaceholder === null ? ''
                 :
@@ -2135,7 +2135,7 @@
       if (search) {
         var input = document.createElement('input');
         search.className = 'bs-searchbox';
-        input.className = 'form-control';
+        input.className = 'form-select';
         search.appendChild(input);
         menu.appendChild(search);
       }
@@ -2405,7 +2405,7 @@
                   : false
                 );
 
-            that.$bsContainer.addClass($element.attr('class').replace(/form-control|fit-width/gi, '')).toggleClass(classNames.DROPUP, $element.hasClass(classNames.DROPUP));
+            that.$bsContainer.addClass($element.attr('class').replace(/form-select|fit-width/gi, '')).toggleClass(classNames.DROPUP, $element.hasClass(classNames.DROPUP));
             pos = $element.offset();
 
             if (!$container.is('body')) {
