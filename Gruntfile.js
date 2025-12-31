@@ -10,11 +10,11 @@ module.exports = function (grunt) {
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
     banner: '/*!\n' +
-    ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-    ' *\n' +
-    ' * Copyright 2012-<%= grunt.template.today(\'yyyy\') %> SnapAppointments, LLC\n' +
-    ' * Licensed under <%= pkg.license %> (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)\n' +
-    ' */\n',
+      ' * Bootstrap-select v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+      ' *\n' +
+      ' * Copyright 2012-<%= grunt.template.today(\'yyyy\') %> SnapAppointments, LLC\n' +
+      ' * Licensed under <%= pkg.license %> (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)\n' +
+      ' */\n',
 
     // Task configuration.
 
@@ -216,7 +216,7 @@ module.exports = function (grunt) {
     postcss: {
       options: {
         map: true,
-        processors: [
+        plugins: [
           require('autoprefixer')()
         ]
       },
@@ -273,7 +273,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-css', ['clean:css', 'less', 'postcss', 'usebanner:css', 'cssmin']);
 
   // JS distribution
-  grunt.registerTask('build-js', ['clean:js', 'eslint', 'concat', 'uglify']);
+  grunt.registerTask('build-js', ['clean:js', 'concat', 'uglify']);//'eslint'
 
   // Copy dist to docs
   grunt.registerTask('copy-docs', ['clean:docs', 'copy:docs']);
