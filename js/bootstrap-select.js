@@ -2656,7 +2656,7 @@
     },
 
     isDisabled: function () {
-      return this.$element[0].disabled;
+      return this.$element.is(':disabled');
     },
 
     checkDisabled: function () {
